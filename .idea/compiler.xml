@@ -10,6 +10,9 @@
         <module name="LoL_Client" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="LoL_Client" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

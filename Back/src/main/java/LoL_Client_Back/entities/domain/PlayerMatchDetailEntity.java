@@ -1,0 +1,49 @@
+package LoL_Client_Back.entities.domain;
+import LoL_Client_Back.entities.reference.RoleEntity;
+import LoL_Client_Back.entities.reference.TeamEntity;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "player_match_details")
+public class PlayerMatchDetailEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    private Integer kills;
+    private Integer deaths;
+    private Integer assists;
+    @Column(name = "total_gold")
+    private Integer totalGold;
+    @Column(name = "total_damage")
+    private Integer totalDamage;
+    @Column(name = "creatures_killed")
+    private Integer creaturesKilled;
+
+    @JoinColumn
+    @ManyToOne
+    private MatchEntity match;
+
+    @JoinColumn
+    @ManyToOne
+    private UserEntity user;
+
+    @JoinColumn
+    @ManyToOne
+    private TeamEntity team;
+
+    @JoinColumn
+    @ManyToOne
+    private ChampionEntity champion;
+
+    @JoinColumn
+    @ManyToOne
+    private RoleEntity role;
+}
