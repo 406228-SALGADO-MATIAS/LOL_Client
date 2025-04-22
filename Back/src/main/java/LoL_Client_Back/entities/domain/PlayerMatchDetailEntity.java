@@ -31,7 +31,7 @@ public class PlayerMatchDetailEntity {
     @ManyToOne
     private MatchEntity match;
 
-    @JoinColumn
+    @JoinColumn(name ="`user`")
     @ManyToOne
     private UserEntity user;
 

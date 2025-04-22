@@ -13,7 +13,7 @@ public class User {
     private String password;
     private String email;
     private String nickname;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime registrationDate;
     private Integer blueEssence;
     private Integer riotPoints;

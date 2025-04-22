@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 public class Match {
     private Long id;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
     private String duration;
     private Boolean ranked;

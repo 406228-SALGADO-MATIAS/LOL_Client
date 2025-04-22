@@ -41,7 +41,7 @@ public class UserMatchesEntity {
     @Column(name = "aram_losses")
     private Integer aramLosses;
 
-    @JoinColumn
+    @JoinColumn(name ="`user`")
     @ManyToOne
     private UserEntity user;
 

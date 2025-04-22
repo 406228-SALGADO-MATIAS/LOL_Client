@@ -22,10 +22,11 @@ public class ChampionEntity {
     private Long id;
     private String name;
     private Integer price;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "release_date")
     private LocalDateTime releaseDate;
     private Double winrate;
+    @Lob
     private String image;
     @JoinColumn
     @ManyToOne
@@ -36,5 +37,8 @@ public class ChampionEntity {
     @JoinColumn
     @ManyToOne
     private ChampionStyleEntity style;
+    @JoinColumn
+    @ManyToOne
+    private ChampionStyleEntity style2;
 
 }

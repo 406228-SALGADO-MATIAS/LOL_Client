@@ -19,11 +19,11 @@ public class UserXChampionEntity {
     private Integer masteryLevel;
 
     @Column(name = "adquisition_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime adquisitionDate;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name ="`user`")
     private UserEntity user;
 
     @ManyToOne

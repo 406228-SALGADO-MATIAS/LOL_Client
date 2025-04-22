@@ -18,9 +18,10 @@ public class SkinEntity {
     @Column(name = "id", nullable = false)
     private Long id;
     private String name;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "release_date")
     private LocalDateTime releaseDate;
+    @Lob
     private String image;
     @JoinColumn
     @ManyToOne

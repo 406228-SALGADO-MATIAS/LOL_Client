@@ -25,8 +25,13 @@ public class ItemEntity {
     @Column(name = "ability_power")
     private Integer abilityPower;
     private Integer health;
+    @Column(name = "health_regeneration")
+    private String healthRegeneration;
     private Integer mana;
+    @Column(name = "mana_regeneration")
+    private String manaRegeneration;
     private Integer armor;
+    private String tenacity;
     @Column(name = "magic_resistance")
     private Integer magicResistance;
     @Column(name = "cool_down_reduction")
@@ -39,13 +44,16 @@ public class ItemEntity {
     private String armorPenetration;
     @Column(name = "magic_penetration")
     private String magicPenetration;
-    private Integer letality;
+    private Integer lethality;
     @Column(name = "healing_and_shield_power")
     private String healingAndShieldPower;
+    @Lob
     private String image;
-    @JoinColumn
+    @Lob
+    private String effect;
+    private Integer cost;
+    @JoinColumn(name = "item_type")
     @ManyToOne
-    @Column(name = "item_type")
     private ItemTypeEntity itemType;
 
 }

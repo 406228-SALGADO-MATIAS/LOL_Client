@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 public class UserXIcon {
     private Long id;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime adquisitionDate;
     private User user;
     private ProfileIcon icon;

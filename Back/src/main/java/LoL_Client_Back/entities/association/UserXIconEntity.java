@@ -18,12 +18,12 @@ public class UserXIconEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "adquisition_date")
     private LocalDateTime adquisitionDate;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name ="`user`")
     private UserEntity user;
 
     @ManyToOne

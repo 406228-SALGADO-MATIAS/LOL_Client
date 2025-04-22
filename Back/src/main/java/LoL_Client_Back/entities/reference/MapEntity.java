@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "champions")
+@Table(name = "maps")
 public class MapEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

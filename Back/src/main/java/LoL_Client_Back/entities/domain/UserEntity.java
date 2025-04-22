@@ -23,7 +23,7 @@ public class UserEntity {
     private String password;
     private String email;
     private String nickname;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;
     @Column(name = "blue_essence")

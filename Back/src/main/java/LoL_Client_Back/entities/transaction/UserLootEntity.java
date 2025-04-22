@@ -30,6 +30,6 @@ public class UserLootEntity {
     private Integer orangeEssence;
 
     @ManyToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "`user`")
     private UserEntity user;
 }
