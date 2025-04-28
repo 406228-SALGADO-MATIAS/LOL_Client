@@ -158,11 +158,12 @@ INSERT INTO server_regions (server) VALUES
 ('China (CN)');
 
 INSERT INTO skin_tiers (tier, price) VALUES
+('Budget', 520),
+('Standard', 750),
+('Deluxe', 975),
 ('Epic', 1350),
 ('Legendary', 1820),
-('Mythic', 3250),
-('Ultimate', 3250),
-('Prestige', 15000);
+('Mythic', 3250);
 
 INSERT INTO teams (team_color) VALUES
 ('Blue'),
@@ -2539,6 +2540,610 @@ VALUES
     2650,                       -- Cost
     5                           -- item_type_id (Tank corresponds to ID 5)
 );
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('High Noon Lucian',
+ '2018-08-30 00:00:00',
+ 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_8.jpg&w=1200&q=75',
+ 5,
+ 1),
+ ('PROJECT Lucian',
+  '2015-09-08 00:00:00',
+  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_6.jpg&w=1200&q=75',
+  4,
+  1);
+  INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+  VALUES
+  ('Soul Reaver Draven',
+   '2012-06-06 00:00:00',
+   'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_1.jpg&w=1200&q=75',
+   4,  -- tier Epic corresponde al 1350, que es el 4to tier
+   2),
+('Primetime Draven',
+ '2014-06-21 00:00:00',
+ 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_3.jpg&w=1200&q=75',
+ 3,
+ 2);
+  INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Shockblade Zed',
+ '2012-11-13 00:00:00',
+ 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZed_1.jpg&w=1200&q=75',
+ 3,
+ 3),
+
+('Empyrean Zed',
+ '2024-05-01 00:00:00',
+ 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZed_38.jpg&w=1200&q=75',
+ 4,
+ 3);
+ INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+ VALUES
+ ('Empyrean Zac',
+  '2022-11-03 00:00:00',
+  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_14.jpg&w=1200&q=75',
+  4,
+  4),
+
+ ('Special Weapon Zac',
+  '2013-03-29 00:00:00',
+  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_1.jpg&w=1200&q=75',
+  3,
+  4);
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Time Machine Zilean',
+ '2011-04-12 00:00:00',
+ 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_4.jpg&w=1200&q=75',
+ 1,
+ 5),
+
+('Sugar Rush Zilean',
+ '2019-12-17 00:00:00',
+ 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_6.jpg&w=1200&q=75',
+ 4,
+ 5);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Odyssey Jinx',
+ '2018-09-12 00:00:00',
+ 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_13.jpg&w=1200&q=75',
+ 4,
+ 6),
+
+('Battle Cat Jinx',
+ '2022-03-31 00:00:00',
+ 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_38.jpg&w=1200&q=75',
+ 4,
+ 6);
+
+ INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+ VALUES
+ ('Riot Graves',
+  '2012-08-16 00:00:00',
+  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGraves_4.jpg&w=1200&q=75',
+  3,
+  7),
+
+ ('Pool Party Graves',
+  '2013-09-11 00:00:00',
+  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGraves_5.jpg&w=1200&q=75',
+  4,
+  7);
+
+  INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+  VALUES
+  ('Traditional Karma',
+   '2013-03-29 00:00:00',
+   'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_3.jpg&w=1200&q=75',
+   3,
+   8),
+
+  ('Tranquility Dragon Karma',
+   '2021-10-20 00:00:00',
+   'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_44.jpg&w=1200&q=75',
+   4,
+   8);
+
+  INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+   VALUES
+   ('Crime City Twitch',
+    '2010-10-13 00:00:00',
+    'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_4.jpg&w=1200&q=75',
+    3,
+    9),
+    ('Dragonslayer Twitch',
+     '2021-04-15 00:00:00',
+     'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_36.jpg&w=1200&q=75',
+     4,
+     9);
+
+     INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+     VALUES
+     ('The Magnificent Twisted Fate',
+      '2010-05-18 00:00:00',
+      'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/TwistedFate_3.jpg',
+      5,
+      10),
+     ('Underworld Twisted Fate',
+      '2012-10-26 00:00:00',
+      'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/TwistedFate_7.jpg',
+      3,
+      10);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Scorched Earth Xerath',
+ '2012-07-13 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Xerath_3.jpg',
+ 4,
+ 11),
+('Arcana Xerath',
+ '2021-05-12 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Xerath_12.jpg',
+ 4,
+ 11);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Slay Belle Katarina',
+ '2012-12-14 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Katarina_7.jpg',
+ 3,
+ 12),
+('Kitty Cat Katarina',
+ '2010-10-18 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Katarina_4.jpg',
+ 3,
+ 12);
+
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Mecha Kha´Zix',
+ '2012-09-27 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Khazix_1.jpg',
+ 3,
+ 13),
+('Dark Star Kha´Zix',
+ '2017-02-05 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Khazix_4.jpg',
+ 3,
+ 13);
+
+ INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+ VALUES
+ ('Fisherman Fizz',
+  '2012-04-01 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fizz_3.jpg',
+  3,
+  14),
+ ('Tundra Fizz',
+  '2011-11-15 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fizz_2.jpg',
+  2,
+  14);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Headhunter Rengar',
+ '2012-08-21 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Rengar_1.jpg',
+ 3,
+ 15),
+('Night Hunter Rengar',
+ '2014-05-20 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Rengar_2.jpg',
+ 3,
+ 15);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Headmistress Fiora',
+ '2012-10-25 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiora_3.jpg',
+ 3,
+ 16),
+('Soaring Sword Fiora',
+ '2017-09-28 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiora_22.jpg',
+ 4,
+ 16);
+
+ INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+ VALUES
+ ('Arcade Hecarim',
+  '2013-08-22 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Hecarim_4.jpg',
+  4,
+  17),
+ ('Elderwood Hecarim',
+  '2015-11-25 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Hecarim_5.jpg',
+  4,
+  17);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Blood Lord Vladimir',
+ '2011-11-21 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vladimir_5.jpg',
+ 5,
+ 18),
+('Soulstealer Vladimir',
+ '2014-07-10 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vladimir_6.jpg',
+ 4,
+ 18);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Ashen Lord Aurelion Sol',
+ '2016-03-24 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/AurelionSol_1.jpg',
+ 4,
+ 19),
+('Mecha Aurelion Sol',
+ '2018-08-15 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/AurelionSol_2.jpg',
+ 4,
+ 19);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Arcade Kai´Sa',
+ '2019-06-28 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kaisa_17.jpg',
+ 4,
+ 20),
+('Heavenscale Kai´Sa',
+ '2024-02-07 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kaisa_59.jpg',
+ 4,
+ 20);
+
+ INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+ VALUES
+ ('Giant Enemy Crabgot',
+  '2010-08-24 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Urgot_1.jpg',
+  2,
+  21),
+ ('Battlecast Urgot',
+  '2012-03-05 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Urgot_3.jpg',
+  4,
+  21);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Outback Renekton',
+ '2011-01-18 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Renekton_2.jpg',
+ 2,
+ 22),
+('Pool Party Renekton',
+ '2013-09-09 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Renekton_6.jpg',
+ 3,
+ 22);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Withered Rose Zeri',
+ '2022-01-20 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_1.jpg',
+ 3,
+ 23),
+('Ocean Song Zeri',
+ '2022-06-09 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_10.jpg',
+ 3,
+ 23);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Surfer Singed',
+ '2010-12-06 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Singed_3.jpg',
+ 3,
+ 24),
+('Augmented Singed',
+ '2012-07-09 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Singed_5.jpg',
+ 3,
+ 24);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Eternum Rek´Sai',
+ '2014-12-11 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/RekSai_1.jpg',
+ 4,
+ 25),
+('Blackfrost Rek´Sai',
+ '2020-03-05 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/RekSai_1.jpg',
+ 4,
+ 25);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Traditional Trundle',
+ '2013-04-30 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Trundle_3.jpg',
+ 3,
+ 26),
+('Constable Trundle',
+ '2014-11-28 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Trundle_4.jpg',
+ 2,
+ 26);
+
+ INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+ VALUES
+ ('Mecha Aatrox',
+  '2014-07-24 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_2.jpg',
+  4,
+  27),
+ ('Blood Moon Aatrox',
+  '2019-01-10 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_7.jpg',
+  4,
+  27);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Longhorn Alistar',
+ '2011-02-16 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Alistar_4.jpg',
+ 1,
+ 28),
+('Moo Cow Alistar',
+ '2017-03-30 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Alistar_10.jpg',
+ 3,
+ 28);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Stinger Akali',
+ '2010-05-10 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Akali_1.jpg',
+ 1,
+ 29),
+('Nurse Akali',
+ '2011-01-04 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Akali_4.jpg',
+ 3,
+ 29);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Elderwood Ornn',
+ '2020-12-10 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ornn_2.jpg',
+ 4,
+ 30),
+('Choo-Choo Ornn',
+ '2024-03-31 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ornn_20.jpg',
+ 4,
+ 30);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Commando Galio',
+ '2011-01-18 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Galio_3.jpg',
+ 1,
+ 31),
+('Gatekeeper Galio',
+ '2012-04-23 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Galio_4.jpg',
+ 5,
+ 31);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Darkforge Jarvan IV',
+ '2011-07-26 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/JarvanIV_3.jpg',
+ 3,
+ 32),
+('Warring Kingdoms Jarvan IV',
+ '2013-02-08 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/JarvanIV_5.jpg',
+ 4,
+ 32),
+('Faerie Court Milio',
+ '2023-03-23 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Milio_1.jpg',
+ 4,
+ 33),
+('Rain Shepherd Milio',
+ '2024-06-26 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Milio_11.jpg',
+ 4,
+ 33);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Admiral Glasc',
+ '2022-02-17 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Renata_1.jpg',
+ 4,
+ 34),
+('Prestige La Ilusión Renata Glasc',
+ '2023-09-26 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Renata_21.jpg',
+ 5,
+ 34);
+
+ INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+ VALUES
+ ('Yellow Jacket Shen',
+  '2010-03-24 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Shen_2.jpg',
+  1,
+  35),
+ ('Warlord Shen',
+  '2012-04-17 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Shen_5.jpg',
+  3,
+  35);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Sandscourge Skarner',
+ '2011-08-09 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Skarner_1.jpg',
+ 3,
+ 36),
+('Battlecast Alpha Skarner',
+ '2014-11-25 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Skarner_3.jpg',
+ 4,
+ 36);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Hyena Warwick',
+ '2011-12-05 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Warwick_7.jpg',
+ 3,
+ 37),
+('Tundra Hunter Warwick',
+ '2010-08-16 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Warwick_4.jpg',
+ 2,
+ 37);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Arcane Caitlyn',
+ '2021-11-22 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_28.jpg',
+ 4,
+ 38),
+('Sheriff Caitlyn',
+ '2011-01-04 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_2.jpg',
+ 1,
+ 38);
+
+ INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+ VALUES
+ ('Gentleman Cho´Gath',
+  '2010-05-11 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Chogath_2.jpg',
+  5,
+  39),
+ ('Jurassic Cho´Gath',
+  '2011-11-01 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Chogath_4.jpg',
+  1,
+  39);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Coral Reef Malphite',
+ '2010-11-08 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Malphite_2.jpg',
+ 2,
+ 40),
+('Glacial Malphite',
+ '2012-07-11 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Malphite_5.jpg',
+ 3,
+ 40);
+
+ INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+ VALUES
+ ('Hillbilly Gragas',
+  '2010-08-02 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Gragas_2.jpg',
+  2,
+  41),
+ ('Gragas, Esq.',
+  '2011-04-12 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Gragas_4.jpg',
+  3,
+  41);
+
+  INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+  VALUES
+  ('Neon Strike Vi',
+   '2012-12-19 00:00:00',
+   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vi_1.jpg',
+   2,
+   42),
+  ('PROJECT: Vi',
+   '2017-11-22 00:00:00',
+   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vi_11.jpg',
+   3,
+   42);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Dragonslayer Braum',
+ '2014-05-12 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Braum_1.jpg',
+ 2,
+ 43),
+('Santa Braum',
+ '2016-12-14 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Braum_10.jpg',
+ 3,
+ 43);
+
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Lord Mordekaiser',
+ '2011-05-10 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Mordekaiser_4.jpg',
+ 2,
+ 44),
+('PROJECT: Mordekaiser',
+ '2021-05-27 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Mordekaiser_13.jpg',
+ 5,
+ 44);
+ INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+ VALUES
+ ('Snow Day Bard',
+  '2015-12-10 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Bard_5.jpg',
+  3,
+  45),
+ ('Astronaut Bard',
+  '2020-05-28 00:00:00',
+  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Bard_8.jpg',
+  3,
+  45);
+INSERT INTO skins (name, release_date, image, tier_id, champion_id)
+VALUES
+('Prestige True Damage Senna',
+ '2020-02-06 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Senna_9.jpg',
+ 5,
+ 46),
+('High Noon Senna',
+ '2020-06-18 00:00:00',
+ 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Senna_10.jpg',
+ 5,
+ 46);
+
+
+
+
+
+
+
+
+
 
 
 
