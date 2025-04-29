@@ -33,6 +33,9 @@ public class ChampionEntity {
     private RoleEntity role;
     @JoinColumn
     @ManyToOne
+    private RoleEntity role2;
+    @JoinColumn
+    @ManyToOne
     private ChampionDifficultyEntity difficulty;
     @JoinColumn
     @ManyToOne

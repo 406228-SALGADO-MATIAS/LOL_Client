@@ -27,6 +27,6 @@ public class MatchEntity {
     private MapEntity map;
     @JoinColumn
     @ManyToOne
-    private TeamEntity team;
+    private TeamEntity winnerTeam;
 
 }

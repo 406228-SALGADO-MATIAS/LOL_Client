@@ -1,4 +1,6 @@
 package LoL_Client_Back.entities.domain;
+import LoL_Client_Back.entities.reference.ChampionStyleEntity;
+import LoL_Client_Back.entities.reference.PlayerMatchItemsEntity;
 import LoL_Client_Back.entities.reference.RoleEntity;
 import LoL_Client_Back.entities.reference.TeamEntity;
 import jakarta.persistence.*;
@@ -46,4 +48,9 @@ public class PlayerMatchDetailEntity {
     @JoinColumn
     @ManyToOne
     private RoleEntity role;
+
+    @JoinColumn
+    @ManyToOne
+    private PlayerMatchItemsEntity items;
+
 }

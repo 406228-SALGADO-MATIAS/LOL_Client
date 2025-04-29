@@ -1,4 +1,5 @@
 package LoL_Client_Back.entities.reference;
+import LoL_Client_Back.entities.domain.ItemEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,4 +16,6 @@ public class ChampionStyleEntity {
     @Column(name = "id", nullable = false)
     private Long id;
     private String style;
+
+
 }
