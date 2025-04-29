@@ -14,6 +14,11 @@ public class UserMatchesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @JoinColumn
+    @ManyToOne
+    private UserEntity user;
+
     @Column(name = "normal_games_played")
     private Integer normalGamesPlayed;
 
@@ -41,8 +46,6 @@ public class UserMatchesEntity {
     @Column(name = "aram_losses")
     private Integer aramLosses;
 
-    @JoinColumn(name ="`user`")
-    @ManyToOne
-    private UserEntity user;
+
 
 }

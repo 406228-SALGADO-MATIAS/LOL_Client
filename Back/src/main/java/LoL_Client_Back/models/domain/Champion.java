@@ -20,6 +20,7 @@ public class Champion {
     @Lob
     private String image;
     private Role role;
+    private Role role2;
     private ChampionDifficulty difficulty;
     private ChampionStyle style;
     private ChampionStyle style2;

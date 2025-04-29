@@ -147,15 +147,10 @@ INSERT INTO roles (rol) VALUES
 
 INSERT INTO server_regions (server) VALUES
 ('North America (NA)'),
-('Europe West (EUW)'),
-('Europe Nordic & East (EUNE)'),
 ('Latin America North (LAN)'),
 ('Latin America South (LAS)'),
-('Brazil (BR)'),
-('Korea (KR)'),
-('Japan (JP)'),
-('Oceania (OCE)'),
-('China (CN)');
+('Brazil (BR)');
+
 
 INSERT INTO skin_tiers (tier, price) VALUES
 ('Budget', 520),
@@ -3183,11 +3178,160 @@ VALUES
  4,
  49);
 
+--LAS
+-- LAS Bronze (rank_id = 1, server_id = 3)
+INSERT INTO users (
+    username, password, email, nickname, registration_date, blue_essence, riot_points, rank_id, server_id
+) VALUES
+('matias.romero', 'pw_matias1', 'matias.romero@gmail.com', 'Matix', '2021-05-10 13:22:00', 2800, 520, 1, 3),
+('luciano.soto', 'pw_luciano2', 'luciano.soto@yahoo.com', 'Lucs', '2022-07-08 15:45:20', 1500, 0, 1, 3),
+('diego.salinas', 'pw_diego3', 'diego.sal@gmail.com', 'Diegorl', '2023-03-17 10:05:45', 3200, 750, 1, 3),
+('alejandro.mendez', 'pw_ale4', 'ale.mendez@hotmail.com', 'AleMdz', '2020-11-21 22:10:30', 1900, 400, 1, 3),
+('facundo.torres', 'pw_facundo5', 'fatorres@outlook.com', 'FakTor', '2021-09-03 18:50:12', 2100, 1350, 1, 3),
+('nicolas.ibarra', 'pw_nico6', 'nico.ibarra@gmail.com', 'NikoBeast', '2022-04-27 09:30:00', 1100, 0, 1, 3),
+('camila.vargas', 'pw_camila7', 'cami.vargas@gmail.com', 'Camilucha', '2020-12-01 11:15:44', 2450, 975, 1, 3),
+('valentina.miranda', 'pw_valen8', 'valen.miranda@gmail.com', 'ValeGG', '2021-08-25 16:40:20', 3000, 1820, 1, 3),
+('sofia.luna', 'pw_sofi9', 'sofi.luna@gmail.com', 'Lunatica', '2023-01-10 08:12:34', 1300, 0, 1, 3),
+('julieta.rios', 'pw_juli10', 'julieta.rios@gmail.com', 'Julzz', '2022-06-13 20:30:15', 1600, 400, 1, 3);
+
+-- LAS Silver (rank_id = 2, server_id = 3)
+INSERT INTO users (
+    username, password, email, nickname, registration_date, blue_essence, riot_points, rank_id, server_id
+) VALUES
+('sebastian.vera', 'pw_seba1', 'sebastian.vera@gmail.com', 'SebasXD', '2021-03-05 12:05:00', 3700, 1350, 2, 3),
+('franco.molina', 'pw_franco2', 'franco.molina@gmail.com', 'Franquito', '2020-10-10 14:25:18', 2100, 975, 2, 3),
+('gonzalo.ayala', 'pw_gonza3', 'g.ayala@gmail.com', 'Zalo', '2023-02-18 11:40:00', 4200, 520, 2, 3),
+('agustin.rojas', 'pw_agus4', 'agus.rojas@gmail.com', 'ElTino', '2022-05-15 19:10:55', 1800, 0, 2, 3),
+('marcos.espinoza', 'pw_marcos5', 'marcos.esp@gmail.com', 'Marquinhos', '2021-12-01 13:55:00', 2600, 400, 2, 3),
+('lucas.alvarez', 'pw_lucas6', 'lucasalv@gmail.com', 'Lukix', '2023-06-30 17:00:00', 3400, 1820, 2, 3),
+('pamela.fuentes', 'pw_pamela7', 'pamfuentes@gmail.com', 'PameGG', '2022-09-07 15:45:33', 3000, 975, 2, 3),
+('micaela.silva', 'pw_mica8', 'mica.silva@gmail.com', 'Micaa', '2021-07-12 09:05:12', 1900, 520, 2, 3),
+('carla.duran', 'pw_carla9', 'carla.duran@gmail.com', 'Carlitax', '2020-11-17 08:00:00', 2200, 0, 2, 3),
+('florencia.reyes', 'pw_flor10', 'flor.reyes@gmail.com', 'FlorFPS', '2021-10-03 21:20:00', 2700, 750, 2, 3);
+
+-- LAS Gold (rank_id = 3, server_id = 3)
+INSERT INTO users (
+    username, password, email, nickname, registration_date, blue_essence, riot_points, rank_id, server_id
+) VALUES
+('martin.carrizo', 'pw_martin1', 'martin.carrizo@gmail.com', 'Martox', '2022-03-18 12:00:00', 4500, 1350, 3, 3),
+('rodrigo.farias', 'pw_rodrigo2', 'rodrigo.f@gmail.com', 'Rodra', '2023-01-10 14:30:00', 3800, 975, 3, 3),
+('santiago.acosta', 'pw_santi3', 'santi.acosta@gmail.com', 'Santix', '2022-06-09 10:45:20', 3400, 1820, 3, 3),
+('joaquin.martinez', 'pw_joaquin4', 'joaquin.martinez@gmail.com', 'Joaqo', '2021-08-14 19:20:10', 3100, 520, 3, 3),
+('emanuel.lopez', 'pw_emanuel5', 'ema.lopez@gmail.com', 'EmanGo', '2022-12-03 16:10:00', 4100, 750, 3, 3),
+('ivan.rios', 'pw_ivan6', 'ivan.rios@gmail.com', 'Rivax', '2023-02-21 11:15:30', 3600, 0, 3, 3),
+('cristian.fernandez', 'pw_cris7', 'cristian.fer@gmail.com', 'Crizz', '2021-05-29 18:50:00', 2800, 400, 3, 3),
+('milagros.perez', 'pw_mili8', 'milagros.perez@gmail.com', 'Milix', '2022-07-11 17:25:00', 2300, 1350, 3, 3),
+('carolina.vazquez', 'pw_caro9', 'caro.vazquez@gmail.com', 'Caroz', '2020-09-18 13:00:00', 3000, 975, 3, 3),
+('jazmin.lopez', 'pw_jaz10', 'jazmin.lopez@gmail.com', 'JazStyle', '2023-03-15 08:40:10', 2600, 520, 3, 3);
+
+-- LAS Platinum (rank_id = 4, server_id = 3)
+INSERT INTO users (
+    username, password, email, nickname, registration_date, blue_essence, riot_points, rank_id, server_id
+) VALUES
+('federico.gomez', 'pw_fede1', 'fede.gomez@gmail.com', 'Fedekun', '2021-04-10 12:35:00', 4800, 1820, 4, 3),
+('german.roldan', 'pw_german2', 'german.roldan@gmail.com', 'Gerox', '2022-06-22 16:00:00', 3900, 750, 4, 3),
+('leo.mansilla', 'pw_leo3', 'leo.mansilla@gmail.com', 'Leobas', '2023-05-13 10:30:00', 4300, 400, 4, 3),
+('daniel.quiroga', 'pw_dani4', 'daniel.q@gmail.com', 'DaniKDA', '2022-01-19 09:10:00', 3700, 1350, 4, 3),
+('julian.rey', 'pw_julian5', 'julianrey@gmail.com', 'Julvyn', '2020-10-07 20:00:00', 2900, 520, 4, 3),
+('bruno.espinoza', 'pw_bruno6', 'bruno.espinoza@gmail.com', 'Brunex', '2021-11-28 17:45:00', 3200, 975, 4, 3),
+('mauricio.diaz', 'pw_mau7', 'mauricio.diaz@gmail.com', 'Mauuu', '2023-03-02 19:55:10', 4100, 0, 4, 3),
+('florencia.moya', 'pw_flor8', 'flor.moya@gmail.com', 'FlorMoba', '2021-07-15 12:25:30', 3500, 1350, 4, 3),
+('agustina.sosa', 'pw_agus9', 'agus.sosa@gmail.com', 'AgusBot', '2022-04-08 14:20:00', 2800, 750, 4, 3),
+('luciana.vallejos', 'pw_luci10', 'luciana.v@gmail.com', 'Lucixx', '2023-01-22 11:05:20', 3000, 400, 4, 3);
+
+-- LAS Emerald (rank_id = 5, server_id = 3)
+INSERT INTO users (
+    username, password, email, nickname, registration_date, blue_essence, riot_points, rank_id, server_id
+) VALUES
+('facundo.torres', 'pw_facu1', 'facu.torres@gmail.com', 'FakuZ', '2022-01-12 13:00:00', 5400, 975, 5, 3),
+('matias.salinas', 'pw_mati2', 'matias.salinas@gmail.com', 'Matinex', '2023-02-03 09:25:00', 5100, 1350, 5, 3),
+('lucas.rojas', 'pw_lucas3', 'lucas.rojas@gmail.com', 'LRojas', '2021-07-22 17:45:10', 4600, 520, 5, 3),
+('alejandro.cortez', 'pw_ale4', 'ale.cortez@gmail.com', 'AleCore', '2022-10-19 08:40:00', 4900, 1820, 5, 3),
+('pablo.mendez', 'pw_pablo5', 'pablo.mendez@gmail.com', 'Pablitox', '2023-03-10 20:00:00', 4200, 750, 5, 3),
+('gaston.vazquez', 'pw_gaston6', 'gaston.vazquez@gmail.com', 'G4ston', '2020-11-14 11:10:00', 5800, 1350, 5, 3),
+('franco.dominguez', 'pw_franco7', 'franco.d@gmail.com', 'FraDo', '2021-05-18 12:15:30', 4000, 400, 5, 3),
+('sebastian.luna', 'pw_seba8', 'sebastian.luna@gmail.com', 'SebLuz', '2022-08-30 15:20:00', 4500, 975, 5, 3),
+('valeria.bustos', 'pw_vale9', 'valeria.bustos@gmail.com', 'ValeGG', '2021-03-07 10:00:00', 3600, 520, 5, 3),
+('camila.olivera', 'pw_camila10', 'camila.olivera@gmail.com', 'Camix', '2023-06-12 18:30:00', 3700, 750, 5, 3);
+
+-- LAS Diamond (rank_id = 6, server_id = 3)
+INSERT INTO users (
+    username, password, email, nickname, registration_date, blue_essence, riot_points, rank_id, server_id
+) VALUES
+('andres.lopez', 'pw_andres1', 'andres.lopez@gmail.com', 'AndyLoL', '2022-04-11 14:20:00', 6100, 1820, 6, 3),
+('julio.ramirez', 'pw_julio2', 'julio.ramirez@gmail.com', 'JRam', '2021-10-27 19:10:00', 5900, 750, 6, 3),
+('ezequiel.garcia', 'pw_eze3', 'eze.garcia@gmail.com', 'EzeMain', '2022-05-30 12:00:00', 5300, 1350, 6, 3),
+('luis.ortega', 'pw_luis4', 'luis.ortega@gmail.com', 'LuixZ', '2023-03-05 16:10:00', 5600, 975, 6, 3),
+('fernando.gil', 'pw_fer5', 'fer.gil@gmail.com', 'FGil', '2020-08-19 09:30:00', 5200, 400, 6, 3),
+('agustin.villar', 'pw_agus6', 'agus.villar@gmail.com', 'Agux', '2021-12-15 13:45:00', 5800, 1350, 6, 3),
+('nahuel.sanchez', 'pw_nahu7', 'nahuel.sanchez@gmail.com', 'N4wuel', '2022-09-21 11:05:00', 5000, 520, 6, 3),
+('ramiro.flores', 'pw_rami8', 'ramiro.flores@gmail.com', 'RamFlo', '2023-01-28 15:25:00', 5700, 1820, 6, 3),
+('noelia.morales', 'pw_noe9', 'noelia.morales@gmail.com', 'NoeGG', '2021-06-18 17:50:00', 4000, 750, 6, 3),
+('melina.rodriguez', 'pw_meli10', 'melina.rodriguez@gmail.com', 'MelxD', '2022-02-13 08:15:00', 4300, 975, 6, 3);
+
+-- LAS Master (rank_id = 7, server_id = 3)
+INSERT INTO users (
+    username, password, email, nickname, registration_date, blue_essence, riot_points, rank_id, server_id
+) VALUES
+('benjamin.martinez', 'pw_benja1', 'benja.martinez@gmail.com', 'BenjaLoL', '2022-07-10 10:00:00', 6400, 1820, 7, 3),
+('tomas.moreno', 'pw_tomi2', 'tomas.moreno@gmail.com', 'Tomoreno', '2023-02-01 13:15:00', 6000, 1350, 7, 3),
+('diego.sosa', 'pw_diego3', 'diego.sosa@gmail.com', 'DSosa', '2021-11-05 09:20:00', 5800, 975, 7, 3),
+('javier.pereyra', 'pw_javi4', 'javier.pereyra@gmail.com', 'Javix', '2023-04-17 14:30:00', 6200, 520, 7, 3),
+('ignacio.rios', 'pw_ignacio5', 'ignacio.rios@gmail.com', 'Nacho', '2022-12-22 18:40:00', 6100, 750, 7, 3),
+('rodrigo.bustos', 'pw_rodri6', 'rodrigo.bustos@gmail.com', 'Rodrixx', '2021-06-28 20:00:00', 5900, 400, 7, 3),
+('federico.gomez', 'pw_fede7', 'fede.gomez@gmail.com', 'F3de', '2022-03-19 11:10:00', 6300, 1820, 7, 3),
+('maximiliano.vera', 'pw_maxi8', 'maxi.vera@gmail.com', 'MaxV', '2021-09-13 08:50:00', 6200, 750, 7, 3),
+('cristian.araya', 'pw_cris9', 'cristian.araya@gmail.com', 'CrisA', '2020-10-03 12:30:00', 6100, 1350, 7, 3),
+('agostina.lopez', 'pw_ago10', 'agostina.lopez@gmail.com', 'Agos', '2022-01-07 17:45:00', 5800, 975, 7, 3);
+
+-- LAS Grandmaster (rank_id = 8, server_id = 3)
+INSERT INTO users (
+    username, password, email, nickname, registration_date, blue_essence, riot_points, rank_id, server_id
+) VALUES
+('manuel.castro', 'pw_manu1', 'manuel.castro@gmail.com', 'Manucas', '2023-03-01 16:20:00', 6700, 1820, 8, 3),
+('joaquin.luna', 'pw_joaquin2', 'joaquin.luna@gmail.com', 'Joax', '2022-04-12 19:00:00', 6400, 975, 8, 3),
+('luciano.torrez', 'pw_lucho3', 'luciano.torrez@gmail.com', 'LuchoGod', '2021-08-22 13:10:00', 6200, 1350, 8, 3),
+('leandro.alvarez', 'pw_leo4', 'leandro.alvarez@gmail.com', 'Leandrix', '2020-11-30 09:00:00', 6500, 520, 8, 3),
+('daniel.molina', 'pw_dani5', 'daniel.molina@gmail.com', 'D4nix', '2023-06-10 10:15:00', 6600, 750, 8, 3),
+('facundo.rios', 'pw_facu6', 'facundo.rios@gmail.com', 'FacuLOL', '2021-05-27 20:10:00', 6800, 400, 8, 3),
+('santiago.mendez', 'pw_santi7', 'santiago.mendez@gmail.com', 'Santix', '2022-09-16 14:40:00', 6900, 1350, 8, 3),
+('dario.peralta', 'pw_dario8', 'dario.peralta@gmail.com', 'DPer4', '2020-12-11 11:30:00', 6600, 520, 8, 3),
+('nicolas.fernandez', 'pw_nico9', 'nicolas.fernandez@gmail.com', 'NicoXD', '2023-01-19 17:20:00', 6300, 1820, 8, 3),
+('valentina.quiroga', 'pw_valen10', 'valentina.quiroga@gmail.com', 'Valek', '2021-07-06 08:45:00', 6000, 750, 8, 3);
+
+-- LAS Challenger (rank_id = 9, server_id = 3)
+INSERT INTO users (
+    username, password, email, nickname, registration_date, blue_essence, riot_points, rank_id, server_id
+) VALUES
+('sebastian.morales', 'pw_seba1', 'sebastian.morales@gmail.com', 'SebaKing', '2022-08-12 10:20:00', 7000, 1820, 9, 3),
+('martin.galvez', 'pw_martin2', 'martin.galvez@gmail.com', 'Martox', '2023-02-08 14:00:00', 6800, 975, 9, 3),
+('matias.espinoza', 'pw_mati3', 'matias.espinoza@gmail.com', 'MatEzz', '2021-06-18 16:30:00', 7200, 1350, 9, 3),
+('julian.santana', 'pw_juli4', 'julian.santana@gmail.com', 'Julikz', '2020-09-25 19:10:00', 7400, 520, 9, 3),
+('alejandro.reyes', 'pw_ale5', 'alejandro.reyes@gmail.com', 'AlePro', '2023-05-14 11:45:00', 7100, 750, 9, 3),
+('franco.mendez', 'pw_franco6', 'franco.mendez@gmail.com', 'Fr4nc0', '2022-10-30 09:25:00', 6950, 400, 9, 3),
+('gonzalo.lopez', 'pw_gonza7', 'gonzalo.lopez@gmail.com', 'GonzaLOL', '2021-01-09 08:15:00', 7050, 1350, 9, 3),
+('axel.ortiz', 'pw_axel8', 'axel.ortiz@gmail.com', 'AxelOnTop', '2020-11-13 13:40:00', 7150, 520, 9, 3),
+('damian.cabrera', 'pw_dami9', 'damian.cabrera@gmail.com', 'DamiCore', '2023-03-28 15:00:00', 7300, 1820, 9, 3),
+('lucas.villalba', 'pw_lucas10', 'lucas.villalba@gmail.com', 'LukasChall', '2021-07-21 17:35:00', 7250, 750, 9, 3);
 
 
-
-
-
+-- USER MATCHES
+INSERT INTO user_matches (
+    user_id,
+    normal_games_played, normal_wins, normal_losses,
+    rankeds_played, ranked_wins, ranked_losses,
+    arams_played, aram_wins, aram_losses
+) VALUES
+(1, 120, 65, 55, 200, 110, 90, 85, 45, 40),
+(2, 90, 50, 40, 170, 95, 75, 60, 30, 30),
+(3, 130, 70, 60, 220, 125, 95, 100, 55, 45),
+(4, 100, 48, 52, 180, 90, 90, 75, 40, 35),
+(5, 85, 43, 42, 160, 80, 80, 70, 35, 35),
+(6, 110, 60, 50, 190, 105, 85, 80, 44, 36),
+(7, 95, 55, 40, 175, 100, 75, 72, 38, 34),
+(8, 105, 58, 47, 210, 115, 95, 90, 50, 40),
+(9, 75, 35, 40, 150, 70, 80, 55, 28, 27),
+(10, 140, 85, 55, 230, 130, 100, 110, 60, 50);
 
 
 
