@@ -19,7 +19,7 @@ public class UserXSkinEntity {
     private LocalDateTime adquisitionDate;
 
     @ManyToOne
-    @JoinColumn(name ="`user`")
+    @JoinColumn
     private UserEntity user;
 
     @ManyToOne

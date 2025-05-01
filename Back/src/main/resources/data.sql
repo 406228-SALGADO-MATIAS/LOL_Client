@@ -3334,6 +3334,71 @@ INSERT INTO user_matches (
 (10, 140, 85, 55, 230, 130, 100, 110, 60, 50);
 
 
+--USER X CHAMPIONS
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (1, 1, 2, '2025-05-01 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (1, 2, 3, '2025-05-02 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (2, 3, 4, '2025-05-01 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (2, 4, 5, '2025-05-02 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (3, 5, 1, '2025-05-01 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (3, 6, 2, '2025-05-02 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (4, 7, 3, '2025-05-01 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (4, 8, 4, '2025-05-02 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (5, 9, 5, '2025-05-01 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (5, 10, 1, '2025-05-02 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (6, 11, 2, '2025-05-01 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (6, 12, 3, '2025-05-02 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (7, 13, 4, '2025-05-01 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (7, 14, 5, '2025-05-02 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (8, 15, 1, '2025-05-01 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (8, 16, 2, '2025-05-02 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (9, 17, 3, '2025-05-01 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (9, 18, 4, '2025-05-02 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (10, 19, 5, '2025-05-01 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (10, 20, 1, '2025-05-02 00:00:00');
+
+
+--USER X SKINS
+
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (1, 1, '2025-05-01 00:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (1, 3, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (2, 5, '2025-05-01 00:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (2, 7, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (3, 9, '2025-05-01 00:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (3, 11, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (4, 13, '2025-05-01 00:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (4, 15, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (5, 17, '2025-05-01 00:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (5, 19, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (6, 21, '2025-05-01 00:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (6, 23, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (7, 25, '2025-05-01 00:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (7, 27, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (8, 29, '2025-05-01 00:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (8, 31, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (9, 33, '2025-05-01 00:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (9, 35, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (10, 37, '2025-05-01 00:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (10, 39, '2025-05-01 00:00:00');
+
 
 
 
