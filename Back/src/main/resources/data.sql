@@ -3433,16 +3433,16 @@ INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (10, 20, '
 
 
 -- USER LOOTS
-INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (1, 2, 1, 1, 2, 1500, 5000);
-INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (2, 3, 0, 2, 1, 2000, 6000);
-INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (3, 1, 2, 0, 3, 1000, 3000);
-INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (4, 0, 1, 1, 1, 500, 250);
-INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (5, 5, 0, 3, 0, 3000, 800);
-INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (6, 2, 1, 2, 2, 1800, 4500);
-INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (7, 1, 1, 1, 1, 120, 4000);
-INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (8, 4, 0, 2, 1, 250, 7000);
-INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (9, 3, 2, 1, 3, 2200, 550);
-INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (10, 0, 0, 0, 0, 0, 1000);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence) VALUES (1, 2, 1, 1, 2, 1500);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence) VALUES (2, 3, 0, 2, 1, 2000);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence) VALUES (3, 1, 2, 0, 3, 1000);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence) VALUES (4, 0, 1, 1, 1, 500);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence) VALUES (5, 5, 0, 3, 0, 3000);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence) VALUES (6, 2, 1, 2, 2, 1800);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence) VALUES (7, 1, 1, 1, 1, 120);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence) VALUES (8, 4, 0, 2, 1, 250);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence) VALUES (9, 3, 2, 1, 3, 2200);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence) VALUES (10, 0, 0, 0, 0, 0);
 
 --LOOT CHAMPIONS
 
