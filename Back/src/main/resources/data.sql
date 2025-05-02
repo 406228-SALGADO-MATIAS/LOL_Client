@@ -21,7 +21,7 @@ INSERT INTO item_types (type) VALUES ('Support');
 INSERT INTO maps (map) VALUES ('Summoners Rift');
 INSERT INTO maps (map) VALUES ('Howling Abyss');
 
---PROFILE ICONS
+--PROFILE ICONS (50)
 --
 --
 --
@@ -3399,13 +3399,108 @@ INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (9, 35, '2
 INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (10, 37, '2025-05-01 00:00:00');
 INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (10, 39, '2025-05-01 00:00:00');
 
+-- USERS X ICONS
+
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (1, 1, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (1, 2, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (2, 3, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (2, 4, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (3, 5, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (3, 6, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (4, 7, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (4, 8, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (5, 9, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (5, 10, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (6, 11, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (6, 12, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (7, 13, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (7, 14, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (8, 15, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (8, 16, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (9, 17, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (9, 18, '2025-05-01 00:00:00');
+
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (10, 19, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (10, 20, '2025-05-01 00:00:00');
 
 
+-- USER LOOTS
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (1, 2, 1, 1, 2, 1500, 5000);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (2, 3, 0, 2, 1, 2000, 6000);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (3, 1, 2, 0, 3, 1000, 3000);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (4, 0, 1, 1, 1, 500, 250);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (5, 5, 0, 3, 0, 3000, 800);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (6, 2, 1, 2, 2, 1800, 4500);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (7, 1, 1, 1, 1, 120, 4000);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (8, 4, 0, 2, 1, 250, 7000);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (9, 3, 2, 1, 3, 2200, 550);
+INSERT INTO user_loots (user_id, chests, master_chests, keys, key_fragments, orange_essence, blue_essence) VALUES (10, 0, 0, 0, 0, 0, 1000);
 
+--LOOT CHAMPIONS
 
+INSERT INTO loot_inventory_champions (loot_id, is_active, acquisition_date, removal_date, champion_id)
+VALUES (1, true, '2025-05-01 10:00:00', null, 5);
 
+INSERT INTO loot_inventory_champions (loot_id, is_active, acquisition_date, removal_date, champion_id)
+VALUES (2, true, '2025-05-01 10:05:00', null, 12);
 
+INSERT INTO loot_inventory_champions (loot_id, is_active, acquisition_date, removal_date, champion_id)
+VALUES (3, true, '2025-05-01 10:10:00', null, 20);
 
+INSERT INTO loot_inventory_champions (loot_id, is_active, acquisition_date, removal_date, champion_id)
+VALUES (4, true, '2025-05-01 10:15:00', null, 7);
+
+INSERT INTO loot_inventory_champions (loot_id, is_active, acquisition_date, removal_date, champion_id)
+VALUES (5, true, '2025-05-01 10:20:00', null, 33);
+
+INSERT INTO loot_inventory_champions (loot_id, is_active, acquisition_date, removal_date, champion_id)
+VALUES (6, true, '2025-05-01 10:25:00', null, 18);
+
+--LOOT SKINS
+
+INSERT INTO loot_inventory_skins (loot_id, is_active, acquisition_date, removal_date, skin_id)
+VALUES (1, true, '2025-05-01 11:00:00', null, 4);
+
+INSERT INTO loot_inventory_skins (loot_id, is_active, acquisition_date, removal_date, skin_id)
+VALUES (2, true, '2025-05-01 11:05:00', null, 17);
+
+INSERT INTO loot_inventory_skins (loot_id, is_active, acquisition_date, removal_date, skin_id)
+VALUES (3, true, '2025-05-01 11:10:00', null, 29);
+
+INSERT INTO loot_inventory_skins (loot_id, is_active, acquisition_date, removal_date, skin_id)
+VALUES (5, true, '2025-05-01 11:15:00', null, 7);
+
+INSERT INTO loot_inventory_skins (loot_id, is_active, acquisition_date, removal_date, skin_id)
+VALUES (6, true, '2025-05-01 11:20:00', null, 45);
+
+INSERT INTO loot_inventory_skins (loot_id, is_active, acquisition_date, removal_date, skin_id)
+VALUES (7, true, '2025-05-01 11:25:00', null, 10);
+
+INSERT INTO loot_inventory_skins (loot_id, is_active, acquisition_date, removal_date, skin_id)
+VALUES (8, true, '2025-05-01 11:30:00', null, 36);
+
+INSERT INTO loot_inventory_skins (loot_id, is_active, acquisition_date, removal_date, skin_id)
+VALUES (9, true, '2025-05-01 11:35:00', null, 22);
+
+-- LOOT ICONS
+INSERT INTO loot_inventory_icons (loot_id, is_active, acquisition_date, removal_date, icon_id) VALUES (1, true, '2025-05-01 12:00:00', null, 10);
+INSERT INTO loot_inventory_icons (loot_id, is_active, acquisition_date, removal_date, icon_id) VALUES (2, true, '2025-05-01 12:00:00', null, 3);
+INSERT INTO loot_inventory_icons (loot_id, is_active, acquisition_date, removal_date, icon_id) VALUES (3, true, '2025-05-01 12:00:00', null, 7);
+INSERT INTO loot_inventory_icons (loot_id, is_active, acquisition_date, removal_date, icon_id) VALUES (4, true, '2025-05-01 12:00:00', null, 22);
+INSERT INTO loot_inventory_icons (loot_id, is_active, acquisition_date, removal_date, icon_id) VALUES (5, true, '2025-05-01 12:00:00', null, 15);
+INSERT INTO loot_inventory_icons (loot_id, is_active, acquisition_date, removal_date, icon_id) VALUES (6, true, '2025-05-01 12:00:00', null, 40);
+INSERT INTO loot_inventory_icons (loot_id, is_active, acquisition_date, removal_date, icon_id) VALUES (7, true, '2025-05-01 12:00:00', null, 1);
+INSERT INTO loot_inventory_icons (loot_id, is_active, acquisition_date, removal_date, icon_id) VALUES (8, true, '2025-05-01 12:00:00', null, 18);
+INSERT INTO loot_inventory_icons (loot_id, is_active, acquisition_date, removal_date, icon_id) VALUES (9, true, '2025-05-01 12:00:00', null, 25);
+INSERT INTO loot_inventory_icons (loot_id, is_active, acquisition_date, removal_date, icon_id) VALUES (10, true, '2025-05-01 12:00:00', null, 33);
 
 
 

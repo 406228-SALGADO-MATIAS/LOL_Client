@@ -27,10 +27,10 @@ public class LootInventorySkinsEntity {
     private LocalDateTime removalDate;
 
     @ManyToOne
-    @JoinColumn(name = "loot")
+    @JoinColumn
     private UserLootEntity loot;
 
     @ManyToOne
-    @JoinColumn(name = "skin")
+    @JoinColumn
     private SkinEntity skin;
 }

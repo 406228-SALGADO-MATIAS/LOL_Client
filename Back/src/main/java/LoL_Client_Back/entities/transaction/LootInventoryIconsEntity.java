@@ -27,10 +27,10 @@ public class LootInventoryIconsEntity {
     private LocalDateTime removalDate;
 
     @ManyToOne
-    @JoinColumn(name = "loot")
+    @JoinColumn
     private UserLootEntity loot;
 
     @ManyToOne
-    @JoinColumn(name = "icon")
+    @JoinColumn
     private ProfileIconEntity icon;
 }

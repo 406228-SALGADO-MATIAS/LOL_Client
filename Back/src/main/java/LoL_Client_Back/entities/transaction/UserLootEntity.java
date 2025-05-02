@@ -29,7 +29,10 @@ public class UserLootEntity {
     @Column(name = "orange_essence")
     private Integer orangeEssence;
 
+    @Column(name = "blue_essence")
+    private Integer blueEssence;
+
     @ManyToOne
-    @JoinColumn(name = "`user`")
+    @JoinColumn
     private UserEntity user;
 }

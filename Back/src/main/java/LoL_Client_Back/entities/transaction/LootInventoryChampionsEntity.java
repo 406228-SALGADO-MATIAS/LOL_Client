@@ -27,10 +27,10 @@ public class LootInventoryChampionsEntity {
     private LocalDateTime removalDate;
 
     @ManyToOne
-    @JoinColumn(name = "loot")
+    @JoinColumn
     private UserLootEntity loot;
 
     @ManyToOne
-    @JoinColumn(name = "champion")
+    @JoinColumn
     private ChampionEntity champion;
 }
