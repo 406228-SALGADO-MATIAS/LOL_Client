@@ -20,31 +20,31 @@ public class UserMatchesEntity {
     private UserEntity user;
 
     @Column(name = "normal_games_played")
-    private Integer normalGamesPlayed;
+    private Integer normalGamesPlayed = 0;
 
     @Column(name = "normal_wins")
-    private Integer normalWins;
+    private Integer normalWins = 0;
 
     @Column(name = "normal_losses")
-    private Integer normalLosses;
+    private Integer normalLosses = 0;
 
     @Column(name = "rankeds_played")
-    private Integer rankedsPlayed;
+    private Integer rankedsPlayed = 0;
 
     @Column(name = "ranked_wins")
-    private Integer rankedWins;
+    private Integer rankedWins = 0;
 
     @Column(name = "ranked_losses")
-    private Integer rankedLosses;
+    private Integer rankedLosses = 0;
 
     @Column(name = "arams_played")
-    private Integer aramsPlayed;
+    private Integer aramsPlayed = 0;
 
     @Column(name = "aram_wins")
-    private Integer aramWins;
+    private Integer aramWins = 0;
 
     @Column(name = "aram_losses")
-    private Integer aramLosses;
+    private Integer aramLosses = 0;
 
 
 

@@ -2,6 +2,7 @@ package LoL_Client_Back.models.domain;
 
 import LoL_Client_Back.models.reference.ChampionDifficulty;
 import LoL_Client_Back.models.reference.ChampionStyle;
+import LoL_Client_Back.models.reference.ChampionTierPrice;
 import LoL_Client_Back.models.reference.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Lob;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 public class Champion {
     private Long id;
     private String name;
-    private Integer price;
+    private ChampionTierPrice price;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime releaseDate;
     private Double winrate;

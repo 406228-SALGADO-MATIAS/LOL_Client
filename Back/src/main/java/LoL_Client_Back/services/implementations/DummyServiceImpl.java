@@ -1,20 +1,12 @@
-package LoL_Client_Back.services.impl;
+package LoL_Client_Back.services.implementations;
 
 import LoL_Client_Back.dtos.DummyDto;
 import LoL_Client_Back.models.Dummy;
 import LoL_Client_Back.repositories.DummyRepository;
-import LoL_Client_Back.services.DummyService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import jakarta.persistence.EntityNotFoundException;
-import org.modelmapper.ModelMapper;
+import LoL_Client_Back.services.interfaces.DummyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.List;
 
 @Service

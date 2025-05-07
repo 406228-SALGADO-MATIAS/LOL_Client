@@ -1,4 +1,4 @@
-package LoL_Client_Back.services;
+package LoL_Client_Back.services.interfaces;
 
 
 import LoL_Client_Back.dtos.DummyDto;

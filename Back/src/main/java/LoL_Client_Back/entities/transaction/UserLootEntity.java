@@ -16,20 +16,21 @@ public class UserLootEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private Integer chests;
+    private Integer chests = 1;
 
     @Column(name = "master_chests")
-    private Integer masterChests;
+    private Integer masterChests = 0;
 
-    private Integer keys;
+    private Integer keys = 1;
 
     @Column(name = "key_fragments")
-    private Integer keyFragments;
+    private Integer keyFragments = 0;
 
     @Column(name = "orange_essence")
-    private Integer orangeEssence;
+    private Integer orangeEssence = 1050;
 
     @ManyToOne
     @JoinColumn
     private UserEntity user;
+    
 }

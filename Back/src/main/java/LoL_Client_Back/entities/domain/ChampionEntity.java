@@ -1,6 +1,7 @@
 package LoL_Client_Back.entities.domain;
 import LoL_Client_Back.entities.reference.ChampionDifficultyEntity;
 import LoL_Client_Back.entities.reference.ChampionStyleEntity;
+import LoL_Client_Back.entities.reference.ChampionTierPriceEntity;
 import LoL_Client_Back.entities.reference.RoleEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -21,7 +22,6 @@ public class ChampionEntity {
     @Column(name = "id", nullable = false)
     private Long id;
     private String name;
-    private Integer price;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "release_date")
     private LocalDateTime releaseDate;
@@ -43,5 +43,8 @@ public class ChampionEntity {
     @JoinColumn
     @ManyToOne
     private ChampionStyleEntity style2;
+    @JoinColumn
+    @ManyToOne
+    private ChampionTierPriceEntity price;
 
 }

@@ -152,75 +152,89 @@ INSERT INTO server_regions (server) VALUES
 ('Brazil (BR)');
 
 
-INSERT INTO skin_tiers (tier, price) VALUES
-('Budget', 520),
-('Standard', 750),
-('Deluxe', 975),
-('Epic', 1350),
-('Legendary', 1820),
-('Mythic', 3250);
+INSERT INTO skin_tiers
+(tier, rp_cost, orange_essence_cost,disenchant_orange_essence)
+VALUES
+('Budget', 520, 220,104),
+('Standard', 750, 450,150),
+('Deluxe', 975, 675,195),
+('Epic', 1350, 1050,270),
+('Legendary', 1820, 1520,364),
+('Mythic', 3250, 2950,650);
+
 
 INSERT INTO teams (team_color) VALUES
 ('Blue'),
 ('Red');
 
+INSERT INTO champions_tier_prices
+(rp_cost, blue_essence_cost,disenchant_blue_essence)
+VALUES
+(260, 450,90),
+(450, 1350,270),
+(585, 3150,630),
+(790, 4800,960),
+(880, 6300,1260),
+(975, 7800,1560);
+
+
 --DOMAIN
 
 
-INSERT INTO champions (name, price, release_date, winrate, image, role_id, difficulty_id, style_id, role2_id , style2_id)
+INSERT INTO champions (name, price_id, release_date, winrate, image, role_id, difficulty_id, style_id, role2_id , style2_id)
 VALUES
-('Lucian', 4800, '2013-08-27 12:00:00', 50.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_0.jpg&w=1200&q=75', 4, 2, 2,3,null),
-('Draven', 4800, '2012-06-06 12:00:00', 51.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75', 4, 3, 2,3,null),
-('Zed', 6300, '2012-11-13 12:00:00', 49.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZed_0.jpg&w=1200&q=75', 3, 3, 4,2,null),
-('Zac', 6300, '2013-03-29 12:00:00', 52.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_0.jpg&w=1200&q=75', 2, 2, 5,1,3),
-('Zilean', 1350, '2009-04-18 12:00:00', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75', 5, 2, 6,3,null),
-('Jinx', 6300, '2013-10-10 12:00:00', 50.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_0.jpg&w=1200&q=75', 4, 2, 2,null,null),
-('Graves', 4800, '2011-10-13 12:00:00', 51.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGraves_0.jpg&w=1200&q=75', 2, 2, 1,1,null),
-('Karma', 3150, '2011-02-01 12:00:00', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75', 5, 2, 6,3,3),
-('Twitch', 3150, '2009-05-01 12:00:00', 50.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75', 4, 2, 2,2,3),
-('Twisted Fate', 1350, '2009-02-21 12:00:00', 48.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwistedFate_0.jpg&w=1200&q=75', 3, 2, 3,1,2),
-('Xerath', 3150, '2011-01-07 12:00:00', 49.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FXerath_0.jpg&w=1200&q=75', 3, 3, 3,5,null),
-('Katarina', 3150, '2010-06-11 12:00:00', 51.2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75', 3, 2, 4,null,5),
-('Kha´Zix', 4800, '2012-09-27 12:00:00', 52.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKhazix_0.jpg&w=1200&q=75', 2, 3, 4,null,null),
-('Fizz', 4800, '2011-11-15 12:00:00', 50.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75', 3, 2, 4,null,5),
-('Rengar', 4800, '2012-08-21 12:00:00', 51.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75', 2, 3, 4,null,null),
-('Fiora', 4800, '2012-02-29 12:00:00', 50.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFiora_0.jpg&w=1200&q=75', 1, 3, 1,null,null),
-('Hecarim', 4800, '2012-04-18 12:00:00', 52.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FHecarim_0.jpg&w=1200&q=75', 2, 2, 1,null,5), -- Jungle, Medium, Fighter
-('Vladimir', 3150, '2010-02-27 12:00:00', 50.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75', 3, 3, 3,1,null), -- Mid, Hard, Mage
-('Aurelion Sol', 6300, '2016-03-24 12:00:00', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAurelionSol_0.jpg&w=1200&q=75', 3, 3, 3,null,null), -- Mid, Hard, Mage
-('Kai´Sa', 6300, '2018-03-07 12:00:00', 50.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75', 4, 2, 2,null,3), -- ADC, Medium, Marksman
-('Urgot', 3150, '2010-08-24 12:00:00', 49.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FUrgot_0.jpg&w=1200&q=75', 1, 3, 1,null,null), -- Top, Hard, Fighter
-('Renekton', 4800, '2011-01-18 12:00:00', 50.4, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenekton_0.jpg&w=1200&q=75', 1, 2, 1,null,null), -- Top, Medium, Fighter
-('Zeri', 6300, '2022-01-20 12:00:00', 48.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75', 4, 2, 2,null,null),-- ADC, Medium, Marksman
-('Singed', 1350, '2009-04-18 12:00:00', 51.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSinged_0.jpg&w=1200&q=75', 1, 2, 5,3,3), -- Top, Medium, Tank
-('Rek´Sai', 4800, '2014-12-11 12:00:00', 49.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRekSai_0.jpg&w=1200&q=75', 2, 2, 1,null,null), -- Jungle, Medium, Fighter
-('Trundle', 4800, '2010-05-01 12:00:00', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTrundle_0.jpg&w=1200&q=75', 1, 2, 1,null,null), -- Top, Medium, Fighter
-('Aatrox', 6300, '2013-06-13 12:00:00', 47.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAatrox_0.jpg&w=1200&q=75', 1, 2, 1,null,null), -- Top, Medium, Fighter
-('Alistar', 1350, '2009-02-21 12:00:00', 50.2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAlistar_0.jpg&w=1200&q=75', 5, 1, 5,null,null), -- Support, Easy, Tank
-('Akali', 3150, '2010-05-11 12:00:00', 48.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAkali_0.jpg&w=1200&q=75', 3, 3, 4,1,5), -- Mid, Hard, Assassin
-('Ornn', 4800, '2017-08-23 12:00:00', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FOrnn_0.jpg&w=1200&q=75', 1, 2, 5,null,null), -- Top, Medium, Tank
-('Galio', 3150, '2010-08-10 12:00:00', 50.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75', 3, 2, 5,5,3), -- Mid, Medium, Tank
-('Jarvan IV', 4800, '2011-03-01 12:00:00', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75', 2, 2, 1,null,4), -- Jungle, Medium, Fighter
-('Milio', 6300, '2023-03-22 12:00:00', 52.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMilio_0.jpg&w=1200&q=75', 5, 1, 6,null,3), -- Support, Easy, Support
-('Renata', 6300, '2022-02-17 12:00:00', 49.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenata_0.jpg&w=1200&q=75', 5, 3, 6,null,null), -- Support, Hard, Support
-('Shen', 3150, '2010-03-24 12:00:00', 51.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FShen_0.jpg&w=1200&q=75', 1, 2, 5,5,null), -- Top, Medium, Tank
-('Skarner', 4800, '2011-08-09 12:00:00', 47.6, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSkarner_0.jpg&w=1200&q=75', 2, 2, 5,1,null), -- Jungle, Medium, Tank
-('Warwick', 1350, '2009-06-11 12:00:00', 51.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75', 2, 1, 1,1,null), -- Jungle, Easy, Fighter
-('Caitlyn', 4800, '2011-01-04 12:00:00', 51.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FCaitlyn_0.jpg&w=1200&q=75', 4, 2, 2,null,null); -- ADC, Medium, Marksman
+('Lucian', 4, '2013-08-27 12:00:00', 50.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_0.jpg&w=1200&q=75', 4, 2, 2,3,null),
+('Draven', 4, '2012-06-06 12:00:00', 51.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75', 4, 3, 2,3,null),
+('Zed', 5, '2012-11-13 12:00:00', 49.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZed_0.jpg&w=1200&q=75', 3, 3, 4,2,null),
+('Zac', 5, '2013-03-29 12:00:00', 52.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_0.jpg&w=1200&q=75', 2, 2, 5,1,3),
+('Zilean', 2, '2009-04-18 12:00:00', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75', 5, 2, 6,3,null),
+('Jinx', 5, '2013-10-10 12:00:00', 50.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_0.jpg&w=1200&q=75', 4, 2, 2,null,null),
+('Graves', 4, '2011-10-13 12:00:00', 51.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGraves_0.jpg&w=1200&q=75', 2, 2, 1,1,null),
+('Karma', 3, '2011-02-01 12:00:00', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75', 5, 2, 6,3,3),
+('Twitch', 3, '2009-05-01 12:00:00', 50.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75', 4, 2, 2,2,3),
+('Twisted Fate', 2, '2009-02-21 12:00:00', 48.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwistedFate_0.jpg&w=1200&q=75', 3, 2, 3,1,2),
+('Xerath', 3, '2011-01-07 12:00:00', 49.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FXerath_0.jpg&w=1200&q=75', 3, 3, 3,5,null),
+('Katarina', 3, '2010-06-11 12:00:00', 51.2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75', 3, 2, 4,null,5),
+('Kha´Zix', 4, '2012-09-27 12:00:00', 52.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKhazix_0.jpg&w=1200&q=75', 2, 3, 4,null,null),
+('Fizz', 4, '2011-11-15 12:00:00', 50.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75', 3, 2, 4,null,5),
+('Rengar', 4, '2012-08-21 12:00:00', 51.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75', 2, 3, 4,null,null),
+('Fiora', 4, '2012-02-29 12:00:00', 50.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFiora_0.jpg&w=1200&q=75', 1, 3, 1,null,null),
+('Hecarim', 4, '2012-04-18 12:00:00', 52.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FHecarim_0.jpg&w=1200&q=75', 2, 2, 1,null,5), -- Jungle, Medium, Fighter
+('Vladimir', 3, '2010-02-27 12:00:00', 50.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75', 3, 3, 3,1,null), -- Mid, Hard, Mage
+('Aurelion Sol', 5, '2016-03-24 12:00:00', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAurelionSol_0.jpg&w=1200&q=75', 3, 3, 3,null,null), -- Mid, Hard, Mage
+('Kai´Sa', 5, '2018-03-07 12:00:00', 50.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75', 4, 2, 2,null,3), -- ADC, Medium, Marksman
+('Urgot', 3, '2010-08-24 12:00:00', 49.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FUrgot_0.jpg&w=1200&q=75', 1, 3, 1,null,null), -- Top, Hard, Fighter
+('Renekton', 4, '2011-01-18 12:00:00', 50.4, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenekton_0.jpg&w=1200&q=75', 1, 2, 1,null,null), -- Top, Medium, Fighter
+('Zeri', 5, '2022-01-20 12:00:00', 48.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75', 4, 2, 2,null,null),-- ADC, Medium, Marksman
+('Singed', 2, '2009-04-18 12:00:00', 51.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSinged_0.jpg&w=1200&q=75', 1, 2, 5,3,3), -- Top, Medium, Tank
+('Rek´Sai', 4, '2014-12-11 12:00:00', 49.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRekSai_0.jpg&w=1200&q=75', 2, 2, 1,null,null), -- Jungle, Medium, Fighter
+('Trundle', 4, '2010-05-01 12:00:00', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTrundle_0.jpg&w=1200&q=75', 1, 2, 1,null,null), -- Top, Medium, Fighter
+('Aatrox', 5, '2013-06-13 12:00:00', 47.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAatrox_0.jpg&w=1200&q=75', 1, 2, 1,null,null), -- Top, Medium, Fighter
+('Alistar', 2, '2009-02-21 12:00:00', 50.2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAlistar_0.jpg&w=1200&q=75', 5, 1, 5,null,null), -- Support, Easy, Tank
+('Akali', 3, '2010-05-11 12:00:00', 48.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAkali_0.jpg&w=1200&q=75', 3, 3, 4,1,5), -- Mid, Hard, Assassin
+('Ornn', 4, '2017-08-23 12:00:00', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FOrnn_0.jpg&w=1200&q=75', 1, 2, 5,null,null), -- Top, Medium, Tank
+('Galio', 3, '2010-08-10 12:00:00', 50.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75', 3, 2, 5,5,3), -- Mid, Medium, Tank
+('Jarvan IV', 4, '2011-03-01 12:00:00', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75', 2, 2, 1,null,4), -- Jungle, Medium, Fighter
+('Milio', 5, '2023-03-22 12:00:00', 52.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMilio_0.jpg&w=1200&q=75', 5, 1, 6,null,3), -- Support, Easy, Support
+('Renata', 5, '2022-02-17 12:00:00', 49.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenata_0.jpg&w=1200&q=75', 5, 3, 6,null,null), -- Support, Hard, Support
+('Shen', 3, '2010-03-24 12:00:00', 51.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FShen_0.jpg&w=1200&q=75', 1, 2, 5,5,null), -- Top, Medium, Tank
+('Skarner', 4, '2011-08-09 12:00:00', 47.6, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSkarner_0.jpg&w=1200&q=75', 2, 2, 5,1,null), -- Jungle, Medium, Tank
+('Warwick', 2, '2009-06-11 12:00:00', 51.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75', 2, 1, 1,1,null), -- Jungle, Easy, Fighter
+('Caitlyn', 4, '2011-01-04 12:00:00', 51.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FCaitlyn_0.jpg&w=1200&q=75', 4, 2, 2,null,null); -- ADC, Medium, Marksman
 
-INSERT INTO champions (name, price, release_date, winrate, image, role_id, difficulty_id, style_id, style2_id,role2_id)
+INSERT INTO champions (name, price_id, release_date, winrate, image, role_id, difficulty_id, style_id, style2_id,role2_id)
 VALUES
-('Cho´Gath', 1350, '2009-06-26 12:00:00', 50.2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FChogath_0.jpg&w=1200&q=75', 1, 1, 5, 3,3),
-('Malphite', 1350, '2009-11-02 12:00:00', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMalphite_0.jpg&w=1200&q=75', 1, 1, 5, 3,3),
-('Gragas', 3150, '2010-02-02 12:00:00', 49.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGragas_0.jpg&w=1200&q=75', 1, 2, 3, 5,3),
-('Vi', 4800, '2012-12-19 12:00:00', 51.4, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVi_0.jpg&w=1200&q=75', 2, 2, 1, 4,null), -- Jungle, Medium, Fighter
-('Braum', 1350, '2014-05-14 12:00:00', 50.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75', 5, 1, 5, null,null),
-('Mordekaiser', 3150, '2010-02-24 12:00:00', 50.2,'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMordekaiser_0.jpg&w=1200&q=75',1, 2, 5, 3,null), -- Top, Medium, Tank
-('Bardo', 6300, '2015-03-12 12:00:00', 50.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBard_0.jpg&w=1200&q=75', 5, 3, 6, 5,null), -- Support, Hard, Support
-('Senna', 6300, '2019-11-10 12:00:00', 49.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75', 4, 3, 2, 6,5), -- ADC, Hard, Support
-('Dr. Mundo', 450, '2009-09-02 12:00:00', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDrMundo_0.jpg&w=1200&q=75', 1, 1, 5, NULL, 2),
-('Tryndamere', 1350, '2009-05-01 12:00:00', 48.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_0.jpg&w=1200&q=75', 1, 1, 2, 1, NULL),
-('Ivern', 4800, '2016-10-05 12:00:00', 49.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FIvern_0.jpg&w=1200&q=75', 2, 3, 6, NULL, 5);
+('Cho´Gath', 2, '2009-06-26 12:00:00', 50.2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FChogath_0.jpg&w=1200&q=75', 1, 1, 5, 3,3),
+('Malphite', 2, '2009-11-02 12:00:00', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMalphite_0.jpg&w=1200&q=75', 1, 1, 5, 3,3),
+('Gragas', 3, '2010-02-02 12:00:00', 49.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGragas_0.jpg&w=1200&q=75', 1, 2, 3, 5,3),
+('Vi', 4, '2012-12-19 12:00:00', 51.4, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVi_0.jpg&w=1200&q=75', 2, 2, 1, 4,null), -- Jungle, Medium, Fighter
+('Braum', 2, '2014-05-14 12:00:00', 50.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75', 5, 1, 5, null,null),
+('Mordekaiser', 3, '2010-02-24 12:00:00', 50.2,'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMordekaiser_0.jpg&w=1200&q=75',1, 2, 5, 3,null), -- Top, Medium, Tank
+('Bardo', 5, '2015-03-12 12:00:00', 50.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBard_0.jpg&w=1200&q=75', 5, 3, 6, 5,null), -- Support, Hard, Support
+('Senna', 5, '2019-11-10 12:00:00', 49.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75', 4, 3, 2, 6,5), -- ADC, Hard, Support
+('Dr. Mundo', 1, '2009-09-02 12:00:00', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDrMundo_0.jpg&w=1200&q=75', 1, 1, 5, NULL, 2),
+('Tryndamere', 2, '2009-05-01 12:00:00', 48.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_0.jpg&w=1200&q=75', 1, 1, 2, 1, NULL),
+('Ivern', 4, '2016-10-05 12:00:00', 49.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FIvern_0.jpg&w=1200&q=75', 2, 3, 6, NULL, 5);
 
 
 --ITEMS
