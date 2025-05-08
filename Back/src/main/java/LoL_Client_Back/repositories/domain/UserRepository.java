@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity,Long> {
-    List<UserEntity> findAll();
+
 
     @Query("SELECT u FROM UserEntity u " +
             "WHERE u.email = :email " +
@@ -26,10 +26,21 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
             @Param("nickname") String nickname
     );
 
-    Optional<UserEntity> findByEmail(String email);
+    //unique email
+    Optional<UserEntity> findByEmailIgnoreCase(String email);
+
+    //similar emails
+    List<UserEntity> findByEmailIgnoreCaseContaining(String email);
+
+    //specifics
     Optional<UserEntity> findByUsernameAndServer(String username, ServerRegionEntity server);
-    Optional<UserEntity> findByNicknameAndServer(String nickname, ServerRegionEntity server);
+    Optional<UserEntity> findByNicknameIgnoreCaseAndServer(String nickname, ServerRegionEntity server);
 
-
+    //nicknames
+    List<UserEntity> findByNicknameIgnoreCaseContaining(String nickname);
+    //nicknames per server
+    List<UserEntity> findByNicknameIgnoreCaseContainingAndServer(String nickname, ServerRegionEntity server);
+    //usernames
+    List<UserEntity> findByUsernameIgnoreCaseContaining(String username);
 
 }

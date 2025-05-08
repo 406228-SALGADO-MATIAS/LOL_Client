@@ -7,4 +7,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserMatchesService {
     UserMatches createUserMatches(UserEntity userEntity);
+    UserMatches findByUser (UserEntity userEntity);
 }

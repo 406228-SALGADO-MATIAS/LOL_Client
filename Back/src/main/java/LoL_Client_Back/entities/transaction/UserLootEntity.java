@@ -32,5 +32,5 @@ public class UserLootEntity {
     @ManyToOne
     @JoinColumn
     private UserEntity user;
-    
+
 }

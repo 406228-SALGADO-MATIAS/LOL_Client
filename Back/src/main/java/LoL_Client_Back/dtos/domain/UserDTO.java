@@ -4,7 +4,6 @@ import LoL_Client_Back.dtos.enums.ServerOptions;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.Server;
 
 @Data
 @AllArgsConstructor
@@ -14,5 +13,4 @@ public class UserDTO {
     private String password;
     private String email;
     private String nickname;
-    private ServerOptions serverOption;
 }

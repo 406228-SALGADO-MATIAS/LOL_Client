@@ -17,6 +17,7 @@ public class DummyController {
 
     //url
     // http://localhost:8080/swagger-ui/index.html#/
+   /*
     @Autowired
     private DummyService dummyService;
 
@@ -60,4 +61,5 @@ public class DummyController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar");
         }
     }
+    */
 }

@@ -1,19 +1,17 @@
 package LoL_Client_Back.dtos.domain;
 
-
-import LoL_Client_Back.models.domain.UserMatches;
 import LoL_Client_Back.models.reference.RankTier;
-import LoL_Client_Back.models.reference.ServerRegion;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserLootMatchesDTO {
+public class UserMatchesDTO {
     private Long user_id;
     private String username;
     private String password;
@@ -23,10 +21,6 @@ public class UserLootMatchesDTO {
     private LocalDateTime registrationDate;
     private String rank = "UNRANKED";
     private String server;
-
-    private Long loot_id;
-    private Integer chests;
-    private Integer keys;
 
     private Long matches_id;
     private Integer normalGamesPlayed = 0;
