@@ -1,12 +1,14 @@
 package LoL_Client_Back.repositories.domain;
 
 import LoL_Client_Back.entities.domain.UserEntity;
+import LoL_Client_Back.entities.reference.RankTierEntity;
 import LoL_Client_Back.entities.reference.ServerRegionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,5 +44,15 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
     List<UserEntity> findByNicknameIgnoreCaseContainingAndServer(String nickname, ServerRegionEntity server);
     //usernames
     List<UserEntity> findByUsernameIgnoreCaseContaining(String username);
+    List<UserEntity> findByRank(RankTierEntity rankTierEntity);
+    List<UserEntity> findByRankAndServer(RankTierEntity rank, ServerRegionEntity server);
+    List<UserEntity> findByRegistrationDateGreaterThanEqualOrderByRegistrationDateAsc(LocalDateTime date);
+
+    List<UserEntity> findByRankIsNull();
+    List<UserEntity> findByRankIsNullAndServer(ServerRegionEntity server);
+
+
+
+
 
 }

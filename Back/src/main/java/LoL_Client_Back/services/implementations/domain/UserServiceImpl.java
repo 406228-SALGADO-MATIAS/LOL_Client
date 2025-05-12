@@ -1,15 +1,20 @@
 package LoL_Client_Back.services.implementations.domain;
 
-import LoL_Client_Back.dtos.domain.UserDTO;
-import LoL_Client_Back.dtos.domain.UserLootMatchesDTO;
-import LoL_Client_Back.dtos.domain.UserMatchesDTO;
-import LoL_Client_Back.dtos.enums.ServerOptions;
+import LoL_Client_Back.dtos.domain.*;
+import LoL_Client_Back.dtos.enums.MatchType;
+import LoL_Client_Back.dtos.enums.ServerOption;
+import LoL_Client_Back.dtos.enums.UserRankTier;
 import LoL_Client_Back.entities.domain.UserEntity;
+import LoL_Client_Back.entities.domain.UserMatchesEntity;
+import LoL_Client_Back.entities.reference.RankTierEntity;
 import LoL_Client_Back.entities.reference.ServerRegionEntity;
 import LoL_Client_Back.models.domain.User;
 import LoL_Client_Back.models.domain.UserMatches;
+import LoL_Client_Back.models.reference.RankTier;
 import LoL_Client_Back.models.transaction.UserLoot;
+import LoL_Client_Back.repositories.domain.UserMatchesRepository;
 import LoL_Client_Back.repositories.domain.UserRepository;
+import LoL_Client_Back.repositories.reference.RankTierRepository;
 import LoL_Client_Back.repositories.reference.ServerRegionRepository;
 import LoL_Client_Back.services.interfaces.domain.UserMatchesService;
 import LoL_Client_Back.services.interfaces.domain.UserService;
@@ -23,8 +28,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,9 +43,24 @@ public class UserServiceImpl implements UserService {
     @Autowired
     ServerRegionRepository serverRegionRepository;
     @Autowired
+    RankTierRepository rankTierRepository;
+    @Autowired
     UserMatchesService userMatchesService;
     @Autowired
+    UserMatchesRepository userMatchesRepository;
+    @Autowired
     UserLootService userLootService;
+
+
+    @Override
+    public UserMatchesDTO findById(Long id) {
+        Optional<UserEntity> optUserEntity = userRepository.findById(id);
+        if (optUserEntity.isPresent())
+        {
+            return buildUserMatchesDTO(optUserEntity.get());
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user with id "+id);
+    }
 
     @Override
     public List<User> getAllUsers() {
@@ -52,7 +74,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserLootMatchesDTO createUser(UserDTO userDTO,ServerOptions serverOptions) {
+    public UserLootMatchesDTO createUser(UserDTO userDTO, ServerOption serverOptions) {
 
         String email = userDTO.getEmail();
         String username = userDTO.getUsername();
@@ -100,7 +122,7 @@ public class UserServiceImpl implements UserService {
 
             return buildUserMatchesDTO(userEntity);
         }
-        throw new EntityNotFoundException("Did not find user with "+email + " email");
+        throw new EntityNotFoundException("Did not find user with email "+email);
     }
 
     @Override
@@ -121,7 +143,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserMatchesDTO> findUsersByNicknameAndServer(String nickname, ServerOptions serverOptions) {
+    public List<UserMatchesDTO> findUsersByNicknameAndServer(String nickname, ServerOption serverOptions) {
 
         ServerRegionEntity serverRegion =
                 getServerByName(serverOptions.getFullName());
@@ -140,6 +162,248 @@ public class UserServiceImpl implements UserService {
                 userRepository.findByUsernameIgnoreCaseContaining(username);
         return buildUserMatchesDTOList
                 (usersEntity,"Did not find users with username ("+username+")");
+    }
+
+    @Override
+    public UserMatchesDTO updateUser(Long id, UserDTO userDTO, ServerOption serverOption, UserRankTier rankTier) {
+
+        Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
+        if (optionalUserEntity.isPresent())
+        {
+            UserEntity userFound= optionalUserEntity.get();
+            ServerRegionEntity serverEntity = getServerByName(serverOption.getFullName());
+            Optional<RankTierEntity> optionalRankTierEntity =
+                    rankTierRepository.findByRank(rankTier.name());
+
+            if (optionalRankTierEntity.isPresent())
+            {
+                RankTierEntity rankTierEntity = optionalRankTierEntity.get();
+                String errorMsg = checkRepeatedUserData(userDTO,serverEntity);
+
+                if (errorMsg.equals("No repeated data"))
+                {
+                    UserEntity updatedUser = buildUpdatedUserEntity(userFound,userDTO,rankTierEntity,serverEntity);
+                    return buildUserMatchesDTO(userRepository.save(updatedUser));
+                }
+                throw new ResponseStatusException(HttpStatus.CONFLICT,errorMsg);
+            }
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find ranktier ("+rankTier+")");
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No user found by id "+id);
+    }
+
+    @Override
+    public List<UserMatchesDTO> findUsersByRanktier(UserRankTier rankTierOption) {
+
+         if (rankTierOption == UserRankTier.Unranked)
+         {
+             return buildUserMatchesDTOList(userRepository.findByRankIsNull(),
+                    "Did not find users with rank tier "+rankTierOption.name());
+         }
+         Optional<RankTierEntity> optionalRankTier =
+                 rankTierRepository.findByRank(rankTierOption.name());
+         if (optionalRankTier.isPresent())
+         {
+             RankTierEntity rankTierEntity = optionalRankTier.get();
+             return buildUserMatchesDTOList(userRepository.findByRank(rankTierEntity),
+                     "Did not find users with rank tier "+rankTierOption.name());
+         }
+         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find rank tier "+rankTierOption.name()+" in the database");
+    }
+
+    @Override
+    public List<UserMatchesWinrateDTO> findUsersByWinrateAndServer
+            (MatchType matchType,ServerOption serverOption,Double minWinrate) {
+
+        List<UserMatchesEntity> entityList =
+                getUserMatchesListByTypeAndServer(matchType,getServerByName(serverOption.getFullName()));
+        if (!entityList.isEmpty())
+        {
+            List<UserMatchesWinrateDTO> dtoList = new ArrayList<>();
+            for (UserMatchesEntity u : entityList)
+            {
+                dtoList.add(buildUserMatchesWinrateDTO(u,matchType));
+            }
+            List<UserMatchesWinrateDTO> dtoFilteredList =
+                    filterByWinrate(reorderListByWinrate(dtoList,matchType),minWinrate);
+            if (dtoFilteredList.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "No users found with matchtype " + matchType + ", server " + serverOption + " and winrate > " + minWinrate);
+            }
+            return dtoFilteredList;
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Did not find usermatches for matchtype "+matchType+" and server "+serverOption);
+
+    }
+
+    @Override
+    public List<UserMatchesWinrateDTO> findUsersByMatchesPlayed(MatchType matchType, ServerOption serverOption, Integer minMatchesPlayed) {
+        List<UserMatchesEntity> entityList =
+                getUserMatchesListByTypeAndServer(matchType,getServerByName(serverOption.getFullName()));
+
+        if (!entityList.isEmpty()){
+            List<UserMatchesWinrateDTO> dtoList = new ArrayList<>();
+            for (UserMatchesEntity u : entityList)
+            {
+                dtoList.add(buildUserMatchesWinrateDTO(u,matchType));
+            }
+            List<UserMatchesWinrateDTO> dtoFilteredList =
+                    filterByMatchesPlayed(reorderListByMatchesPlayed(dtoList,matchType),minMatchesPlayed);
+            if (dtoFilteredList.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "No users found with matchtype " + matchType + ", server " + serverOption + " and that played more than > " + minMatchesPlayed+" games");
+            }
+            return dtoFilteredList;
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Did not find usermatches for matchtype "+matchType+" and server "+serverOption);
+    }
+
+    @Override
+    public List<UserMatchesDTO> findUsersByRegistrationDate(LocalDateTime date) {
+        List<UserEntity> userEntities = userRepository.
+                findByRegistrationDateGreaterThanEqualOrderByRegistrationDateAsc(date);
+        return buildUserMatchesDTOList
+                (userEntities,"Did not find user with registration date" + date + " or higher");
+    }
+
+    @Override
+    public List<UserMatchesDTO> findUsersByRankAndServer(UserRankTier rank, ServerOption server) {
+
+        List<UserEntity> userEntityList = new ArrayList<>();
+        if (rank == UserRankTier.Unranked) {
+            userEntityList = userRepository.
+                    findByRankIsNullAndServer(getServerByName(server.getFullName()));
+        }
+        else {
+            userEntityList = userRepository.findByRankAndServer
+                    (getRankByName(rank.name()),getServerByName(server.getFullName()));
+        }
+        return buildUserMatchesDTOList(userEntityList,
+               "Did not find users on server "+server.name()+" that are "+rank.name());
+    }
+
+    private RankTierEntity getRankByName(String rankname)
+    {
+        Optional<RankTierEntity> optionalRankTier =
+                rankTierRepository.findByRank(rankname);
+        if (optionalRankTier.isPresent())
+        {
+            return optionalRankTier.get();
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"DId not find user ranktier "+rankname);
+    }
+    private List<UserMatchesWinrateDTO> filterByWinrate(List<UserMatchesWinrateDTO> list, double minWinrate) {
+        return list.stream()
+                .filter(dto ->
+                        (dto.getRankedWinrate() != null && dto.getRankedWinrate() >= minWinrate) ||
+                                (dto.getNormalWinrate() != null && dto.getNormalWinrate() >= minWinrate) ||
+                                (dto.getAramWinrate() != null && dto.getAramWinrate() >= minWinrate)
+                )
+                .collect(Collectors.toList());
+    }
+
+    private List<UserMatchesWinrateDTO> filterByMatchesPlayed(List<UserMatchesWinrateDTO> list, Integer minMatchesPlayed) {
+        return list.stream()
+                .filter(dto ->
+                        (dto.getRankedsPlayed() != null && dto.getRankedsPlayed() >= minMatchesPlayed) ||
+                                (dto.getNormalGamesPlayed() != null && dto.getNormalGamesPlayed() >= minMatchesPlayed) ||
+                                (dto.getAramsPlayed() != null && dto.getAramsPlayed() >= minMatchesPlayed)
+                )
+                .collect(Collectors.toList());
+    }
+
+    private List<UserMatchesWinrateDTO> reorderListByWinrate (List<UserMatchesWinrateDTO> list, MatchType type)
+    {
+        switch (type) {
+            case RANKED -> list.sort(Comparator.comparing
+                    (UserMatchesWinrateDTO::getRankedWinrate, Comparator.nullsLast(Comparator.naturalOrder())));
+            case NORMAL -> list.sort(Comparator.comparing
+                    (UserMatchesWinrateDTO::getNormalWinrate, Comparator.nullsLast(Comparator.naturalOrder())));
+            case ARAM -> list.sort(Comparator.comparing
+                    (UserMatchesWinrateDTO::getAramWinrate, Comparator.nullsLast(Comparator.naturalOrder())));
+        }
+        return list;
+    }
+
+    private List<UserMatchesWinrateDTO> reorderListByMatchesPlayed (List<UserMatchesWinrateDTO> list, MatchType type)
+    {
+        switch (type) {
+            case RANKED -> list.sort(Comparator.comparing
+                    (UserMatchesWinrateDTO::getRankedsPlayed, Comparator.nullsLast(Comparator.naturalOrder())));
+            case NORMAL -> list.sort(Comparator.comparing
+                    (UserMatchesWinrateDTO::getNormalGamesPlayed, Comparator.nullsLast(Comparator.naturalOrder())));
+            case ARAM -> list.sort(Comparator.comparing
+                    (UserMatchesWinrateDTO::getAramsPlayed, Comparator.nullsLast(Comparator.naturalOrder())));
+        }
+        return list;
+    }
+
+    private UserMatchesWinrateDTO buildUserMatchesWinrateDTO(UserMatchesEntity uM, MatchType matchType)
+    {
+        UserMatchesWinrateDTO dto = new UserMatchesWinrateDTO();
+        UserEntity u = uM.getUser();
+
+        dto.setUser_id(u.getId());
+        dto.setNickname(u.getNickname());
+        dto.setRank(u.getRank().getRank());
+        dto.setServer(u.getServer().getServer());
+
+        switch (matchType) {
+            case RANKED -> {
+                dto.setRankedsPlayed(uM.getRankedsPlayed());
+                dto.setRankedWins(uM.getRankedWins());
+                dto.setRankedWinrate(calculateWinrate(uM.getRankedsPlayed(), uM.getRankedWins()));
+            }
+            case NORMAL -> {
+                dto.setNormalGamesPlayed(uM.getNormalGamesPlayed());
+                dto.setNormalWins(uM.getNormalWins());
+                dto.setNormalWinrate(calculateWinrate(uM.getNormalGamesPlayed(), uM.getNormalWins()));
+            }
+            case ARAM -> {
+                dto.setAramsPlayed(uM.getAramsPlayed());
+                dto.setAramWins(uM.getAramWins());
+                dto.setAramWinrate(calculateWinrate(uM.getAramsPlayed(), uM.getAramWins()));
+            }
+        }
+        return dto;
+    }
+
+    private Double calculateWinrate(double gamesPlayed, double wins) {
+        if (gamesPlayed == 0) {
+            return 0.0;
+        }
+        return (wins / gamesPlayed) * 100;
+    }
+
+    private List<UserMatchesEntity> getUserMatchesListByTypeAndServer(MatchType matchType,ServerRegionEntity serverRegion)
+    {
+        List<UserMatchesEntity> list = new ArrayList<>();
+        switch (matchType) {
+            case ARAM -> list = userMatchesRepository.findByAramMatches(serverRegion);
+            case NORMAL -> list = userMatchesRepository.findByNormalMatches(serverRegion);
+            case RANKED -> list = userMatchesRepository.findByRankedMatches(serverRegion);
+        }
+        return list;
+    }
+
+    private UserEntity buildUpdatedUserEntity(UserEntity userToUpdate,UserDTO userDTO,RankTierEntity rank, ServerRegionEntity server)
+    {
+        UserEntity updtEntity = new UserEntity();
+
+        updtEntity.setId(userToUpdate.getId());
+        updtEntity.setUsername(userDTO.getUsername());
+        updtEntity.setPassword(userDTO.getPassword());
+        updtEntity.setEmail(userDTO.getEmail());
+        updtEntity.setNickname(userDTO.getNickname());
+
+        updtEntity.setRank(rank);
+        updtEntity.setServer(server);
+        updtEntity.setRegistrationDate(userToUpdate.getRegistrationDate());
+        updtEntity.setRiotPoints(userToUpdate.getRiotPoints());
+        updtEntity.setBlueEssence(userToUpdate.getBlueEssence());
+        return updtEntity;
     }
 
     private UserEntity buildNewUserEntity (UserDTO userDTO,ServerRegionEntity server)
@@ -217,25 +481,25 @@ public class UserServiceImpl implements UserService {
 
 
         if (userRepository.findByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
-            return "El correo electrónico ya está en uso.";
+            return "The email ("+userDTO.getEmail()+") does already exist.";
         }
 
         if (userRepository.findByUsernameAndServer(userDTO.getUsername(), serverRegion).isPresent()) {
-            return "El nombre de usuario ya está en uso en este servidor.";
+            return "The username ("+userDTO.getUsername()+") is currently in use on the server ("+serverRegion.getServer()+")";
         }
 
         if (userRepository.findByNicknameIgnoreCaseAndServer(userDTO.getNickname(), serverRegion).isPresent())
         {
-            return "El apodo ya está en uso en este servidor.";
+            return "The nickanem ("+userDTO.getNickname()+") is currently in use on the server ("+serverRegion.getServer()+")";
         }
 
-        return "No se encontraron datos repetidos (esto no debería pasar si ya validaste antes).";
+        return "No repeated data";
     }
 
     private ServerRegionEntity getServerByName(String serverName) {
         return serverRegionRepository.findByServer(serverName)
                 .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST, "No se encontró el servidor con nombre: " + serverName));
+                        HttpStatus.BAD_REQUEST, "Did not find server named " + serverName));
     }
 
     private List<UserMatchesDTO> buildUserMatchesDTOList (List<UserEntity> usersEntity, String errorMsg)
