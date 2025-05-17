@@ -1,6 +1,5 @@
-package LoL_Client_Back.dtos.domain;
+package LoL_Client_Back.dtos.user;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

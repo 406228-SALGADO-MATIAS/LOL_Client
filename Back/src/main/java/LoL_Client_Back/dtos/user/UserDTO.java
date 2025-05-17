@@ -1,4 +1,4 @@
-package LoL_Client_Back.dtos.domain;
+package LoL_Client_Back.dtos.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserUpdateDTO {
+public class UserDTO {
     private String username;
     private String password;
     private String email;

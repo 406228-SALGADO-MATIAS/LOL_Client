@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 @Configuration
 public class MappersConfig {
+
     @Bean
     public ModelMapper modelMapper() {return new ModelMapper();}
+
     @Bean("mergerMapper")
     public ModelMapper mergerMapper() {
         ModelMapper mapper = new ModelMapper();
@@ -24,6 +26,18 @@ public class MappersConfig {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule (new JavaTimeModule());
         return  objectMapper;
+    }
+
+    @Bean("customModelMapper")
+    public ModelMapper customModelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+
+        modelMapper.getConfiguration()
+                .setAmbiguityIgnored(true)
+                .setSkipNullEnabled(true)
+                .setFieldMatchingEnabled(true)
+                .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE);
+        return modelMapper;
     }
 
        /*

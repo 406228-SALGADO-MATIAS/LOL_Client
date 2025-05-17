@@ -138,12 +138,12 @@ INSERT INTO rank_tiers (rank) VALUES
 ('Grandmaster'),
 ('Challenger');
 
-INSERT INTO roles (rol) VALUES
-('Top'),
-('Jungle'),
-('Mid'),
+INSERT INTO roles (role) VALUES
+('TOP'),
+('JUNGLE'),
+('MID'),
 ('ADC'),
-('Support');
+('SUPPORT');
 
 INSERT INTO server_regions (server) VALUES
 ('North America (NA)'),
@@ -183,58 +183,58 @@ VALUES
 
 INSERT INTO champions (name, price_id, release_date, winrate, image, role_id, difficulty_id, style_id, role2_id , style2_id)
 VALUES
-('Lucian', 4, '2013-08-27 12:00:00', 50.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_0.jpg&w=1200&q=75', 4, 2, 2,3,null),
-('Draven', 4, '2012-06-06 12:00:00', 51.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75', 4, 3, 2,3,null),
-('Zed', 5, '2012-11-13 12:00:00', 49.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZed_0.jpg&w=1200&q=75', 3, 3, 4,2,null),
-('Zac', 5, '2013-03-29 12:00:00', 52.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_0.jpg&w=1200&q=75', 2, 2, 5,1,3),
-('Zilean', 2, '2009-04-18 12:00:00', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75', 5, 2, 6,3,null),
-('Jinx', 5, '2013-10-10 12:00:00', 50.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_0.jpg&w=1200&q=75', 4, 2, 2,null,null),
-('Graves', 4, '2011-10-13 12:00:00', 51.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGraves_0.jpg&w=1200&q=75', 2, 2, 1,1,null),
-('Karma', 3, '2011-02-01 12:00:00', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75', 5, 2, 6,3,3),
-('Twitch', 3, '2009-05-01 12:00:00', 50.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75', 4, 2, 2,2,3),
-('Twisted Fate', 2, '2009-02-21 12:00:00', 48.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwistedFate_0.jpg&w=1200&q=75', 3, 2, 3,1,2),
-('Xerath', 3, '2011-01-07 12:00:00', 49.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FXerath_0.jpg&w=1200&q=75', 3, 3, 3,5,null),
-('Katarina', 3, '2010-06-11 12:00:00', 51.2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75', 3, 2, 4,null,5),
-('Kha´Zix', 4, '2012-09-27 12:00:00', 52.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKhazix_0.jpg&w=1200&q=75', 2, 3, 4,null,null),
-('Fizz', 4, '2011-11-15 12:00:00', 50.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75', 3, 2, 4,null,5),
-('Rengar', 4, '2012-08-21 12:00:00', 51.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75', 2, 3, 4,null,null),
-('Fiora', 4, '2012-02-29 12:00:00', 50.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFiora_0.jpg&w=1200&q=75', 1, 3, 1,null,null),
-('Hecarim', 4, '2012-04-18 12:00:00', 52.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FHecarim_0.jpg&w=1200&q=75', 2, 2, 1,null,5), -- Jungle, Medium, Fighter
-('Vladimir', 3, '2010-02-27 12:00:00', 50.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75', 3, 3, 3,1,null), -- Mid, Hard, Mage
-('Aurelion Sol', 5, '2016-03-24 12:00:00', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAurelionSol_0.jpg&w=1200&q=75', 3, 3, 3,null,null), -- Mid, Hard, Mage
-('Kai´Sa', 5, '2018-03-07 12:00:00', 50.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75', 4, 2, 2,null,3), -- ADC, Medium, Marksman
-('Urgot', 3, '2010-08-24 12:00:00', 49.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FUrgot_0.jpg&w=1200&q=75', 1, 3, 1,null,null), -- Top, Hard, Fighter
-('Renekton', 4, '2011-01-18 12:00:00', 50.4, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenekton_0.jpg&w=1200&q=75', 1, 2, 1,null,null), -- Top, Medium, Fighter
-('Zeri', 5, '2022-01-20 12:00:00', 48.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75', 4, 2, 2,null,null),-- ADC, Medium, Marksman
-('Singed', 2, '2009-04-18 12:00:00', 51.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSinged_0.jpg&w=1200&q=75', 1, 2, 5,3,3), -- Top, Medium, Tank
-('Rek´Sai', 4, '2014-12-11 12:00:00', 49.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRekSai_0.jpg&w=1200&q=75', 2, 2, 1,null,null), -- Jungle, Medium, Fighter
-('Trundle', 4, '2010-05-01 12:00:00', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTrundle_0.jpg&w=1200&q=75', 1, 2, 1,null,null), -- Top, Medium, Fighter
-('Aatrox', 5, '2013-06-13 12:00:00', 47.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAatrox_0.jpg&w=1200&q=75', 1, 2, 1,null,null), -- Top, Medium, Fighter
-('Alistar', 2, '2009-02-21 12:00:00', 50.2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAlistar_0.jpg&w=1200&q=75', 5, 1, 5,null,null), -- Support, Easy, Tank
-('Akali', 3, '2010-05-11 12:00:00', 48.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAkali_0.jpg&w=1200&q=75', 3, 3, 4,1,5), -- Mid, Hard, Assassin
-('Ornn', 4, '2017-08-23 12:00:00', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FOrnn_0.jpg&w=1200&q=75', 1, 2, 5,null,null), -- Top, Medium, Tank
-('Galio', 3, '2010-08-10 12:00:00', 50.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75', 3, 2, 5,5,3), -- Mid, Medium, Tank
-('Jarvan IV', 4, '2011-03-01 12:00:00', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75', 2, 2, 1,null,4), -- Jungle, Medium, Fighter
-('Milio', 5, '2023-03-22 12:00:00', 52.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMilio_0.jpg&w=1200&q=75', 5, 1, 6,null,3), -- Support, Easy, Support
-('Renata', 5, '2022-02-17 12:00:00', 49.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenata_0.jpg&w=1200&q=75', 5, 3, 6,null,null), -- Support, Hard, Support
-('Shen', 3, '2010-03-24 12:00:00', 51.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FShen_0.jpg&w=1200&q=75', 1, 2, 5,5,null), -- Top, Medium, Tank
-('Skarner', 4, '2011-08-09 12:00:00', 47.6, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSkarner_0.jpg&w=1200&q=75', 2, 2, 5,1,null), -- Jungle, Medium, Tank
-('Warwick', 2, '2009-06-11 12:00:00', 51.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75', 2, 1, 1,1,null), -- Jungle, Easy, Fighter
-('Caitlyn', 4, '2011-01-04 12:00:00', 51.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FCaitlyn_0.jpg&w=1200&q=75', 4, 2, 2,null,null); -- ADC, Medium, Marksman
+('Lucian', 4, '2013-08-27', 50.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_0.jpg&w=1200&q=75', 4, 2, 2,3,null),
+('Draven', 4, '2012-06-06', 51.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75', 4, 3, 2,3,null),
+('Zed', 5, '2012-11-13', 49.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZed_0.jpg&w=1200&q=75', 3, 3, 4,2,null),
+('Zac', 5, '2013-03-29', 52.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_0.jpg&w=1200&q=75', 2, 2, 5,1,3),
+('Zilean', 2, '2009-04-18', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75', 5, 2, 6,3,3),
+('Jinx', 5, '2013-10-10', 50.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_0.jpg&w=1200&q=75', 4, 2, 2,null,null),
+('Graves', 4, '2011-10-13', 51.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGraves_0.jpg&w=1200&q=75', 2, 2, 1,1,null),
+('Karma', 3, '2011-02-01', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75', 5, 2, 6,3,3),
+('Twitch', 3, '2009-05-01', 50.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75', 4, 2, 2,2,3),
+('Twisted Fate', 2, '2009-02-21', 48.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwistedFate_0.jpg&w=1200&q=75', 3, 2, 3,1,2),
+('Xerath', 3, '2011-01-07', 49.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FXerath_0.jpg&w=1200&q=75', 3, 2, 3,5,null),
+('Katarina', 3, '2010-06-11', 51.2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75', 3, 2, 4,null,5),
+('Kha´Zix', 4, '2012-09-27', 52.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKhazix_0.jpg&w=1200&q=75', 2, 3, 4,null,null),
+('Fizz', 4, '2011-11-15', 50.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75', 3, 2, 4,null,5),
+('Rengar', 4, '2012-08-21', 51.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75', 2, 3, 4,null,null),
+('Fiora', 4, '2012-02-29', 50.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFiora_0.jpg&w=1200&q=75', 1, 3, 1,null,null),
+('Hecarim', 4, '2012-04-18', 52.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FHecarim_0.jpg&w=1200&q=75', 2, 2, 1,null,5), -- Jungle, Medium, Fighter
+('Vladimir', 3, '2010-02-27', 50.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75', 3, 2, 3,1,null), -- Mid, Hard, Mage
+('Aurelion Sol', 5, '2016-03-24', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAurelionSol_0.jpg&w=1200&q=75', 3, 3, 3,null,null), -- Mid, Hard, Mage
+('Kai´Sa', 5, '2018-03-07', 50.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75', 4, 2, 2,null,3), -- ADC, Medium, Marksman
+('Urgot', 3, '2010-08-24', 49.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FUrgot_0.jpg&w=1200&q=75', 1, 1, 1,null,null), -- Top, Hard, Fighter
+('Renekton', 4, '2011-01-18', 50.4, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenekton_0.jpg&w=1200&q=75', 1, 2, 1,null,null), -- Top, Medium, Fighter
+('Zeri', 5, '2022-01-20', 48.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75', 4, 2, 2,null,null),-- ADC, Medium, Marksman
+('Singed', 2, '2009-04-18', 51.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSinged_0.jpg&w=1200&q=75', 1, 2, 5,3,3), -- Top, Medium, Tank
+('Rek´Sai', 4, '2014-12-11', 49.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRekSai_0.jpg&w=1200&q=75', 2, 2, 1,null,null), -- Jungle, Medium, Fighter
+('Trundle', 4, '2010-05-01', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTrundle_0.jpg&w=1200&q=75', 1, 2, 1,null,null), -- Top, Medium, Fighter
+('Aatrox', 5, '2013-06-13', 47.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAatrox_0.jpg&w=1200&q=75', 1, 2, 1,null,null), -- Top, Medium, Fighter
+('Alistar', 2, '2009-02-21', 50.2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAlistar_0.jpg&w=1200&q=75', 5, 1, 5,null,null), -- Support, Easy, Tank
+('Akali', 3, '2010-05-11', 48.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAkali_0.jpg&w=1200&q=75', 3, 3, 4,1,5), -- Mid, Hard, Assassin
+('Ornn', 4, '2017-08-23', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FOrnn_0.jpg&w=1200&q=75', 1, 2, 5,null,null), -- Top, Medium, Tank
+('Galio', 3, '2010-08-10', 50.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75', 3, 2, 5,5,3), -- Mid, Medium, Tank
+('Jarvan IV', 4, '2011-03-01', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75', 2, 2, 1,null,4), -- Jungle, Medium, Fighter
+('Milio', 5, '2023-03-22', 52.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMilio_0.jpg&w=1200&q=75', 5, 1, 6,null,3), -- Support, Easy, Support
+('Renata', 5, '2022-02-17', 49.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenata_0.jpg&w=1200&q=75', 5, 2, 6,null,null), -- Support, Hard, Support
+('Shen', 3, '2010-03-24', 51.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FShen_0.jpg&w=1200&q=75', 1, 2, 5,5,null), -- Top, Medium, Tank
+('Skarner', 4, '2011-08-09', 47.6, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSkarner_0.jpg&w=1200&q=75', 2, 2, 5,1,null), -- Jungle, Medium, Tank
+('Warwick', 2, '2009-06-11', 51.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75', 2, 1, 1,1,null), -- Jungle, Easy, Fighter
+('Caitlyn', 4, '2011-01-04', 51.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FCaitlyn_0.jpg&w=1200&q=75', 4, 2, 2,null,null); -- ADC, Medium, Marksman
 
 INSERT INTO champions (name, price_id, release_date, winrate, image, role_id, difficulty_id, style_id, style2_id,role2_id)
 VALUES
-('Cho´Gath', 2, '2009-06-26 12:00:00', 50.2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FChogath_0.jpg&w=1200&q=75', 1, 1, 5, 3,3),
-('Malphite', 2, '2009-11-02 12:00:00', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMalphite_0.jpg&w=1200&q=75', 1, 1, 5, 3,3),
-('Gragas', 3, '2010-02-02 12:00:00', 49.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGragas_0.jpg&w=1200&q=75', 1, 2, 3, 5,3),
-('Vi', 4, '2012-12-19 12:00:00', 51.4, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVi_0.jpg&w=1200&q=75', 2, 2, 1, 4,null), -- Jungle, Medium, Fighter
-('Braum', 2, '2014-05-14 12:00:00', 50.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75', 5, 1, 5, null,null),
-('Mordekaiser', 3, '2010-02-24 12:00:00', 50.2,'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMordekaiser_0.jpg&w=1200&q=75',1, 2, 5, 3,null), -- Top, Medium, Tank
-('Bardo', 5, '2015-03-12 12:00:00', 50.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBard_0.jpg&w=1200&q=75', 5, 3, 6, 5,null), -- Support, Hard, Support
-('Senna', 5, '2019-11-10 12:00:00', 49.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75', 4, 3, 2, 6,5), -- ADC, Hard, Support
-('Dr. Mundo', 1, '2009-09-02 12:00:00', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDrMundo_0.jpg&w=1200&q=75', 1, 1, 5, NULL, 2),
-('Tryndamere', 2, '2009-05-01 12:00:00', 48.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_0.jpg&w=1200&q=75', 1, 1, 2, 1, NULL),
-('Ivern', 4, '2016-10-05 12:00:00', 49.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FIvern_0.jpg&w=1200&q=75', 2, 3, 6, NULL, 5);
+('Cho´Gath', 2, '2009-06-26', 50.2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FChogath_0.jpg&w=1200&q=75', 1, 1, 5, 3,3),
+('Malphite', 2, '2009-11-02', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMalphite_0.jpg&w=1200&q=75', 1, 1, 5, 3,3),
+('Gragas', 3, '2010-02-02', 49.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGragas_0.jpg&w=1200&q=75', 2, 2, 3, 5,1),
+('Vi', 4, '2012-12-19', 51.4, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVi_0.jpg&w=1200&q=75', 2, 2, 1, 4,null), -- Jungle, Medium, Fighter
+('Braum', 2, '2014-05-14', 50.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75', 5, 1, 5, null,null),
+('Mordekaiser', 3, '2010-02-24', 50.2,'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMordekaiser_0.jpg&w=1200&q=75',1, 2, 5, 3,null), -- Top, Medium, Tank
+('Bardo', 5, '2015-03-12', 50.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBard_0.jpg&w=1200&q=75', 5, 3, 6, 5,null), -- Support, Hard, Support
+('Senna', 5, '2019-11-10', 49.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75', 4, 3, 2, 6,5), -- ADC, Hard, Support
+('Dr. Mundo', 1, '2009-09-02', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDrMundo_0.jpg&w=1200&q=75', 1, 1, 5, NULL, 2),
+('Tryndamere', 2, '2009-05-01', 48.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_0.jpg&w=1200&q=75', 1, 1, 2, 1, NULL),
+('Ivern', 4, '2016-10-05', 49.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FIvern_0.jpg&w=1200&q=75', 2, 3, 6, 3, 5);
 
 
 --ITEMS
@@ -2555,63 +2555,63 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('High Noon Lucian',
- '2018-08-30 00:00:00',
+ '2018-08-30',
  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_8.jpg&w=1200&q=75',
  5,
  1),
  ('PROJECT Lucian',
-  '2015-09-08 00:00:00',
+  '2015-09-08',
   'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_6.jpg&w=1200&q=75',
   4,
   1);
   INSERT INTO skins (name, release_date, image, tier_id, champion_id)
   VALUES
   ('Soul Reaver Draven',
-   '2012-06-06 00:00:00',
+   '2012-06-06',
    'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_1.jpg&w=1200&q=75',
    4,  -- tier Epic corresponde al 1350, que es el 4to tier
    2),
 ('Primetime Draven',
- '2014-06-21 00:00:00',
+ '2014-06-21',
  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_3.jpg&w=1200&q=75',
  3,
  2);
   INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Shockblade Zed',
- '2012-11-13 00:00:00',
+ '2012-11-13',
  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZed_1.jpg&w=1200&q=75',
  3,
  3),
 
 ('Empyrean Zed',
- '2024-05-01 00:00:00',
+ '2024-05-01',
  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZed_38.jpg&w=1200&q=75',
  4,
  3);
  INSERT INTO skins (name, release_date, image, tier_id, champion_id)
  VALUES
  ('Empyrean Zac',
-  '2022-11-03 00:00:00',
+  '2022-11-03',
   'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_14.jpg&w=1200&q=75',
   4,
   4),
 
  ('Special Weapon Zac',
-  '2013-03-29 00:00:00',
+  '2013-03-29',
   'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_1.jpg&w=1200&q=75',
   3,
   4);
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Time Machine Zilean',
- '2011-04-12 00:00:00',
+ '2011-04-12',
  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_4.jpg&w=1200&q=75',
  1,
  5),
 
 ('Sugar Rush Zilean',
- '2019-12-17 00:00:00',
+ '2019-12-17',
  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_6.jpg&w=1200&q=75',
  4,
  5);
@@ -2619,13 +2619,13 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Odyssey Jinx',
- '2018-09-12 00:00:00',
+ '2018-09-12',
  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_13.jpg&w=1200&q=75',
  4,
  6),
 
 ('Battle Cat Jinx',
- '2022-03-31 00:00:00',
+ '2022-03-31',
  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_38.jpg&w=1200&q=75',
  4,
  6);
@@ -2633,13 +2633,13 @@ VALUES
  INSERT INTO skins (name, release_date, image, tier_id, champion_id)
  VALUES
  ('Riot Graves',
-  '2012-08-16 00:00:00',
+  '2012-08-16',
   'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGraves_4.jpg&w=1200&q=75',
   3,
   7),
 
  ('Pool Party Graves',
-  '2013-09-11 00:00:00',
+  '2013-09-11',
   'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGraves_5.jpg&w=1200&q=75',
   4,
   7);
@@ -2647,13 +2647,13 @@ VALUES
   INSERT INTO skins (name, release_date, image, tier_id, champion_id)
   VALUES
   ('Traditional Karma',
-   '2013-03-29 00:00:00',
+   '2013-03-29',
    'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_3.jpg&w=1200&q=75',
    3,
    8),
 
   ('Tranquility Dragon Karma',
-   '2021-10-20 00:00:00',
+   '2021-10-20',
    'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_44.jpg&w=1200&q=75',
    4,
    8);
@@ -2661,12 +2661,12 @@ VALUES
   INSERT INTO skins (name, release_date, image, tier_id, champion_id)
    VALUES
    ('Crime City Twitch',
-    '2010-10-13 00:00:00',
+    '2010-10-13',
     'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_4.jpg&w=1200&q=75',
     3,
     9),
     ('Dragonslayer Twitch',
-     '2021-04-15 00:00:00',
+     '2021-04-15',
      'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_36.jpg&w=1200&q=75',
      4,
      9);
@@ -2674,12 +2674,12 @@ VALUES
      INSERT INTO skins (name, release_date, image, tier_id, champion_id)
      VALUES
      ('The Magnificent Twisted Fate',
-      '2010-05-18 00:00:00',
+      '2010-05-18',
       'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/TwistedFate_3.jpg',
       5,
       10),
      ('Underworld Twisted Fate',
-      '2012-10-26 00:00:00',
+      '2012-10-26',
       'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/TwistedFate_7.jpg',
       3,
       10);
@@ -2687,12 +2687,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Scorched Earth Xerath',
- '2012-07-13 00:00:00',
+ '2012-07-13',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Xerath_3.jpg',
  4,
  11),
 ('Arcana Xerath',
- '2021-05-12 00:00:00',
+ '2021-05-12',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Xerath_12.jpg',
  4,
  11);
@@ -2700,26 +2700,25 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Slay Belle Katarina',
- '2012-12-14 00:00:00',
+ '2012-12-14',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Katarina_7.jpg',
  3,
  12),
 ('Kitty Cat Katarina',
- '2010-10-18 00:00:00',
+ '2010-10-18',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Katarina_4.jpg',
  3,
  12);
 
-
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Mecha Kha´Zix',
- '2012-09-27 00:00:00',
+ '2012-09-27',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Khazix_1.jpg',
  3,
  13),
 ('Dark Star Kha´Zix',
- '2017-02-05 00:00:00',
+ '2017-02-05',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Khazix_4.jpg',
  3,
  13);
@@ -2727,12 +2726,12 @@ VALUES
  INSERT INTO skins (name, release_date, image, tier_id, champion_id)
  VALUES
  ('Fisherman Fizz',
-  '2012-04-01 00:00:00',
+  '2012-04-01',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fizz_3.jpg',
   3,
   14),
  ('Tundra Fizz',
-  '2011-11-15 00:00:00',
+  '2011-11-15',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fizz_2.jpg',
   2,
   14);
@@ -2740,12 +2739,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Headhunter Rengar',
- '2012-08-21 00:00:00',
+ '2012-08-21',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Rengar_1.jpg',
  3,
  15),
 ('Night Hunter Rengar',
- '2014-05-20 00:00:00',
+ '2014-05-20',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Rengar_2.jpg',
  3,
  15);
@@ -2753,12 +2752,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Headmistress Fiora',
- '2012-10-25 00:00:00',
+ '2012-10-25',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiora_3.jpg',
  3,
  16),
 ('Soaring Sword Fiora',
- '2017-09-28 00:00:00',
+ '2017-09-28',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiora_22.jpg',
  4,
  16);
@@ -2766,12 +2765,12 @@ VALUES
  INSERT INTO skins (name, release_date, image, tier_id, champion_id)
  VALUES
  ('Arcade Hecarim',
-  '2013-08-22 00:00:00',
+  '2013-08-22',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Hecarim_4.jpg',
   4,
   17),
  ('Elderwood Hecarim',
-  '2015-11-25 00:00:00',
+  '2015-11-25',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Hecarim_5.jpg',
   4,
   17);
@@ -2779,12 +2778,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Blood Lord Vladimir',
- '2011-11-21 00:00:00',
+ '2011-11-21',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vladimir_5.jpg',
  5,
  18),
 ('Soulstealer Vladimir',
- '2014-07-10 00:00:00',
+ '2014-07-10',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vladimir_6.jpg',
  4,
  18);
@@ -2792,12 +2791,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Ashen Lord Aurelion Sol',
- '2016-03-24 00:00:00',
+ '2016-03-24',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/AurelionSol_1.jpg',
  4,
  19),
 ('Mecha Aurelion Sol',
- '2018-08-15 00:00:00',
+ '2018-08-15',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/AurelionSol_2.jpg',
  4,
  19);
@@ -2805,12 +2804,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Arcade Kai´Sa',
- '2019-06-28 00:00:00',
+ '2019-06-28',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kaisa_17.jpg',
  4,
  20),
 ('Heavenscale Kai´Sa',
- '2024-02-07 00:00:00',
+ '2024-02-07',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kaisa_59.jpg',
  4,
  20);
@@ -2818,12 +2817,12 @@ VALUES
  INSERT INTO skins (name, release_date, image, tier_id, champion_id)
  VALUES
  ('Giant Enemy Crabgot',
-  '2010-08-24 00:00:00',
+  '2010-08-24',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Urgot_1.jpg',
   2,
   21),
  ('Battlecast Urgot',
-  '2012-03-05 00:00:00',
+  '2012-03-05',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Urgot_3.jpg',
   4,
   21);
@@ -2831,12 +2830,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Outback Renekton',
- '2011-01-18 00:00:00',
+ '2011-01-18',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Renekton_2.jpg',
  2,
  22),
 ('Pool Party Renekton',
- '2013-09-09 00:00:00',
+ '2013-09-09',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Renekton_6.jpg',
  3,
  22);
@@ -2844,12 +2843,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Withered Rose Zeri',
- '2022-01-20 00:00:00',
+ '2022-01-20',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_1.jpg',
  3,
  23),
 ('Ocean Song Zeri',
- '2022-06-09 00:00:00',
+ '2022-06-09',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_10.jpg',
  3,
  23);
@@ -2857,12 +2856,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Surfer Singed',
- '2010-12-06 00:00:00',
+ '2010-12-06',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Singed_3.jpg',
  3,
  24),
 ('Augmented Singed',
- '2012-07-09 00:00:00',
+ '2012-07-09',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Singed_5.jpg',
  3,
  24);
@@ -2870,12 +2869,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Eternum Rek´Sai',
- '2014-12-11 00:00:00',
+ '2014-12-11',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/RekSai_1.jpg',
  4,
  25),
 ('Blackfrost Rek´Sai',
- '2020-03-05 00:00:00',
+ '2020-03-05',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/RekSai_1.jpg',
  4,
  25);
@@ -2883,12 +2882,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Traditional Trundle',
- '2013-04-30 00:00:00',
+ '2013-04-30',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Trundle_3.jpg',
  3,
  26),
 ('Constable Trundle',
- '2014-11-28 00:00:00',
+ '2014-11-28',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Trundle_4.jpg',
  2,
  26);
@@ -2896,12 +2895,12 @@ VALUES
  INSERT INTO skins (name, release_date, image, tier_id, champion_id)
  VALUES
  ('Mecha Aatrox',
-  '2014-07-24 00:00:00',
+  '2014-07-24',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_2.jpg',
   4,
   27),
  ('Blood Moon Aatrox',
-  '2019-01-10 00:00:00',
+  '2019-01-10',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_7.jpg',
   4,
   27);
@@ -2909,12 +2908,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Longhorn Alistar',
- '2011-02-16 00:00:00',
+ '2011-02-16',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Alistar_4.jpg',
  1,
  28),
 ('Moo Cow Alistar',
- '2017-03-30 00:00:00',
+ '2017-03-30',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Alistar_10.jpg',
  3,
  28);
@@ -2922,12 +2921,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Stinger Akali',
- '2010-05-10 00:00:00',
+ '2010-05-10',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Akali_1.jpg',
  1,
  29),
 ('Nurse Akali',
- '2011-01-04 00:00:00',
+ '2011-01-04',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Akali_4.jpg',
  3,
  29);
@@ -2935,12 +2934,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Elderwood Ornn',
- '2020-12-10 00:00:00',
+ '2020-12-10',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ornn_2.jpg',
  4,
  30),
 ('Choo-Choo Ornn',
- '2024-03-31 00:00:00',
+ '2024-03-31',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ornn_20.jpg',
  4,
  30);
@@ -2948,12 +2947,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Commando Galio',
- '2011-01-18 00:00:00',
+ '2011-01-18',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Galio_3.jpg',
  1,
  31),
 ('Gatekeeper Galio',
- '2012-04-23 00:00:00',
+ '2012-04-23',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Galio_4.jpg',
  5,
  31);
@@ -2961,22 +2960,22 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Darkforge Jarvan IV',
- '2011-07-26 00:00:00',
+ '2011-07-26',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/JarvanIV_3.jpg',
  3,
  32),
 ('Warring Kingdoms Jarvan IV',
- '2013-02-08 00:00:00',
+ '2013-02-08',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/JarvanIV_5.jpg',
  4,
  32),
 ('Faerie Court Milio',
- '2023-03-23 00:00:00',
+ '2023-03-23',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Milio_1.jpg',
  4,
  33),
 ('Rain Shepherd Milio',
- '2024-06-26 00:00:00',
+ '2024-06-26',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Milio_11.jpg',
  4,
  33);
@@ -2984,12 +2983,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Admiral Glasc',
- '2022-02-17 00:00:00',
+ '2022-02-17',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Renata_1.jpg',
  4,
  34),
 ('Prestige La Ilusión Renata Glasc',
- '2023-09-26 00:00:00',
+ '2023-09-26',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Renata_21.jpg',
  5,
  34);
@@ -2997,12 +2996,12 @@ VALUES
  INSERT INTO skins (name, release_date, image, tier_id, champion_id)
  VALUES
  ('Yellow Jacket Shen',
-  '2010-03-24 00:00:00',
+  '2010-03-24',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Shen_2.jpg',
   1,
   35),
  ('Warlord Shen',
-  '2012-04-17 00:00:00',
+  '2012-04-17',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Shen_5.jpg',
   3,
   35);
@@ -3010,12 +3009,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Sandscourge Skarner',
- '2011-08-09 00:00:00',
+ '2011-08-09',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Skarner_1.jpg',
  3,
  36),
 ('Battlecast Alpha Skarner',
- '2014-11-25 00:00:00',
+ '2014-11-25',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Skarner_3.jpg',
  4,
  36);
@@ -3023,12 +3022,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Hyena Warwick',
- '2011-12-05 00:00:00',
+ '2011-12-05',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Warwick_7.jpg',
  3,
  37),
 ('Tundra Hunter Warwick',
- '2010-08-16 00:00:00',
+ '2010-08-16',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Warwick_4.jpg',
  2,
  37);
@@ -3036,12 +3035,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Arcane Caitlyn',
- '2021-11-22 00:00:00',
+ '2021-11-22',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_28.jpg',
  4,
  38),
 ('Sheriff Caitlyn',
- '2011-01-04 00:00:00',
+ '2011-01-04',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_2.jpg',
  1,
  38);
@@ -3049,12 +3048,12 @@ VALUES
  INSERT INTO skins (name, release_date, image, tier_id, champion_id)
  VALUES
  ('Gentleman Cho´Gath',
-  '2010-05-11 00:00:00',
+  '2010-05-11',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Chogath_2.jpg',
   5,
   39),
  ('Jurassic Cho´Gath',
-  '2011-11-01 00:00:00',
+  '2011-11-01',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Chogath_4.jpg',
   1,
   39);
@@ -3062,12 +3061,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Coral Reef Malphite',
- '2010-11-08 00:00:00',
+ '2010-11-08',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Malphite_2.jpg',
  2,
  40),
 ('Glacial Malphite',
- '2012-07-11 00:00:00',
+ '2012-07-11',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Malphite_5.jpg',
  3,
  40);
@@ -3075,12 +3074,12 @@ VALUES
  INSERT INTO skins (name, release_date, image, tier_id, champion_id)
  VALUES
  ('Hillbilly Gragas',
-  '2010-08-02 00:00:00',
+  '2010-08-02',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Gragas_2.jpg',
   2,
   41),
  ('Gragas, Esq.',
-  '2011-04-12 00:00:00',
+  '2011-04-12',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Gragas_4.jpg',
   3,
   41);
@@ -3088,12 +3087,12 @@ VALUES
   INSERT INTO skins (name, release_date, image, tier_id, champion_id)
   VALUES
   ('Neon Strike Vi',
-   '2012-12-19 00:00:00',
+   '2012-12-19',
    'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vi_1.jpg',
    2,
    42),
   ('PROJECT: Vi',
-   '2017-11-22 00:00:00',
+   '2017-11-22',
    'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vi_11.jpg',
    3,
    42);
@@ -3101,12 +3100,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Dragonslayer Braum',
- '2014-05-12 00:00:00',
+ '2014-05-12',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Braum_1.jpg',
  2,
  43),
 ('Santa Braum',
- '2016-12-14 00:00:00',
+ '2016-12-14',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Braum_10.jpg',
  3,
  43);
@@ -3114,36 +3113,36 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Lord Mordekaiser',
- '2011-05-10 00:00:00',
+ '2011-05-10',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Mordekaiser_4.jpg',
  2,
  44),
 ('PROJECT: Mordekaiser',
- '2021-05-27 00:00:00',
+ '2021-05-27',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Mordekaiser_13.jpg',
  5,
  44);
  INSERT INTO skins (name, release_date, image, tier_id, champion_id)
  VALUES
  ('Snow Day Bard',
-  '2015-12-10 00:00:00',
+  '2015-12-10',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Bard_5.jpg',
   3,
   45),
  ('Astronaut Bard',
-  '2020-05-28 00:00:00',
+  '2020-05-28',
   'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Bard_8.jpg',
   3,
   45);
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Prestige True Damage Senna',
- '2020-02-06 00:00:00',
+ '2020-02-06',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Senna_9.jpg',
  5,
  46),
 ('High Noon Senna',
- '2020-06-18 00:00:00',
+ '2020-06-18',
  'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Senna_10.jpg',
  5,
  46);
@@ -3151,12 +3150,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Corporate Mundo',
- '2010-09-13 00:00:00',
+ '2010-09-13',
  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDrMundo_3.jpg&w=1200&q=75',
  5,
  47),
 ('Pool Party Mundo',
- '2015-06-26 00:00:00',
+ '2015-06-26',
  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDrMundo_8.jpg&w=1200&q=75',
  4,
  47);
@@ -3164,12 +3163,12 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Demonblade Tryndamere',
- '2011-08-02 00:00:00',
+ '2011-08-02',
  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_4.jpg&w=1200&q=75',
  5,
  48),
 ('Warring Kingdoms Tryndamere',
- '2014-01-28 00:00:00',
+ '2014-01-28',
  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_6.jpg&w=1200&q=75',
  3,
  48);
@@ -3177,17 +3176,17 @@ VALUES
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
 ('Candy King Ivern',
- '2016-10-05 00:00:00',
+ '2016-10-05',
  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FIvern_1.jpg&w=1200&q=75',
  4,
  49),
 ('Dunkmaster Ivern',
- '2019-04-04 00:00:00',
+ '2019-04-04',
  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FIvern_2.jpg&w=1200&q=75',
  4,
  49),
 ('Astronaut Ivern',
- '2023-02-24 00:00:00',
+ '2023-02-24',
  'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FIvern_20.jpg&w=1200&q=75',
  4,
  49);

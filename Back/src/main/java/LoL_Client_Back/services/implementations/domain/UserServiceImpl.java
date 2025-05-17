@@ -1,6 +1,9 @@
 package LoL_Client_Back.services.implementations.domain;
 
-import LoL_Client_Back.dtos.domain.*;
+import LoL_Client_Back.dtos.user.UserDTO;
+import LoL_Client_Back.dtos.user.UserLootMatchesDTO;
+import LoL_Client_Back.dtos.user.UserMatchesDTO;
+import LoL_Client_Back.dtos.user.UserMatchesWinrateDTO;
 import LoL_Client_Back.dtos.enums.MatchType;
 import LoL_Client_Back.dtos.enums.ServerOption;
 import LoL_Client_Back.dtos.enums.UserRankTier;
@@ -10,7 +13,6 @@ import LoL_Client_Back.entities.reference.RankTierEntity;
 import LoL_Client_Back.entities.reference.ServerRegionEntity;
 import LoL_Client_Back.models.domain.User;
 import LoL_Client_Back.models.domain.UserMatches;
-import LoL_Client_Back.models.reference.RankTier;
 import LoL_Client_Back.models.transaction.UserLoot;
 import LoL_Client_Back.repositories.domain.UserMatchesRepository;
 import LoL_Client_Back.repositories.domain.UserRepository;

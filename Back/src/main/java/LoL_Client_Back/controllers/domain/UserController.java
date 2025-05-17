@@ -1,9 +1,9 @@
 package LoL_Client_Back.controllers.domain;
 
-import LoL_Client_Back.dtos.domain.UserDTO;
-import LoL_Client_Back.dtos.domain.UserLootMatchesDTO;
-import LoL_Client_Back.dtos.domain.UserMatchesDTO;
-import LoL_Client_Back.dtos.domain.UserMatchesWinrateDTO;
+import LoL_Client_Back.dtos.user.UserDTO;
+import LoL_Client_Back.dtos.user.UserLootMatchesDTO;
+import LoL_Client_Back.dtos.user.UserMatchesDTO;
+import LoL_Client_Back.dtos.user.UserMatchesWinrateDTO;
 import LoL_Client_Back.dtos.enums.MatchType;
 import LoL_Client_Back.dtos.enums.ServerOption;
 import LoL_Client_Back.dtos.enums.UserRankTier;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("users")
 public class UserController {
     @Autowired
     UserService userService;
@@ -129,6 +129,8 @@ public class UserController {
     {
         return ResponseEntity.ok(userService.updateUser(id,userDTO,serverOption,rankTiers));
     }
+    
+
 
 
 

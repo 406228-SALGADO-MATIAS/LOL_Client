@@ -1,6 +1,5 @@
-package LoL_Client_Back.dtos.domain;
+package LoL_Client_Back.dtos.user;
 
-import LoL_Client_Back.models.reference.RankTier;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
