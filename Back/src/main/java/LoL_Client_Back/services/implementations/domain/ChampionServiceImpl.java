@@ -224,17 +224,11 @@ public class ChampionServiceImpl implements ChampionService {
         return "Did not find champion with id "+id;
     }
 
-    private ChampionTierPriceEntity getPriceOrThrow(Integer price) {
-        return tierPriceRepository.findByBlueEssenceCost(price)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Price not found: " + price));
-    }
-
     @Override
     public Champion createChampion(String name, Double winrate, String imageUrl, Integer price, ChampionDifficulty difficulty,
                                    ChampionRole role, ChampionRole role2,
-                                   ChampionStyle style, ChampionStyle style2) {
-
+                                   ChampionStyle style, ChampionStyle style2)
+    {
         if (name != null)
         {
             Optional<ChampionEntity> e =
@@ -260,6 +254,12 @@ public class ChampionServiceImpl implements ChampionService {
         }
         throw new ResponseStatusException(HttpStatus.CONFLICT,
                 "You must enter a name for the champion");
+    }
+
+    private ChampionTierPriceEntity getPriceOrThrow(Integer price) {
+        return tierPriceRepository.findByBlueEssenceCost(price)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Price not found: " + price));
     }
 
     private ChampionStyleEntity getChampionStyle (String style)

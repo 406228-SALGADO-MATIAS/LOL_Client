@@ -11,13 +11,6 @@ INSERT INTO champions_styles (style) VALUES ('Assassin');
 INSERT INTO champions_styles (style) VALUES ('Tank');
 INSERT INTO champions_styles (style) VALUES ('Support');
 
-INSERT INTO item_types (type) VALUES ('Fighter');
-INSERT INTO item_types (type) VALUES ('Marksman');
-INSERT INTO item_types (type) VALUES ('Mage');
-INSERT INTO item_types (type) VALUES ('Assassin');
-INSERT INTO item_types (type) VALUES ('Tank');
-INSERT INTO item_types (type) VALUES ('Support');
-
 INSERT INTO maps (map) VALUES ('Summoners Rift');
 INSERT INTO maps (map) VALUES ('Howling Abyss');
 
@@ -243,7 +236,7 @@ INSERT INTO items (
     name, attack_damage, critical_strike_chance, attack_speed, ability_power,
     health, health_regeneration,mana, mana_regeneration, armor, tenacity, magic_resistance, cool_down_reduction, movement_speed,
     life_steal, armor_penetration, magic_penetration, lethality,
-    healing_and_shield_power, image, effect, cost,item_type
+    healing_and_shield_power, image, effect, cost,item_type,item_type2
 )
 VALUES (
     'Infinity Edge',
@@ -268,32 +261,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3031.png', -- Image URL
     'Increases critical damage and basic attack damage. Grants bonus critical strike chance.', --Effect
     3600, --Cost
-    2 -- Marksman id from the item_types table
-),
-(
-    'Bloodthirster',
-    80,
-    '0%',
-    '0%',
-    0,
-    0,
-    '0%',    -- Health Regeneration / Base health regeneration
-    0,
-    '0%',
-    0,
-    '0%',
-    0,
-    0,
-    '0%',
-    '15%',
-    '0%',
-    '0%',
-    0,
-    '0%',
-    'https://u.gg/lol/items/bloodthirster',
-    'Grants life steal and attack damage. Restores health on critical hits.',
-    3400,
-    2
+    2,null-- Marksman id from the item_types table
 ),
 (
     'Trinity Force',
@@ -318,7 +286,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3078.png',
     'Enchanted Sword: \nAfter using an ability, your next attack deals bonus physical damage on impact. \nHasten: \nAttacking grants you 20 Movement Speed for 2 seconds.',
     3333,
-    2
+    2,1
 ),
 (
     'Zhonya´s Hourglass',
@@ -343,7 +311,7 @@ VALUES (
     'https://u.gg/lol/items/zhonyas-hourglass',
     'Active: \nBecomes invulnerable and untargetable for 2.5 seconds, but cannot move or act during this time.',
     3250,
-    3
+    3,null
 ),
 (
     'Zeke´s Convergence',
@@ -368,7 +336,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3050.png',
     'Active:\n Join an allied champion. When your ally damages an enemy champion, both you and your ally deal additional magic damage for 3 seconds.',
     2200,
-    5
+    5,6
 ),
 (
     'Yun Tal Wildarrows',
@@ -393,7 +361,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3032.png',
     'More Practice, More Lethality:\n On attack, you gain 20% Critical Strike Chance permanently, up to a maximum of 25%.\n Burst:\n Attacking an enemy champion grants you 30% Attack Speed for 4 seconds (40 second cooldown). Attacks reduce this cooldown by 1 second, which increases to 2 seconds if you land a critical strike.',
     3000,
-    2
+    2,null
 ),
 (
     'Youmuu´s Ghostblade',
@@ -418,7 +386,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3142.png',
     'Pursuit: \nYou gain 20 Movement Speed when out of combat.\n Spectral Step:\n You gain movement speed and become Ghosted for 6 seconds.',
     2800,
-    4
+    4,null
 ),
 (
     'Wit´s End',
@@ -443,7 +411,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3091.png',
     'Attacks deal bonus magic damage on impact.',
     2800,
-    2
+    2,1
 ),
 (
     'Winter´s Approach',
@@ -468,7 +436,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3119.png',
     'Wonder:\n Gain health. Mana Flow (8s, max 4 stacks): Attacks and abilities grant 3 maximum Mana (doubles against champions). Transforms into Nordic Winter upon reaching 360 maximum Mana.',
     2400,
-    5
+    5,null
 ),
 (
     'Warmog´s Armor',
@@ -493,7 +461,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3083.png',
     'Warmog´s Heart:\n If you have 1500 additional Health and haven´t taken damage in the last 6 seconds, you regenerate health per second and gain 4% Movement Speed.',
     3300,
-    5
+    5,null
 ),
 (
     'Voltaic Cyclosword',
@@ -518,7 +486,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6699.png',
     'Galvanize: \nMoving and Stealth increase Energized by 75% faster.\n Firmament: \nYour energized attack deals additional physical damage and slows for 0.75 seconds.',
     3000,
-    4
+    4,null
 ),
 (
     'Void Staff',
@@ -543,7 +511,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3135.png',
     '',
     3000,
-    3
+    3,null
 ),
 (
     'Unending Despair',
@@ -568,7 +536,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/2502.png', -- Image URL
     'Deals magic damage to nearby enemies every 5 seconds in combat against champions and heals you for 250% of the damage dealt.', -- Effect
     2800,   -- Cost
-    5       -- Marksman id from the item_types table
+    5,null     -- Marksman id from the item_types table
 ),
 (
     'Umbral Glaive',
@@ -593,7 +561,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3179.png', -- Image URL
     'Blackout:\n When you are near enemy Stealth Wards and traps, reveal them for 8 seconds. \nExtinguish:\n Attacks do bonus damage to Wards.', -- Effect
     2600,   -- Cost
-    4       -- item_type_id (assuming it's the correct ID for the item type)
+    4,null    -- item_type_id (assuming it's the correct ID for the item type)
 ),
 (
     'Titanic Hydra',
@@ -618,7 +586,7 @@ VALUES (
     'https://u.gg/lol/items/titanic-hydra', -- Image URL
     'Cleave:\n Attacks deal physical damage on-hit and to enemies behind the target. \nTitanic Crescent:\n Empower your next Cleave to deal bonus physical damage On-Hit and deal bonus physical damage to enemies behind the target.', -- Effect
     3300,   -- Cost
-    5       -- item_type_id (assuming it's the correct ID for the item type)
+    5,null      -- item_type_id (assuming it's the correct ID for the item type)
 ),
 (
     'Thornmail',
@@ -643,7 +611,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3075.png', -- Image URL
     'Thorns:\n When struck by an Attack, deal magic damage to the attacker and apply 40% Wounds for 3 seconds if they are a champion.', -- Effect
     2450,   -- Cost
-    5       -- item_type_id (assuming it's the correct ID for the item type)
+    5,null       -- item_type_id (assuming it's the correct ID for the item type)
 ),
 (
     'The Collector',
@@ -668,7 +636,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6676.png', -- Image URL
     'Death: \nYour damage executes champions that are below 5% Health. \nTaxes:\n Champion kills grant 25 bonus gold.', -- Effect
     2950,   -- Cost
-    4       -- item_type_id (assuming it's the correct ID for the item type)
+    4,2       -- item_type_id (assuming it's the correct ID for the item type)
 ),
 (
     'Sunfire Aegis',
@@ -693,7 +661,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3068.png', -- Image URL
     'Immolate:\n After taking or dealing damage, deal magic damage per second to nearby enemies for 3 seconds.', -- Effect
     2700,   -- Cost
-    5       -- item_type_id (assuming it's the correct ID for the item type)
+    5,null      -- item_type_id (assuming it's the correct ID for the item type)
 ),
 (
     'Sundered Sky',
@@ -718,7 +686,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6610.png', -- Image URL
     'Lightshield Strike:\n Your first Attack against a champion Critically Strikes and restores Health.', -- Effect
     3100,   -- Cost
-    1       -- item_type_id (assuming it's the correct ID for the item type)
+    1,null      -- item_type_id (assuming it's the correct ID for the item type)
 ),
 (
     'Stridebreaker',
@@ -743,7 +711,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6631.png', -- Image URL
     'Cleave:\n Attacks deal physical damage to nearby enemies. \nBreaking Shockwave:\n Deal physical damage and Slow nearby enemies by 35%. Gain 35% decaying Move Speed per champion hit for 3 seconds.', -- Effect
     3300,   -- Cost
-    1       -- item_type_id (assuming it's the correct ID for the item type)
+    1,null      -- item_type_id (assuming it's the correct ID for the item type)
 ),
 (
     'Stormsurge',
@@ -768,7 +736,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/4646.png', -- Image URL
     'Stormraider:\n Dealing 25% of a champion´s maximum Health within 2.5s applies Squall to them and grants 25% Move Speed for 1.5 seconds.\n Squall:\n After 2 seconds, deal magic damage. If the target dies before Squall triggers, it damages nearby enemies and grants 30 gold.', -- Effect
     2900,   -- Cost
-    3       -- item_type_id (assuming it's the correct ID for the item type)
+    3,null      -- item_type_id (assuming it's the correct ID for the item type)
 ),
 (
     'Sterak´s Gage',
@@ -793,7 +761,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3053.png', -- Image URL
     'The Claws that Catch:\n Gain bonus Attack Damage. \nLifeline:\n Taking damage that would reduce your Health below 30% grants a decaying Shield for 4.5 seconds.', -- Effect
     3200,    -- Cost
-    1        -- item_type_id (assuming it’s the correct ID for this item type)
+    1, 5       -- item_type_id (assuming it’s the correct ID for this item type)
 ),
 (
     'Statikk Shiv',
@@ -818,7 +786,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3087.png', -- Image URL
     'Electrospark: \nAttacks trigger chain lightning On-Hit, dealing magic damage with a cooldown. \nElectroshock:\n Takedowns within 3 seconds of damaging the target reset Electrospark´s cooldown.', -- Effect
     2700,     -- Cost
-    2         -- item_type_id (asumiendo que es el ID correcto para este tipo de ítem)
+    2,null         -- item_type_id (asumiendo que es el ID correcto para este tipo de ítem)
 ),
 (
     'Staff of Flowing Water',    -- Item name
@@ -843,7 +811,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6616.png', -- Image URL
     'Rapids:\n Healing or Shielding an ally grants you both 45 Ability Power for 4 seconds.', -- Effect
     2250,                        -- Cost
-    6                            -- item_type_id
+    6,null                            -- item_type_id
 ),
 (
     'Spirit Visage',            -- Item name
@@ -868,7 +836,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3065.png', -- Image URL
     'Boundless Vitality:\n Heals and Shields on you are increased by 25%.', -- Effect
     2700,                        -- Cost
-    5                           -- item_type_id
+    5,null                           -- item_type_id
 ),
 (
     'Spear of Shojin',          -- Item name
@@ -893,7 +861,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3161.png', -- Image URL
     'Dragonforce:\n Gain 25 Basic Ability Haste. \nFocused Will: \nDealing damage with Abilities increases your Champion´s Ability and Passive damage by 3% for 6 seconds. (stacks 4 times).', -- Effect
     3100,                       -- Cost
-    1                           -- item_type_id
+    1,null                           -- item_type_id
 ),
 (
     'Shurelya´s Battlesong',   -- Item name
@@ -918,7 +886,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/2065.png', -- Image URL
     'Inspiring Speech:\n Grant nearby allies 30% Move Speed for 4 seconds.', -- Effect
     2200,                       -- Cost
-    6                           -- item_type_id
+    6,null                           -- item_type_id
 ),
 (
     'Shadowflame',              -- Item name
@@ -943,7 +911,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/4645.png', -- Image URL
     'Cinderbloom:\n Magic and true damage Critically Strikes enemies below 40% Health, dealing 20% increased damage.', -- Effect
     3200,                       -- Cost
-    3                           -- item_type_id
+    3 ,null                          -- item_type_id
 ),
 (
     'Serylda´s Grudge',         -- Item name
@@ -968,7 +936,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6694.png', -- Image URL
     'Bitter Cold:\n Damaging Abilities Slow enemies below 50% Health by 30% for 1 second.', -- Effect
     3000,                        -- Cost
-    4                            -- item_type_id
+    4,null                        -- item_type_id
 ),
 (
     'Serpent´s Fang',           -- Item name
@@ -993,7 +961,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6695.png', -- Image URL
     'Shield Reaver:\n Damaging an enemy champion reduces Shields they gain by % for 3 seconds. If they were not already affected by Shield Reaver, reduce Shields on them by %.', -- Effect
     2500,                        -- Cost
-    4                        -- item_type_id
+    4,null            -- item_type_id
 ),
 (
     'Archangel´s Staff',         -- Item name
@@ -1018,7 +986,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3003.png', -- Image URL
     'Awe: \n Gain Ability Power equal to 1% bonus Mana. Manaflow (8s, max 5 charges): Landing Abilities grant 5 max Mana (doubled vs. champions). Transforms into Seraph´s Embrace at 360 max Mana.', -- Effect
     2900,                        -- Cost
-    3                          -- item_type_id
+    3,null                          -- item_type_id
 ),
 (
     'Rylai´s Crystal Scepter',   -- Item name
@@ -1043,7 +1011,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3116.png', -- Image URL
     'Rimefrost:\n Damaging Abilities Slow enemies by 30% for 1 second.', -- Effect
     2600,                        -- Cost
-    3                           -- item_type_id
+    3 , null                           -- item_type_id
 ),
 (
     'Runaan´s Hurricane',      -- Item name
@@ -1068,7 +1036,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3085.png', -- Image URL
     'Wind´s Fury:\n Attacks fire bolts at 2 additional enemies near the target. Each bolt deals physical damage and applies On-Hit effects.', -- Effect
     2650,                       -- Cost
-    2                           -- item_type_id
+    2 ,null                          -- item_type_id
 ),
 (
     'Rod of Ages',              -- Item name
@@ -1093,7 +1061,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6657.png', -- Image URL
     'Timeless:\n This item gains 10 Health, 20 Mana, and 3 Ability Power every 60 seconds up to 10 times.Upon reaching max stacks, gain a level. \nEternity:\n Taking damage from champions restores 7% of the damage as Mana. Casting an ability heals for 25% of Mana spent.', -- Effect
     2600,                       -- Cost
-    3                          -- item_type_id
+    3,null                          -- item_type_id
 ),
 (
     'Riftmaker',                -- Item name
@@ -1118,7 +1086,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/4633.png', -- Image URL
     'Void Corruption: \nFor each second in combat with enemy champions, deal 2% bonus damage, up to 8%. At maximum strength, gain Omnivamp. \nVoid Infusion:\n Gain 2% of your bonus Health as Ability Power.', -- Effect
     3100,                       -- Cost
-    3                           -- item_type_id
+    3  , null                         -- item_type_id
 ),
 (
     'Redemption',               -- Item name
@@ -1143,7 +1111,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3107.png', -- Image URL
     'Intervention:\n Restore 200 - 400 Health to allied champions and deal 10% max Health true damage to enemy champions after 2.5 seconds.', -- Effect
     2300,                       -- Cost
-    6                           -- item_type_id
+    6    ,null                       -- item_type_id
 ),
 (
     'Ravenous Hydra',           -- Item name
@@ -1168,7 +1136,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3074.png', -- Image URL
     'Cleave:\n Attacks deal physical damage to nearby enemies. \nRavenous Crescent:\n Deal physical damage to enemies around you. Your Life Steal applies to this damage.', -- Effect
     3300,                       -- Cost
-    1                           -- item_type_id
+    1 ,null                          -- item_type_id
 ),
 (
     'Rapid Firecannon',         -- Item name
@@ -1193,7 +1161,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3094.png', -- Image URL
     'Sharpshooter:\n Your Energized Attack deals 40 bonus magic damage and gains 35% bonus Attack Range.', -- Effect
     2650,                       -- Cost
-    2                           -- item_type_id
+    2  ,null                         -- item_type_id
 ),
 (
     'Randuin´s Omen',         -- Item name
@@ -1218,7 +1186,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3143.png', -- Image URL
     'Resilience:\n Receive 30% less damage from Critical Strikes. \nHumility:\n Slow nearby enemies by 70% for 2 seconds.', -- Effect
     2700,                      -- Cost
-    5                          -- item_type_id
+    5    , null                      -- item_type_id
 ),
 (
     'Rabadon´s Deathcap',     -- Item name
@@ -1243,7 +1211,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3089.png', -- Image URL
     'Magical Opus:\n Increases your total Ability Power by 30%.', -- Effect
     3600,                      -- Cost
-    3                          -- item_type_id
+    3     ,null                     -- item_type_id
 ),
 (
     'Profane Hydra',          -- Item name
@@ -1268,7 +1236,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6698.png', -- Image URL
     'Cleave: \nAttacks deal physical damage to nearby enemies. \nHeretical Cleave:\n Deal physical damage around you.', -- Effect
     3200,                     -- Cost
-    2                         -- item_type_id
+    4,null                       -- item_type_id
 ),
 (
     'Phantom Dancer',         -- Item name
@@ -1293,7 +1261,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3046.png', -- Image URL
     'Spectral Waltz:\n Become Ghosted.', -- Effect
     2650,                     -- Cost
-    2                         -- item_type_id
+    2 , null                        -- item_type_id
 ),
 (
     'Overlord´s Bloodmail',  -- Item name
@@ -1318,7 +1286,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/2501.png', -- Image URL
     'Tyranny:\n Gain 2% of your bonus Health as Attack Damage. \nRetribution\n Gain up to 10% increased Attack Damage based on your percent missing Health.', -- Effect
     3300,                     -- Cost
-    5                         -- item_type_id
+    5,null                         -- item_type_id
 ),
 (
     'Opportunity',            -- Item name
@@ -1343,7 +1311,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6701.png', -- Image URL
     'Preparation\n After being out of combat with Champions for 8 seconds gain Lethality. This Lethality lasts for 3 seconds after dealing damage to champions. Extraction\n When a champion that you damaged within 3 seconds dies, gain 200 decaying Move Speed for 1.5 seconds.', -- Effect
     2700,                     -- Cost
-    4                         -- item_type_id
+    4  , null                       -- item_type_id
 ),
 (
     'Mortal Reminder',         -- Item name
@@ -1368,7 +1336,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3033.png', -- Image URL
     'Grievous Wounds\n Dealing physical damage applies 40% Wounds to enemy champions for 3 seconds.', -- Effect
     3200,                      -- Cost
-    2                          -- item_type_id
+    2,1                          -- item_type_id
 ),
 (
     'Morellonomicon',          -- Item name
@@ -1393,7 +1361,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3165.png', -- Image URL
     'Grievous Wounds\n Dealing magic damage to champions applies 40% Wounds for 3 seconds.', -- Effect
     2950,                      -- Cost
-    3                          -- item_type_id
+    3      , null                    -- item_type_id
 ),
 (
     'Moonstone Renewer',       -- Item name
@@ -1418,7 +1386,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6617.png', -- Image URL
     'Starlit Grace\n Healing or shielding an ally chains the effect to another ally (excluding yourself), healing 30% or shielding 35% of the original amount.', -- Effect
     2200,                      -- Cost
-    6                          -- item_type_id
+    6,null                          -- item_type_id
 ),
 (
     'Mikael´s Blessing',      -- Item name
@@ -1443,7 +1411,7 @@ VALUES (
     'https://u.gg/lol/items/mikaels-blessing', -- Image URL
     'Purify\n Remove all crowd control debuffs (excluding Airborne and Suppression) from an ally champion and restore 100 - 250 Health.', -- Effect
     2300,                      -- Cost
-    6                          -- item_type_id
+    6 , null                         -- item_type_id
 ),
 (
     'Maw of Malmortius',       -- Item name
@@ -1468,7 +1436,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3156.png', -- Image URL
     'Lifeline\n Taking magic damage that would reduce your Health below 30% grants a magic damage Shield for 3 seconds and 10% Omnivamp until end of combat.', -- Effect
     3100,                      -- Cost
-    1                          -- item_type_id
+    1 , 4                         -- item_type_id
 ),
 (
     'Malignance',              -- Item name
@@ -1493,7 +1461,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3118.png', -- Image URL
     'Scorn\n Gain 20 Ultimate Ability Haste. Hatefog\n Damaging a champion with your Ultimate burns the ground beneath them for 3s, dealing magic damage per second and reducing their Magic Resist.', -- Effect
     2700,                      -- Cost
-    3                          -- item_type_id
+    3  , null                        -- item_type_id
 ),
 (
     'Luden´s Companion',       -- Item name
@@ -1518,7 +1486,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6655.png', -- Image URL
     'Fire\n Damaging Abilities fire 6 Shots that deal bonus magic damage to the target and nearby enemies. Remaining Shots fire on the primary target, dealing 20% damage.', -- Effect
     2850,                       -- Cost
-    3                           -- item_type_id
+    3 ,null                          -- item_type_id
 ),
 (
     'Lord Dominik´s Regards',  -- Item name
@@ -1543,7 +1511,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3036.png', -- Image URL
     '',                       -- Effect (no specific effect listed)
     3000,                        -- Cost
-    2                            -- item_type_id
+    2  ,null                          -- item_type_id
 ),
 (
     'Locket of the Iron Solari',  -- Item name
@@ -1568,7 +1536,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3190.png',  -- Image URL
     'Devotion\n Grant nearby allies a 200 - 360 Shield that decays over 2.5 seconds.',  -- Effect
     2200,                         -- Cost
-    6                             -- item_type_id
+    6 ,null                            -- item_type_id
 ),
 (
     'Lich Bane',                 -- Item name
@@ -1593,7 +1561,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3100.png',  -- Image URL
     'Spellblade\n After using an Ability, your next Attack deals bonus magic damage On-Hit.',  -- Effect
     3200,                         -- Cost
-    3                             -- item_type_id
+    3     , null                        -- item_type_id
 ),
 (
     'Liandry´s Torment',         -- Item name
@@ -1618,7 +1586,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6653.png', -- Image URL
     'Torment\n Damaging Abilities burn enemies for 2% max Health magic damage per second for 3 seconds. Suffering\n For each second in combat with enemy champions, deal 2% bonus damage, up to 6%.',  -- Effects
     3000,                         -- Cost
-    3                             -- item_type_id
+    3    ,null                         -- item_type_id
 ),
 (
     'Kraken Slayer',             -- Item name
@@ -1643,7 +1611,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6672.png', -- Image URL
     'Bring It Down\n Every third Attack deals bonus physical damage On-Hit, increased based on their missing Health.',  -- Effects
     3100,                         -- Cost
-    2                             -- item_type_id
+    2 ,null                            -- item_type_id
 ),
 (
     'Knight´s Vow',             -- Item name
@@ -1668,7 +1636,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3109.png',  -- Image URL
     'Sacrifice\n While near your Worthy ally, take 12% of the damage they receive and heal for 10% of the damage they deal to champions. \nPledge\n: Designate an ally as Worthy.',  -- Effects
     2300,                         -- Cost
-    6                             -- item_type_id
+    6   ,null                          -- item_type_id
 ),
 (
     'Kaenic Rookern',            -- Item name
@@ -1693,7 +1661,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/2504.png',  -- Image URL
     'Magebane\nAfter not taking magic damage for 15 seconds, gain a magic shield.',  -- Effects
     2900,                        -- Cost
-    5                            -- item_type_id (Mage corresponds to ID 3)
+    5  ,null                          -- item_type_id (Mage corresponds to ID 3)
 ),
 (
     'Jak´Sho, The Protean',     -- Item name
@@ -1718,7 +1686,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6665.png',  -- Image URL
     'Voidborn Resilience\nAfter 5 seconds of champion combat, increase your bonus Armor and Magic Resist by 30% until end of combat.',  -- Effects
     3200,                        -- Cost
-    5                            -- item_type_id (Mage corresponds to ID 5)
+    5       ,null                     -- item_type_id (Mage corresponds to ID 5)
 ),
 (
     'Imperial Mandate',          -- Item name
@@ -1743,7 +1711,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/4005.png',  -- Image URL
     'Coordinated Fire (30s per target)\nSlowing or Immobilizing an enemy champion marks them for 5 seconds. Ally champion damage detonates the mark, dealing magic damage equal to 10% of current health.',  -- Effects
     2250,                        -- Cost
-    6                            -- item_type_id (Support corresponds to ID 6)
+    6  ,null                          -- item_type_id (Support corresponds to ID 6)
 ),
 (
     'Immortal Shieldbow',        -- Item name
@@ -1768,7 +1736,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6673.png',  -- Image URL
     'Lifeline\nTaking damage that would reduce your Health below 30% grants a Shield for 3 seconds.',  -- Effects
     3000,                        -- Cost
-    6                            -- item_type_id (Support corresponds to ID 6)
+    6,null                            -- item_type_id (Support corresponds to ID 6)
 ),
 (
     'Iceborn Gauntlet',          -- Item name
@@ -1793,7 +1761,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6662.png',  -- Image URL
     'Spellblade\nAfter using an Ability, your next Attack deals bonus physical damage On-Hit and creates a frost field for 2s that Slows.',  -- Effects
     2900,                        -- Cost
-    5                            -- item_type_id (Tank corresponds to ID 5)
+    5,1                            -- item_type_id (Tank corresponds to ID 5)
 ),
 (
     'Hubris',                    -- Item name
@@ -1818,7 +1786,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6697.png',  -- Image URL
     'Eminence\nWhen a champion that you damaged within 3 seconds dies, gain 15 Attack Damage plus 2 per champion killed for 90 seconds.',  -- Effects
     3000,                         -- Cost
-    4                             -- item_type_id (Assassin corresponds to ID 4)
+    4, 2                            -- item_type_id (Assassin corresponds to ID 4)
 ),
 (
     'Horizon Focus',             -- Item name
@@ -1843,7 +1811,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/4628.png',  -- Image URL
     'Hypershot\nDealing Ability damage to champions at 600 range or greater Reveals them for 6 seconds.\nDeal 10% increased damage to enemies Revealed by this item.\nFocus\nWhen Hypershot is triggered, Reveal all other enemy champions within 1400 range of them for 3 seconds.',  -- Effects
     2700,                        -- Cost
-    3                             -- item_type_id (Mage corresponds to ID 3)
+    3  ,null                           -- item_type_id (Mage corresponds to ID 3)
 ),
 (
     'Hollow Radiance',           -- Item name
@@ -1868,7 +1836,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6664.png',  -- Image URL
     'Immolate\nAfter taking or dealing damage, deal magic damage per second to nearby enemies for 3 seconds.\nDesolate\nKilling an enemy deals magic damage around them.',  -- Effects
     2800,                        -- Cost
-    5                             -- item_type_id (Tank corresponds to ID 5)
+    5,null                             -- item_type_id (Tank corresponds to ID 5)
 ),
 (
     'Heartsteel',                -- Item name
@@ -1893,7 +1861,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3084.png',  -- Image URL
     'Colossal Consumption\nIf an enemy champion is nearby for a few seconds, your next Attack against them deals 80 plus of 12% of your Item Health as bonus physical damage and grants 12% of the damage as max Health.\nGoliath\nFor each 1000 max Health, gain 3% increased size, up to 30%.',  -- Effects
     3000,                        -- Cost
-    5                             -- item_type_id (Tank corresponds to ID 5)
+    5,null                             -- item_type_id (Tank corresponds to ID 5)
 ),
 (
     'Guinsoo´s Rageblade',       -- Item name
@@ -1918,7 +1886,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3124.png',  -- Image URL
     'Wrath\nAttacks deal 30 bonus magic damage On-Hit.\nSeething Strike\nAttacks grant 8% Attack Speed for 3 seconds. (stacks 4 times).\nWhile fully stacked, every third Attack applies On-Hit effects twice.',  -- Effects
     3000,                        -- Cost
-    2                             -- item_type_id (Marksman corresponds to ID 2)
+    2  ,null                           -- item_type_id (Marksman corresponds to ID 2)
 ),
 (
     'Guardian Angel',            -- Item name
@@ -1943,7 +1911,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3026.png',  -- Image URL
     'Rebirth\nUpon taking lethal damage, restores 50% base Health and 100% max Mana after 4 seconds of Stasis.',  -- Effects
     3200,                        -- Cost
-    2                             -- item_type_id (Marksman corresponds to ID 2)
+    2 ,1                            -- item_type_id (Marksman corresponds to ID 2)
 ),
 (
     'Frozen Heart',              -- Item name
@@ -1968,7 +1936,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3110.png',  -- Image URL
     'Winter´s Caress\nReduce the Attack Speed of nearby champions by 20%.',  -- Effects
     2500,                        -- Cost
-    5                             -- item_type_id (Tank corresponds to ID 5)
+    5,null                             -- item_type_id (Tank corresponds to ID 5)
 ),
 (
     'Force of Nature',          -- Item name
@@ -1993,7 +1961,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/4401.png',  -- Image URL
     'Steadfast\nGain 70 Magic Resist and 6% bonus Move Speed after taking magic damage from Champions 8 times.',  -- Effects
     2800,                        -- Cost
-    5                             -- item_type_id (Tank corresponds to ID 5)
+    5 , null                            -- item_type_id (Tank corresponds to ID 5)
 ),
 (
     'Fimbulwinter',             -- Item name
@@ -2018,7 +1986,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3121.png',  -- Image URL
     'Everlasting (Os)\nImmobilizing or Slowing (Melee only) an enemy champion grants a Shield for 3 seconds.\nThe Shield is increased by 80% if more than one enemy is nearby.',  -- Effects
     2400,                        -- Cost
-    5                             -- item_type_id (Tank corresponds to ID 5)
+    5 ,null                            -- item_type_id (Tank corresponds to ID 5)
 ),
 (
     'Experimental Hexplate',    -- Item name
@@ -2043,7 +2011,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3073.png',  -- Image URL
     'Hexcharged\nGain 30 Ultimate Ability Haste to your definitive\nOverdrive\nAfter casting your Ultimate, gain 30% Attack Speed and 15% Move Speed for 8 seconds.',  -- Effects
     3000,                        -- Cost
-    1                            -- item_type_id (Fighter corresponds to ID 2)
+    1 , null                           -- item_type_id (Fighter corresponds to ID 2)
 ),
 (
     'Essence Reaver',           -- Item name
@@ -2068,7 +2036,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/3508.png',  -- Image URL
     'Essence Drain\nAttacks grant Mana On-Hit.',  -- Effects
     2900,                       -- Cost
-    1                           -- item_type_id (Fighter corresponds to ID 2)
+    2,1                           -- item_type_id (Fighter corresponds to ID 2)
 ),
 (
     'Edge of Night',            -- Item name
@@ -2093,7 +2061,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/3814.png',  -- Image URL
     'Annul\nGrants a Spell Shield that blocks the next enemy Ability.',  -- Effects
     3000,                       -- Cost
-    4                           -- item_type_id (Assassin corresponds to ID 4)
+    4,null                           -- item_type_id (Assassin corresponds to ID 4)
 ),
 (
     'Eclipse',                  -- Item name
@@ -2118,7 +2086,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/6692.png',  -- Image URL
     'Ever Rising Moon\nHitting a champion with 2 separate Attacks or Abilities within 2 seconds grants you a Shield for 2 seconds.',  -- Effects
     2900,                       -- Cost
-    1                           -- item_type_id (Fighter corresponds to ID 1)
+    1 , 4                          -- item_type_id (Fighter corresponds to ID 1)
 ),
 (
     'Echoes of Helia',          -- Item name
@@ -2143,7 +2111,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/6620.png',  -- Image URL
     'Soul Siphon\nDamaging a champion grants a Soul Shard, up to 2.\nHealing or Shielding an ally consumes all Soul Shards to restore Health and deal magic damage to the nearest enemy champion per Shard.',  -- Effects
     2200,                       -- Cost
-    6                           -- item_type_id (Support corresponds to ID 6)
+    6  , null                         -- item_type_id (Support corresponds to ID 6)
 ),
 (
     'Deathfire Grasp',          -- Item name
@@ -2168,7 +2136,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/3128.png',  -- Image URL
     'Active - The Silence: Deal magic damage equal to 15% of the Target´s Max Health, and then amplify damage they take by 15% for 4 seconds (90(0s)).',  -- Effects
     2900,                       -- Cost
-    3                           -- item_type_id (Mage corresponds to ID 3)
+    3 , null                          -- item_type_id (Mage corresponds to ID 3)
 ),
 (
     'Death´s Dance',           -- Item name
@@ -2193,7 +2161,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/6333.png',  -- Image URL
     'Ignore Pain\nA percentage of damage taken is dealt to you over 3 seconds instead.\nDefy\nWhen a champion that you damaged within 3 seconds dies, cleanse Ignore Pain´s remaining damage and restore Health over 2 seconds.',  -- Effects
     3300,                       -- Cost
-    1                           -- item_type_id (Fighter corresponds to ID 1)
+    1, null                          -- item_type_id (Fighter corresponds to ID 1)
 ),
 (
     'Dead Man´s Plate',        -- Item name
@@ -2218,7 +2186,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/3742.png',  -- Image URL
     'Shipwrecker\nWhile moving, build up to 20 bonus Move Speed. Your next Attack discharges built up Move Speed to deal bonus physical damage.\nUnsinkable\nReduce the effectiveness of Slows by 25%.',  -- Effects
     2900,                       -- Cost
-    5                           -- item_type_id (Tank corresponds to ID 5)
+    5 , 1                          -- item_type_id (Tank corresponds to ID 5)
 ),
 (
     'Dawncore',                 -- Item name
@@ -2243,7 +2211,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/6621.png',  -- Image URL
     'First Light\nGain 2% Heal and Shield Power and 10 Ability Power per 100% Base Mana Regen.',  -- Effects
     2500,                       -- Cost
-    6                           -- item_type_id (Support corresponds to ID 6)
+    6, null                           -- item_type_id (Support corresponds to ID 6)
 ),
 (
     'Cryptbloom',               -- Item name
@@ -2268,7 +2236,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/3137.png',  -- Image URL
     'Life from Death\nWhen a champion that you damaged within 3 seconds dies, a nova spreads from their corpse that heals.',  -- Effects
     2850,                       -- Cost
-    3                           -- item_type_id (Mage corresponds to ID 3)
+    3 , null                          -- item_type_id (Mage corresponds to ID 3)
 ),
 (
     'Cosmic Drive',             -- Item name
@@ -2293,7 +2261,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/4629.png',  -- Image URL
     'Spelldance\nDealing magic or true damage to champions grants Move Speed for 4 seconds.',  -- Effects
     3000,                       -- Cost
-    3                           -- item_type_id (Mage corresponds to ID 3)
+    3 , null                          -- item_type_id (Mage corresponds to ID 3)
 ),
 (
     'Chempunk Chainsword',      -- Item name
@@ -2318,7 +2286,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/6609.png',  -- Image URL
     'Hackshorn\nDealing physical damage applies 40% Wounds to enemy champions for 3 seconds.',  -- Effects
     3100,                       -- Cost
-    2                           -- item_type_id (Fighter corresponds to ID 2)
+    1,4                           -- item_type_id (Fighter corresponds to ID 2)
 ),
 (
     'Bloodthirster',            -- Item name
@@ -2343,7 +2311,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/3072.png',  -- Image URL
     'Ichorshield\nConvert excess healing from your Lifesteal to a Shield.',  -- Effects
     3400,                       -- Cost
-    1                           -- item_type_id (Marksman corresponds to ID 1)
+    2, null                           -- item_type_id (Marksman corresponds to ID 1)
 ),
 (
     'Blade of The Ruined King',  -- Item name
@@ -2368,7 +2336,7 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/3153.png',  -- Image URL
     'Mist´s Edge\nAttacks deal a percentage of enemy´s current Health as bonus physical damage On-Hit.\nClawing Shadows\nAttacking a champion 3 times Slows them by 30% for 1 second.',  -- Effects
     3200,                       -- Cost
-    2                           -- item_type_id (Fighter corresponds to ID 2)
+    2  ,1                          -- item_type_id (Fighter corresponds to ID 2)
 ),
 (
     'Blackfire Torch',          -- Item name
@@ -2393,15 +2361,8 @@ VALUES (
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/2503.png',  -- Image URL
     'Baleful Blaze\nDamaging Abilities deals bonus magic damage for 3 seconds.\nBlackfire\nFor each enemy champion, epic and large monster affected by your Baleful Blaze, gain 4% Ability Power.',  -- Effects
     2800,                       -- Cost
-    3                           -- item_type_id (Mage corresponds to ID 3)
-);
-INSERT INTO items (
-    name, attack_damage, critical_strike_chance, attack_speed, ability_power,
-    health, health_regeneration,mana, mana_regeneration, armor, tenacity, magic_resistance, cool_down_reduction, movement_speed,
-    life_steal, armor_penetration, magic_penetration, lethality,
-    healing_and_shield_power, image, effect, cost,item_type
-)
-VALUES
+    3  , null                         -- item_type_id (Mage corresponds to ID 3)
+),
 (
     'Black Cleaver',            -- Item name
     40,                         -- Attack damage
@@ -2425,7 +2386,7 @@ VALUES
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/3071.png',  -- Image URL
     'Carve: Dealing physical damage to champions reduces their Armor by 6% for 6 seconds. (stacks 5 times).\nFervor: Dealing physical damage grants 20 Move Speed for 2 seconds.',  -- Effects
     3000,                       -- Cost
-    1                           -- item_type_id (Fighter corresponds to ID 1)
+    1   , null                        -- item_type_id (Fighter corresponds to ID 1)
 ),
 (
     'Banshee´s Veil',          -- Item name
@@ -2450,7 +2411,7 @@ VALUES
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/3102.png',  -- Image URL
     'Annul: Grants a Spell Shield that blocks the next enemy Ability.',  -- Effects
     3000,                       -- Cost
-    3                           -- item_type_id (Mage corresponds to ID 3)
+    3  , null                         -- item_type_id (Mage corresponds to ID 3)
 ),
 (
     'Axiom Arc',                -- Item name
@@ -2475,7 +2436,7 @@ VALUES
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/6696.png',  -- Image URL
     'Flux: When a champion that you damaged within 3 seconds dies, refund some of your Ultimate Ability´s total cooldown.',  -- Effects
     3000,                       -- Cost
-    4                           -- item_type_id (Assassin corresponds to ID 4)
+    4 , null                        -- item_type_id (Assassin corresponds to ID 4)
 ),
 (
     'Ardent Censer',            -- Item name
@@ -2500,7 +2461,7 @@ VALUES
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/3504.png',  -- Image URL
     'Sanctify: Healing or Shielding an ally enhances you both for 6 seconds, granting 25% Attack Speed and 20 magic damage On-Hit.',  -- Effects
     2200,                       -- Cost
-    6                           -- item_type_id (Support corresponds to ID 6)
+    6 , null                          -- item_type_id (Support corresponds to ID 6)
 ),
 (
     'Anathema´s Chains',       -- Item name
@@ -2525,7 +2486,7 @@ VALUES
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/8001.png',  -- Image URL
     'Vendetta: You gain Vendetta stacks over time. Each stack of Vendetta grants you 1% reduced damage from your Nemesis.\nVengeance: At maximum stacks, your Nemesis has reduced Tenacity while near you.\nACTIVE (0s): Vow: Choose a Nemesis.',  -- Effects
     2500,                       -- Cost
-    5                           -- item_type_id (Tank corresponds to ID 5)
+    5,null                           -- item_type_id (Tank corresponds to ID 5)
 ),
 (
     'Abyssal Mask',             -- Item name
@@ -2550,7 +2511,7 @@ VALUES
     'https://static.bigbrain.gg/assets/lol/riot_static/14.23.1/img/item/8020.png',  -- Image URL
     'Unmake: Reduce nearby enemy champions Magic Resist by 30%.',  -- Effects
     2650,                       -- Cost
-    5                           -- item_type_id (Tank corresponds to ID 5)
+    5 ,null                          -- item_type_id (Tank corresponds to ID 5)
 );
 INSERT INTO skins (name, release_date, image, tier_id, champion_id)
 VALUES
@@ -3331,100 +3292,101 @@ INSERT INTO users (
 -- USER MATCHES
 INSERT INTO user_matches (
     user_id,
-    normal_games_played, normal_wins, normal_losses,
-    rankeds_played, ranked_wins, ranked_losses,
-    arams_played, aram_wins, aram_losses
+    normal_games_played, normal_wins,
+    rankeds_played, ranked_wins,
+    arams_played, aram_wins
 ) VALUES
-(1, 140, 67, 73, 178, 85, 93, 63, 30, 33),
-(2, 140, 67, 73, 159, 77, 82, 84, 42, 42),
-(3, 103, 53, 50, 204, 95, 109, 112, 57, 55),
-(4, 105, 50, 55, 145, 76, 69, 50, 24, 26),
-(5, 126, 60, 66, 210, 111, 99, 104, 53, 51),
-(6, 89, 44, 45, 209, 100, 109, 54, 25, 29),
-(7, 109, 52, 57, 186, 89, 97, 55, 26, 29),
-(8, 122, 58, 64, 219, 105, 114, 69, 35, 34),
-(9, 92, 48, 44, 192, 99, 93, 53, 25, 28),
-(10, 101, 48, 53, 174, 90, 84, 70, 36, 34),
-(11, 98, 50, 48, 165, 85, 80, 108, 51, 57),
-(12, 94, 44, 50, 191, 99, 92, 92, 45, 47),
-(13, 135, 63, 72, 191, 99, 92, 118, 57, 61),
-(14, 103, 50, 53, 144, 74, 70, 63, 31, 32),
-(15, 135, 64, 71, 154, 72, 82, 99, 49, 50),
-(16, 136, 72, 64, 243, 123, 120, 118, 56, 62),
-(17, 125, 63, 62, 148, 71, 77, 92, 47, 45),
-(18, 134, 68, 66, 179, 89, 90, 102, 48, 54),
-(19, 118, 57, 61, 226, 113, 113, 72, 33, 39),
-(20, 106, 54, 52, 166, 81, 85, 105, 52, 53),
-(21, 97, 51, 46, 205, 104, 101, 110, 56, 54),
-(22, 106, 73, 33, 205, 96, 109, 92, 45, 47),
-(23, 95, 66, 29, 158, 91, 67, 53, 33, 20),
-(24, 128, 62, 66, 193, 94, 99, 74, 35, 39),
-(25, 70, 33, 37, 236, 122, 114, 63, 32, 31),
-(26, 129, 61, 68, 146, 70, 76, 81, 40, 41),
-(27, 137, 71, 66, 211, 107, 104, 90, 45, 45),
-(28, 134, 64, 70, 194, 100, 94, 120, 60, 60),
-(29, 101, 50, 51, 247, 125, 122, 85, 41, 44),
-(30, 79, 38, 41, 231, 120, 111, 86, 40, 46),
-(31, 89, 45, 44, 169, 79, 90, 99, 48, 51),
-(32, 139, 90, 49, 199, 103, 96, 103, 64, 39),
-(33, 72, 38, 34, 249, 122, 127, 98, 48, 50),
-(34, 123, 63, 60, 208, 104, 104, 119, 58, 61),
-(35, 132, 67, 65, 143, 70, 73, 99, 47, 52),
-(36, 129, 67, 62, 156, 88, 68, 118, 48, 70),
-(37, 124, 60, 64, 157, 76, 81, 109, 54, 55),
-(38, 113, 59, 54, 237, 118, 119, 98, 50, 48),
-(39, 130, 89, 41, 142, 66, 76, 119, 49, 70),
-(40, 75, 36, 39, 236, 110, 126, 53, 25, 28),
-(41, 86, 41, 45, 200, 102, 98, 64, 33, 31),
-(42, 91, 43, 48, 217, 106, 111, 64, 32, 32),
-(43, 109, 55, 54, 213, 100, 113, 98, 49, 49),
-(44, 101, 51, 50, 153, 73, 80, 88, 46, 42),
-(45, 75, 36, 39, 184, 92, 92, 118, 57, 61),
-(46, 123, 65, 58, 245, 124, 121, 112, 58, 54),
-(47, 89, 47, 42, 195, 95, 100, 72, 37, 35),
-(48, 138, 71, 67, 239, 121, 118, 111, 54, 57),
-(49, 101, 50, 51, 246, 127, 119, 61, 30, 31),
-(50, 118, 57, 61, 183, 91, 92, 53, 25, 28),
-(51, 103, 52, 51, 183, 89, 94, 85, 39, 46),
-(52, 94, 47, 47, 150, 78, 72, 80, 40, 40),
-(53, 132, 62, 70, 197, 120, 77, 52, 25, 27),
-(54, 117, 58, 59, 200, 102, 98, 120, 58, 62),
-(55, 128, 61, 67, 174, 83, 91, 89, 42, 47),
-(56, 138, 70, 68, 237, 116, 121, 73, 37, 36),
-(57, 137, 71, 66, 216, 105, 111, 86, 42, 44),
-(58, 108, 50, 58, 141, 66, 75, 118, 57, 61),
-(59, 86, 40, 46, 221, 108, 113, 112, 56, 56),
-(60, 113, 58, 55, 163, 78, 85, 56, 26, 30),
-(61, 132, 68, 64, 149, 78, 71, 56, 26, 30),
-(62, 101, 52, 49, 155, 74, 81, 103, 51, 52),
-(63, 127, 67, 60, 196, 96, 100, 88, 44, 44),
-(64, 82, 40, 42, 237, 111, 126, 76, 36, 40),
-(65, 140, 75, 65, 149, 86, 63, 70, 34, 36),
-(66, 99, 49, 50, 176, 89, 87, 86, 45, 41),
-(67, 95, 48, 47, 194, 100, 94, 64, 33, 31),
-(68, 79, 40, 39, 147, 76, 71, 71, 37, 34),
-(69, 126, 64, 62, 155, 82, 73, 109, 54, 55),
-(70, 133, 69, 64, 196, 99, 97, 60, 30, 30),
-(71, 73, 37, 36, 151, 75, 76, 79, 41, 38),
-(72, 104, 49, 55, 213, 106, 107, 55, 27, 28),
-(73, 105, 52, 53, 163, 78, 85, 105, 51, 54),
-(74, 112, 54, 58, 181, 92, 89, 63, 30, 33),
-(75, 121, 52, 69, 244, 117, 127, 120, 51, 69),
-(76, 121, 56, 65, 250, 130, 120, 115, 57, 58),
-(77, 76, 39, 37, 164, 83, 81, 116, 60, 56),
-(78, 96, 47, 49, 174, 90, 84, 120, 60, 60),
-(79, 73, 35, 38, 220, 103, 117, 80, 39, 41),
-(80, 98, 47, 51, 247, 128, 119, 64, 32, 32),
-(81, 107, 53, 54, 205, 102, 103, 84, 42, 42),
-(82, 88, 44, 44, 189, 98, 91, 74, 38, 36),
-(83, 105, 54, 51, 238, 116, 122, 103, 48, 55),
-(84, 108, 54, 54, 247, 123, 124, 112, 54, 58),
-(85, 139, 72, 67, 188, 99, 89, 108, 51, 57),
-(86, 119, 73, 46, 169, 103, 66, 102, 65, 37),
-(87, 119, 55, 64, 224, 112, 112, 69, 35, 34),
-(88, 82, 54, 28, 248, 99, 149, 106, 46, 60),
-(89, 89, 43, 46, 149, 75, 74, 110, 53, 57),
-(90, 80, 41, 39, 249, 122, 127, 92, 45, 47);
+(1, 140, 67, 178, 85, 63, 30),
+(2, 140, 67, 159, 77, 84, 42),
+(3, 103, 53, 204, 95, 112, 57),
+(4, 105, 50, 145, 76, 50, 24),
+(5, 126, 60, 210, 111, 104, 53),
+(6, 89, 44, 209, 100, 54, 25),
+(7, 109, 52, 186, 89, 55, 26),
+(8, 122, 58, 219, 105, 69, 35),
+(9, 92, 48, 192, 99, 53, 25),
+(10, 101, 48, 174, 90, 70, 36),
+(11, 98, 50, 165, 85, 108, 51),
+(12, 94, 44, 191, 99, 92, 45),
+(13, 135, 63, 191, 99, 118, 57),
+(14, 103, 50, 144, 74, 63, 31),
+(15, 135, 64, 154, 72, 99, 49),
+(16, 136, 72, 243, 123, 118, 56),
+(17, 125, 63, 148, 71, 92, 47),
+(18, 134, 68, 179, 89, 102, 48),
+(19, 118, 57, 226, 113, 72, 33),
+(20, 106, 54, 166, 81, 105, 52),
+(21, 97, 51, 205, 104, 110, 56),
+(22, 106, 73, 205, 96, 92, 45),
+(23, 95, 66, 158, 91, 53, 33),
+(24, 128, 62, 193, 94, 74, 35),
+(25, 70, 33, 236, 122, 63, 32),
+(26, 129, 61, 146, 70, 81, 40),
+(27, 137, 71, 211, 107, 90, 45),
+(28, 134, 64, 194, 100, 120, 60),
+(29, 101, 50, 247, 125, 85, 41),
+(30, 79, 38, 231, 120, 86, 40),
+(31, 89, 45, 169, 79, 99, 48),
+(32, 139, 90, 199, 103, 103, 64),
+(33, 72, 38, 249, 122, 98, 48),
+(34, 123, 63, 208, 104, 119, 58),
+(35, 132, 67, 143, 70, 99, 47),
+(36, 129, 67, 156, 88, 118, 48),
+(37, 124, 60, 157, 76, 109, 54),
+(38, 113, 59, 237, 118, 98, 50),
+(39, 130, 89, 142, 66, 119, 49),
+(40, 75, 36, 236, 110, 53, 25),
+(41, 86, 41, 200, 102, 64, 33),
+(42, 91, 43, 217, 106, 64, 32),
+(43, 109, 55, 213, 100, 98, 49),
+(44, 101, 51, 153, 73, 88, 46),
+(45, 75, 36, 184, 92, 118, 57),
+(46, 123, 65, 245, 124, 112, 58),
+(47, 89, 47, 195, 95, 72, 37),
+(48, 138, 71, 239, 121, 111, 54),
+(49, 101, 50, 246, 127, 61, 30),
+(50, 118, 57, 183, 91, 53, 25),
+(51, 103, 52, 183, 89, 85, 39),
+(52, 94, 47, 150, 78, 80, 40),
+(53, 132, 62, 197, 120, 52, 25),
+(54, 117, 58, 200, 102, 120, 58),
+(55, 128, 61, 174, 83, 89, 42),
+(56, 138, 70, 237, 116, 73, 37),
+(57, 137, 71, 216, 105, 86, 42),
+(58, 108, 50, 141, 66, 118, 57),
+(59, 86, 40, 221, 108, 112, 56),
+(60, 113, 58, 163, 78, 56, 26),
+(61, 132, 68, 149, 78, 56, 26),
+(62, 101, 52, 155, 74, 103, 51),
+(63, 127, 67, 196, 96, 88, 44),
+(64, 82, 40, 237, 111, 76, 36),
+(65, 140, 75, 149, 86, 70, 34),
+(66, 99, 49, 176, 89, 86, 45),
+(67, 95, 48, 194, 100, 64, 33),
+(68, 79, 40, 147, 76, 71, 37),
+(69, 126, 64, 155, 82, 109, 54),
+(70, 133, 69, 196, 99, 60, 30),
+(71, 73, 37, 151, 75, 79, 41),
+(72, 104, 49, 213, 106, 55, 27),
+(73, 105, 52, 163, 78, 105, 51),
+(74, 112, 54, 181, 92, 63, 30),
+(75, 121, 52, 244, 117, 120, 51),
+(76, 121, 56, 250, 130, 115, 57),
+(77, 76, 39, 164, 83, 116, 60),
+(78, 96, 47, 174, 90, 120, 60),
+(79, 73, 35, 220, 103, 80, 39),
+(80, 98, 47, 247, 128, 64, 32),
+(81, 107, 53, 205, 102, 84, 42),
+(82, 88, 44, 189, 98, 74, 38),
+(83, 105, 54, 238, 116, 103, 48),
+(84, 108, 54, 247, 123, 112, 54),
+(85, 139, 72, 188, 99, 108, 51),
+(86, 119, 73, 169, 103, 102, 65),
+(87, 119, 55, 224, 112, 69, 35),
+(88, 82, 54, 248, 99, 106, 46),
+(89, 89, 43, 149, 75, 110, 53),
+(90, 80, 41, 249, 122, 92, 45);
+
 
 
 --USER X CHAMPIONS

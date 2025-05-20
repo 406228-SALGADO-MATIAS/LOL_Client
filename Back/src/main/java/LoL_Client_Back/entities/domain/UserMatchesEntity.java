@@ -25,27 +25,16 @@ public class UserMatchesEntity {
     @Column(name = "normal_wins")
     private Integer normalWins = 0;
 
-    @Column(name = "normal_losses")
-    private Integer normalLosses = 0;
-
     @Column(name = "rankeds_played")
     private Integer rankedsPlayed = 0;
 
     @Column(name = "ranked_wins")
     private Integer rankedWins = 0;
 
-    @Column(name = "ranked_losses")
-    private Integer rankedLosses = 0;
-
     @Column(name = "arams_played")
     private Integer aramsPlayed = 0;
 
     @Column(name = "aram_wins")
     private Integer aramWins = 0;
-
-    @Column(name = "aram_losses")
-    private Integer aramLosses = 0;
-
-
 
 }

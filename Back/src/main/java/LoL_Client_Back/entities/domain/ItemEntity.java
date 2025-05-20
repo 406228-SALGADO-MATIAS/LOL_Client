@@ -1,5 +1,6 @@
 package LoL_Client_Back.entities.domain;
-import LoL_Client_Back.entities.reference.ItemTypeEntity;
+import LoL_Client_Back.dtos.enums.ChampionStyle;
+import LoL_Client_Back.entities.reference.ChampionStyleEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -54,6 +55,9 @@ public class ItemEntity {
     private Integer cost;
     @JoinColumn(name = "item_type")
     @ManyToOne
-    private ItemTypeEntity itemType;
+    private ChampionStyleEntity itemType;
+    @JoinColumn(name = "item_type2")
+    @ManyToOne
+    private ChampionStyleEntity itemType2;
 
 }

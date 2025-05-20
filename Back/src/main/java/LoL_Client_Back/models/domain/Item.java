@@ -1,6 +1,6 @@
 package LoL_Client_Back.models.domain;
 
-import LoL_Client_Back.models.reference.ItemType;
+import LoL_Client_Back.models.reference.ChampionStyle;
 import jakarta.persistence.Lob;
 import lombok.Data;
 
@@ -30,5 +30,5 @@ public class Item {
     private String image;
     private String effect;
     private Integer cost;
-    private ItemType itemType;
+    private ChampionStyle itemType;
 }
