@@ -23,10 +23,10 @@ public class UserXChampionEntity {
     private LocalDateTime adquisitionDate;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(nullable = false)
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(nullable = false)
     private ChampionEntity champion;
 }

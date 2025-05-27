@@ -182,34 +182,40 @@ public class ChampionServiceImpl implements ChampionService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Did not find champion with id " + id + " to edit");
         }
+        Optional<ChampionEntity> e =
+                championRepository.findByNameIgnoreCase(name);
+        if (e.isEmpty())
+        {
+            ChampionEntity champion = c.get();
 
-        ChampionEntity champion = c.get();
+            champion.setReleaseDate(LocalDate.now());
 
-        champion.setReleaseDate(LocalDate.now());
+            if (name != null) {
+                champion.setName(name);
+            }
+            if (winrate != null) {
+                champion.setWinrate(winrate);
+            }
+            if (difficulty != null) {
+                ChampionDifficultyEntity d = getChampionDifficulty(difficulty.name());
+                champion.setDifficulty(d);
+            }
 
-        if (name != null) {
-            champion.setName(name);
+            champion.setStyle(style != null ? getChampionStyle(style.name()) : null);
+            champion.setStyle2(style2 != null ? getChampionStyle(style2.name()) : null);
+
+            if (price != null) {
+                ChampionTierPriceEntity p = getPriceOrThrow(price);
+                champion.setPrice(p);
+            }
+
+            champion.setRole(role != null ? getChampionRole(role.name()) : null);
+            champion.setRole2(role2 != null ? getChampionRole(role2.name()) : null);
+
+            return buildChampionDTO(championRepository.save(champion));
         }
-        if (winrate != null) {
-            champion.setWinrate(winrate);
-        }
-        if (difficulty != null) {
-            ChampionDifficultyEntity d = getChampionDifficulty(difficulty.name());
-            champion.setDifficulty(d);
-        }
-
-        champion.setStyle(style != null ? getChampionStyle(style.name()) : null);
-        champion.setStyle2(style2 != null ? getChampionStyle(style2.name()) : null);
-
-        if (price != null) {
-            ChampionTierPriceEntity p = getPriceOrThrow(price);
-            champion.setPrice(p);
-        }
-
-        champion.setRole(role != null ? getChampionRole(role.name()) : null);
-        champion.setRole2(role2 != null ? getChampionRole(role2.name()) : null);
-
-        return buildChampionDTO(championRepository.save(champion));
+        throw new ResponseStatusException(HttpStatus.CONFLICT,
+                "There is already a champion named "+name + " in the database. Try another name");
     }
 
     @Override
@@ -225,7 +231,8 @@ public class ChampionServiceImpl implements ChampionService {
     }
 
     @Override
-    public Champion createChampion(String name, Double winrate, String imageUrl, Integer price, ChampionDifficulty difficulty,
+    public Champion createChampion(String name, Double winrate, String imageUrl, Integer price,
+                                   ChampionDifficulty difficulty,
                                    ChampionRole role, ChampionRole role2,
                                    ChampionStyle style, ChampionStyle style2)
     {

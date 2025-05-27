@@ -174,22 +174,27 @@ public class UserServiceImpl implements UserService {
         {
             UserEntity userFound= optionalUserEntity.get();
             ServerRegionEntity serverEntity = getServerByName(serverOption.getFullName());
+
             Optional<RankTierEntity> optionalRankTierEntity =
                     rankTierRepository.findByRank(rankTier.name());
 
-            if (optionalRankTierEntity.isPresent())
-            {
-                RankTierEntity rankTierEntity = optionalRankTierEntity.get();
-                String errorMsg = checkRepeatedUserData(userDTO,serverEntity);
+            RankTierEntity rankTierEntity;
 
-                if (errorMsg.equals("No repeated data"))
-                {
-                    UserEntity updatedUser = buildUpdatedUserEntity(userFound,userDTO,rankTierEntity,serverEntity);
-                    return buildUserMatchesDTO(userRepository.save(updatedUser));
-                }
-                throw new ResponseStatusException(HttpStatus.CONFLICT,errorMsg);
+            if (rankTier.equals(UserRankTier.Unranked)) {
+                rankTierEntity = null;
+            } else {
+                rankTierEntity = optionalRankTierEntity.orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                "Did not find ranktier (" + rankTier + ")")
+                );
             }
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find ranktier ("+rankTier+")");
+            String errorMsg = checkRepeatedUserData(userDTO,serverEntity);
+            if (errorMsg.equals("No repeated data")) {
+                UserEntity updatedUser =
+                        buildUpdatedUserEntity(userFound,userDTO,rankTierEntity,serverEntity);
+                return buildUserMatchesDTO(userRepository.save(updatedUser));
+            }
+            throw new ResponseStatusException(HttpStatus.CONFLICT,errorMsg);
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No user found by id "+id);
     }
@@ -379,7 +384,8 @@ public class UserServiceImpl implements UserService {
         return (wins / gamesPlayed) * 100;
     }
 
-    private List<UserMatchesEntity> getUserMatchesListByTypeAndServer(MatchType matchType,ServerRegionEntity serverRegion)
+    private List<UserMatchesEntity> getUserMatchesListByTypeAndServer(MatchType matchType,
+                                                                      ServerRegionEntity serverRegion)
     {
         List<UserMatchesEntity> list = new ArrayList<>();
         switch (matchType) {
@@ -390,7 +396,8 @@ public class UserServiceImpl implements UserService {
         return list;
     }
 
-    private UserEntity buildUpdatedUserEntity(UserEntity userToUpdate,UserDTO userDTO,RankTierEntity rank, ServerRegionEntity server)
+    private UserEntity buildUpdatedUserEntity(UserEntity userToUpdate,UserDTO userDTO,
+                                              RankTierEntity rank, ServerRegionEntity server)
     {
         UserEntity updtEntity = new UserEntity();
 
@@ -399,7 +406,6 @@ public class UserServiceImpl implements UserService {
         updtEntity.setPassword(userDTO.getPassword());
         updtEntity.setEmail(userDTO.getEmail());
         updtEntity.setNickname(userDTO.getNickname());
-
         updtEntity.setRank(rank);
         updtEntity.setServer(server);
         updtEntity.setRegistrationDate(userToUpdate.getRegistrationDate());
