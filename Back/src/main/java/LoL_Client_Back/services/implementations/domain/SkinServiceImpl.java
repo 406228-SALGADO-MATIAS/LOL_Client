@@ -3,6 +3,7 @@ package LoL_Client_Back.services.implementations.domain;
 import LoL_Client_Back.dtos.SkinDTO;
 import LoL_Client_Back.dtos.enums.Champion;
 import LoL_Client_Back.entities.domain.ChampionEntity;
+import LoL_Client_Back.entities.domain.ItemEntity;
 import LoL_Client_Back.entities.domain.SkinEntity;
 import LoL_Client_Back.entities.reference.SkinTierEntity;
 import LoL_Client_Back.repositories.domain.ChampionRepository;
@@ -19,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -86,6 +88,7 @@ public class SkinServiceImpl implements SkinService {
     public SkinDTO createSkin(String name, Long championId, String imageUrl, Integer rpCost) {
 
         SkinEntity s = getSkinWithChampionAndTierOnly(championId,rpCost);
+        checkRepeatedSkinName(name,null);
         s.setName(name);
         s.setImage(imageUrl);
         s.setReleaseDate(LocalDate.now());
@@ -97,6 +100,7 @@ public class SkinServiceImpl implements SkinService {
         Optional<SkinEntity> optional =
                 skinRepository.findById(skinId);
         if (optional.isPresent()) {
+            checkRepeatedSkinName(name,skinId);
             SkinEntity s = getSkinWithChampionAndTierOnly(championId,rpCost);
             s.setId(skinId);
             s.setName(name);
@@ -148,6 +152,13 @@ public class SkinServiceImpl implements SkinService {
             return dtos;
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,errorMsg);
+    }
+    private void checkRepeatedSkinName(String name, Long currentSkinId) {
+        Optional<SkinEntity> existingSkin = skinRepository.findByNameIgnoreCase(name);
+        if (existingSkin.isPresent() && !Objects.equals(existingSkin.get().getId(), currentSkinId)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Already exists a skin named " + name);
+        }
     }
 
 }

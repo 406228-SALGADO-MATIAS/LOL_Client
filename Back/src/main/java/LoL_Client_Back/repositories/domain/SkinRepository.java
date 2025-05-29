@@ -14,4 +14,5 @@ public interface SkinRepository extends JpaRepository<SkinEntity,Long> {
     List<SkinEntity> findByTier_RpCostLessThanEqualOrderByTier_RpCostDesc(Integer rpCost);
     List<SkinEntity> findByNameIgnoreCaseContaining(String name);
     List<SkinEntity> findByChampion_Id(Long championId);
+    Optional<SkinEntity> findByNameIgnoreCase(String name);
 }
