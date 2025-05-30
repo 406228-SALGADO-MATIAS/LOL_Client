@@ -14,110 +14,120 @@ INSERT INTO champions_styles (style) VALUES ('Support');
 INSERT INTO maps (map) VALUES ('Summoners Rift');
 INSERT INTO maps (map) VALUES ('Howling Abyss');
 
+INSERT INTO champions_tier_prices
+(rp_cost, blue_essence_cost,disenchant_blue_essence)
+VALUES
+(260, 450,90),
+(450, 1350,270),
+(585, 3150,630),
+(790, 4800,960),
+(880, 6300,1260),
+(975, 7800,1560);
+
 --PROFILE ICONS (50)
 --
 --
 --
-INSERT INTO profile_icons (icon, image) VALUES ('Ocean Week Nautilus',
-'https://static.wikia.nocookie.net/leagueoflegends/images/9/9f/Ocean_Week_Nautilus_profileicon.png/revision/latest?cb=20170504230042');
-INSERT INTO profile_icons (icon, image) VALUES ('Ocean Week Fizz',
-'https://static.wikia.nocookie.net/leagueoflegends/images/5/54/Ocean_Week_Fizz_profileicon.png/revision/latest?cb=20170504215037');
-INSERT INTO profile_icons (icon, image) VALUES ('Nightblade',
-'https://static.wikia.nocookie.net/leagueoflegends/images/e/e1/Nightblade_profileicon.png/revision/latest?cb=20170601013122');
-INSERT INTO profile_icons (icon, image) VALUES ('Mark of the Betrayer',
-'https://static.wikia.nocookie.net/leagueoflegends/images/a/ac/Mark_of_the_Betrayer_profileicon.png/revision/latest?cb=20170504222602');
-INSERT INTO profile_icons (icon, image) VALUES ('Little Devil Teemo',
-'https://static.wikia.nocookie.net/leagueoflegends/images/3/39/Little_Devil_Teemo_profileicon.png/revision/latest?cb=20170505004408');
-INSERT INTO profile_icons (icon, image) VALUES ('Lifebead',
-'https://static.wikia.nocookie.net/leagueoflegends/images/0/05/Lifebead_profileicon.png/revision/latest?cb=20180911214252');
-INSERT INTO profile_icons (icon, image) VALUES ('Super Galaxy Wolf',
-'https://static.wikia.nocookie.net/leagueoflegends/images/6/62/Super_Galaxy_Wolf_profileicon.png/revision/latest?cb=20170505003837');
-INSERT INTO profile_icons (icon, image) VALUES ('El Macho',
-'https://static.wikia.nocookie.net/leagueoflegends/images/8/88/El_Macho_profileicon.png/revision/latest?cb=20170504223921');
-INSERT INTO profile_icons (icon, image) VALUES ('Oblivion',
-'https://static.wikia.nocookie.net/leagueoflegends/images/1/12/Oblivion_profileicon.png/revision/latest?cb=20170505004431');
-INSERT INTO profile_icons (icon, image) VALUES ('Blood Moon Rising',
-'https://static.wikia.nocookie.net/leagueoflegends/images/8/89/Blood_Moon_Rising_profileicon.png/revision/latest?cb=20170505013323');
-INSERT INTO profile_icons (icon, image) VALUES ('Seeing Hat',
-'https://static.wikia.nocookie.net/leagueoflegends/images/8/87/Seeing_Hat_profileicon.png/revision/latest?cb=20170505020507');
-INSERT INTO profile_icons (icon, image) VALUES ('God Fist',
-'https://static.wikia.nocookie.net/leagueoflegends/images/8/87/Seeing_Hat_profileicon.png/revision/latest?cb=20170505020507');
-INSERT INTO profile_icons (icon, image) VALUES ('Pentakill Karthus',
-'https://static.wikia.nocookie.net/leagueoflegends/images/3/38/Pentakill_Karthus_profileicon.png/revision/latest?cb=20170728190547');
-INSERT INTO profile_icons (icon, image) VALUES ('Battle Boss Ziggs',
-'https://static.wikia.nocookie.net/leagueoflegends/images/d/d6/Battle_Boss_Ziggs_profileicon.png/revision/latest?cb=20170726002151');
-INSERT INTO profile_icons (icon, image) VALUES ('Pentakill Olaf',
-'https://static.wikia.nocookie.net/leagueoflegends/images/9/93/Pentakill_Olaf_profileicon.png/revision/latest?cb=20170728190551');
-INSERT INTO profile_icons (icon, image) VALUES ('Pentakill II',
-'https://static.wikia.nocookie.net/leagueoflegends/images/e/ea/Pentakill_II_profileicon.png/revision/latest?cb=20170801201912');
-INSERT INTO profile_icons (icon, image) VALUES ('Pentakill Yorick',
-'https://static.wikia.nocookie.net/leagueoflegends/images/3/36/Pentakill_Yorick_profileicon.png/revision/latest?cb=20170728190553');
-INSERT INTO profile_icons (icon, image) VALUES ('Super Galaxy Elise',
-'https://static.wikia.nocookie.net/leagueoflegends/images/6/69/Super_Galaxy_Elise_profileicon.png/revision/latest?cb=20171003201423');
-INSERT INTO profile_icons (icon, image) VALUES ('Transcendent',
-'https://static.wikia.nocookie.net/leagueoflegends/images/9/9d/Transcendent_profileicon.png/revision/latest?cb=20170915210019');
-INSERT INTO profile_icons (icon, image) VALUES ('Resist',
-'https://static.wikia.nocookie.net/leagueoflegends/images/5/57/Resist_profileicon.png/revision/latest?cb=20180617163451');
-INSERT INTO profile_icons (icon, image) VALUES ('Birdio',
-'https://static.wikia.nocookie.net/leagueoflegends/images/7/70/Birdio_profileicon.png/revision/latest?cb=20180617163629');
-INSERT INTO profile_icons (icon, image) VALUES ('Dark Waters Diana',
-'https://static.wikia.nocookie.net/leagueoflegends/images/8/88/Dark_Waters_Diana_profileicon.png/revision/latest?cb=20180617163849');
-INSERT INTO profile_icons (icon, image) VALUES ('Dark Waters Vladimir',
-'https://static.wikia.nocookie.net/leagueoflegends/images/6/60/Dark_Waters_Vladimir_profileicon.png/revision/latest?cb=20180617163403');
-INSERT INTO profile_icons (icon, image) VALUES ('Wolf Banner',
-'https://static.wikia.nocookie.net/leagueoflegends/images/6/6c/Wolf_Banner_profileicon.png/revision/latest?cb=20180618200635');
-INSERT INTO profile_icons (icon, image) VALUES ('Turret Jr',
-'https://static.wikia.nocookie.net/leagueoflegends/images/b/b1/Turret_Jr._profileicon.png/revision/latest?cb=20180926020420');
-INSERT INTO profile_icons (icon, image) VALUES ('KDA Ahri',
-'https://static.wikia.nocookie.net/leagueoflegends/images/b/b6/KDA_Ahri_profileicon.jpg/revision/latest?cb=20230201133527');
-INSERT INTO profile_icons (icon, image) VALUES ('Blood Moon Aatrox',
-'https://static.wikia.nocookie.net/leagueoflegends/images/5/55/Blood_Moon_Aatrox_profileicon.png/revision/latest?cb=20190109010935');
-INSERT INTO profile_icons (icon, image) VALUES ('Blood Moon Pyke',
-'https://static.wikia.nocookie.net/leagueoflegends/images/7/7d/Blood_Moon_Pyke_profileicon.png/revision/latest?cb=20190109011240');
-INSERT INTO profile_icons (icon, image) VALUES ('Battlecast Poro',
-'https://static.wikia.nocookie.net/leagueoflegends/images/2/29/Battlecast_Poro_profileicon.png/revision/latest?cb=20170504221354');
-INSERT INTO profile_icons (icon, image) VALUES ('Icy Minion',
-'https://static.wikia.nocookie.net/leagueoflegends/images/e/e4/Icy_Minion_profileicon.png/revision/latest?cb=20170504221633');
-INSERT INTO profile_icons (icon, image) VALUES ('Bundled Minion',
-'https://static.wikia.nocookie.net/leagueoflegends/images/2/23/Bundled_Minion_profileicon.png/revision/latest?cb=20170504221648');
-INSERT INTO profile_icons (icon, image) VALUES ('Lovely',
-'https://static.wikia.nocookie.net/leagueoflegends/images/f/f8/Lovely_profileicon.png/revision/latest?cb=20170504223425');
-INSERT INTO profile_icons (icon, image) VALUES ('Snowblower',
-'https://static.wikia.nocookie.net/leagueoflegends/images/9/9d/Snowblower_profileicon.png/revision/latest?cb=20170505024651');
-INSERT INTO profile_icons (icon, image) VALUES ('Jade Demon',
-'https://static.wikia.nocookie.net/leagueoflegends/images/d/db/Jade_Demon_profileicon.png/revision/latest?cb=20170504194433');
-INSERT INTO profile_icons (icon, image) VALUES ('Original Tibbers',
-'https://static.wikia.nocookie.net/leagueoflegends/images/f/fb/Original_Tibbers_profileicon.png/revision/latest?cb=20180617164412');
-INSERT INTO profile_icons (icon, image) VALUES ('Ashes, Ashes',
-'https://static.wikia.nocookie.net/leagueoflegends/images/6/6a/Ashes%2C_Ashes_profileicon.png/revision/latest?cb=20180617164340');
-INSERT INTO profile_icons (icon, image) VALUES ('Space Day Nautilus',
-'https://static.wikia.nocookie.net/leagueoflegends/images/a/a5/Space_Day_Nautilus_profileicon.png/revision/latest?cb=20180617163911');
-INSERT INTO profile_icons (icon, image) VALUES ('LEC 2021 Spring',
-'https://static.wikia.nocookie.net/leagueoflegends/images/f/fe/LEC_2021_Spring_profileicon.jpg/revision/latest?cb=20230102034704');
-INSERT INTO profile_icons (icon, image) VALUES ('Rift Scuttler',
-'https://static.wikia.nocookie.net/leagueoflegends/images/9/91/Rift_Scuttler_profileicon.png/revision/latest?cb=20170504213258');
-INSERT INTO profile_icons (icon, image) VALUES ('Ancient Krug',
-'https://static.wikia.nocookie.net/leagueoflegends/images/c/c4/Ancient_Krug_profileicon.png/revision/latest?cb=20170504205357');
-INSERT INTO profile_icons (icon, image) VALUES ('Battlecast',
-'https://static.wikia.nocookie.net/leagueoflegends/images/f/f9/Battlecast_profileicon.png/revision/latest?cb=20170504223843');
-INSERT INTO profile_icons (icon, image) VALUES ('Act 2 Taking a Dive',
-'https://static.wikia.nocookie.net/leagueoflegends/images/5/5a/Act_2_Taking_a_Dive_profileicon.png/revision/latest?cb=20170504235303');
-INSERT INTO profile_icons (icon, image) VALUES ('Runeterra Map',
-'https://static.wikia.nocookie.net/leagueoflegends/images/2/2a/Runeterra_Map_profileicon.png/revision/latest?cb=20180706201411');
-INSERT INTO profile_icons (icon, image) VALUES ('Odyssey Veteran',
-'https://static.wikia.nocookie.net/leagueoflegends/images/7/7b/Odyssey_Veteran_profileicon.png/revision/latest?cb=20180911222121');
-INSERT INTO profile_icons (icon, image) VALUES ('BAWK BAWK',
-'https://static.wikia.nocookie.net/leagueoflegends/images/0/02/BAWK_BAWK_profileicon.png/revision/latest?cb=20180617163557');
-INSERT INTO profile_icons (icon, image) VALUES ('Champie Twitch',
-'https://static.wikia.nocookie.net/leagueoflegends/images/f/fe/Champie_Twitch_profileicon.png/revision/latest?cb=20180617163536');
-INSERT INTO profile_icons (icon, image) VALUES ('Champie Urgot',
-'https://static.wikia.nocookie.net/leagueoflegends/images/a/a9/Champie_Urgot_profileicon.png/revision/latest?cb=20191105212440');
-INSERT INTO profile_icons (icon, image) VALUES ('Doomed Minion',
-'https://static.wikia.nocookie.net/leagueoflegends/images/6/61/Doomed_Minion_profileicon.png/revision/latest?cb=20170505013534');
-INSERT INTO profile_icons (icon, image) VALUES ('Gingerbread Man',
-'https://static.wikia.nocookie.net/leagueoflegends/images/5/51/Gingerbread_Man_profileicon.png/revision/latest?cb=20170505021416');
-INSERT INTO profile_icons (icon, image) VALUES ('Odyssey Zenith',
-'https://static.wikia.nocookie.net/leagueoflegends/images/d/df/Odyssey_Zenith_profileicon.png/revision/latest?cb=20180911221127');
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Ocean Week Nautilus',
+'https://static.wikia.nocookie.net/leagueoflegends/images/9/9f/Ocean_Week_Nautilus_profileicon.png/revision/latest?cb=20170504230042',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Ocean Week Fizz',
+'https://static.wikia.nocookie.net/leagueoflegends/images/5/54/Ocean_Week_Fizz_profileicon.png/revision/latest?cb=20170504215037',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Nightblade',
+'https://static.wikia.nocookie.net/leagueoflegends/images/e/e1/Nightblade_profileicon.png/revision/latest?cb=20170601013122',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Mark of the Betrayer',
+'https://static.wikia.nocookie.net/leagueoflegends/images/a/ac/Mark_of_the_Betrayer_profileicon.png/revision/latest?cb=20170504222602',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Little Devil Teemo',
+'https://static.wikia.nocookie.net/leagueoflegends/images/3/39/Little_Devil_Teemo_profileicon.png/revision/latest?cb=20170505004408',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Lifebead',
+'https://static.wikia.nocookie.net/leagueoflegends/images/0/05/Lifebead_profileicon.png/revision/latest?cb=20180911214252',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Super Galaxy Wolf',
+'https://static.wikia.nocookie.net/leagueoflegends/images/6/62/Super_Galaxy_Wolf_profileicon.png/revision/latest?cb=20170505003837',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('El Macho',
+'https://static.wikia.nocookie.net/leagueoflegends/images/8/88/El_Macho_profileicon.png/revision/latest?cb=20170504223921',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Oblivion',
+'https://static.wikia.nocookie.net/leagueoflegends/images/1/12/Oblivion_profileicon.png/revision/latest?cb=20170505004431',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Blood Moon Rising',
+'https://static.wikia.nocookie.net/leagueoflegends/images/8/89/Blood_Moon_Rising_profileicon.png/revision/latest?cb=20170505013323',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Seeing Hat',
+'https://static.wikia.nocookie.net/leagueoflegends/images/8/87/Seeing_Hat_profileicon.png/revision/latest?cb=20170505020507',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('God Fist',
+'https://static.wikia.nocookie.net/leagueoflegends/images/8/87/Seeing_Hat_profileicon.png/revision/latest?cb=20170505020507',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Pentakill Karthus',
+'https://static.wikia.nocookie.net/leagueoflegends/images/3/38/Pentakill_Karthus_profileicon.png/revision/latest?cb=20170728190547',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Battle Boss Ziggs',
+'https://static.wikia.nocookie.net/leagueoflegends/images/d/d6/Battle_Boss_Ziggs_profileicon.png/revision/latest?cb=20170726002151',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Pentakill Olaf',
+'https://static.wikia.nocookie.net/leagueoflegends/images/9/93/Pentakill_Olaf_profileicon.png/revision/latest?cb=20170728190551',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Pentakill II',
+'https://static.wikia.nocookie.net/leagueoflegends/images/e/ea/Pentakill_II_profileicon.png/revision/latest?cb=20170801201912',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Pentakill Yorick',
+'https://static.wikia.nocookie.net/leagueoflegends/images/3/36/Pentakill_Yorick_profileicon.png/revision/latest?cb=20170728190553',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Super Galaxy Elise',
+'https://static.wikia.nocookie.net/leagueoflegends/images/6/69/Super_Galaxy_Elise_profileicon.png/revision/latest?cb=20171003201423',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Transcendent',
+'https://static.wikia.nocookie.net/leagueoflegends/images/9/9d/Transcendent_profileicon.png/revision/latest?cb=20170915210019',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Resist',
+'https://static.wikia.nocookie.net/leagueoflegends/images/5/57/Resist_profileicon.png/revision/latest?cb=20180617163451',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Birdio',
+'https://static.wikia.nocookie.net/leagueoflegends/images/7/70/Birdio_profileicon.png/revision/latest?cb=20180617163629',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Dark Waters Diana',
+'https://static.wikia.nocookie.net/leagueoflegends/images/8/88/Dark_Waters_Diana_profileicon.png/revision/latest?cb=20180617163849',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Dark Waters Vladimir',
+'https://static.wikia.nocookie.net/leagueoflegends/images/6/60/Dark_Waters_Vladimir_profileicon.png/revision/latest?cb=20180617163403',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Wolf Banner',
+'https://static.wikia.nocookie.net/leagueoflegends/images/6/6c/Wolf_Banner_profileicon.png/revision/latest?cb=20180618200635',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Turret Jr',
+'https://static.wikia.nocookie.net/leagueoflegends/images/b/b1/Turret_Jr._profileicon.png/revision/latest?cb=20180926020420',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('KDA Ahri',
+'https://static.wikia.nocookie.net/leagueoflegends/images/b/b6/KDA_Ahri_profileicon.jpg/revision/latest?cb=20230201133527',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Blood Moon Aatrox',
+'https://static.wikia.nocookie.net/leagueoflegends/images/5/55/Blood_Moon_Aatrox_profileicon.png/revision/latest?cb=20190109010935',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Blood Moon Pyke',
+'https://static.wikia.nocookie.net/leagueoflegends/images/7/7d/Blood_Moon_Pyke_profileicon.png/revision/latest?cb=20190109011240',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Battlecast Poro',
+'https://static.wikia.nocookie.net/leagueoflegends/images/2/29/Battlecast_Poro_profileicon.png/revision/latest?cb=20170504221354',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Icy Minion',
+'https://static.wikia.nocookie.net/leagueoflegends/images/e/e4/Icy_Minion_profileicon.png/revision/latest?cb=20170504221633',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Bundled Minion',
+'https://static.wikia.nocookie.net/leagueoflegends/images/2/23/Bundled_Minion_profileicon.png/revision/latest?cb=20170504221648',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Lovely',
+'https://static.wikia.nocookie.net/leagueoflegends/images/f/f8/Lovely_profileicon.png/revision/latest?cb=20170504223425',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Snowblower',
+'https://static.wikia.nocookie.net/leagueoflegends/images/9/9d/Snowblower_profileicon.png/revision/latest?cb=20170505024651',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Jade Demon',
+'https://static.wikia.nocookie.net/leagueoflegends/images/d/db/Jade_Demon_profileicon.png/revision/latest?cb=20170504194433',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Original Tibbers',
+'https://static.wikia.nocookie.net/leagueoflegends/images/f/fb/Original_Tibbers_profileicon.png/revision/latest?cb=20180617164412',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Ashes, Ashes',
+'https://static.wikia.nocookie.net/leagueoflegends/images/6/6a/Ashes%2C_Ashes_profileicon.png/revision/latest?cb=20180617164340',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Space Day Nautilus',
+'https://static.wikia.nocookie.net/leagueoflegends/images/a/a5/Space_Day_Nautilus_profileicon.png/revision/latest?cb=20180617163911',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('LEC 2021 Spring',
+'https://static.wikia.nocookie.net/leagueoflegends/images/f/fe/LEC_2021_Spring_profileicon.jpg/revision/latest?cb=20230102034704',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Rift Scuttler',
+'https://static.wikia.nocookie.net/leagueoflegends/images/9/91/Rift_Scuttler_profileicon.png/revision/latest?cb=20170504213258',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Ancient Krug',
+'https://static.wikia.nocookie.net/leagueoflegends/images/c/c4/Ancient_Krug_profileicon.png/revision/latest?cb=20170504205357',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Battlecast',
+'https://static.wikia.nocookie.net/leagueoflegends/images/f/f9/Battlecast_profileicon.png/revision/latest?cb=20170504223843',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Act 2 Taking a Dive',
+'https://static.wikia.nocookie.net/leagueoflegends/images/5/5a/Act_2_Taking_a_Dive_profileicon.png/revision/latest?cb=20170504235303',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Runeterra Map',
+'https://static.wikia.nocookie.net/leagueoflegends/images/2/2a/Runeterra_Map_profileicon.png/revision/latest?cb=20180706201411',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Odyssey Veteran',
+'https://static.wikia.nocookie.net/leagueoflegends/images/7/7b/Odyssey_Veteran_profileicon.png/revision/latest?cb=20180911222121',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('BAWK BAWK',
+'https://static.wikia.nocookie.net/leagueoflegends/images/0/02/BAWK_BAWK_profileicon.png/revision/latest?cb=20180617163557',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Champie Twitch',
+'https://static.wikia.nocookie.net/leagueoflegends/images/f/fe/Champie_Twitch_profileicon.png/revision/latest?cb=20180617163536',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Champie Urgot',
+'https://static.wikia.nocookie.net/leagueoflegends/images/a/a9/Champie_Urgot_profileicon.png/revision/latest?cb=20191105212440',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Doomed Minion',
+'https://static.wikia.nocookie.net/leagueoflegends/images/6/61/Doomed_Minion_profileicon.png/revision/latest?cb=20170505013534',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Gingerbread Man',
+'https://static.wikia.nocookie.net/leagueoflegends/images/5/51/Gingerbread_Man_profileicon.png/revision/latest?cb=20170505021416',1);
+INSERT INTO profile_icons (icon, image,price_id) VALUES ('Odyssey Zenith',
+'https://static.wikia.nocookie.net/leagueoflegends/images/d/df/Odyssey_Zenith_profileicon.png/revision/latest?cb=20180911221127',1);
 
 
 INSERT INTO rank_tiers (rank) VALUES
@@ -160,15 +170,7 @@ INSERT INTO teams (team_color) VALUES
 ('Blue'),
 ('Red');
 
-INSERT INTO champions_tier_prices
-(rp_cost, blue_essence_cost,disenchant_blue_essence)
-VALUES
-(260, 450,90),
-(450, 1350,270),
-(585, 3150,630),
-(790, 4800,960),
-(880, 6300,1260),
-(975, 7800,1560);
+
 
 
 --DOMAIN

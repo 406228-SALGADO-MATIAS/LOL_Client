@@ -1,6 +1,6 @@
 package LoL_Client_Back.services.interfaces.domain;
 
-import LoL_Client_Back.dtos.SkinDTO;
+import LoL_Client_Back.dtos.skin.SkinDTO;
 import LoL_Client_Back.dtos.enums.Champion;
 import org.springframework.stereotype.Service;
 

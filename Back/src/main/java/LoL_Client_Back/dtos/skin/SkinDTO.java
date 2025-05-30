@@ -1,4 +1,4 @@
-package LoL_Client_Back.dtos;
+package LoL_Client_Back.dtos.skin;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;

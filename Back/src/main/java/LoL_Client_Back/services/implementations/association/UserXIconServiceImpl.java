@@ -150,6 +150,7 @@ public class UserXIconServiceImpl implements UserXIconService {
         dto.setId(entity.getId());
         dto.setIdIcon(entity.getIcon().getId());
         dto.setIcon(entity.getIcon().getIcon());
+        dto.setBlueEssencePrice(entity.getIcon().getPrice().getBlueEssenceCost());
         dto.setIdUser(entity.getUser().getId());
         dto.setNickname(entity.getUser().getNickname());
 

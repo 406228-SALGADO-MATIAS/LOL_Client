@@ -1,9 +1,8 @@
 package LoL_Client_Back.services.implementations.domain;
 
-import LoL_Client_Back.dtos.SkinDTO;
+import LoL_Client_Back.dtos.skin.SkinDTO;
 import LoL_Client_Back.dtos.enums.Champion;
 import LoL_Client_Back.entities.domain.ChampionEntity;
-import LoL_Client_Back.entities.domain.ItemEntity;
 import LoL_Client_Back.entities.domain.SkinEntity;
 import LoL_Client_Back.entities.reference.SkinTierEntity;
 import LoL_Client_Back.repositories.domain.ChampionRepository;
