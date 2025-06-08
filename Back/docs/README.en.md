@@ -1,8 +1,8 @@
 # 🎮 LOL Client - League of Legends Client Simulator
 
-📄 [Versión en español](../../../README.md)
-
 ![Client preview](imgs/lolclient.jpg)
+
+📄 [Versión en español](../../../README.md)
 
 This project is a simulation of the internal structure and business logic behind the **League of Legends** client, focusing on managing users, servers, champions, inventory, matches, and more.
 
@@ -133,7 +133,7 @@ With this architecture, the system aims to replicate how the real LoL client org
 
 ## 🗂️ Project structure
 
-```
+```plaintext
 LOL_Client/
 ├── Back/            # Java Spring Boot backend
 │   ├── src/         # Source code
