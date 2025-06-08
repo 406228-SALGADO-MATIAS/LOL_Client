@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -49,8 +52,7 @@ public class PlayerMatchDetailEntity {
     @ManyToOne
     private RoleEntity role;
 
-    @JoinColumn
-    @ManyToOne
-    private PlayerMatchItemsEntity items;
+    @OneToMany(mappedBy = "playerMatch", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PlayerMatchItemsEntity> items = new ArrayList<>();
 
 }

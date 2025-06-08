@@ -4,17 +4,21 @@ import LoL_Client_Back.dtos.champion.ChampionDTO;
 import LoL_Client_Back.dtos.enums.ChampionDifficulty;
 import LoL_Client_Back.dtos.enums.ChampionRole;
 import LoL_Client_Back.dtos.enums.ChampionStyle;
+import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.domain.ChampionEntity;
 import LoL_Client_Back.entities.reference.ChampionDifficultyEntity;
 import LoL_Client_Back.entities.reference.ChampionStyleEntity;
 import LoL_Client_Back.entities.reference.ChampionTierPriceEntity;
 import LoL_Client_Back.entities.reference.RoleEntity;
+import LoL_Client_Back.models.association.UserXChampion;
 import LoL_Client_Back.models.domain.Champion;
+import LoL_Client_Back.repositories.association.UserXChampionRepository;
 import LoL_Client_Back.repositories.domain.ChampionRepository;
 import LoL_Client_Back.repositories.reference.ChampionDifficultyRepository;
 import LoL_Client_Back.repositories.reference.ChampionStyleRepository;
 import LoL_Client_Back.repositories.reference.ChampionTierPriceRepository;
 import LoL_Client_Back.repositories.reference.RoleRepository;
+import LoL_Client_Back.services.interfaces.assocation.UserXChampionService;
 import LoL_Client_Back.services.interfaces.domain.ChampionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +45,8 @@ public class ChampionServiceImpl implements ChampionService {
     ChampionStyleRepository championStyleRepository;
     @Autowired
     ChampionTierPriceRepository tierPriceRepository;
+    @Autowired
+    UserXChampionRepository userXChampionRepository;
     @Autowired
     ModelMapper modelMapper;
     @Autowired
@@ -261,6 +267,39 @@ public class ChampionServiceImpl implements ChampionService {
         }
         throw new ResponseStatusException(HttpStatus.CONFLICT,
                 "You must enter a name for the champion");
+    }
+
+    @Override
+    public List<ChampionDTO> getUserChampions(Long idUser) {
+       List<UserXChampionEntity> list = userXChampionRepository.findByUser_Id(idUser);
+       if (!list.isEmpty()) {
+           List<ChampionDTO> championList = new ArrayList<>();
+           for (UserXChampionEntity u : list) {
+               championList.add(buildChampionDTO(u.getChampion()));
+           }
+           return championList;
+       }
+       throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+               "The user with id "+idUser +" does not have any champions");
+    }
+
+    @Override
+    public List<ChampionDTO> getUserChampionsNotPossess(Long idUser) {
+        List<Long> championsOwnedIds = new ArrayList<>();
+
+        //Champions he has
+        List<UserXChampionEntity> championBelongings =
+                userXChampionRepository.findByUser_Id(idUser);
+        if (!championBelongings.isEmpty()) {
+
+            for (UserXChampionEntity u : championBelongings) {
+               championsOwnedIds.add(u.getChampion().getId());
+            }
+        }
+        return buildChampionDTOList(championRepository.findByIdNotIn(championsOwnedIds),
+                "The user has all the champions, " +
+                        "there are no champions available for acquisition");
+
     }
 
     private ChampionTierPriceEntity getPriceOrThrow(Integer price) {

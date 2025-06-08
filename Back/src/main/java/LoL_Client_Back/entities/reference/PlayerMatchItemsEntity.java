@@ -1,6 +1,7 @@
 package LoL_Client_Back.entities.reference;
 
 import LoL_Client_Back.entities.domain.ItemEntity;
+import LoL_Client_Back.entities.domain.PlayerMatchDetailEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,25 +17,14 @@ public class PlayerMatchItemsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
+
+    @JoinColumn(name = "player_match")
     @ManyToOne
+    private PlayerMatchDetailEntity playerMatch;
+
     @JoinColumn
-    private ItemEntity itemSlot1;
     @ManyToOne
-    @JoinColumn
-    private ItemEntity itemSlot2;
-    @ManyToOne
-    @JoinColumn
-    private ItemEntity itemSlot3;
-    @ManyToOne
-    @JoinColumn
-    private ItemEntity itemSlot4;
-    @ManyToOne
-    @JoinColumn
-    private ItemEntity itemSlot5;
-    @ManyToOne
-    @JoinColumn
-    private ItemEntity itemSlot6;
+    private ItemEntity item;
 
 }

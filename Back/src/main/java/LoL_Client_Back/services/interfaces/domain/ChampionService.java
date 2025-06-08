@@ -35,4 +35,6 @@ public interface ChampionService {
                             ChampionDifficulty difficulty, ChampionRole role, ChampionRole role2,
                             ChampionStyle style, ChampionStyle style2);
 
+    List<ChampionDTO> getUserChampions(Long idUser);
+    List<ChampionDTO> getUserChampionsNotPossess(Long idUser);
 }

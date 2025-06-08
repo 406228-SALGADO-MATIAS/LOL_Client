@@ -1,10 +1,16 @@
 package LoL_Client_Back.services.implementations.domain;
 
+import LoL_Client_Back.dtos.champion.ChampionDTO;
 import LoL_Client_Back.dtos.skin.SkinDTO;
 import LoL_Client_Back.dtos.enums.Champion;
+import LoL_Client_Back.entities.association.UserXChampionEntity;
+import LoL_Client_Back.entities.association.UserXSkinEntity;
 import LoL_Client_Back.entities.domain.ChampionEntity;
 import LoL_Client_Back.entities.domain.SkinEntity;
 import LoL_Client_Back.entities.reference.SkinTierEntity;
+import LoL_Client_Back.models.association.UserXSkin;
+import LoL_Client_Back.repositories.association.UserXChampionRepository;
+import LoL_Client_Back.repositories.association.UserXSkinRepository;
 import LoL_Client_Back.repositories.domain.ChampionRepository;
 import LoL_Client_Back.repositories.domain.SkinRepository;
 import LoL_Client_Back.repositories.reference.SkinTierRepository;
@@ -36,6 +42,10 @@ public class SkinServiceImpl implements SkinService {
     ChampionRepository championRepository;
     @Autowired
     SkinTierRepository skinTierRepository;
+    @Autowired
+    UserXSkinRepository userXSkinRepository;
+    @Autowired
+    UserXChampionRepository userXChampionRepository;
 
     @Override
     public List<SkinDTO> getAllSkins() {
@@ -117,6 +127,78 @@ public class SkinServiceImpl implements SkinService {
                         new ResponseStatusException(HttpStatus.NOT_FOUND,
                                 "Did not find skin with id to delete")));
     }
+
+    @Override
+    public List<SkinDTO> getUserSkins(Long idUser) {
+        List<UserXSkinEntity> list =
+                userXSkinRepository.findByUser_Id(idUser);
+        if (!list.isEmpty()) {
+            List<SkinDTO> championList = new ArrayList<>();
+            for (UserXSkinEntity u : list) {
+                championList.add(buildSkinDTO(u.getSkin()));
+            }
+            return championList;
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "The user with id "+idUser +" does not have any skin");
+    }
+
+    @Override
+    public List<SkinDTO> getUserSkinsNotPossess(Long idUser) {
+        List<UserXSkinEntity> list =
+                userXSkinRepository.findByUser_Id(idUser);
+        if (!list.isEmpty()) {
+
+            List<Long> skinsOwnedIds = new ArrayList<>();
+            for (UserXSkinEntity u : list) {
+                skinsOwnedIds.add(u.getSkin().getId());
+            }
+            return buildSkinDTOList(skinRepository.findByIdNotIn(skinsOwnedIds),
+                    "The user with id \"+idUser +\" has all the skins");
+        }
+        return buildSkinDTOList(skinRepository.findAll(),
+                "There are no skins in the database");
+    }
+
+    @Override
+    public List<SkinDTO> getUserSkinsEnabledPurchase(Long idUser) {
+        // Get all champions the user owns
+        List<UserXChampionEntity> championBelongings =
+                userXChampionRepository.findByUser_Id(idUser);
+
+        if (championBelongings.isEmpty()) {
+            return List.of(); // User owns no champions, can't purchase any skins
+        }
+
+        // Extract champion IDs the user owns
+        List<Long> championsOwnedIds = championBelongings.stream()
+                .map(c -> c.getChampion().getId())
+                .toList();
+
+        // Get IDs of skins the user already owns (optional)
+        List<Long> skinsOwnedIds =
+                userXSkinRepository.findByUser_Id(idUser).stream()
+                .map(s -> s.getSkin().getId())
+                .toList();
+
+        // Get all skins for the champions the user owns
+        List<SkinEntity> allSkinsOfOwnedChampions =
+                skinRepository.findByChampion_IdIn(championsOwnedIds);
+
+        // Filter out skins the user already owns
+        List<SkinEntity> filtered = allSkinsOfOwnedChampions.stream()
+                .filter(skin -> !skinsOwnedIds.contains(skin.getId()))
+                .toList();
+
+        if (filtered.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No available skins to purchase");
+        }
+
+        // Return the list of skins the user can purchase
+        return buildSkinDTOList(filtered,
+                "The user does have all the skins of the champions he owns");
+    }
+
 
     public SkinEntity getSkinWithChampionAndTierOnly(Long championId, Integer rpCost) {
         ChampionEntity champion = championRepository.findById(championId)

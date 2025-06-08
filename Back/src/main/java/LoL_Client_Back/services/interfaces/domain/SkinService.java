@@ -17,4 +17,8 @@ public interface SkinService {
     SkinDTO createSkin(String name, Long championId, String imageUrl,Integer rpCost);
     SkinDTO updateSkin(Long skinId,String name, Long championId, String imageUrl,Integer rpCost);
     void deleteSkin(Long id);
+    List<SkinDTO> getUserSkins(Long idUser);
+    List<SkinDTO> getUserSkinsNotPossess(Long idUser);
+    List<SkinDTO> getUserSkinsEnabledPurchase(Long idUser);
+
 }

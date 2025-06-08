@@ -50,6 +50,21 @@ public class SkinController {
     {
         return ResponseEntity.ok(skinService.findSkinsByChampionId(id));
     }
+    @GetMapping("/getUserSkins/{idUser}")
+    ResponseEntity<List<SkinDTO>> getUserSkins(@PathVariable Long idUser)
+    {
+        return ResponseEntity.ok(skinService.getUserSkins(idUser));
+    }
+    @GetMapping("/getUserSkins/NotPossess/{idUser}")
+    ResponseEntity<List<SkinDTO>> getUserSkinsNotPossess(@PathVariable Long idUser)
+    {
+        return ResponseEntity.ok(skinService.getUserSkinsNotPossess(idUser));
+    }
+    @GetMapping("/getUserSkins/toPurchase/{idUser}")
+    public ResponseEntity<List<SkinDTO>> getUserSkinsToPurchase(@PathVariable Long idUser) {
+        return ResponseEntity.ok(skinService.getUserSkinsEnabledPurchase(idUser));
+    }
+
     @PostMapping("/createSkin")
     ResponseEntity<SkinDTO> createSkin(@RequestParam Long championId, @RequestParam String name,
                                        @RequestParam String imageUrl,

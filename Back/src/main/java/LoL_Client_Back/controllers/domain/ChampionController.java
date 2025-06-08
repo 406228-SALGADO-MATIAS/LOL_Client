@@ -148,6 +148,16 @@ public class ChampionController {
         return ResponseEntity.ok(championService.findByBlueEssenceCost(cost, filter));
     }
 
+    @GetMapping("/userChampions/{idUser}")
+    public ResponseEntity<List<ChampionDTO>> getUserChampions(@PathVariable Long idUser) {
+        return ResponseEntity.ok(championService.getUserChampions(idUser));
+    }
+
+    @GetMapping("/userChampions/NotPossess/{idUser}")
+    public ResponseEntity<List<ChampionDTO>> getUserChampionsNotPossess(@PathVariable Long idUser) {
+        return ResponseEntity.ok(championService.getUserChampionsNotPossess(idUser));
+    }
+
     @PutMapping("/editChampion/{id}")
     public ResponseEntity<ChampionDTO> editChampion(
             @PathVariable Long id,

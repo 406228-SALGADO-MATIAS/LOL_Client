@@ -14,5 +14,6 @@ import java.util.Optional;
 public interface UserXSkinRepository extends JpaRepository<UserXSkinEntity,Long> {
     List<UserXSkinEntity> findBySkin_Id(Long id);
     List<UserXSkinEntity> findByUser_Id(Long id);
+    List<UserXSkinEntity> findByUser_IdNot(Long id);
     Optional<UserXSkinEntity> findByUserAndSkin(UserEntity userEntity, SkinEntity skinEntity);
 }

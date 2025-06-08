@@ -15,4 +15,6 @@ public interface SkinRepository extends JpaRepository<SkinEntity,Long> {
     List<SkinEntity> findByNameIgnoreCaseContaining(String name);
     List<SkinEntity> findByChampion_Id(Long championId);
     Optional<SkinEntity> findByNameIgnoreCase(String name);
+    List<SkinEntity> findByIdNotIn(List<Long> ids);
+    List<SkinEntity> findByChampion_IdIn(List <Long> ids);
 }
