@@ -1,4 +1,4 @@
-# 🎮 LOL Client - Simulador del Cliente de League of Legends
+# 🎮 LOL Client - Simulador
 
 ![Vista ilustrativa del cliente](Back/docs/imgs/lolclient.jpg)
 
