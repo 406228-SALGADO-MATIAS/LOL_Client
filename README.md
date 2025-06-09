@@ -1,23 +1,23 @@
+# 🎮 LOL Client - Simulador del Cliente de League of Legends
+
+![Vista ilustrativa del cliente](Back/docs/imgs/lolclient.jpg)
+
 ## 📑 Índice
 
 1. [🎮 Vista ilustrativa](#-lol-client---simulador-del-cliente-de-league-of-legends)
-2. [📄 English version](#english-version)
+2. [📄 English version](#-english-version)
 3. [🚀 Tecnologías utilizadas](#-tecnologías-utilizadas)
-4. [🖼️ Diagrama de la base de datos](#-diagrama-de-la-base-de-datos)
+4. [🖼️ Diagrama de la base de datos](#diagrama-de-la-base-de-datos)
 5. [🧠 Funcionalidades principales](#-funcionalidades-principales)
    - [🌍 Servidores](#-servidores)
    - [👤 Usuarios](#-usuarios)
-   - [🛡️ Campeones](#-campeones)
+    - [🛡️ Campeones](#campeones)
    - [🧥 Skins](#-skins)
    - [💠 Íconos de perfil](#-íconos-de-perfil)
    - [🎒 Objetos de la partida](#-objetos-de-la-partida)
    - [🔁 Relaciones de usuario con recursos](#-relaciones-de-usuario-con-recursos)
    - [🏆 Partidas (en desarrollo)](#-partidas-en-desarrollo)
-6. [🗂️ Estructura del proyecto](#-estructura-del-proyecto)
-
-# 🎮 LOL Client - Simulador del Cliente de League of Legends
-
-![Vista ilustrativa del cliente](Back/docs/imgs/lolclient.jpg)
+6. [🗂️ Estructura del proyecto](#estructura-del-proyecto)
 
 📄 [English version](Back/docs/README.en.md)
 
