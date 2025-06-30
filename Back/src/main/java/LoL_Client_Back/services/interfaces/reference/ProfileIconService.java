@@ -13,4 +13,7 @@ public interface ProfileIconService {
     ProfileIconDTO createProfileIcon (String iconName, String imageUrl, Integer blueEssencePrice);
     ProfileIconDTO updateProfileIcon (Long id,String iconName, String imageUrl,Integer blueEssencePrice);
     void deleteProfileIcon(Long id);
+    List<ProfileIconDTO> getUserIcons(Long idUser);
+    List<ProfileIconDTO> getUserIconsNotPossess(Long idUser);
+
 }

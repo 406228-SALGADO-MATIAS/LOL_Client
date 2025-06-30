@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface ProfileIconRepository extends JpaRepository<ProfileIconEntity,Long> {
     List<ProfileIconEntity> findByIconIgnoreCaseContaining (String iconName);
     Optional<ProfileIconEntity> findByIconIgnoreCase(String iconName);
+    List<ProfileIconEntity> findByIdNotIn(List<Long> iconsIds);
 }

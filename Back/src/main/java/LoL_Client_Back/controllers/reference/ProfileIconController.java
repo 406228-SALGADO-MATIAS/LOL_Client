@@ -30,6 +30,16 @@ public class ProfileIconController {
         return ResponseEntity.ok(profileIconService.findByName(name));
     }
 
+    @GetMapping("/getUserIcons/{idUser}")
+    public ResponseEntity<List<ProfileIconDTO>> getUserIcons(@PathVariable Long idUser) {
+        return ResponseEntity.ok(profileIconService.getUserIcons(idUser));
+    }
+
+    @GetMapping("/getUserIcons/NotInPossession/{idUser}")
+    public ResponseEntity<List<ProfileIconDTO>> getUserIconsNotPossess(@PathVariable Long idUser) {
+        return ResponseEntity.ok(profileIconService.getUserIconsNotPossess(idUser));
+    }
+
     @PostMapping
     public ResponseEntity<ProfileIconDTO> createProfileIcon(
             @RequestParam String iconName,

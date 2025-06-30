@@ -1,9 +1,12 @@
 package LoL_Client_Back.services.implementations.reference;
 
 import LoL_Client_Back.dtos.reference.ProfileIconDTO;
+import LoL_Client_Back.entities.association.UserXIconEntity;
 import LoL_Client_Back.entities.reference.ChampionTierPriceEntity;
 import LoL_Client_Back.entities.reference.ProfileIconEntity;
+import LoL_Client_Back.models.association.UserXIcon;
 import LoL_Client_Back.models.reference.ChampionTierPrice;
+import LoL_Client_Back.repositories.association.UserXIconRepository;
 import LoL_Client_Back.repositories.reference.ChampionTierPriceRepository;
 import LoL_Client_Back.repositories.reference.ProfileIconRepository;
 import LoL_Client_Back.services.interfaces.reference.ProfileIconService;
@@ -28,6 +31,8 @@ public class ProfileIconServiceImpl implements ProfileIconService {
     ModelMapper customMapper;
     @Autowired
     ChampionTierPriceRepository tierPriceRepository;
+    @Autowired
+    UserXIconRepository userXIconRepository;
 
     @Override
     public ProfileIconDTO getById(Long id) {
@@ -85,8 +90,41 @@ public class ProfileIconServiceImpl implements ProfileIconService {
         repository.delete(icon);
     }
 
+    @Override
+    public List<ProfileIconDTO> getUserIcons(Long idUser) {
+        List<UserXIconEntity> ownership =
+                userXIconRepository.findByUser_Id(idUser);
+        if (!ownership.isEmpty()) {
+            List<ProfileIconDTO> iconsList = new ArrayList<>();
+            for (UserXIconEntity u : ownership) {
+                iconsList.add(buildIconDTO
+                        (u.getIcon(),Optional.empty(),""));
+            }
+            return iconsList;
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"The user has not any icons in possession");
+    }
+
+    @Override
+    public List<ProfileIconDTO> getUserIconsNotPossess(Long idUser) {
+        List<Long> ownedIconsIds = new ArrayList<>();
+        List<UserXIconEntity> ownershipList =
+                userXIconRepository.findByUser_Id(idUser);
+
+        String errorMsg = "The user hast not any icons in possession, " +
+                "but there are no icons in the database";
+
+        if (!ownershipList.isEmpty()){
+            for (UserXIconEntity u : ownershipList){
+                ownedIconsIds.add(u.getIcon().getId());
+            }
+            return buildDtoList(repository.findByIdNotIn(ownedIconsIds),errorMsg);
+        }
+        return buildDtoList(repository.findAll(),errorMsg);
+    }
+
     private ProfileIconDTO buildIconDTO (ProfileIconEntity iconEnt, Optional<ProfileIconEntity> optional,
-                                         String errorMsg) {
+                                         String notFoundMsg) {
         ProfileIconDTO dto;
         if (optional != null && optional.isPresent())
         {
@@ -100,7 +138,7 @@ public class ProfileIconServiceImpl implements ProfileIconService {
             dto.setBlueEssencePrice(iconEnt.getPrice().getBlueEssenceCost());
             return dto;
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,errorMsg);
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,notFoundMsg);
     }
 
     private List<ProfileIconDTO> buildDtoList (List<ProfileIconEntity> list, String errorMsg) {
