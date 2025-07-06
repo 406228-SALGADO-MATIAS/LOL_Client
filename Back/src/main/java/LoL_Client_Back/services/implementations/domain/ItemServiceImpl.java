@@ -1,13 +1,11 @@
 package LoL_Client_Back.services.implementations.domain;
 
 import LoL_Client_Back.dtos.enums.ChampionStyle;
-import LoL_Client_Back.dtos.items.ItemDTO;
+import LoL_Client_Back.dtos.ItemDTO;
 import LoL_Client_Back.entities.domain.ItemEntity;
 import LoL_Client_Back.entities.reference.ChampionStyleEntity;
-import LoL_Client_Back.models.domain.Item;
 import LoL_Client_Back.repositories.domain.ItemRepository;
 import LoL_Client_Back.repositories.reference.ChampionStyleRepository;
-import LoL_Client_Back.services.interfaces.domain.ChampionService;
 import LoL_Client_Back.services.interfaces.domain.ItemService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

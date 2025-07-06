@@ -50,7 +50,7 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
 
     List<UserEntity> findByRankIsNull();
     List<UserEntity> findByRankIsNullAndServer(ServerRegionEntity server);
-
+    List<UserEntity> findByServer(ServerRegionEntity serverRegion);
 
 
 

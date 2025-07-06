@@ -29,4 +29,5 @@ public interface UserService {
     List<UserMatchesWinrateDTO> findUsersByMatchesPlayed(MatchType matchType, ServerOption serverOption, Integer minMatchesPlayed);
     List<UserMatchesDTO> findUsersByRegistrationDate(LocalDateTime date);
     List<UserMatchesDTO> findUsersByRankAndServer(UserRankTier rank, ServerOption server);
+    List<UserMatchesDTO> findUsersByServer(ServerOption server);
 }

@@ -1,12 +1,16 @@
 package LoL_Client_Back.entities.domain;
 import LoL_Client_Back.entities.reference.MapEntity;
+import LoL_Client_Back.entities.reference.ServerRegionEntity;
 import LoL_Client_Back.entities.reference.TeamEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -28,5 +32,11 @@ public class MatchEntity {
     @JoinColumn
     @ManyToOne
     private TeamEntity winnerTeam;
+    @JoinColumn
+    @ManyToOne
+    private ServerRegionEntity serverRegion;
+    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<PlayerMatchDetailEntity> playerDetails = new ArrayList<>();
 
 }

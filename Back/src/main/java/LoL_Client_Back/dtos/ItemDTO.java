@@ -1,7 +1,5 @@
-package LoL_Client_Back.dtos.items;
+package LoL_Client_Back.dtos;
 
-import LoL_Client_Back.models.reference.ChampionStyle;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Lob;

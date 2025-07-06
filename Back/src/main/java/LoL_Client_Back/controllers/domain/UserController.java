@@ -121,6 +121,13 @@ public class UserController {
         return ResponseEntity.ok(userService.findUsersByRankAndServer(rankTierOption,serverOption));
     }
 
+    @GetMapping("/findUsers/Server")
+    public ResponseEntity<List<UserMatchesDTO>> findUsersByServer
+            (@RequestParam ServerOption option)
+    {
+        return ResponseEntity.ok((userService.findUsersByServer(option)));
+    }
+
     @PutMapping("/updateUser/{id}")
     public ResponseEntity<UserMatchesDTO> putUser (@PathVariable Long id,
                                                    @RequestBody UserDTO userDTO,

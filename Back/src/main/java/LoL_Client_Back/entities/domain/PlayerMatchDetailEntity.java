@@ -3,6 +3,7 @@ import LoL_Client_Back.entities.reference.ChampionStyleEntity;
 import LoL_Client_Back.entities.reference.PlayerMatchItemsEntity;
 import LoL_Client_Back.entities.reference.RoleEntity;
 import LoL_Client_Back.entities.reference.TeamEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,8 +33,9 @@ public class PlayerMatchDetailEntity {
     @Column(name = "creatures_killed")
     private Integer creaturesKilled;
 
-    @JoinColumn
     @ManyToOne
+    @JoinColumn
+    @JsonIgnore
     private MatchEntity match;
 
     @JoinColumn(name ="`user`")

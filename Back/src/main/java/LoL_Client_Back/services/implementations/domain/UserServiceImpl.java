@@ -291,6 +291,13 @@ public class UserServiceImpl implements UserService {
                "Did not find users on server "+server.name()+" that are "+rank.name());
     }
 
+    @Override
+    public List<UserMatchesDTO> findUsersByServer(ServerOption server) {
+       return buildUserMatchesDTOList
+               (userRepository.findByServer(getServerByName(server.getFullName())),
+               "Did not find users on the server "+server.name());
+    }
+
     private RankTierEntity getRankByName(String rankname)
     {
         Optional<RankTierEntity> optionalRankTier =
@@ -299,7 +306,7 @@ public class UserServiceImpl implements UserService {
         {
             return optionalRankTier.get();
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"DId not find user ranktier "+rankname);
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user ranktier "+rankname);
     }
     private List<UserMatchesWinrateDTO> filterByWinrate(List<UserMatchesWinrateDTO> list, double minWinrate) {
         return list.stream()

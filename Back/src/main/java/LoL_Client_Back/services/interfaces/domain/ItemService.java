@@ -1,8 +1,7 @@
 package LoL_Client_Back.services.interfaces.domain;
 
 import LoL_Client_Back.dtos.enums.ChampionStyle;
-import LoL_Client_Back.dtos.items.ItemDTO;
-import LoL_Client_Back.models.domain.Item;
+import LoL_Client_Back.dtos.ItemDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
