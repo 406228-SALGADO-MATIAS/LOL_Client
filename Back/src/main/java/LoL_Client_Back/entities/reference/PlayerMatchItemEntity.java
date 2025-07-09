@@ -13,15 +13,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class PlayerMatchItemsEntity {
+public class PlayerMatchItemEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "player_match")
+    @JoinColumn(name = "player_match_detail")
     @ManyToOne
-    private PlayerMatchDetailEntity playerMatch;
+    private PlayerMatchDetailEntity playerMatchDetail;
 
     @JoinColumn
     @ManyToOne

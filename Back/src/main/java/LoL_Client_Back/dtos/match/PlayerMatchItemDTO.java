@@ -1,6 +1,7 @@
 package LoL_Client_Back.dtos.match;
 
-import LoL_Client_Back.dtos.ItemDTO;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,11 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlayerMatchItemsDTO {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class PlayerMatchItemDTO {
     private Long id;
     private Long idMatchDetail;
     private Long idItem;
     private String itemName;
-    private String itemType;
-    private String itemType2;
+    @Lob
+    private String imageUrlItem;
 }

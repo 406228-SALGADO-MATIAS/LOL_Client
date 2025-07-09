@@ -19,12 +19,13 @@ public interface UserXChampionRepository extends JpaRepository<UserXChampionEnti
     Optional<UserXChampionEntity> findByUserAndChampion(UserEntity userEntity, ChampionEntity championEntity);
     @Query("SELECT DISTINCT u.user.id FROM UserXChampionEntity u")
     List<Long> findAllUserIdsWithChampions();
-    @Query("""
-    SELECT DISTINCT u.user.id
-    FROM UserXChampionEntity u
-    WHERE u.user.id IN :userIds
-      AND (u.champion.role1.id = :roleId OR u.champion.role2.id = :roleId)
-""")
-    List<Long> findUserIdsWithChampionsOfRole(@Param("userIds") List<Long> userIds,
-                                              @Param("roleId") Long roleId);
+
+    //@Query("""
+    //    SELECT DISTINCT u.user.id
+    //    FROM UserXChampionEntity u
+    //    WHERE u.user.id IN :userIds
+    //      AND (u.champion.role1.id = :roleId OR u.champion.role2.id = :roleId)
+    //""")
+    //    List<Long> findUserIdsWithChampionsOfRole(@Param("userIds") List<Long> userIds,
+    //                                              @Param("roleId") Long roleId);
 }

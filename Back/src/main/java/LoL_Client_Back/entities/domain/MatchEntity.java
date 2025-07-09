@@ -26,6 +26,8 @@ public class MatchEntity {
     private LocalDateTime date;
     private String duration;
     private Boolean ranked;
+    private Integer blueTeamKills;
+    private Integer redTeamKills;
     @JoinColumn
     @ManyToOne
     private MapEntity map;

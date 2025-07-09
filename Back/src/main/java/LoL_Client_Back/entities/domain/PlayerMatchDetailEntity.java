@@ -1,6 +1,5 @@
 package LoL_Client_Back.entities.domain;
-import LoL_Client_Back.entities.reference.ChampionStyleEntity;
-import LoL_Client_Back.entities.reference.PlayerMatchItemsEntity;
+import LoL_Client_Back.entities.reference.PlayerMatchItemEntity;
 import LoL_Client_Back.entities.reference.RoleEntity;
 import LoL_Client_Back.entities.reference.TeamEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,7 +21,6 @@ public class PlayerMatchDetailEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
     private Integer kills;
     private Integer deaths;
     private Integer assists;
@@ -54,7 +52,7 @@ public class PlayerMatchDetailEntity {
     @ManyToOne
     private RoleEntity role;
 
-    @OneToMany(mappedBy = "playerMatch", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PlayerMatchItemsEntity> items = new ArrayList<>();
+    @OneToMany(mappedBy = "playerMatchDetail", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PlayerMatchItemEntity> items = new ArrayList<>();
 
 }

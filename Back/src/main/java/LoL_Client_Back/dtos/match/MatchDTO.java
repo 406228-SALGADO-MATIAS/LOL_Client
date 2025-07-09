@@ -14,11 +14,13 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MatchDTO {
-    private Long matchId;
+    private Long id;
     private String duration;
     private String serverRegion;
     private Boolean ranked;
     private String map;
+    private Integer blueTeamKills;
+    private Integer redTeamKills;
     private String winnerTeam;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime date;
