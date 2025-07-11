@@ -191,7 +191,7 @@ VALUES
 ('Xerath', 3, '2011-01-07', 49.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FXerath_0.jpg&w=1200&q=75', 3, 2, 3,5,null),
 ('Katarina', 3, '2010-06-11', 51.2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75', 3, 2, 4,null,5),
 ('Kha´Zix', 4, '2012-09-27', 52.3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKhazix_0.jpg&w=1200&q=75', 2, 3, 4,null,null),
-('Fizz', 4, '2011-11-15', 50.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75', 3, 2, 4,null,5),
+('Fizz', 4, '2011-11-15', 50.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75', 3, 2, 4,null,null),
 ('Rengar', 4, '2012-08-21', 51.5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75', 2, 3, 4,null,null),
 ('Fiora', 4, '2012-02-29', 50.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFiora_0.jpg&w=1200&q=75', 1, 3, 1,null,null),
 ('Hecarim', 4, '2012-04-18', 52.1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FHecarim_0.jpg&w=1200&q=75', 2, 2, 1,null,5), -- Jungle, Medium, Fighter
@@ -206,7 +206,7 @@ VALUES
 ('Trundle', 4, '2010-05-01', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTrundle_0.jpg&w=1200&q=75', 1, 2, 1,null,null), -- Top, Medium, Fighter
 ('Aatrox', 5, '2013-06-13', 47.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAatrox_0.jpg&w=1200&q=75', 1, 2, 1,null,null), -- Top, Medium, Fighter
 ('Alistar', 2, '2009-02-21', 50.2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAlistar_0.jpg&w=1200&q=75', 5, 1, 5,null,null), -- Support, Easy, Tank
-('Akali', 3, '2010-05-11', 48.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAkali_0.jpg&w=1200&q=75', 3, 3, 4,1,5), -- Mid, Hard, Assassin
+('Akali', 3, '2010-05-11', 48.7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAkali_0.jpg&w=1200&q=75', 3, 3, 4,1,null), -- Mid, Hard, Assassin
 ('Ornn', 4, '2017-08-23', 51.0, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FOrnn_0.jpg&w=1200&q=75', 1, 2, 5,null,null), -- Top, Medium, Tank
 ('Galio', 3, '2010-08-10', 50.9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75', 3, 2, 5,5,3), -- Mid, Medium, Tank
 ('Jarvan IV', 4, '2011-03-01', 49.8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75', 2, 2, 1,null,4), -- Jungle, Medium, Fighter

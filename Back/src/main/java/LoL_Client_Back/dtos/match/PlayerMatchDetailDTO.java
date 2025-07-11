@@ -24,5 +24,7 @@ public class PlayerMatchDetailDTO {
     private String userNickname;
     @Lob
     private String imageUrlChampion;
+    private Integer creaturesKilled;
+    private Integer totalGold;
     private List<PlayerMatchItemDTO> items;
 }

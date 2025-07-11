@@ -15,6 +15,8 @@ public class PlayerMatchItemDTO {
     private Long idMatchDetail;
     private Long idItem;
     private String itemName;
+    private String type;
+    private String type2;
     @Lob
     private String imageUrlItem;
 }

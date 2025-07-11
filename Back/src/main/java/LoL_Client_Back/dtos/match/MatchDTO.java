@@ -21,6 +21,8 @@ public class MatchDTO {
     private String map;
     private Integer blueTeamKills;
     private Integer redTeamKills;
+    private Integer blueTeamFarm;
+    private Integer redTeamFarm;
     private String winnerTeam;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime date;

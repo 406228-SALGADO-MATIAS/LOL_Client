@@ -75,13 +75,13 @@ public class MatchServiceImpl implements MatchService {
         matchDTO.setMap(matchEntity.getMap().getMap());
         matchDTO.setWinnerTeam(matchEntity.getWinnerTeam().getTeamColor());
         //details
-        matchDTO.setPlayers(buildPlayerMatchDetailDTO
+        matchDTO.setPlayers(buildPlayerMatchDetailDTOList
                 (matchEntity.getPlayerDetails(),showChampion,showItem));
         return matchDTO;
     }
 
     //DETAIL DTO
-    private List<PlayerMatchDetailDTO> buildPlayerMatchDetailDTO(List<PlayerMatchDetailEntity> detailEntities,
+    private List<PlayerMatchDetailDTO> buildPlayerMatchDetailDTOList(List<PlayerMatchDetailEntity> detailEntities,
                                                                  boolean showChampion, boolean showItem)
     {
         List<PlayerMatchDetailDTO> dtoList = new ArrayList<>();
@@ -118,6 +118,9 @@ public class MatchServiceImpl implements MatchService {
             dto.setIdItem(playerItem.getItem().getId());
             dto.setIdMatchDetail(playerItem.getPlayerMatchDetail().getId());
             dto.setItemName(playerItem.getItem().getName());
+            dto.setType(playerItem.getItem().getItemType().getStyle());
+            if (playerItem.getItem().getItemType2() != null)
+                dto.setType2(playerItem.getItem().getItemType2().getStyle());
             if (showItem)
                 dto.setImageUrlItem(playerItem.getItem().getImage());
             dtoList.add(dto);
@@ -136,7 +139,10 @@ public class MatchServiceImpl implements MatchService {
             matchEntity.setMap(getMap(1L));
             matchEntity.setRanked(true);
         } else {
-            if (map.equals("ARAM")) matchEntity.setMap(getMap(2L));
+            if (map.equals("ARAM")) {
+                matchEntity.setMap(getMap(2L));
+                matchEntity.setRanked(false);
+            }
             else {
              matchEntity.setMap(getMap(1L));
                 matchEntity.setRanked(false);
@@ -254,6 +260,7 @@ public class MatchServiceImpl implements MatchService {
         Collections.shuffle(userChampionsForRole);
         Collections.shuffle(userChampions);
         //if the user has champions for the role
+        //todo: avoid exception, keep trying till successes
         if (!userChampionsForRole.isEmpty()) {
             playerMatchDetail.setChampion
                     (getChampionNotSelected(userChampionsForRole,alreadySelectedChampions));
@@ -271,21 +278,33 @@ public class MatchServiceImpl implements MatchService {
     private List<PlayerMatchItemEntity> buildPlayerMatchItemsEntity (PlayerMatchDetailEntity detail)
     {
         ChampionEntity champion = detail.getChampion();
-        ChampionStyleEntity championStyle1 = champion.getStyle();
-        ChampionStyleEntity championStyle2 = champion.getStyle2();
 
+        ChampionStyleEntity championStyle1 = champion.getStyle();
         List<ItemEntity> itemsStyle1 = itemRepository.findByItemType(championStyle1);
-        List<ItemEntity> itemsStyle2 = itemRepository.findByItemType(championStyle2);
-        List<ItemEntity> itemsStyleMix = itemRepository.findByItemTypeOrItemType2(championStyle1,championStyle2);
+
+        List<ItemEntity> itemsToPick;
+
+        //The champion has more than 1 way to build himself
+        if (champion.getStyle2() != null)
+        {
+            ChampionStyleEntity championStyle2 = champion.getStyle2();
+            List<ItemEntity> itemsStyle2 = itemRepository.findByItemType(championStyle2);
+            List<ItemEntity> itemsStyleMix = itemRepository.findByItemTypeOrItemType2(championStyle1,championStyle2);
+            itemsToPick = getRandomItemPoolByStyle(itemsStyle1,itemsStyleMix,itemsStyle2);
+        }
+        else
+            itemsToPick = itemsStyle1;
 
         List<ItemEntity> itemsPicked = new ArrayList<>();
-        List<ItemEntity> itemsToPick = getRandomItemPoolByStyle(itemsStyle1,itemsStyleMix,itemsStyle2);
 
         int playerGold = detail.getTotalGold();
 
         int itemsAmount = 0;
+
         List<PlayerMatchItemEntity> playerItems = new ArrayList<>();
-        // todo : revisar
+        Collections.shuffle(itemsToPick);
+
+        //todo:
         for (ItemEntity item : itemsToPick){
 
             if (itemsAmount < 6)
@@ -301,7 +320,6 @@ public class MatchServiceImpl implements MatchService {
                     itemsAmount++;
                     playerGold -= item.getCost();
                 }
-                else continue;
             }
             else break;
         }
@@ -333,74 +351,93 @@ public class MatchServiceImpl implements MatchService {
     // It works one team per time, and receives the stats to implement, and calculates the gold of each player too
     // after the distribution
     public void distributeTeamStats(List<PlayerMatchDetailEntity> allDetails, TeamEntity team,
-                                    int teamKills,
-                                    int enemyKills,
-                                    int teamCreaturesKilled)
+                                    int teamKills, int enemyKills, int teamCreaturesKilled)
     {
-        int remainingKills = teamKills;
-        int remainingDeaths = enemyKills;
-        int remainingCreatures = teamCreaturesKilled;
-
-        Map<PlayerMatchDetailEntity, Integer> creatureDistribution = new HashMap<>();
         Random random = new Random();
 
-        for (PlayerMatchDetailEntity player : allDetails) {
-            //Filter players/details by teamEntity
-            if (!player.getTeam().getId().equals(team.getId())) {
-                continue;
-            }
+        // FILTER players by TEAM
+        List<PlayerMatchDetailEntity> teamPlayers = allDetails.stream()
+                .filter(p -> p.getTeam().getId().equals(team.getId()))
+                .toList();
 
-            // KILLS
-            int assignedKills = 0;
-            if (remainingKills > 0) {
-                assignedKills = random.nextInt(remainingKills + 1);
-                remainingKills -= assignedKills;
-            }
-            player.setKills(assignedKills);
+        // KILLS
+        double[] killRatios = {0.16, 0.21, 0.25, 0.27, 0.10}; // PERCENTAGE -> distribution of KILLS to each player from teamKills
+        int[] killsAssigned = new int[5];
+        int killSum = 0;
 
-            // DEATHS
-            int assignedDeaths = 0;
-            if (remainingDeaths > 0) {
-                assignedDeaths = random.nextInt(remainingDeaths + 1);
-                remainingDeaths -= assignedDeaths;
-            }
-            player.setDeaths(assignedDeaths);
-
-            // ASSISTS
-            int assists = teamKills > 0 ? random.nextInt(teamKills + 1) : 0;
-            player.setAssists(assists);
-
-            // Pre-asignar criaturas estimadas
-            int creatureGuess = remainingCreatures > 0 ? random.nextInt(remainingCreatures + 1) : 0;
-            creatureDistribution.put(player, creatureGuess);
+        for (int i = 0; i < 5; i++) {
+            killsAssigned[i] = (int) Math.round(teamKills * killRatios[i]);
+            killSum += killsAssigned[i];
         }
 
-        // Ordenar primero por si es support, luego por criaturaGuess
-        List<Map.Entry<PlayerMatchDetailEntity, Integer>> sorted = new ArrayList<>(creatureDistribution.entrySet());
-        sorted.sort((a, b) -> {
-            boolean aSupport = isSupport(a.getKey());
-            boolean bSupport = isSupport(b.getKey());
-            if (aSupport && !bSupport) return -1;
-            if (!aSupport && bSupport) return 1;
-            return Integer.compare(a.getValue(), b.getValue());
-        });
+        assignExcessToRandom(killsAssigned, teamKills - killSum, random);
 
-        // Asignar criaturas y oro
-        for (int i = 0; i < sorted.size(); i++) {
-            PlayerMatchDetailEntity player = sorted.get(i).getKey();
-            int creatureCount;
-            if (i == sorted.size() - 1) {
-                creatureCount = remainingCreatures;
-            } else {
-                creatureCount = random.nextInt(remainingCreatures + 1);
-                remainingCreatures -= creatureCount;
+        // DEATHS
+        int[] deathRatios = {18, 22, 20, 21, 19}; // PERCENTAGE -> distribution of DEATHS to each player from enemyKills
+        int[] deathsAssigned = new int[5];
+        int deathSum = 0;
+
+        for (int i = 0; i < 5; i++) {
+            deathsAssigned[i] = (int) Math.round(enemyKills * (deathRatios[i] / 100.0));
+            deathSum += deathsAssigned[i];
+        }
+
+        assignExcessToRandom(deathsAssigned, enemyKills - deathSum, random);
+
+        // ASSISTS
+        double assistMultiplier = 0.75 + (new Random().nextDouble() * 0.30); // 0.75 a 1.05
+        int assistCap = (int) Math.round(teamKills * assistMultiplier);
+        double[] assistRatios = {0.15, 0.22, 0.18, 0.15, 0.50}; // PERCENTAGE -> distribution of ASSISTS to each player from teamKills
+        int[] assistsAssigned = new int[5];
+
+        for (int i = 0; i < 5; i++) {
+            assistsAssigned[i] = (int) Math.round(assistCap * assistRatios[i]);
+        }
+
+        // CREATURES / FARM
+        double[] creatureRatios = {0.23, 0.20, 0.20, 0.27, 0.10};
+        int[] creaturesAssigned = new int[5];
+        int creatureSum = 0;
+
+        for (int i = 0; i < 5; i++) {
+            creaturesAssigned[i] = (int) Math.round(teamCreaturesKilled * creatureRatios[i]);
+            creatureSum += creaturesAssigned[i];
+        }
+
+        int creatureDiff = teamCreaturesKilled - creatureSum;
+        if (creatureDiff != 0) {
+            creaturesAssigned[3] += creatureDiff; // the EXCESS of farm assigned to the ADC
+        }
+
+        // FINAL: KDA, FARM and GOLD ASSIGNATION
+        for (int i = 0; i < 5; i++) {
+            PlayerMatchDetailEntity player = teamPlayers.get(i);
+            player.setKills(killsAssigned[i]);
+            player.setDeaths(deathsAssigned[i]);
+            player.setAssists(assistsAssigned[i]);
+            player.setCreaturesKilled(creaturesAssigned[i]);
+
+            int goldFromKills = killsAssigned[i] * 400;
+            int goldFromCreatures = creaturesAssigned[i] * 35;
+            int totalGold = goldFromKills + goldFromCreatures;
+
+            if (player.getRole().getRole().equals("SUPPORT")) {
+                totalGold = (int) Math.round(totalGold * 1.6); // 60% más
             }
+            player.setTotalGold(totalGold);
+        }
+    }
 
-            player.setCreaturesKilled(creatureCount);
-
-            int goldFromCreatures = creatureCount * 35;
-            int goldFromKills = player.getKills() * 400;
-            player.setTotalGold(goldFromCreatures + goldFromKills);
+    private void assignExcessToRandom(int[] array, int diff, Random random) {
+        if (diff != 0) {
+            int index = random.nextInt(array.length);
+            if (diff < 0) {
+                // Avoid negative values
+                int maxRestar = Math.min(Math.abs(diff), array[index]);
+                array[index] -= maxRestar;
+            } else {
+                array[index] += diff;
+            }
         }
     }
 
@@ -415,9 +452,9 @@ public class MatchServiceImpl implements MatchService {
         } else {
             throw new IllegalArgumentException("Duration format not recognized: " + matchDuration);
         }
-        // between 25 and 32 creeps per minute are killed lets say
-        int minCreaturesPerMinute = 25;
-        int maxCreaturesPerMinute = 32;
+        // between 20 and 25 creeps per minute are killed lets say
+        int minCreaturesPerMinute = 20;
+        int maxCreaturesPerMinute = 25;
 
         int totalCreatures = 0;
         for (int i = 0; i < totalMinutes; i++) {
@@ -429,37 +466,41 @@ public class MatchServiceImpl implements MatchService {
         return totalCreatures;
     }
 
-    private boolean isSupport(PlayerMatchDetailEntity player) {
-        RoleEntity role = player.getRole();
-        return role != null && (role.getId() == 5L || "SUPPORT".equalsIgnoreCase(role.getRole()));
-    }
-
     public void estimateTeamKillsByMatch(MatchEntity match) {
         if (match == null) return;
 
         Random random = new Random();
 
-        // Kills between 20 and 80 per team
-        int blueKills = random.nextInt(61) + 20; // 20 a 80 inclusive
-        int redKills = random.nextInt(61) + 20;
+        int blueKills = random.nextInt(36) + 25; // 30–60
+        int redKills = random.nextInt(36) + 25;  // 30–60
 
-        // if ARAM is the map/game mode, totalKills x1.5
+        // If aram, +20% kills
         boolean isAram = match.getMap() != null && match.getMap().getId().equals(2L);
         if (isAram) {
-            blueKills = (int) Math.round(blueKills * 1.5);
-            redKills = (int) Math.round(redKills * 1.5);
+            blueKills = (int) Math.round(blueKills * 1.2);
+            redKills = (int) Math.round(redKills * 1.2);
+        }
+
+        // Bonus kills for winner (10–20 kills extra)
+        if (match.getWinnerTeam() != null) {
+            int bonus = random.nextInt(9) + 7; // 8–14inclusive
+
+            if (match.getWinnerTeam().getId().equals(1L)) {
+                blueKills += bonus;
+            } else {
+                redKills += bonus;
+            }
         }
 
         match.setBlueTeamKills(blueKills);
         match.setRedTeamKills(redKills);
     }
 
-
     private List<ItemEntity> getRandomItemPoolByStyle(List<ItemEntity> style1, List<ItemEntity> mix, List<ItemEntity> style2) {
         int roll = new Random().nextInt(10) + 1;
-        if (roll >= 1 && roll <= 5) {
+        if (roll <= 5) {
             return style1;
-        } else if (roll >= 6 && roll <= 8) {
+        } else if (roll <= 8) {
             return mix;
         } else {
             return style2;
@@ -514,7 +555,6 @@ public class MatchServiceImpl implements MatchService {
         return filteredUsers;
     }
 
-    //todo : revisar
     private ChampionEntity getChampionNotSelected(List<ChampionEntity> userChampions,
                                                   List<ChampionEntity> pickedChampions) {
         for (ChampionEntity uc : userChampions) {
