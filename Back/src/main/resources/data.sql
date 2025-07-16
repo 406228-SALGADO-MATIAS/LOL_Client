@@ -3290,6 +3290,21 @@ INSERT INTO users (
 ('damian.cabrera', 'pw_dami9', 'damian.cabrera@gmail.com', 'DamiCore', '2023-03-28 15:00:00', 7300, 1820, 9, 3),
 ('lucas.villalba', 'pw_lucas10', 'lucas.villalba@gmail.com', 'LukasChall', '2021-07-21 17:35:00', 7250, 750, 9, 3);
 
+-- LAS Unranked
+INSERT INTO users (
+    username, password, email, nickname, registration_date, blue_essence, riot_points, rank_id, server_id
+) VALUES
+('bruno.carrizo', 'pw_bruno11', 'bruno.carrizo@gmail.com', 'Brunox', '2023-04-12 11:25:00', 1600, 300, NULL, 3),
+('martina.lopez', 'pw_martina12', 'martina.lopez@yahoo.com', 'Marti', '2021-06-20 14:10:33', 2400, 1220, NULL, 3),
+('ramiro.fernandez', 'pw_ramiro13', 'ramiro.fernandez@outlook.com', 'RamiXD', '2022-10-09 19:03:45', 1800, 0, NULL, 3),
+('melina.garcia', 'pw_melina14', 'melina.garcia@gmail.com', 'MeliChan', '2020-09-15 17:55:20', 2200, 520, NULL, 3),
+('gonzalo.vera', 'pw_gonza15', 'gonzalo.vera@gmail.com', 'Zalox', '2023-02-01 09:00:00', 2700, 890, NULL, 3),
+('karina.suarez', 'pw_karina16', 'karina.suarez@gmail.com', 'KariStar', '2021-03-30 12:45:50', 1950, 0, NULL, 3),
+('tomás.rey', 'pw_tomas17', 'tomas.rey@gmail.com', 'TomKill', '2022-12-14 08:25:15', 3100, 1350, NULL, 3),
+('florencia.acosta', 'pw_flor18', 'flor.acosta@gmail.com', 'Florky', '2021-11-18 13:50:42', 1400, 0, NULL, 3),
+('esteban.silva', 'pw_esteban19', 'esteban.silva@hotmail.com', 'Est3ban', '2020-07-05 21:35:27', 2000, 720, NULL, 3),
+('rocio.perez', 'pw_rocio20', 'rocio.perez@gmail.com', 'Rochi', '2023-05-09 10:10:10', 2500, 1100, NULL, 3);
+
 
 -- USER MATCHES
 INSERT INTO user_matches (
@@ -4085,6 +4100,66 @@ INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_
 INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (90, 18, 1, '2025-05-04 00:00:00');
 INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (90, 6, 1, '2025-05-04 00:00:00');
 INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (90, 8, 1, '2025-05-04 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (91, 35, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (91, 49, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (91, 12, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (91, 38, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (91, 28, 1, '2025-05-04 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (92, 47, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (92, 17, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (92, 10, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (92, 6, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (92, 33, 1, '2025-05-04 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (93, 30, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (93, 4, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (93, 3, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (93, 23, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (93, 43, 1, '2025-05-04 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (94, 48, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (94, 36, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (94, 11, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (94, 46, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (94, 8, 1, '2025-05-04 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (95, 35, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (95, 37, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (95, 19, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (95, 9, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (95, 28, 1, '2025-05-04 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (96, 35, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (96, 15, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (96, 11, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (96, 38, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (96, 33, 1, '2025-05-04 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (97, 48, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (97, 7, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (97, 3, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (97, 38, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (97, 34, 1, '2025-05-04 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (98, 26, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (98, 4, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (98, 3, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (98, 20, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (98, 34, 1, '2025-05-04 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (99, 22, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (99, 36, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (99, 3, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (99, 20, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (99, 8, 1, '2025-05-04 00:00:00');
+
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (100, 21, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (100, 13, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (100, 31, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (100, 38, 1, '2025-05-04 00:00:00');
+INSERT INTO users_x_champions (user_id, champion_id, mastery_level, adquisition_date) VALUES (100, 34, 1, '2025-05-04 00:00:00');
 
 
 --USER X SKINS

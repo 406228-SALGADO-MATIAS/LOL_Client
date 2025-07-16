@@ -48,4 +48,19 @@ public class ChampionEntity {
     @ManyToOne
     private ChampionTierPriceEntity price;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ChampionEntity that = (ChampionEntity) o;
+
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
 }

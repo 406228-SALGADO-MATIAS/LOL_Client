@@ -25,8 +25,8 @@ public class MatchController
                                                 @RequestParam @Parameter(schema = @Schema(allowableValues = {"RANKED", "NORMAL"})) String gameMode,
                                                 @RequestParam @Parameter(schema = @Schema(allowableValues = {"ARAM", "SUMMONERS RIFT"})) String map,
                                                 @RequestParam UserRankTier elo,
-                                                @RequestParam boolean showChampionImg,
-                                                @RequestParam boolean showItemImg)
+                                                @RequestParam (defaultValue = "false") boolean showChampionImg,
+                                                @RequestParam (defaultValue = "false") boolean showItemImg)
     {
         return ResponseEntity.ok(matchService.createMatch(server, gameMode, map, elo, showChampionImg, showItemImg));
     }

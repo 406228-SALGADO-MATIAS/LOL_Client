@@ -12,9 +12,11 @@ import LoL_Client_Back.entities.domain.ItemEntity;
 import LoL_Client_Back.entities.domain.MatchEntity;
 import LoL_Client_Back.entities.domain.PlayerMatchDetailEntity;
 import LoL_Client_Back.entities.reference.*;
+import LoL_Client_Back.models.domain.PlayerMatchDetail;
 import LoL_Client_Back.repositories.association.UserXChampionRepository;
 import LoL_Client_Back.repositories.domain.ItemRepository;
 import LoL_Client_Back.repositories.domain.MatchRepository;
+import LoL_Client_Back.repositories.domain.UserMatchesRepository;
 import LoL_Client_Back.repositories.reference.*;
 import LoL_Client_Back.services.interfaces.domain.MatchService;
 import org.modelmapper.ModelMapper;
@@ -56,6 +58,9 @@ public class MatchServiceImpl implements MatchService {
     RoleRepository roleRepository;
     @Autowired
     ItemRepository itemRepository;
+    @Autowired
+    UserMatchesServiceImpl userMatchesService;
+
 
     @Override
     public MatchDTO createMatch(ServerOption serverOption, String gameMode, String map, UserRankTier elo,
@@ -63,6 +68,8 @@ public class MatchServiceImpl implements MatchService {
     {
         MatchEntity match = buildMatchEntity(serverOption,gameMode,map,elo);
         MatchEntity matchSaved = matchRepository.save(match);
+        //UPDATING USER MATCHES
+        userMatchesService.updateUsers(matchSaved.getPlayerDetails());
         return buildMatchDTO(matchSaved,showChampion,showItem);
     }
 
@@ -92,7 +99,11 @@ public class MatchServiceImpl implements MatchService {
 
             dto.setMatchId(detail.getMatch().getId());
             dto.setTeamMember(detail.getTeam().getTeamColor());
-            dto.setRole(detail.getRole().getRole());
+
+            if (detail.getRole() != null){ //FOR ARAM, THERE ARE NO ROLES
+                dto.setRole(detail.getRole().getRole());
+            }
+
             dto.setChampion(detail.getChampion().getName());
             dto.setUserNickname(detail.getUser().getNickname());
 
@@ -150,7 +161,7 @@ public class MatchServiceImpl implements MatchService {
             }
         }
         matchEntity.setServerRegion(getServerByName(serverOption.getFullName()));
-        //todo: calcular de verdad un equipo ganador
+        //todo: calcular de verdad un equipo ganador, basado en winrates y random
         matchEntity.setWinnerTeam(getRandomTeam());
 
         estimateTeamKillsByMatch(matchEntity);
@@ -174,10 +185,22 @@ public class MatchServiceImpl implements MatchService {
             usersFromServer = userService.findUsersByServer(serverOption);
         }
 
+        if (usersFromServer.isEmpty())
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "There are no players in the server to build a match with ranked: " +match.getRanked() +
+                            " , elo: " +elo.name() + " and server "+ serverOption.getFullName());
+        }
         //filter users with no champions
         List<UserMatchesDTO> usersWithChampions =
                 filterUsersWithNoChampions(usersFromServer);
 
+        if (usersWithChampions.isEmpty())
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "There are no players WITH CHAMPIONS to build a match with ranked: " +match.getRanked() +
+                            " , elo: " +elo.name() + " and server "+ serverOption.getFullName());
+        }
         Pair<List<Long>, List<Long>> equipos = getRandomUserIds(usersWithChampions);
 
         List<Long> blueTeamIds = equipos.getFirst();
@@ -213,7 +236,7 @@ public class MatchServiceImpl implements MatchService {
             roleIndex++;
             pickedChampions = getUniqueChampionsFromMatchDetails(detailList);
         }
-        if (mirrorChampions) pickedChampions.clear();
+        if (mirrorChampions) pickedChampions.clear(); //IF MIRROR TRUE, CLEAR PICKED CHAMPIONS AFTER BLUE TEAM PICKED
         //RED TEAM
         roleIndex = 0;
         for (Long playerId : redTeam){
@@ -259,17 +282,35 @@ public class MatchServiceImpl implements MatchService {
         PlayerMatchDetailEntity playerMatchDetail = new PlayerMatchDetailEntity();
         Collections.shuffle(userChampionsForRole);
         Collections.shuffle(userChampions);
-        //if the user has champions for the role
-        //todo: avoid exception, keep trying till successes
-        if (!userChampionsForRole.isEmpty()) {
-            playerMatchDetail.setChampion
-                    (getChampionNotSelected(userChampionsForRole,alreadySelectedChampions));
+
+        //if the user has champions for the role, and is not aram
+        ChampionEntity champion;
+        if (!userChampionsForRole.isEmpty() && match.getMap().getId().equals(1L)) {
+             champion = getChampionNotSelected
+                    (userChampionsForRole,alreadySelectedChampions);
         }
-        else {// if not, random champion the user has
-            playerMatchDetail.setChampion(getChampionNotSelected(userChampions,alreadySelectedChampions));
+        // if not, then pick any champion that the user has, but that is not selected already
+        else {
+            champion = getChampionNotSelected(userChampions,alreadySelectedChampions);
+        }
+        if (champion != null){
+            playerMatchDetail.setChampion(champion);
+        }
+        // no champion from rol nor from general pool could be picked
+        else{
+            //pick random
+            champion = getChampionNotSelected(userChampions,alreadySelectedChampions);
+            if (champion != null){
+                playerMatchDetail.setChampion(champion);
+            }
+            else //still null?
+                throw new RuntimeException("The user only has champions that are already selected");
         }
         playerMatchDetail.setUser(userChampionsBelonging.get(0).getUser());
-        playerMatchDetail.setRole(role);
+        if (match.getMap().getId().equals(1L))
+        {
+            playerMatchDetail.setRole(role); //Roles are onlty for map 1, not ARAM
+        }
         playerMatchDetail.setTeam(team);
         playerMatchDetail.setMatch(match);
         return playerMatchDetail;
@@ -304,7 +345,6 @@ public class MatchServiceImpl implements MatchService {
         List<PlayerMatchItemEntity> playerItems = new ArrayList<>();
         Collections.shuffle(itemsToPick);
 
-        //todo:
         for (ItemEntity item : itemsToPick){
 
             if (itemsAmount < 6)
@@ -354,6 +394,7 @@ public class MatchServiceImpl implements MatchService {
                                     int teamKills, int enemyKills, int teamCreaturesKilled)
     {
         Random random = new Random();
+        boolean isAram = allDetails.get(0).getMatch().getMap().getId().equals(2L);
 
         // FILTER players by TEAM
         List<PlayerMatchDetailEntity> teamPlayers = allDetails.stream()
@@ -421,9 +462,10 @@ public class MatchServiceImpl implements MatchService {
             int goldFromCreatures = creaturesAssigned[i] * 35;
             int totalGold = goldFromKills + goldFromCreatures;
 
-            if (player.getRole().getRole().equals("SUPPORT")) {
+            if (player.getRole() != null && "SUPPORT".equals(player.getRole().getRole())) {
                 totalGold = (int) Math.round(totalGold * 1.6); // 60% más
             }
+            if (isAram) totalGold = totalGold* 2; //DOUBLE GOLD FOR ARAM GAMES
             player.setTotalGold(totalGold);
         }
     }
@@ -556,19 +598,20 @@ public class MatchServiceImpl implements MatchService {
     }
 
     private ChampionEntity getChampionNotSelected(List<ChampionEntity> userChampions,
-                                                  List<ChampionEntity> pickedChampions) {
+                                                  List<ChampionEntity> pickedChampions)
+    {
         for (ChampionEntity uc : userChampions) {
             if (!pickedChampions.contains(uc)) {
                 return uc;
             }
         }
-        throw new RuntimeException("The user only has champions for selection that are already picked in the team");
+        return null;
     }
 
     public String generateDurationRandom() {
-        int minutos = ThreadLocalRandom.current().nextInt(20, 51); // 20 a 50 inclusive
-        int segundos = ThreadLocalRandom.current().nextInt(0, 60);  // 0 a 59 inclusive
-        return String.format("%02d:%02d", minutos, segundos);
+        int minutes = ThreadLocalRandom.current().nextInt(20, 51); // 20 - 50
+        int seconds = ThreadLocalRandom.current().nextInt(0, 60);  // 0 - 59
+        return String.format("%02d:%02d", minutes, seconds);
     }
 
     private MapEntity getMap(Long id) {
