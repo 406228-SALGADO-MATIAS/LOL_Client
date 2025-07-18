@@ -21,6 +21,8 @@ public class PlayerMatchDetailDTO {
     private Integer kills;
     private Integer deaths;
     private Integer assists;
+    private Long idUser;
+    private String elo;
     private String userNickname;
     @Lob
     private String imageUrlChampion;
