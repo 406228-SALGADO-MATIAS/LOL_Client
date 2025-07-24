@@ -913,21 +913,20 @@ public class MatchServiceImpl implements MatchService {
             throw new IllegalArgumentException("At least 9 additional users are needed (10 total with fixed user).");
         }
 
-        // Shuffle para aleatorizar
+        // Randomizing
         Collections.shuffle(users);
 
-        // Seleccionar 9 usuarios aleatorios
+        // Pick 9 random
         List<Long> randomUserIds = users.stream()
                 .map(UserMatchesDTO::getUser_id)
                 .filter(id -> !id.equals(idUser)) // Por si llega a estar incluido
                 .limit(9)
                 .toList();
 
-        // Preparar equipos
         List<Long> team1 = new ArrayList<>();
         List<Long> team2 = new ArrayList<>();
 
-        // Elegir equipo aleatorio para el usuario fijo
+        // Pick a random team for the user (idUser)
         boolean userGoesToTeam1 = new Random().nextBoolean();
         if (userGoesToTeam1) {
             team1.add(idUser);
@@ -935,7 +934,7 @@ public class MatchServiceImpl implements MatchService {
             team2.add(idUser);
         }
 
-        // Rellenar los equipos con los 9 restantes
+        // Complete the teams with the other 9 players
         for (int i = 0; i < randomUserIds.size(); i++) {
             if ((userGoesToTeam1 && team1.size() < 5) || (!userGoesToTeam1 && team2.size() >= 5)) {
                 team1.add(randomUserIds.get(i));

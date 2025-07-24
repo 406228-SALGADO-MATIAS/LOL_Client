@@ -19,6 +19,8 @@ public class ChampionTierPriceEntity {
     private Integer rpCost;
     @Column(name = "blue_essence_cost")
     private Integer blueEssenceCost;
+    @Column(name = "enchant_price")
+    private Integer enchantPrice;
     @Column(name ="disenchant_blue_essence")
     private Integer disenchantBlueEssence;
 }

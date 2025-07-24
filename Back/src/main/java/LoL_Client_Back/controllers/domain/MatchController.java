@@ -74,7 +74,7 @@ public class MatchController
         return ResponseEntity.ok(match);
     }
 
-    @PostMapping("/createMatchForUserAndRole/{userId}")
+    @PostMapping("/createMatch/userAndRole/{userId}")
     public ResponseEntity<MatchDTO> createMatchForUserAndRole(@PathVariable Long userId,
                                                               @RequestParam @Parameter(schema = @Schema(allowableValues = {"TOP", "JUNGLE", "MID", "ADC", "SUPPORT"}))
                                                               String role,
@@ -88,20 +88,19 @@ public class MatchController
     }
 
     @PutMapping("/{matchId}")
-    public ResponseEntity<MatchDTO> updateMatch(
-            @PathVariable Long matchId,
-            @RequestParam ServerOption serverOption,
-            @RequestParam @Parameter(schema = @Schema(allowableValues = {"ARAM", "SUMMONERS RIFT"}))
-            String map,
-            @RequestParam @Parameter(schema = @Schema(allowableValues = {"RANKED", "NORMAL"}))
-            String gameMode,
-            @RequestParam UserRankTier elo,
-            @RequestParam(required = false) Long userId,
-            @RequestParam(required = false)
-            @Parameter(schema = @Schema(allowableValues = {"TOP", "JUNGLE", "MID", "ADC", "SUPPORT"}))
-            String role,
-            @RequestParam(defaultValue = "false") boolean showChampion,
-            @RequestParam(defaultValue = "false") boolean showItem
+    public ResponseEntity<MatchDTO> updateMatch(@PathVariable Long matchId,
+                                                @RequestParam ServerOption serverOption,
+                                                @RequestParam @Parameter(schema = @Schema(allowableValues = {"ARAM", "SUMMONERS RIFT"}))
+                                                    String map,
+                                                @RequestParam @Parameter(schema = @Schema(allowableValues = {"RANKED", "NORMAL"}))
+                                                    String gameMode,
+                                                @RequestParam UserRankTier elo,
+                                                @RequestParam(required = false) Long userId,
+                                                @RequestParam(required = false)
+                                                    @Parameter(schema = @Schema(allowableValues = {"TOP", "JUNGLE", "MID", "ADC", "SUPPORT"}))
+                                                    String role,
+                                                @RequestParam(defaultValue = "false") boolean showChampion,
+                                                @RequestParam(defaultValue = "false") boolean showItem
     ) {
         MatchDTO updated = matchService.updateMatchById(
                 matchId, serverOption, gameMode, map, elo, userId, role, showChampion, showItem
