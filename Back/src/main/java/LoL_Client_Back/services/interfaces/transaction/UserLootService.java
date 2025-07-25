@@ -10,20 +10,20 @@ import org.springframework.stereotype.Service;
 public interface UserLootService {
     UserLoot createUserLoot (UserEntity user);
     UserLootDTO createUserLoot
-            (Long idUser, Integer chests, Integer masterChests, Integer keys,  Integer orangeEssence);
+            (Long idUser, Integer chests, Integer masterChests, Integer keys,  Integer orangeEssence, boolean showInactives);
 
-    UserLootDTO findByUserId(Long idUser);
+    UserLootDTO findByUserId(Long idUser, boolean showInactives);
 
-    UserLootDTO updateUserLoot (Long idLoot, Integer chests, Integer masterChests, Integer keys,  Integer orangeEssence);
-    UserLootDTO openChests (Long idUser, Integer chestsToOpen, Integer masterChestsToOpen);
+    UserLootDTO updateUserLoot (Long idLoot, Integer chests, Integer masterChests, Integer keys,  Integer orangeEssence, boolean showInactives);
+    UserLootDTO openChests (Long idUser, Integer chestsToOpen, Integer masterChestsToOpen, boolean showInactives);
 
-    UserLootDTO unlockOrRefundChampionLoot (Long idLootChampion, boolean unlock);
-    UserLootDTO unlockOrRefundSkinLoot (Long idLootSkin, boolean unlock);
-    UserLootDTO unlockOrRefundIconLoot (Long idLootIcon, boolean unlock);
+    UserLootDTO unlockOrRefundChampionLoot (Long idLootChampion, boolean unlock, boolean showInactives);
+    UserLootDTO unlockOrRefundSkinLoot (Long idLootSkin, boolean unlock, boolean showInactives);
+    UserLootDTO unlockOrRefundIconLoot (Long idLootIcon, boolean unlock, boolean showInactives);
 
-    UserLootDTO rerollChampionsLoot(Long idLootChampion1, Long idLootChampion2, Long idLootChampion3);
-    UserLootDTO rerollSkinsLoot(Long idLootSkin1, Long idLootSkin2, Long idLootSkin3);
-    UserLootDTO rerollIconsLoot(Long idLootIcon1, Long idLootIcon2, Long idLootIcon3);
+    UserLootDTO rerollChampionsLoot(Long idLootChampion1, Long idLootChampion2, Long idLootChampion3, boolean showInactives);
+    UserLootDTO rerollSkinsLoot(Long idLootSkin1, Long idLootSkin2, Long idLootSkin3, boolean showInactives);
+    UserLootDTO rerollIconsLoot(Long idLootIcon1, Long idLootIcon2, Long idLootIcon3, boolean showInactives);
 
 
 
