@@ -162,8 +162,8 @@ VALUES
 ('Standard', 750, 450,150),
 ('Deluxe', 975, 675,195),
 ('Epic', 1350, 1050,270),
-('Legendary', 1820, 1520,364),
-('Mythic', 3250, 2520,650);
+('Legendary', 1820, 1300,400),
+('Mythic', 3250, 1800,600);
 
 
 INSERT INTO teams (team_color) VALUES

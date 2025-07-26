@@ -15,8 +15,6 @@ import LoL_Client_Back.entities.transaction.LootInventoryChampionsEntity;
 import LoL_Client_Back.entities.transaction.LootInventoryIconsEntity;
 import LoL_Client_Back.entities.transaction.LootInventorySkinsEntity;
 import LoL_Client_Back.entities.transaction.UserLootEntity;
-import LoL_Client_Back.models.association.UserXIcon;
-import LoL_Client_Back.models.transaction.LootInventoryIcons;
 import LoL_Client_Back.models.transaction.UserLoot;
 import LoL_Client_Back.repositories.association.UserXChampionRepository;
 import LoL_Client_Back.repositories.association.UserXIconRepository;
@@ -37,9 +35,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collector;
 
 @Service
 public class UserLootServiceImpl implements UserLootService {
@@ -81,6 +79,41 @@ public class UserLootServiceImpl implements UserLootService {
         return customMapper.map
                 (userLootRepository.save(userLootEntity), UserLoot.class);
 
+    }
+
+    @Override
+    public UserLootDTO findByLootInventoryId(Long idLoot,String userLootType, boolean showInactives) {
+
+        Optional<UserLootEntity> optional;
+        switch (userLootType.toUpperCase()) {
+            case "SKINS":
+
+                optional = lootInventorySkinsRepository.
+                        findUserLootByLootInventorySkinId(idLoot);
+
+                if (optional.isEmpty())
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user loot with loot "+userLootType+" id : "+idLoot);
+
+                return buildUserLootDTO(optional.get(),showInactives);
+            case "CHAMPIONS":
+                optional = lootInventoryChampionsRepository.
+                        findUserLootByLootInventoryChampionId(idLoot);
+
+                if (optional.isEmpty())
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user loot with loot "+userLootType+" id : "+idLoot);
+
+                return buildUserLootDTO(optional.get(), showInactives);
+            case "ICONS":
+                optional = lootInventoryIconsRepository.
+                        findUserLootByLootInventoryIconId(idLoot);
+
+                if (optional.isEmpty())
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user loot with loot "+userLootType+" id : "+idLoot);
+
+                return buildUserLootDTO(optional.get(), showInactives);
+            default:
+                throw new IllegalArgumentException("Not supported loot type " + userLootType);
+        }
     }
 
     @Override
@@ -214,7 +247,7 @@ public class UserLootServiceImpl implements UserLootService {
             Object reward = getRandomReward(true);
             if (reward instanceof SkinEntity skin) {
                 LootInventorySkinsEntity skinEntity = buildNewLootSkinEntity(skin, loot);
-                loot.addSkin(skinEntity);
+                loot.addLootSkin(skinEntity);
             }
         }
 
@@ -223,13 +256,13 @@ public class UserLootServiceImpl implements UserLootService {
             Object reward = getRandomReward(false);
             if (reward instanceof SkinEntity skin) {
                 LootInventorySkinsEntity skinEntity = buildNewLootSkinEntity(skin, loot);
-                loot.addSkin(skinEntity);
+                loot.addLootSkin(skinEntity);
             } else if (reward instanceof ProfileIconEntity icon) {
                 LootInventoryIconsEntity iconEntity = buildNewLootIconEntity(icon, loot);
-                loot.addIcon(iconEntity);
+                loot.addLootIcon(iconEntity);
             } else if (reward instanceof ChampionEntity champion) {
                 LootInventoryChampionsEntity champEntity = buildNewLootChampionEntity(champion, loot);
-                loot.addChampion(champEntity);
+                loot.addLootChampion(champEntity);
             }
         }
 
@@ -465,18 +498,372 @@ public class UserLootServiceImpl implements UserLootService {
     }
 
     @Override
-    public UserLootDTO rerollChampionsLoot(Long idLootChampion1, Long idLootChampion2, Long idLootChampion3, boolean showInactives) {
-        return null;
+    public UserLootDTO reRollChampionsLoot(Long idLootChampion1, Long idLootChampion2, Long idLootChampion3, boolean showInactives)
+    {
+        List<Long> idsLootChampion =
+                List.of(idLootChampion1, idLootChampion2, idLootChampion3);
+
+        @SuppressWarnings("unchecked")
+        List<LootInventoryChampionsEntity> listLoot = (List<LootInventoryChampionsEntity>) (List<?>)
+                validateLootInventory(idsLootChampion, true, false, false);
+
+        UserLootEntity userLoot = listLoot.get(0).getLoot();
+        UserEntity user = userLoot.getUser();
+
+        for (LootInventoryChampionsEntity c : listLoot) { //DEACTIVATE THE LOOTS THAT WERE REROLLED
+            c.setIsActive(false);
+            c.setRemovalDate(LocalDateTime.now());
+        }
+        lootInventoryChampionsRepository.saveAll(listLoot); //UPDATE THEM
+
+        ChampionEntity championObtained = reRollDropChampion(user); //OBTAIN CHAMPION THAT THE USER DOES NOT HAVE
+
+        //ASK IF THE PLAYER ALREADY HAS THE CHAMPION (only if he has all the champions)
+        Optional<UserXChampionEntity> optional =
+                userXChampionRepository.findByUserAndChampion(user,championObtained);
+
+        boolean alreadyOwned = optional.isPresent();
+        //ADD NEW LOOT
+        LootInventoryChampionsEntity newLoot = new LootInventoryChampionsEntity();
+        newLoot.setAcquisitionDate(LocalDateTime.now());
+        newLoot.setLoot(userLoot);
+        newLoot.setChampion(championObtained);
+        newLoot.setIsActive(true);
+
+        if (!alreadyOwned) { //YOU DID NOT HAVE THE CHAMPION
+            newLoot.setIsActive(false);
+            newLoot.setRemovalDate(LocalDateTime.now());
+            //SAVE NEW USER BELONGING
+            UserXChampionEntity userXChampion = new UserXChampionEntity();
+            userXChampion.setAdquisitionDate(LocalDateTime.now());
+            userXChampion.setMasteryLevel(0);
+            userXChampion.setUser(user);
+            userXChampion.setChampion(championObtained);
+            userXChampionRepository.save(userXChampion);
+        }
+
+        userLoot.addLootChampion(newLoot);
+        userLootRepository.save(userLoot);
+        return buildUserLootDTO(userLoot,showInactives);
     }
 
     @Override
-    public UserLootDTO rerollSkinsLoot(Long idLootSkin1, Long idLootSkin2, Long idLootSkin3, boolean showInactives) {
-        return null;
+    public UserLootDTO reRollSkinsLoot(Long idLootSkin1, Long idLootSkin2, Long idLootSkin3, boolean showInactives)
+    {
+        List<Long> idsLootSkin = List.of(idLootSkin1, idLootSkin2, idLootSkin3);
+
+        @SuppressWarnings("unchecked")
+        List<LootInventorySkinsEntity> listLoot = (List<LootInventorySkinsEntity>) (List<?>)
+                validateLootInventory(idsLootSkin, false, true, false);
+
+        UserLootEntity userLoot = listLoot.get(0).getLoot();
+        UserEntity user = userLoot.getUser();
+
+        for (LootInventorySkinsEntity s : listLoot) { // DEACTIVATE THE LOOTS THAT WERE REROLLED
+            s.setIsActive(false);
+            s.setRemovalDate(LocalDateTime.now());
+        }
+        lootInventorySkinsRepository.saveAll(listLoot); // UPDATE THEM
+
+        SkinEntity skinObtained = reRollDropSkin(user); // OBTAIN SKIN THAT THE USER DOES NOT HAVE
+
+        Optional<UserXSkinEntity> optional =
+                userXSkinRepository.findByUserAndSkin(user, skinObtained);
+
+        boolean alreadyOwned = optional.isPresent();
+
+        // ADD NEW LOOT
+        LootInventorySkinsEntity newLoot = new LootInventorySkinsEntity();
+        newLoot.setAcquisitionDate(LocalDateTime.now());
+        newLoot.setLoot(userLoot);
+        newLoot.setSkin(skinObtained);
+        newLoot.setIsActive(true);
+
+        if (!alreadyOwned) { // YOU DID NOT HAVE THE SKIN
+            newLoot.setIsActive(false);
+            newLoot.setRemovalDate(LocalDateTime.now());
+
+            // SAVE NEW USER BELONGING
+            UserXSkinEntity userXSkin = new UserXSkinEntity();
+            userXSkin.setAdquisitionDate(LocalDateTime.now());
+            userXSkin.setUser(user);
+            userXSkin.setSkin(skinObtained);
+            userXSkinRepository.save(userXSkin);
+        }
+
+        userLoot.addLootSkin(newLoot);
+        userLootRepository.save(userLoot);
+
+        return buildUserLootDTO(userLoot, showInactives);
     }
 
     @Override
-    public UserLootDTO rerollIconsLoot(Long idLootIcon1, Long idLootIcon2, Long idLootIcon3, boolean showInactives) {
-        return null;
+    public UserLootDTO reRollIconsLoot(Long idLootIcon1, Long idLootIcon2, Long idLootIcon3, boolean showInactives)
+    {
+        List<Long> idsLootIcon = List.of(idLootIcon1, idLootIcon2, idLootIcon3);
+
+        @SuppressWarnings("unchecked")
+        List<LootInventoryIconsEntity> listLoot = (List<LootInventoryIconsEntity>) (List<?>)
+                validateLootInventory(idsLootIcon, false, false, true);
+
+        UserLootEntity userLoot = listLoot.get(0).getLoot();
+        UserEntity user = userLoot.getUser();
+
+        for (LootInventoryIconsEntity i : listLoot) { // DEACTIVATE THE LOOTS THAT WERE REROLLED
+            i.setIsActive(false);
+            i.setRemovalDate(LocalDateTime.now());
+        }
+        lootInventoryIconsRepository.saveAll(listLoot); // UPDATE THEM
+
+        ProfileIconEntity iconObtained = reRollDropIcon(user); // OBTAIN ICON THAT THE USER DOES NOT HAVE
+
+        Optional<UserXIconEntity> optional =
+                userXIconRepository.findByUserAndIcon(user, iconObtained);
+
+        boolean alreadyOwned = optional.isPresent();
+
+        // ADD NEW LOOT
+        LootInventoryIconsEntity newLoot = new LootInventoryIconsEntity();
+        newLoot.setAcquisitionDate(LocalDateTime.now());
+        newLoot.setLoot(userLoot);
+        newLoot.setIcon(iconObtained);
+        newLoot.setIsActive(true);
+
+        if (!alreadyOwned) { // YOU DID NOT HAVE THE ICON
+            newLoot.setIsActive(false);
+            newLoot.setRemovalDate(LocalDateTime.now());
+
+            // SAVE NEW USER BELONGING
+            UserXIconEntity userXIcon = new UserXIconEntity();
+            userXIcon.setAdquisitionDate(LocalDateTime.now());
+            userXIcon.setUser(user);
+            userXIcon.setIcon(iconObtained);
+            userXIconRepository.save(userXIcon);
+        }
+
+        userLoot.addLootIcon(newLoot);
+        userLootRepository.save(userLoot);
+
+        return buildUserLootDTO(userLoot, showInactives);
+    }
+
+    @Override
+    public UserLootDTO disenchantAll(Long idUser,String lootType, boolean showInactives)
+    {
+        Optional<UserEntity> optionalUser = userRepository.findById(idUser);
+        if (optionalUser.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find user with id " + idUser);
+
+        Optional<UserLootEntity> optionalUserLoot = userLootRepository.findByUser_Id(idUser);
+        if (optionalUserLoot.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find user loot with id user " + idUser);
+
+        UserLootEntity userLoot = optionalUserLoot.get();
+
+        switch (lootType.toUpperCase()) {
+            case "SKINS":
+                List<LootInventorySkinsEntity> listLootSkins =
+                        lootInventorySkinsRepository.findByLootAndIsActiveTrue(userLoot);
+                if (listLootSkins.isEmpty())
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                            "This user loot has no skins active in it. Id user: " + idUser);
+                for (LootInventorySkinsEntity lootSkin : listLootSkins) {
+                    unlockOrRefundSkinLoot(lootSkin.getId(), false, showInactives);
+                }
+                break;
+
+            case "CHAMPIONS":
+                List<LootInventoryChampionsEntity> listLootChampions =
+                        lootInventoryChampionsRepository.findByLootAndIsActiveTrue(userLoot);
+                if (listLootChampions.isEmpty())
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                            "This user loot has no champions active in it. Id user: " + idUser);
+                for (LootInventoryChampionsEntity lootChampion : listLootChampions) {
+                    unlockOrRefundChampionLoot(lootChampion.getId(), false, showInactives);
+                }
+                break;
+
+            case "ICONS":
+                List<LootInventoryIconsEntity> listLootIcons =
+                        lootInventoryIconsRepository.findByLootAndIsActiveTrue(userLoot);
+                if (listLootIcons.isEmpty())
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                            "This user loot has no icons active in it. Id user: " + idUser);
+                for (LootInventoryIconsEntity lootIcon : listLootIcons) {
+                    unlockOrRefundIconLoot(lootIcon.getId(), false, showInactives);
+                }
+                break;
+
+            default:
+                throw new IllegalArgumentException("Not supported loot type: " + lootType);
+        }
+
+        return buildUserLootDTO(userLoot, showInactives);
+    }
+
+    public List<?> validateLootInventory(List<Long> ids, boolean isChampion, boolean isSkin, boolean isIcon)
+    {
+        if (ids.size() != 3) {
+            throw new IllegalArgumentException("3 IDs are required. Provided: "+ids.size());
+        }
+
+        if ((isChampion ? 1 : 0) + (isSkin ? 1 : 0) + (isIcon ? 1 : 0) != 1) {
+            throw new IllegalArgumentException("Just one flag must be true");
+        }
+
+        List<?> loots;
+
+        if (isChampion) {
+            List<LootInventoryChampionsEntity> found = lootInventoryChampionsRepository.findAllById(ids);
+            if (found.size() != 3) throw new IllegalArgumentException("One of the ChampionLoots does not exists");
+            if (found.stream().anyMatch(l -> Boolean.FALSE.equals(l.getIsActive()))) {
+                throw new IllegalArgumentException("All ChampionLoots must be active");
+            }
+            checkSameUserLoot(found);
+            loots = found;
+        } else if (isSkin) {
+            List<LootInventorySkinsEntity> found = lootInventorySkinsRepository.findAllById(ids);
+            if (found.size() != 3) throw new IllegalArgumentException("One of the SkinLoots does not exists");
+            if (found.stream().anyMatch(l -> Boolean.FALSE.equals(l.getIsActive()))) {
+                throw new IllegalArgumentException("All SkinLoots must be active");
+            }
+            checkSameUserLoot(found);
+            loots = found;
+        } else {
+            List<LootInventoryIconsEntity> found = lootInventoryIconsRepository.findAllById(ids);
+            if (found.size() != 3) throw new IllegalArgumentException("One of the IconLoots does not exists");
+            if (found.stream().anyMatch(l -> Boolean.FALSE.equals(l.getIsActive()))) {
+                throw new IllegalArgumentException("All IconLoots must be active");
+            }
+            checkSameUserLoot(found);
+            loots = found;
+        }
+
+        return loots;
+    }
+
+    private void checkSameUserLoot(List<?> loots) {
+        UserLootEntity first = null;
+
+        for (Object loot : loots) {
+            UserLootEntity current;
+
+            if (loot instanceof LootInventoryChampionsEntity) {
+                current = ((LootInventoryChampionsEntity) loot).getLoot();
+            } else if (loot instanceof LootInventorySkinsEntity) {
+                current = ((LootInventorySkinsEntity) loot).getLoot();
+            } else if (loot instanceof LootInventoryIconsEntity) {
+                current = ((LootInventoryIconsEntity) loot).getLoot();
+            } else {
+                throw new IllegalArgumentException("Loot type not supported");
+            }
+
+            if (first == null) {
+                first = current;
+            } else if (!first.equals(current)) {
+                throw new IllegalArgumentException("The loots provided do not belong to the same UserLootEntity");
+            }
+        }
+    }
+
+    private SkinEntity reRollDropSkin (UserEntity userEntity)
+    {
+        List<UserXChampionEntity> uXc =
+                userXChampionRepository.findByUser_Id(userEntity.getId());
+
+        List<UserXSkinEntity> uXs = userXSkinRepository.findByUser_Id(userEntity.getId());
+
+        List<Long> championsOwnedIds = new ArrayList<>();
+
+        for (UserXChampionEntity u : uXc) {
+            championsOwnedIds.add(u.getChampion().getId());
+        }
+
+        List<SkinEntity> skinsAvailable = skinRepository.findByChampion_IdIn(championsOwnedIds);
+
+        Iterator<SkinEntity> iterator = skinsAvailable.iterator();
+
+        while (iterator.hasNext())
+        {
+            SkinEntity s = iterator.next();
+            for (UserXSkinEntity u : uXs)
+            {
+                if (s.equals(u.getSkin()))
+                {
+                    iterator.remove();
+                    break;
+                }
+            }
+        }
+
+        Random random = new Random();
+
+        if (!skinsAvailable.isEmpty()) //
+        {
+            Collections.shuffle(skinsAvailable);
+
+            return getRandomElement(skinsAvailable, random);
+        }
+        //IF THE USER HAS ALL THE SKINS
+        return getRandomElement(skinRepository.findAll(), random);
+    }
+
+    private ChampionEntity reRollDropChampion (UserEntity user)
+    {
+        List<UserXChampionEntity> uXc =
+                userXChampionRepository.findByUser_Id(user.getId());
+
+        List<Long> championsOwnedIds = new ArrayList<>();
+
+        for (UserXChampionEntity u : uXc)
+        {
+            championsOwnedIds.add(u.getChampion().getId());
+        }
+
+        List<ChampionEntity> championsAvailable =
+                championRepository.findByIdNotIn(championsOwnedIds);
+
+        Random random = new Random();
+
+        if (!championsAvailable.isEmpty()) //
+        {
+            Collections.shuffle(championsAvailable);
+
+            return getRandomElement(championsAvailable, random);
+        }
+
+        //IF THE USER HAS ALL THE CHAMPIONS
+        return getRandomElement(championRepository.findAll(), random);
+
+    }
+
+    private ProfileIconEntity reRollDropIcon (UserEntity user)
+    {
+        List<UserXIconEntity> uXi =
+                userXIconRepository.findByUser_Id(user.getId());
+
+        List<Long> iconOwned = new ArrayList<>();
+
+        for (UserXIconEntity u : uXi)
+        {
+            iconOwned.add(u.getIcon().getId());
+        }
+
+        List<ProfileIconEntity> iconsAvailable =
+                iconRepository.findByIdNotIn(iconOwned);
+
+        Random random = new Random();
+
+        if (!iconsAvailable.isEmpty()) //
+        {
+            Collections.shuffle(iconsAvailable);
+
+            return getRandomElement(iconsAvailable, random);
+        }
+
+        //IF THE USER HAS ALL THE ICONS
+        return getRandomElement(iconRepository.findAll(), random);
+
     }
 
     private UserLootDTO buildUserLootDTO(UserLootEntity userLootEntity, boolean showInactives) {

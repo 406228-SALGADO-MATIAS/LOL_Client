@@ -2,13 +2,15 @@ package LoL_Client_Back.controllers.transaction;
 
 import LoL_Client_Back.dtos.loot.UserLootDTO;
 import LoL_Client_Back.services.interfaces.transaction.UserLootService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/loot")
+@RequestMapping("/userLoot")
 public class UserLootController {
     @Autowired
     private UserLootService userLootService;
@@ -18,6 +20,15 @@ public class UserLootController {
                                                            @RequestParam (defaultValue = "true") boolean showInactives) {
         UserLootDTO loot = userLootService.findByUserId(idUser,showInactives);
         return ResponseEntity.ok(loot);
+    }
+    @GetMapping("/byLootInventory/{id}")
+    public UserLootDTO findByUserLootId(@PathVariable Long id,
+                                        @RequestParam
+                                        @Parameter(schema = @Schema(allowableValues = {"SKINS", "CHAMPIONS", "ICONS"}))
+                                        String userLootType,
+                                        @RequestParam(defaultValue = "true") boolean showInactives)
+    {
+        return userLootService.findByLootInventoryId(id, userLootType, showInactives);
     }
     @PostMapping("/create")
     public ResponseEntity<UserLootDTO> createUserLoot(@RequestParam Long idUser,
@@ -78,6 +89,46 @@ public class UserLootController {
         UserLootDTO result = userLootService.unlockOrRefundIconLoot(idLootIcon, enchant, showInactives);
         return ResponseEntity.ok(result);
     }
+    @PutMapping("/reRoll/champions")
+    public ResponseEntity<UserLootDTO> reRollChampionsLoot(@RequestParam Long idLootChampion1,
+                                                           @RequestParam Long idLootChampion2,
+                                                           @RequestParam Long idLootChampion3,
+                                                           @RequestParam(defaultValue = "true") boolean showInactives)
+    {
+        UserLootDTO result = userLootService.
+                reRollChampionsLoot(idLootChampion1, idLootChampion2, idLootChampion3, showInactives);
+        return ResponseEntity.ok(result);
+    }
+    @PutMapping("/reRoll/skins")
+    public ResponseEntity<UserLootDTO> reRollSkinsLoot(@RequestParam Long idLootSkin1,
+                                                           @RequestParam Long idLootSkin2,
+                                                           @RequestParam Long idLootSkin3,
+                                                           @RequestParam(defaultValue = "true") boolean showInactives)
+    {
+        UserLootDTO result = userLootService.
+                reRollSkinsLoot(idLootSkin1, idLootSkin2, idLootSkin3, showInactives);
+        return ResponseEntity.ok(result);
+    }
+    @PutMapping("/reRoll/icons")
+    public ResponseEntity<UserLootDTO> reRollIconsLoot(@RequestParam Long idLootIcon1,
+                                                           @RequestParam Long idLootIcon2,
+                                                           @RequestParam Long idLootIcon3,
+                                                           @RequestParam(defaultValue = "true") boolean showInactives)
+    {
+        UserLootDTO result = userLootService.
+                reRollIconsLoot(idLootIcon1, idLootIcon2, idLootIcon3, showInactives);
+        return ResponseEntity.ok(result);
+    }
+    @PutMapping("/disenchantAll")
+    public ResponseEntity<UserLootDTO> disenchantAll(@RequestParam Long idUser,
+                                                     @RequestParam @Parameter(schema = @Schema(allowableValues = {"SKINS", "CHAMPIONS", "ICONS"}))
+                                                     String lootType,
+                                                     @RequestParam(defaultValue = "true") boolean showInactives)
+    {
+        return ResponseEntity.ok(userLootService.disenchantAll(idUser,lootType,showInactives));
+    }
+
+
 
 
 }
