@@ -4,12 +4,16 @@ import LoL_Client_Back.dtos.reference.ProfileIconDTO;
 import LoL_Client_Back.entities.association.UserXIconEntity;
 import LoL_Client_Back.entities.reference.ChampionTierPriceEntity;
 import LoL_Client_Back.entities.reference.ProfileIconEntity;
+import LoL_Client_Back.entities.transaction.LootInventoryIconsEntity;
 import LoL_Client_Back.models.association.UserXIcon;
 import LoL_Client_Back.models.reference.ChampionTierPrice;
+import LoL_Client_Back.models.transaction.LootInventoryIcons;
 import LoL_Client_Back.repositories.association.UserXIconRepository;
 import LoL_Client_Back.repositories.reference.ChampionTierPriceRepository;
 import LoL_Client_Back.repositories.reference.ProfileIconRepository;
+import LoL_Client_Back.repositories.transaction.LootInventoryIconsRepository;
 import LoL_Client_Back.services.interfaces.reference.ProfileIconService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,6 +37,8 @@ public class ProfileIconServiceImpl implements ProfileIconService {
     ChampionTierPriceRepository tierPriceRepository;
     @Autowired
     UserXIconRepository userXIconRepository;
+    @Autowired
+    LootInventoryIconsRepository lootInventoryIconsRepository;
 
     @Override
     public ProfileIconDTO getById(Long id) {
@@ -82,11 +88,17 @@ public class ProfileIconServiceImpl implements ProfileIconService {
                 "Did not find profile icon with id " + id);
     }
 
+    @Transactional
     @Override
     public void deleteProfileIcon(Long id) {
         ProfileIconEntity icon = repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Did not find profile icon with id " + id));
+
+        List<UserXIconEntity> listBelongings = userXIconRepository.findByIcon_Id(id);
+        userXIconRepository.deleteAll(listBelongings);
+        List<LootInventoryIconsEntity> listLoot = lootInventoryIconsRepository.findByIcon(icon);
+        lootInventoryIconsRepository.deleteAll(listLoot);
         repository.delete(icon);
     }
 

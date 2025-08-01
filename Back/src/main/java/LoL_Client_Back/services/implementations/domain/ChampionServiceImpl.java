@@ -5,21 +5,31 @@ import LoL_Client_Back.dtos.enums.ChampionDifficulty;
 import LoL_Client_Back.dtos.enums.ChampionRole;
 import LoL_Client_Back.dtos.enums.ChampionStyle;
 import LoL_Client_Back.entities.association.UserXChampionEntity;
+import LoL_Client_Back.entities.association.UserXSkinEntity;
 import LoL_Client_Back.entities.domain.ChampionEntity;
+import LoL_Client_Back.entities.domain.MatchEntity;
+import LoL_Client_Back.entities.domain.SkinEntity;
 import LoL_Client_Back.entities.reference.ChampionDifficultyEntity;
 import LoL_Client_Back.entities.reference.ChampionStyleEntity;
 import LoL_Client_Back.entities.reference.ChampionTierPriceEntity;
 import LoL_Client_Back.entities.reference.RoleEntity;
+import LoL_Client_Back.entities.transaction.LootInventoryChampionsEntity;
+import LoL_Client_Back.entities.transaction.LootInventorySkinsEntity;
 import LoL_Client_Back.models.association.UserXChampion;
 import LoL_Client_Back.models.domain.Champion;
+import LoL_Client_Back.models.transaction.LootInventoryChampions;
 import LoL_Client_Back.repositories.association.UserXChampionRepository;
+import LoL_Client_Back.repositories.association.UserXSkinRepository;
 import LoL_Client_Back.repositories.domain.ChampionRepository;
-import LoL_Client_Back.repositories.reference.ChampionDifficultyRepository;
-import LoL_Client_Back.repositories.reference.ChampionStyleRepository;
-import LoL_Client_Back.repositories.reference.ChampionTierPriceRepository;
-import LoL_Client_Back.repositories.reference.RoleRepository;
+import LoL_Client_Back.repositories.domain.MatchRepository;
+import LoL_Client_Back.repositories.domain.PlayerMatchDetailRepository;
+import LoL_Client_Back.repositories.domain.SkinRepository;
+import LoL_Client_Back.repositories.reference.*;
+import LoL_Client_Back.repositories.transaction.LootInventoryChampionsRepository;
+import LoL_Client_Back.repositories.transaction.LootInventorySkinsRepository;
 import LoL_Client_Back.services.interfaces.assocation.UserXChampionService;
 import LoL_Client_Back.services.interfaces.domain.ChampionService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -52,6 +62,18 @@ public class ChampionServiceImpl implements ChampionService {
     @Autowired
     @Qualifier("customModelMapper")
     private ModelMapper customMapper;
+    @Autowired
+    LootInventoryChampionsRepository lootInventoryChampionsRepository;
+    @Autowired
+    LootInventorySkinsRepository lootInventorySkinsRepository;
+    @Autowired
+    UserXSkinRepository userXSkinRepository;
+    @Autowired
+    SkinRepository skinRepository;
+    @Autowired
+    MatchRepository matchRepository;
+    @Autowired
+    PlayerMatchDetailRepository matchDetailRepository;
 
 
     @Override
@@ -224,12 +246,48 @@ public class ChampionServiceImpl implements ChampionService {
                 "There is already a champion named "+name + " in the database. Try another name");
     }
 
+    @Transactional
     @Override
     public String deleteChampion(Long id) {
         Optional<ChampionEntity> entity =
                 championRepository.findById(id);
         if (entity.isPresent())
         {
+            //CHAMPION
+            List<UserXChampionEntity> belongingsChamps = userXChampionRepository.findByChampion_Id(id);
+            userXChampionRepository.deleteAll(belongingsChamps);
+
+            List<LootInventoryChampionsEntity> loots =
+                    lootInventoryChampionsRepository.findByChampion(entity.get());
+            lootInventoryChampionsRepository.deleteAll(loots);
+
+            //DELETE SKINS
+
+            List<SkinEntity> championSkins =  skinRepository.findByChampion_Id(id);
+
+            for (SkinEntity s : championSkins) //for each skin
+            {
+                //look belongings with that skin
+                //so the users will no longer have that skin
+                List<UserXSkinEntity> belongings =
+                        userXSkinRepository.findBySkin_Id(s.getId());
+                userXSkinRepository.deleteAll(belongings);
+
+                //look inventories with that skin
+                //users will no longer have that skin on their loots
+                List<LootInventorySkinsEntity> loot =
+                        lootInventorySkinsRepository.findBySkin(s);
+                lootInventorySkinsRepository.deleteAll(loot);
+
+                skinRepository.delete(s); //delete the skin
+            }
+
+            List<MatchEntity> matches = //delete all matches with the champion
+                    matchDetailRepository.findMatchesByChampionId(entity.get().getId());
+
+            if (!matches.isEmpty())
+                matchRepository.deleteAll(matches);
+
             championRepository.delete(entity.get());
             return "The champion named "+entity.get().getName() +" with id "+ id+" was successfully deleted";
         }

@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/userLoot")
 public class UserLootController {
@@ -127,7 +129,32 @@ public class UserLootController {
     {
         return ResponseEntity.ok(userLootService.disenchantAll(idUser,lootType,showInactives));
     }
-
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<UserLootDTO> findById (@PathVariable Long id,
+                                                 @RequestParam(defaultValue = "true") boolean showInactives)
+    {
+        return ResponseEntity.ok(userLootService.findById(id,showInactives));
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteUserLoot(@PathVariable("id") Long id) {
+        userLootService.delete(id);
+        return ResponseEntity.ok("User loot with ID " + id + " was successfully deleted.");
+    }
+    @GetMapping("/getAll")
+    public ResponseEntity<List<UserLootDTO>> getAll (@RequestParam(defaultValue = "true")
+                                                   boolean showInactives)
+    {
+        return ResponseEntity.ok(userLootService.findAll(showInactives));
+    }
+    @DeleteMapping("/delete/lootInventory/{idLoot}")
+    public ResponseEntity<Void> deleteLootInventory(@PathVariable Long idLoot,
+                                                    @RequestParam
+                                                    @Parameter(schema = @Schema(allowableValues = {"CHAMPION", "SKIN", "ICON"}))
+                                                    String typeLoot)
+    {
+        userLootService.deleteLootInventory(idLoot, typeLoot);
+        return ResponseEntity.noContent().build();
+    }
 
 
 

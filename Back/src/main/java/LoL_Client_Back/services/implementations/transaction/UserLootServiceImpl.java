@@ -68,6 +68,28 @@ public class UserLootServiceImpl implements UserLootService {
     LootInventoryIconsRepository lootInventoryIconsRepository;
 
     @Override
+    public UserLootDTO findById(Long id, boolean showInactives) {
+       Optional <UserLootEntity> optional = userLootRepository.findById(id);
+       if (optional.isEmpty())
+           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find user loot with id "+id);
+       return buildUserLootDTO(optional.get(),showInactives);
+    }
+
+    @Override
+    public List<UserLootDTO> findAll(boolean showInactives) {
+        List<UserLootEntity> list = userLootRepository.findAll();
+        if (list.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find any user loots");
+
+        List<UserLootDTO> dtoList = new ArrayList<>();
+        for (UserLootEntity entity : list)
+        {
+            dtoList.add(buildUserLootDTO(entity,showInactives));
+        }
+        return dtoList;
+    }
+
+    @Override
     public UserLoot createUserLoot(UserEntity user) {
         UserLootEntity userLootEntity = new UserLootEntity();
         userLootEntity.setKeys(4);
@@ -699,6 +721,44 @@ public class UserLootServiceImpl implements UserLootService {
         }
 
         return buildUserLootDTO(userLoot, showInactives);
+    }
+
+    @Override
+    public void delete(Long userLootId) {
+        Optional <UserLootEntity> optional = userLootRepository.findById(userLootId);
+        if (optional.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find user loot with id "+userLootId);
+        userLootRepository.delete(optional.get());
+    }
+
+    @Override
+    public void deleteLootInventory(Long idLoot, String typeLoot)
+    {
+        switch (typeLoot.toUpperCase()) {
+            case "CHAMPION":
+                lootInventoryChampionsRepository.findById(idLoot).ifPresentOrElse(
+                        loot -> lootInventoryChampionsRepository.delete(loot),
+                        () -> { throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find loot CHAMPION id " + idLoot); }
+                );
+                break;
+
+            case "SKIN":
+                lootInventorySkinsRepository.findById(idLoot).ifPresentOrElse(
+                        loot -> lootInventorySkinsRepository.delete(loot),
+                        () -> { throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find loot SKIN id " + idLoot); }
+                );
+                break;
+
+            case "ICON":
+                lootInventoryIconsRepository.findById(idLoot).ifPresentOrElse(
+                        loot -> lootInventoryIconsRepository.delete(loot),
+                        () -> { throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find loot ICON id " + idLoot); }
+                );
+                break;
+
+            default:
+                throw new IllegalArgumentException("Not supported loot type " + typeLoot);
+        }
     }
 
     public List<?> validateLootInventory(List<Long> ids, boolean isChampion, boolean isSkin, boolean isIcon)

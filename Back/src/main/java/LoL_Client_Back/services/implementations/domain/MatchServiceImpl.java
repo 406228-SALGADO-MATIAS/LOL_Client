@@ -93,7 +93,7 @@ public class MatchServiceImpl implements MatchService {
         {
             return buildMatchDTOList(matches,showChampionImg,showItemImg);
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find matches for the user");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find matches");
     }
 
     @Override
@@ -203,6 +203,15 @@ public class MatchServiceImpl implements MatchService {
             return buildMatchDTO(matchUpdated, showChampion,showItem);
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find the match with id provided");
+    }
+
+    @Override
+    public void delete(Long id) {
+        Optional<MatchEntity> optional = matchRepository.findById(id);
+        if (optional.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find match id "+id + " to delete");
+        matchRepository.delete(optional.get());
+
     }
 
     //MATCH DTO LIST

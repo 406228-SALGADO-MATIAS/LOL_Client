@@ -5,8 +5,13 @@ import LoL_Client_Back.entities.domain.UserEntity;
 import LoL_Client_Back.models.transaction.UserLoot;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface UserLootService {
+    UserLootDTO findById (Long id, boolean showInactives);
+    List<UserLootDTO> findAll(boolean showInactives);
+
     UserLoot createUserLoot (UserEntity user);
 
     UserLootDTO findByLootInventoryId (Long idLoot, String userLootType, boolean showInactives);
@@ -29,4 +34,7 @@ public interface UserLootService {
 
     UserLootDTO disenchantAll (Long idUser,String lootType, boolean showInactives);
 
+    void delete(Long userLootId);
+
+    void deleteLootInventory (Long idLoot, String typeLoot);
 }

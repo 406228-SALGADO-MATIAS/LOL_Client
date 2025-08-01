@@ -107,6 +107,12 @@ public class MatchController
         );
         return ResponseEntity.ok(updated);
     }
+    @DeleteMapping("/byMatch/{id}")
+    public ResponseEntity<String> deleteMatch(@PathVariable("id") Long id) {
+        matchService.delete(id);
+        return ResponseEntity.ok("Match with ID " + id + " has been successfully deleted.");
+    }
+
 
 
 }

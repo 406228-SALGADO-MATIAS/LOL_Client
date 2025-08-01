@@ -8,13 +8,16 @@ import LoL_Client_Back.entities.association.UserXSkinEntity;
 import LoL_Client_Back.entities.domain.ChampionEntity;
 import LoL_Client_Back.entities.domain.SkinEntity;
 import LoL_Client_Back.entities.reference.SkinTierEntity;
+import LoL_Client_Back.entities.transaction.LootInventorySkinsEntity;
 import LoL_Client_Back.models.association.UserXSkin;
 import LoL_Client_Back.repositories.association.UserXChampionRepository;
 import LoL_Client_Back.repositories.association.UserXSkinRepository;
 import LoL_Client_Back.repositories.domain.ChampionRepository;
 import LoL_Client_Back.repositories.domain.SkinRepository;
 import LoL_Client_Back.repositories.reference.SkinTierRepository;
+import LoL_Client_Back.repositories.transaction.LootInventorySkinsRepository;
 import LoL_Client_Back.services.interfaces.domain.SkinService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,6 +49,8 @@ public class SkinServiceImpl implements SkinService {
     UserXSkinRepository userXSkinRepository;
     @Autowired
     UserXChampionRepository userXChampionRepository;
+    @Autowired
+    LootInventorySkinsRepository lootInventorySkinsRepository;
 
     @Override
     public List<SkinDTO> getAllSkins() {
@@ -120,12 +125,17 @@ public class SkinServiceImpl implements SkinService {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find skin with id "+skinId + " to update");
     }
 
+    @Transactional
     @Override
     public void deleteSkin(Long id) {
-        skinRepository.delete(
-                skinRepository.findById(id).orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                "Did not find skin with id to delete")));
+        Optional<SkinEntity> optional = skinRepository.findById(id);
+        if (optional.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find skin with id "+id);
+        List<UserXSkinEntity> belongings = userXSkinRepository.findBySkin_Id(id);
+        userXSkinRepository.deleteAll(belongings);
+        List<LootInventorySkinsEntity> loot = lootInventorySkinsRepository.findBySkin(optional.get());
+        skinRepository.delete(optional.get());
+        lootInventorySkinsRepository.deleteAll(loot);
     }
 
     @Override
