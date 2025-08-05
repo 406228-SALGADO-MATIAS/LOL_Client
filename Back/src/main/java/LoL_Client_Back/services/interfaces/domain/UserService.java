@@ -1,8 +1,5 @@
 package LoL_Client_Back.services.interfaces.domain;
-import LoL_Client_Back.dtos.user.UserDTO;
-import LoL_Client_Back.dtos.user.UserLootMatchesDTO;
-import LoL_Client_Back.dtos.user.UserMatchesDTO;
-import LoL_Client_Back.dtos.user.UserMatchesWinrateDTO;
+import LoL_Client_Back.dtos.user.*;
 import LoL_Client_Back.dtos.enums.MatchType;
 import LoL_Client_Back.dtos.enums.ServerOption;
 import LoL_Client_Back.dtos.enums.UserRankTier;
@@ -30,4 +27,6 @@ public interface UserService {
     List<UserMatchesDTO> findUsersByRegistrationDate(LocalDateTime date);
     List<UserMatchesDTO> findUsersByRankAndServer(UserRankTier rank, ServerOption server);
     List<UserMatchesDTO> findUsersByServer(ServerOption server);
+    LoginResponseDTO login (ServerOption serverOption, String username, String password);
+    String delete (Long id);
 }

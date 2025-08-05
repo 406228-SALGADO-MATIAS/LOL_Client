@@ -52,6 +52,11 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
     List<UserEntity> findByRankIsNullAndServer(ServerRegionEntity server);
     List<UserEntity> findByServer(ServerRegionEntity serverRegion);
 
+    @Query("SELECT u FROM UserEntity u WHERE u.server = :server AND u.username = :username AND u.password = :password")
+    Optional<UserEntity> findByServerAndUsernameAndPassword(@Param("server") ServerRegionEntity server,
+                                                            @Param("username") String username,
+                                                            @Param("password") String password);
+
 
 
 

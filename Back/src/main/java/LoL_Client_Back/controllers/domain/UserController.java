@@ -1,9 +1,6 @@
 package LoL_Client_Back.controllers.domain;
 
-import LoL_Client_Back.dtos.user.UserDTO;
-import LoL_Client_Back.dtos.user.UserLootMatchesDTO;
-import LoL_Client_Back.dtos.user.UserMatchesDTO;
-import LoL_Client_Back.dtos.user.UserMatchesWinrateDTO;
+import LoL_Client_Back.dtos.user.*;
 import LoL_Client_Back.dtos.enums.MatchType;
 import LoL_Client_Back.dtos.enums.ServerOption;
 import LoL_Client_Back.dtos.enums.UserRankTier;
@@ -23,6 +20,24 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+
+    // LOGIN
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO request) {
+        LoginResponseDTO response = userService.login(
+                request.getServer(),
+                request.getUsername(),
+                request.getPassword()
+        );
+        return ResponseEntity.ok(response);
+    }
+
+    // DELETE
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        String message = userService.delete(id);
+        return ResponseEntity.ok(message);
+    }
 
     @PostMapping("/createUser")
     public ResponseEntity<UserLootMatchesDTO> createUser(@RequestBody UserDTO dto,

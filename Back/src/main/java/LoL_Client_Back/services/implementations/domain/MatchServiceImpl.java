@@ -449,6 +449,9 @@ public class MatchServiceImpl implements MatchService {
             sortByTeamAndRoles(details);
         }
         else {
+            //Shuffle in case of user provided, he may play different roles
+            Collections.shuffle(blueTeamIds);
+            Collections.shuffle(redTeamIds);
             details = championSelectionTeams(match, blueTeamIds, redTeamIds, mirrorChampions);
         }
 

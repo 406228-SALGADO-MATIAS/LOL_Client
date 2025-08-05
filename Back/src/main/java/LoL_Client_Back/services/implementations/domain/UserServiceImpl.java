@@ -1,27 +1,40 @@
 package LoL_Client_Back.services.implementations.domain;
 
-import LoL_Client_Back.dtos.user.UserDTO;
-import LoL_Client_Back.dtos.user.UserLootMatchesDTO;
-import LoL_Client_Back.dtos.user.UserMatchesDTO;
-import LoL_Client_Back.dtos.user.UserMatchesWinrateDTO;
+import LoL_Client_Back.dtos.user.*;
 import LoL_Client_Back.dtos.enums.MatchType;
 import LoL_Client_Back.dtos.enums.ServerOption;
 import LoL_Client_Back.dtos.enums.UserRankTier;
+import LoL_Client_Back.entities.association.UserXChampionEntity;
+import LoL_Client_Back.entities.association.UserXIconEntity;
+import LoL_Client_Back.entities.association.UserXSkinEntity;
+import LoL_Client_Back.entities.domain.MatchEntity;
 import LoL_Client_Back.entities.domain.UserEntity;
 import LoL_Client_Back.entities.domain.UserMatchesEntity;
 import LoL_Client_Back.entities.reference.RankTierEntity;
 import LoL_Client_Back.entities.reference.ServerRegionEntity;
+import LoL_Client_Back.entities.transaction.UserLootEntity;
+import LoL_Client_Back.models.association.UserXChampion;
+import LoL_Client_Back.models.association.UserXIcon;
+import LoL_Client_Back.models.association.UserXSkin;
+import LoL_Client_Back.models.domain.PlayerMatchDetail;
 import LoL_Client_Back.models.domain.User;
 import LoL_Client_Back.models.domain.UserMatches;
 import LoL_Client_Back.models.transaction.UserLoot;
+import LoL_Client_Back.repositories.association.UserXChampionRepository;
+import LoL_Client_Back.repositories.association.UserXIconRepository;
+import LoL_Client_Back.repositories.association.UserXSkinRepository;
+import LoL_Client_Back.repositories.domain.MatchRepository;
+import LoL_Client_Back.repositories.domain.PlayerMatchDetailRepository;
 import LoL_Client_Back.repositories.domain.UserMatchesRepository;
 import LoL_Client_Back.repositories.domain.UserRepository;
 import LoL_Client_Back.repositories.reference.RankTierRepository;
 import LoL_Client_Back.repositories.reference.ServerRegionRepository;
+import LoL_Client_Back.repositories.transaction.UserLootRepository;
 import LoL_Client_Back.services.interfaces.domain.UserMatchesService;
 import LoL_Client_Back.services.interfaces.domain.UserService;
 import LoL_Client_Back.services.interfaces.transaction.UserLootService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,7 +65,18 @@ public class UserServiceImpl implements UserService {
     UserMatchesRepository userMatchesRepository;
     @Autowired
     UserLootService userLootService;
-
+    @Autowired
+    UserXChampionRepository userXChampionRepository;
+    @Autowired
+    UserXSkinRepository userXSkinRepository;
+    @Autowired
+    UserXIconRepository userXIconRepository;
+    @Autowired
+    PlayerMatchDetailRepository playerMatchDetailRepository;
+    @Autowired
+    MatchRepository matchRepository;
+    @Autowired
+    UserLootRepository userLootRepository;
 
     @Override
     public UserMatchesDTO findById(Long id) {
@@ -79,6 +103,9 @@ public class UserServiceImpl implements UserService {
     public UserLootMatchesDTO createUser(UserDTO userDTO, ServerOption serverOptions) {
 
         String email = userDTO.getEmail();
+        validateEmail(email);
+        String password = userDTO.getPassword();
+        validatePassword(password);
         String username = userDTO.getUsername();
         String nickname = userDTO.getNickname();
         String serverName = serverOptions.getFullName();
@@ -296,6 +323,63 @@ public class UserServiceImpl implements UserService {
        return buildUserMatchesDTOList
                (userRepository.findByServer(getServerByName(server.getFullName())),
                "Did not find users on the server "+server.name());
+    }
+
+    @Override
+    public LoginResponseDTO login(ServerOption serverOption, String username, String password) {
+        ServerRegionEntity serverRegionEntity =
+                getServerByName(serverOption.getFullName());
+        Optional<UserEntity> optionalUser =
+                userRepository.findByServerAndUsernameAndPassword(serverRegionEntity,username,password);
+
+        if (optionalUser.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "The data provided does not match with any user account on the server "
+                            +serverOption.getFullName());
+
+        return new LoginResponseDTO(optionalUser.get().getId(),"Login successful");
+    }
+
+    @Transactional
+    @Override
+    public String delete(Long id) {
+        Optional<UserEntity> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user with id "+id + " to delete");
+
+        //User belongings deletions
+        List<UserXChampionEntity> listUxC =
+                userXChampionRepository.findByUser_Id(id);
+        userXChampionRepository.deleteAll(listUxC);
+
+        List<UserXSkinEntity> listUxS = userXSkinRepository.findByUser_Id(id);
+        userXSkinRepository.deleteAll(listUxS);
+
+        List<UserXIconEntity> listUxI = userXIconRepository.findByUser_Id(id);
+        userXIconRepository.deleteAll(listUxI);
+
+        //Delete Matches with user
+        List<MatchEntity> matches =
+                playerMatchDetailRepository.findMatchesByUserId(id);
+
+        matchRepository.deleteAll(matches);
+
+        //Delete user matches data
+        Optional<UserMatchesEntity> optionalUserMatches =
+                userMatchesRepository.findByUser(optionalUser.get());
+
+        optionalUserMatches.ifPresent
+                (userMatchesEntity -> userMatchesRepository.delete(userMatchesEntity));
+
+        //Delete user loot
+        Optional<UserLootEntity> optionalUserLoot = userLootRepository.findByUser_Id(id);
+        optionalUserLoot.ifPresent
+                (userLootEntity -> userLootRepository.delete(userLootEntity));
+
+        //Delete user at last
+        userRepository.deleteById(id);
+
+        return "User with id "+id + " successfully deleted";
     }
 
     private RankTierEntity getRankByName(String rankname)
@@ -529,6 +613,60 @@ public class UserServiceImpl implements UserService {
             return userMatchesDTOS;
         }
         throw new EntityNotFoundException(errorMsg);
+    }
+
+    private void validateEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            throw new RuntimeException("Email cannot be null or empty.");
+        }
+
+        String trimmedEmail = email.trim();
+
+        // Minimum length check (adjustable, this is a reasonable baseline)
+        if (trimmedEmail.length() < 6) {
+            throw new RuntimeException("Email is too short to be valid.");
+        }
+
+        // Basic structure checks
+        if (!trimmedEmail.contains("@") || !trimmedEmail.contains(".")) {
+            throw new RuntimeException("Email must contain '@' and a domain like '.com'.");
+        }
+
+        // Optional: check that the dot comes after the @
+        int atIndex = trimmedEmail.indexOf("@");
+        int lastDotIndex = trimmedEmail.lastIndexOf(".");
+
+        if (lastDotIndex < atIndex) {
+            throw new RuntimeException("Invalid domain structure in email.");
+        }
+
+        // Optional: enforce common domain endings
+        if (!trimmedEmail.matches(".*\\.(com|net|org|edu|gov|io|co)$")) {
+            throw new RuntimeException("Email must end with a valid domain like '.com'.");
+        }
+    }
+
+    public void validatePassword(String password) {
+        if (password == null || password.trim().isEmpty()) {
+            throw new RuntimeException("Password cannot be null or empty.");
+        }
+
+        String trimmedPassword = password.trim();
+
+        // Minimum length
+        if (trimmedPassword.length() < 8) {
+            throw new RuntimeException("Password must be at least 8 characters long.");
+        }
+
+        // At least one uppercase letter
+        if (!trimmedPassword.matches(".*[A-Z].*")) {
+            throw new RuntimeException("Password must contain at least one uppercase letter.");
+        }
+
+        // At least one special character
+        if (!trimmedPassword.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*")) {
+            throw new RuntimeException("Password must contain at least one special character.");
+        }
     }
 }
 

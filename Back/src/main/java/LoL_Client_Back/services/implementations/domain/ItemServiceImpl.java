@@ -3,10 +3,14 @@ package LoL_Client_Back.services.implementations.domain;
 import LoL_Client_Back.dtos.enums.ChampionStyle;
 import LoL_Client_Back.dtos.ItemDTO;
 import LoL_Client_Back.entities.domain.ItemEntity;
+import LoL_Client_Back.entities.domain.MatchEntity;
 import LoL_Client_Back.entities.reference.ChampionStyleEntity;
 import LoL_Client_Back.repositories.domain.ItemRepository;
+import LoL_Client_Back.repositories.domain.MatchRepository;
+import LoL_Client_Back.repositories.reference.PlayerMatchItemRepository;
 import LoL_Client_Back.repositories.reference.ChampionStyleRepository;
 import LoL_Client_Back.services.interfaces.domain.ItemService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,6 +34,10 @@ public class ItemServiceImpl implements ItemService {
     private ModelMapper customMapper;
     @Autowired
     ChampionStyleRepository championStyleRepository;
+    @Autowired
+    PlayerMatchItemRepository playerMatchItemRepository;
+    @Autowired
+    MatchRepository matchRepository;
 
     @Override
     public ItemDTO findById(Long id) {
@@ -97,10 +105,14 @@ public class ItemServiceImpl implements ItemService {
                 (HttpStatus.NOT_FOUND,"Did not find item with id "+id +" to update");
     }
 
+    @Transactional
     @Override
     public void deleteItem(Long id) {
         Optional<ItemEntity> opt = itemRepository.findById(id);
-        if (opt.isPresent()) {
+        if (opt.isPresent())
+        {
+            List<MatchEntity> matches = playerMatchItemRepository.findMatchesByItemId(id);
+            matchRepository.deleteAll(matches);
             itemRepository.delete(opt.get());
         } else {
             throw new ResponseStatusException(
