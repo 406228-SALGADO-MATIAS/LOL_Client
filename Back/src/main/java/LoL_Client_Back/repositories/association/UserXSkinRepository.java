@@ -4,6 +4,7 @@ import LoL_Client_Back.entities.association.UserXSkinEntity;
 import LoL_Client_Back.entities.domain.SkinEntity;
 import LoL_Client_Back.entities.domain.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface UserXSkinRepository extends JpaRepository<UserXSkinEntity,Long>
     List<UserXSkinEntity> findByUser_Id(Long id);
     List<UserXSkinEntity> findByUser_IdNot(Long id);
     Optional<UserXSkinEntity> findByUserAndSkin(UserEntity userEntity, SkinEntity skinEntity);
+    @Query("SELECT u FROM UserEntity u WHERE u.id NOT IN (SELECT us.user.id FROM UserXSkinEntity us)")
+    List<UserEntity> findUsersWithoutSkins();
 }

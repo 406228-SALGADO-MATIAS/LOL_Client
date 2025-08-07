@@ -20,5 +20,4 @@ public interface SkinService {
     List<SkinDTO> getUserSkins(Long idUser);
     List<SkinDTO> getUserSkinsNotPossess(Long idUser);
     List<SkinDTO> getUserSkinsEnabledPurchase(Long idUser);
-
 }

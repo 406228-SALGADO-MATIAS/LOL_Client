@@ -3402,8 +3402,17 @@ INSERT INTO user_matches (
 (87, 119, 55, 224, 112, 69, 35),
 (88, 82, 54, 248, 99, 106, 46),
 (89, 89, 43, 149, 75, 110, 53),
-(90, 80, 41, 249, 122, 92, 45);
-
+(90, 80, 41, 249, 122, 92, 45),
+(91, 0, 0, 0, 0, 0, 0),
+(92, 0, 0, 0, 0, 0, 0),
+(93, 0, 0, 0, 0, 0, 0),
+(94, 0, 0, 0, 0, 0, 0),
+(95, 0, 0, 0, 0, 0, 0),
+(96, 0, 0, 0, 0, 0, 0),
+(97, 0, 0, 0, 0, 0, 0),
+(98, 0, 0, 0, 0, 0, 0),
+(99, 0, 0, 0, 0, 0, 0),
+(100, 0, 0, 0, 0, 0, 0);
 
 
 --USER X CHAMPIONS
@@ -4194,6 +4203,637 @@ INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (9, 35, '2
 INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (10, 37, '2025-05-01 00:00:00');
 INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (10, 39, '2025-05-01 00:00:00');
 
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (11, 32, '2025-05-03 12:00:00'); -- campeón 16
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (11, 14, '2025-05-03 12:30:00'); -- campeón 7
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (11, 6,  '2025-05-03 13:00:00'); -- campeón 3
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (11, 2,  '2025-05-03 13:30:00'); -- campeón 1
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (11, 10, '2025-05-03 14:00:00'); -- campeón 5
+
+-- User 12
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (12, 42, '2025-05-03 12:00:00'); -- champion 21
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (12, 64, '2025-05-03 12:30:00'); -- champion 32
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (12, 20, '2025-05-03 13:00:00'); -- champion 10
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (12, 4,  '2025-05-03 13:30:00'); -- champion 2
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (12, 16, '2025-05-03 14:00:00'); -- champion 8
+
+-- User 13
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (13, 44, '2025-05-03 12:00:00'); -- champion 22
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (13, 82, '2025-05-03 12:30:00'); -- champion 41
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (13, 22, '2025-05-03 13:00:00'); -- champion 11
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (13, 12, '2025-05-03 13:30:00'); -- champion 6
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (13, 56, '2025-05-03 14:00:00'); -- champion 28
+
+-- User 14
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (14, 48, '2025-05-03 12:00:00'); -- champion 24
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (14, 74, '2025-05-03 12:30:00'); -- champion 37
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (14, 24, '2025-05-03 13:00:00'); -- champion 12
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (14, 18, '2025-05-03 13:30:00'); -- champion 9
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (14, 66, '2025-05-03 14:00:00'); -- champion 33
+
+-- User 15
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (15, 52, '2025-05-03 12:00:00'); -- champion 26
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (15, 84, '2025-05-03 12:30:00'); -- champion 42
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (15, 28, '2025-05-03 13:00:00'); -- champion 14
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (15, 46, '2025-05-03 13:30:00'); -- champion 23
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (15, 68, '2025-05-03 14:00:00'); -- champion 34
+
+-- User 16
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (16, 54, '2025-05-04 12:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (16, 50, '2025-05-04 12:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (16, 36, '2025-05-04 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (16, 76, '2025-05-04 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (16, 86, '2025-05-04 14:00:00');
+
+-- User 17
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (17, 60, '2025-05-04 12:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (17, 72, '2025-05-04 12:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (17, 58, '2025-05-04 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (17, 92, '2025-05-04 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (17, 90, '2025-05-04 14:00:00');
+
+-- User 18
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (18, 70, '2025-05-04 12:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (18, 64, '2025-05-04 12:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (18, 62, '2025-05-04 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (18, 76, '2025-05-04 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (18, 68, '2025-05-04 14:00:00');
+
+-- User 19
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (19, 78, '2025-05-04 12:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (19, 98, '2025-05-04 12:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (19, 24, '2025-05-04 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (19, 46, '2025-05-04 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (19, 66, '2025-05-04 14:00:00');
+
+-- User 20
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (20, 88, '2025-05-04 12:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (20, 84, '2025-05-04 12:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (20, 58, '2025-05-04 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (20, 2, '2025-05-04 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (20, 86, '2025-05-04 14:00:00');
+
+-- User 21
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (21, 42, '2025-05-04 12:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (21, 8, '2025-05-04 12:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (21, 62, '2025-05-04 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (21, 4, '2025-05-04 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (21, 90, '2025-05-04 14:00:00');
+
+-- User 22
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (22, 44, '2025-05-04 12:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (22, 14, '2025-05-04 12:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (22, 28, '2025-05-04 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (22, 12, '2025-05-04 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (22, 16, '2025-05-04 14:00:00');
+
+-- User 23
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (23, 48, '2025-05-04 12:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (23, 50, '2025-05-04 12:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (23, 36, '2025-05-04 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (23, 18, '2025-05-04 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (23, 66, '2025-05-04 14:00:00');
+
+-- User 24
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (24, 52, '2025-05-04 12:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (24, 64, '2025-05-04 12:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (24, 58, '2025-05-04 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (24, 46, '2025-05-04 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (24, 68, '2025-05-04 14:00:00');
+
+-- User 25
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (25, 54, '2025-05-04 12:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (25, 72, '2025-05-04 12:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (25, 24, '2025-05-04 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (25, 2, '2025-05-04 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (25, 10, '2025-05-04 14:00:00');
+
+-- User 26
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (26, 60, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (26, 74, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (26, 38, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (26, 40, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (26, 86, '2025-05-05 12:00:00');
+
+-- User 27
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (27, 70, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (27, 82, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (27, 62, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (27, 76, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (27, 86, '2025-05-05 12:00:00');
+
+-- User 28
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (28, 78, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (28, 98, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (28, 24, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (28, 2, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (28, 56, '2025-05-05 12:00:00');
+
+-- User 29
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (29, 80, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (29, 84, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (29, 38, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (29, 46, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (29, 86, '2025-05-05 12:00:00');
+
+-- User 30
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (30, 88, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (30, 72, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (30, 58, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (30, 12, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (30, 86, '2025-05-05 12:00:00');
+
+-- User 31
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (31, 96, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (31, 8, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (31, 6, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (31, 2, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (31, 10, '2025-05-05 12:00:00');
+
+-- User 32
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (32, 32, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (32, 14, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (32, 20, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (32, 12, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (32, 16, '2025-05-05 12:00:00');
+
+-- User 33
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (33, 54, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (33, 26, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (33, 36, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (33, 18, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (33, 68, '2025-05-05 12:00:00');
+
+-- User 34
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (34, 78, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (34, 30, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (34, 24, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (34, 40, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (34, 90, '2025-05-05 12:00:00');
+
+-- User 35
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (35, 94, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (35, 82, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (35, 58, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (35, 46, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (35, 56, '2025-05-05 12:00:00');
+
+-- User 36
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (36, 88, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (36, 50, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (36, 38, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (36, 76, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (36, 68, '2025-05-05 12:00:00');
+
+-- User 37
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (37, 94, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (37, 84, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (37, 58, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (37, 92, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (37, 66, '2025-05-05 12:00:00');
+
+-- User 38
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (38, 96, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (38, 72, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (38, 28, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (38, 40, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (38, 56, '2025-05-05 12:00:00');
+
+-- User 39
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (39, 70, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (39, 50, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (39, 36, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (39, 4, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (39, 86, '2025-05-05 12:00:00');
+
+-- User 40
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (40, 52, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (40, 98, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (40, 58, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (40, 76, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (40, 10, '2025-05-05 12:00:00');
+
+-- User 41
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (41, 42, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (41, 14, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (41, 20, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (41, 4, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (41, 16, '2025-05-05 12:00:00');
+
+-- User 42
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (42, 44, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (42, 26, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (42, 22, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (42, 12, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (42, 56, '2025-05-05 12:00:00');
+
+-- User 43
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (43, 48, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (43, 30, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (43, 24, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (43, 18, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (43, 66, '2025-05-05 12:00:00');
+
+-- User 44
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (44, 52, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (44, 34, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (44, 28, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (44, 40, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (44, 68, '2025-05-05 12:00:00');
+
+-- User 45
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (45, 54, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (45, 50, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (45, 36, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (45, 46, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (45, 86, '2025-05-05 12:00:00');
+
+-- User 46
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (46, 60, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (46, 64, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (46, 38, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (46, 76, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (46, 90, '2025-05-05 12:00:00');
+
+-- User 47
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (47, 70, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (47, 72, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (47, 58, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (47, 92, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (47, 10, '2025-05-05 12:00:00');
+
+-- User 48
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (48, 78, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (48, 74, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (48, 62, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (48, 2, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (48, 16, '2025-05-05 12:00:00');
+
+-- User 49
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (49, 80, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (49, 82, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (49, 6, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (49, 4, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (49, 56, '2025-05-05 12:00:00');
+
+-- User 50
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (50, 88, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (50, 84, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (50, 20, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (50, 12, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (50, 66, '2025-05-05 12:00:00');
+
+-- User 51
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (51, 94, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (51, 98, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (51, 22, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (51, 18, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (51, 68, '2025-05-05 12:00:00');
+
+-- User 52
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (52, 96, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (52, 8, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (52, 24, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (52, 40, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (52, 86, '2025-05-05 12:00:00');
+
+-- User 53
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (53, 32, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (53, 14, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (53, 28, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (53, 46, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (53, 90, '2025-05-05 12:00:00');
+
+-- User 54
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (54, 42, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (54, 26, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (54, 36, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (54, 76, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (54, 10, '2025-05-05 12:00:00');
+
+-- User 55
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (55, 44, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (55, 30, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (55, 38, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (55, 92, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (55, 16, '2025-05-05 12:00:00');
+
+-- User 56
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (56, 48, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (56, 34, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (56, 58, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (56, 2, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (56, 56, '2025-05-05 12:00:00');
+
+-- User 57
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (57, 52, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (57, 50, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (57, 62, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (57, 4, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (57, 66, '2025-05-05 12:00:00');
+
+-- User 58
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (58, 54, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (58, 64, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (58, 6, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (58, 12, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (58, 68, '2025-05-05 12:00:00');
+
+-- User 59
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (59, 60, '2025-05-05 10:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (59, 72, '2025-05-05 10:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (59, 20, '2025-05-05 11:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (59, 18, '2025-05-05 11:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (59, 86, '2025-05-05 12:00:00');
+
+-- User 60
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (60, 70, '2025-05-05 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (60, 74, '2025-05-05 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (60, 22, '2025-05-05 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (60, 40, '2025-05-05 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (60, 90, '2025-05-05 15:00:00');
+
+-- User 61
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (61, 78, '2025-05-05 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (61, 82, '2025-05-05 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (61, 24, '2025-05-05 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (61, 46, '2025-05-05 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (61, 10, '2025-05-05 15:00:00');
+
+-- User 62
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (62, 80, '2025-05-05 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (62, 84, '2025-05-05 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (62, 28, '2025-05-05 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (62, 76, '2025-05-05 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (62, 16, '2025-05-05 15:00:00');
+
+-- User 63
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (63, 88, '2025-05-05 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (63, 98, '2025-05-05 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (63, 36, '2025-05-05 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (63, 92, '2025-05-05 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (63, 56, '2025-05-05 15:00:00');
+
+-- User 64
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (64, 94, '2025-05-05 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (64, 8, '2025-05-05 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (64, 38, '2025-05-05 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (64, 2, '2025-05-05 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (64, 66, '2025-05-05 15:00:00');
+
+-- User 65
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (65, 96, '2025-05-05 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (65, 14, '2025-05-05 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (65, 58, '2025-05-05 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (65, 4, '2025-05-05 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (65, 68, '2025-05-05 15:00:00');
+
+-- User 66
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (66, 32, '2025-05-05 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (66, 26, '2025-05-05 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (66, 62, '2025-05-05 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (66, 12, '2025-05-05 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (66, 86, '2025-05-05 15:00:00');
+
+-- User 67
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (67, 42, '2025-05-05 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (67, 30, '2025-05-05 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (67, 6, '2025-05-05 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (67, 18, '2025-05-05 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (67, 90, '2025-05-05 15:00:00');
+
+-- User 68
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (68, 44, '2025-05-05 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (68, 34, '2025-05-05 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (68, 20, '2025-05-05 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (68, 40, '2025-05-05 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (68, 10, '2025-05-05 15:00:00');
+
+-- User 69
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (69, 48, '2025-05-05 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (69, 50, '2025-05-05 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (69, 22, '2025-05-05 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (69, 46, '2025-05-05 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (69, 16, '2025-05-05 15:00:00');
+
+-- User 70
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (70, 52, '2025-05-05 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (70, 64, '2025-05-05 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (70, 24, '2025-05-05 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (70, 76, '2025-05-05 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (70, 56, '2025-05-05 15:00:00');
+
+-- User 71
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (71, 54, '2025-05-06 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (71, 72, '2025-05-06 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (71, 28, '2025-05-06 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (71, 92, '2025-05-06 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (71, 66, '2025-05-06 15:00:00');
+
+-- User 72
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (72, 60, '2025-05-06 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (72, 74, '2025-05-06 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (72, 36, '2025-05-06 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (72, 2, '2025-05-06 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (72, 68, '2025-05-06 15:00:00');
+
+-- User 73
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (73, 70, '2025-05-06 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (73, 82, '2025-05-06 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (73, 38, '2025-05-06 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (73, 4, '2025-05-06 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (73, 86, '2025-05-06 15:00:00');
+
+-- User 74
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (74, 78, '2025-05-06 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (74, 84, '2025-05-06 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (74, 58, '2025-05-06 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (74, 12, '2025-05-06 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (74, 90, '2025-05-06 15:00:00');
+
+-- User 75
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (75, 80, '2025-05-06 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (75, 98, '2025-05-06 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (75, 62, '2025-05-06 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (75, 18, '2025-05-06 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (75, 10, '2025-05-06 15:00:00');
+
+-- User 76
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (76, 88, '2025-05-06 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (76, 8, '2025-05-06 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (76, 6, '2025-05-06 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (76, 40, '2025-05-06 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (76, 16, '2025-05-06 15:00:00');
+
+-- User 77
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (77, 94, '2025-05-06 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (77, 14, '2025-05-06 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (77, 20, '2025-05-06 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (77, 46, '2025-05-06 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (77, 56, '2025-05-06 15:00:00');
+
+-- User 78
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (78, 96, '2025-05-06 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (78, 26, '2025-05-06 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (78, 22, '2025-05-06 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (78, 76, '2025-05-06 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (78, 66, '2025-05-06 15:00:00');
+
+-- User 79
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (79, 32, '2025-05-06 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (79, 30, '2025-05-06 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (79, 24, '2025-05-06 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (79, 92, '2025-05-06 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (79, 68, '2025-05-06 15:00:00');
+
+-- User 80
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (80, 42, '2025-05-06 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (80, 34, '2025-05-06 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (80, 28, '2025-05-06 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (80, 2, '2025-05-06 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (80, 86, '2025-05-06 15:00:00');
+
+
+-- User 81
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (81, 44, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (81, 50, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (81, 36, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (81, 4, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (81, 90, '2025-05-07 15:00:00');
+
+-- User 82
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (82, 48, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (82, 64, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (82, 38, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (82, 12, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (82, 10, '2025-05-07 15:00:00');
+
+-- User 83
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (83, 52, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (83, 72, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (83, 58, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (83, 18, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (83, 16, '2025-05-07 15:00:00');
+
+-- User 84
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (84, 54, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (84, 74, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (84, 62, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (84, 40, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (84, 56, '2025-05-07 15:00:00');
+
+-- User 85
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (85, 60, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (85, 82, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (85, 6, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (85, 46, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (85, 66, '2025-05-07 15:00:00');
+
+-- User 86
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (86, 70, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (86, 84, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (86, 20, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (86, 76, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (86, 68, '2025-05-07 15:00:00');
+
+-- User 87
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (87, 78, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (87, 98, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (87, 22, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (87, 92, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (87, 86, '2025-05-07 15:00:00');
+
+-- User 88
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (88, 80, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (88, 8, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (88, 24, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (88, 2, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (88, 90, '2025-05-07 15:00:00');
+
+-- User 89
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (89, 88, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (89, 14, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (89, 28, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (89, 4, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (89, 10, '2025-05-07 15:00:00');
+
+-- User 90
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (90, 94, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (90, 26, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (90, 36, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (90, 12, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (90, 16, '2025-05-07 15:00:00');
+
+-- User 91
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (91, 70, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (91, 98, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (91, 24, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (91, 76, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (91, 56, '2025-05-07 15:00:00');
+
+-- User 92
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (92, 94, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (92, 34, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (92, 20, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (92, 12, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (92, 66, '2025-05-07 15:00:00');
+
+-- User 93
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (93, 60, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (93, 8, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (93, 6, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (93, 46, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (93, 86, '2025-05-07 15:00:00');
+
+-- User 94
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (94, 96, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (94, 72, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (94, 22, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (94, 92, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (94, 16, '2025-05-07 15:00:00');
+
+-- User 95
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (95, 70, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (95, 74, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (95, 38, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (95, 18, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (95, 56, '2025-05-07 15:00:00');
+
+-- User 96
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (96, 70, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (96, 30, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (96, 22, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (96, 76, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (96, 66, '2025-05-07 15:00:00');
+
+-- User 97
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (97, 96, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (97, 14, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (97, 6, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (97, 76, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (97, 68, '2025-05-07 15:00:00');
+
+-- User 98
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (98, 52, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (98, 8, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (98, 6, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (98, 40, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (98, 68, '2025-05-07 15:00:00');
+
+-- User 99
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (99, 44, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (99, 72, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (99, 6, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (99, 40, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (99, 16, '2025-05-07 15:00:00');
+
+-- User 100
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (100, 42, '2025-05-07 13:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (100, 26, '2025-05-07 13:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (100, 62, '2025-05-07 14:00:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (100, 76, '2025-05-07 14:30:00');
+INSERT INTO users_x_skins (user_id, skin_id, adquisition_date) VALUES (100, 68, '2025-05-07 15:00:00');
+
+
 -- USERS X ICONS
 
 INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (1, 1, '2025-05-01 00:00:00');
@@ -4226,8 +4866,288 @@ INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (9, 18, '2
 INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (10, 19, '2025-05-01 00:00:00');
 INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (10, 20, '2025-05-01 00:00:00');
 
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (11, 44, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (11, 18, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (12, 13, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (12, 22, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (13, 3, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (13, 1, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (14, 42, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (14, 2, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (15, 31, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (15, 41, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (16, 7, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (16, 42, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (17, 1, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (17, 6, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (18, 46, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (18, 36, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (19, 31, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (19, 45, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (20, 21, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (20, 28, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (21, 15, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (21, 23, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (22, 41, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (22, 3, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (23, 44, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (23, 14, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (24, 33, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (24, 9, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (25, 28, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (25, 43, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (26, 14, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (26, 16, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (27, 11, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (27, 36, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (28, 23, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (28, 46, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (29, 28, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (29, 11, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (30, 34, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (30, 38, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (31, 49, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (31, 47, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (32, 41, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (32, 14, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (33, 16, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (33, 19, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (34, 48, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (34, 11, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (35, 4, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (35, 11, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (36, 14, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (36, 48, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (37, 48, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (37, 16, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (38, 39, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (38, 45, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (39, 35, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (39, 4, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (40, 1, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (40, 8, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (41, 10, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (41, 31, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (42, 28, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (42, 13, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (43, 22, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (43, 21, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (44, 18, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (44, 46, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (45, 8, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (45, 13, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (46, 35, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (46, 46, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (47, 4, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (47, 30, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (48, 48, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (48, 23, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (49, 9, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (49, 38, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (50, 48, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (50, 14, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (51, 32, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (51, 27, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (52, 44, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (52, 25, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (53, 15, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (53, 19, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (54, 22, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (54, 34, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (55, 33, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (55, 5, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (56, 26, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (56, 35, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (57, 4, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (57, 24, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (58, 48, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (58, 9, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (59, 38, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (59, 37, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (60, 26, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (60, 25, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (61, 8, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (61, 49, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (62, 13, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (62, 43, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (63, 3, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (63, 50, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (64, 49, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (64, 26, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (65, 15, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (65, 45, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (66, 4, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (66, 2, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (67, 46, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (67, 49, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (68, 9, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (68, 22, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (69, 23, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (69, 16, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (70, 42, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (70, 21, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (71, 28, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (71, 43, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (72, 10, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (72, 26, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (73, 26, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (73, 9, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (74, 43, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (74, 37, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (75, 12, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (75, 3, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (76, 6, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (76, 17, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (77, 5, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (77, 27, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (78, 46, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (78, 47, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (79, 40, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (79, 34, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (80, 39, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (80, 44, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (81, 38, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (81, 26, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (82, 47, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (82, 36, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (83, 6, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (83, 31, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (84, 7, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (84, 30, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (85, 21, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (85, 39, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (86, 49, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (86, 48, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (87, 42, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (87, 32, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (88, 44, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (88, 32, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (89, 41, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (89, 2, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (90, 49, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (90, 7, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (91, 10, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (91, 19, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (92, 27, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (92, 30, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (93, 44, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (93, 9, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (94, 14, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (94, 37, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (95, 18, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (95, 17, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (96, 41, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (96, 16, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (97, 25, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (97, 42, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (98, 18, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (98, 38, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (99, 6, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (99, 14, '2025-05-01 00:01:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (100, 7, '2025-05-01 00:00:00');
+INSERT INTO users_x_icons (user_id, icon_id, adquisition_date) VALUES (100, 45, '2025-05-01 00:01:00');
 
-
+INSERT INTO user_loots (chests, master_chests, keys, orange_essence, user_id) VALUES
+(2, 2, 4, 1500, 1),
+(2, 2, 4, 1500, 2),
+(2, 2, 4, 1500, 3),
+(2, 2, 4, 1500, 4),
+(2, 2, 4, 1500, 5),
+(2, 2, 4, 1500, 6),
+(2, 2, 4, 1500, 7),
+(2, 2, 4, 1500, 8),
+(2, 2, 4, 1500, 9),
+(2, 2, 4, 1500, 10),
+(2, 2, 4, 1500, 11),
+(2, 2, 4, 1500, 12),
+(2, 2, 4, 1500, 13),
+(2, 2, 4, 1500, 14),
+(2, 2, 4, 1500, 15),
+(2, 2, 4, 1500, 16),
+(2, 2, 4, 1500, 17),
+(2, 2, 4, 1500, 18),
+(2, 2, 4, 1500, 19),
+(2, 2, 4, 1500, 20),
+(2, 2, 4, 1500, 21),
+(2, 2, 4, 1500, 22),
+(2, 2, 4, 1500, 23),
+(2, 2, 4, 1500, 24),
+(2, 2, 4, 1500, 25),
+(2, 2, 4, 1500, 26),
+(2, 2, 4, 1500, 27),
+(2, 2, 4, 1500, 28),
+(2, 2, 4, 1500, 29),
+(2, 2, 4, 1500, 30),
+(2, 2, 4, 1500, 31),
+(2, 2, 4, 1500, 32),
+(2, 2, 4, 1500, 33),
+(2, 2, 4, 1500, 34),
+(2, 2, 4, 1500, 35),
+(2, 2, 4, 1500, 36),
+(2, 2, 4, 1500, 37),
+(2, 2, 4, 1500, 38),
+(2, 2, 4, 1500, 39),
+(2, 2, 4, 1500, 40),
+(2, 2, 4, 1500, 41),
+(2, 2, 4, 1500, 42),
+(2, 2, 4, 1500, 43),
+(2, 2, 4, 1500, 44),
+(2, 2, 4, 1500, 45),
+(2, 2, 4, 1500, 46),
+(2, 2, 4, 1500, 47),
+(2, 2, 4, 1500, 48),
+(2, 2, 4, 1500, 49),
+(2, 2, 4, 1500, 50),
+(2, 2, 4, 1500, 51),
+(2, 2, 4, 1500, 52),
+(2, 2, 4, 1500, 53),
+(2, 2, 4, 1500, 54),
+(2, 2, 4, 1500, 55),
+(2, 2, 4, 1500, 56),
+(2, 2, 4, 1500, 57),
+(2, 2, 4, 1500, 58),
+(2, 2, 4, 1500, 59),
+(2, 2, 4, 1500, 60),
+(2, 2, 4, 1500, 61),
+(2, 2, 4, 1500, 62),
+(2, 2, 4, 1500, 63),
+(2, 2, 4, 1500, 64),
+(2, 2, 4, 1500, 65),
+(2, 2, 4, 1500, 66),
+(2, 2, 4, 1500, 67),
+(2, 2, 4, 1500, 68),
+(2, 2, 4, 1500, 69),
+(2, 2, 4, 1500, 70),
+(2, 2, 4, 1500, 71),
+(2, 2, 4, 1500, 72),
+(2, 2, 4, 1500, 73),
+(2, 2, 4, 1500, 74),
+(2, 2, 4, 1500, 75),
+(2, 2, 4, 1500, 76),
+(2, 2, 4, 1500, 77),
+(2, 2, 4, 1500, 78),
+(2, 2, 4, 1500, 79),
+(2, 2, 4, 1500, 80),
+(2, 2, 4, 1500, 81),
+(2, 2, 4, 1500, 82),
+(2, 2, 4, 1500, 83),
+(2, 2, 4, 1500, 84),
+(2, 2, 4, 1500, 85),
+(2, 2, 4, 1500, 86),
+(2, 2, 4, 1500, 87),
+(2, 2, 4, 1500, 88),
+(2, 2, 4, 1500, 89),
+(2, 2, 4, 1500, 90),
+(2, 2, 4, 1500, 91),
+(2, 2, 4, 1500, 92),
+(2, 2, 4, 1500, 93),
+(2, 2, 4, 1500, 94),
+(2, 2, 4, 1500, 95),
+(2, 2, 4, 1500, 96),
+(2, 2, 4, 1500, 97),
+(2, 2, 4, 1500, 98),
+(2, 2, 4, 1500, 99),
+(2, 2, 4, 1500, 100);
 
 
 

@@ -29,4 +29,5 @@ public interface UserService {
     List<UserMatchesDTO> findUsersByServer(ServerOption server);
     LoginResponseDTO login (ServerOption serverOption, String username, String password);
     String delete (Long id);
+    List<UserLootMatchesDTO> create100ForServer(ServerOption serverOption);
 }

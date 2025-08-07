@@ -15,5 +15,5 @@ public interface UserXChampionService {
     void deleteById (Long id);
     UserXChampionDTO createChampionBelonging(Long idUser,Long idChampion);
     UserXChampionDTO updateChampionBelongiong(Long idBelonging, Long idUser, Long idChampion, Integer masteryLevel);
-
+    String giveChampionsToUsersWithNoChampions();
 }

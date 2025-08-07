@@ -43,5 +43,5 @@ public interface ChampionRepository extends JpaRepository<ChampionEntity,Long> {
 
     List<ChampionEntity> findByPrice_BlueEssenceCostLessThanEqualOrderByPrice_BlueEssenceCostDesc(Integer cost);
     List<ChampionEntity> findByIdNotIn(List <Long> ids);
-
+    List<ChampionEntity> findByRole_id(Long id);
 }

@@ -2,9 +2,12 @@ package LoL_Client_Back.services.implementations.association;
 
 import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.association.UserXSkinDTO;
+import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.association.UserXSkinEntity;
+import LoL_Client_Back.entities.domain.ChampionEntity;
 import LoL_Client_Back.entities.domain.SkinEntity;
 import LoL_Client_Back.entities.domain.UserEntity;
+import LoL_Client_Back.repositories.association.UserXChampionRepository;
 import LoL_Client_Back.repositories.association.UserXSkinRepository;
 import LoL_Client_Back.repositories.domain.SkinRepository;
 import LoL_Client_Back.repositories.domain.UserRepository;
@@ -18,9 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserXSkinServiceImpl implements UserXSkinService {
@@ -37,6 +39,8 @@ public class UserXSkinServiceImpl implements UserXSkinService {
     UserXChampionService userXChampionService;
     @Autowired
     DTOBuilder dtoBuilder;
+    @Autowired
+    UserXChampionRepository userXChampionRepository;
 
     @Override
     public UserXSkinDTO findById(Long id) {
@@ -146,6 +150,58 @@ public class UserXSkinServiceImpl implements UserXSkinService {
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Did not find skin belonging with id " + idBelonging + " to update");
+    }
+
+    @Override
+    public String giveSkinsToUsersWithout() {
+
+        List<UserEntity> usersWithoutSkins = userXSkinRepository.findUsersWithoutSkins();
+        if (usersWithoutSkins.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"There are no users with no skins");
+
+        List<UserXSkinEntity> newBelongings = new ArrayList<>();
+        Random random = new Random();
+
+        for (UserEntity user : usersWithoutSkins)
+        {
+            List<UserXChampionEntity> userChampions =
+                    userXChampionRepository.findByUser_Id(user.getId());
+
+            if (userChampions == null || userChampions.isEmpty())
+                throw new RuntimeException("The user "+ user.getId() + " has no champions to get skins");
+
+            // Get champion list from userXchampions
+            List<ChampionEntity> champions =
+                    userChampions.stream()
+                    .map(UserXChampionEntity::getChampion)
+                    .collect(Collectors.toList());
+
+            List<SkinEntity> availableSkins = skinRepository.findByChampionIn(champions);
+
+            if (availableSkins == null || availableSkins.size() < 2) {
+                continue; // if the champion does not have skins (should never happen)
+            }
+
+            Collections.shuffle(availableSkins, random);
+            SkinEntity skin1 = availableSkins.get(0);
+            SkinEntity skin2 = availableSkins.get(1);
+
+            UserXSkinEntity belonging1 = new UserXSkinEntity();
+            belonging1.setUser(user);
+            belonging1.setSkin(skin1);
+            belonging1.setAdquisitionDate(LocalDateTime.now());
+
+            UserXSkinEntity belonging2 = new UserXSkinEntity();
+            belonging2.setUser(user);
+            belonging2.setSkin(skin2);
+            belonging2.setAdquisitionDate(LocalDateTime.now());
+
+            newBelongings.add(belonging1);
+            newBelongings.add(belonging2);
+        }
+
+        userXSkinRepository.saveAll(newBelongings);
+        return "Skins were assigned to " + usersWithoutSkins.size() + " users.";
     }
 
     private void verifyChampionBelonging(Long idUser, Long idChampion) {

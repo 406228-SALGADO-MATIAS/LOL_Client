@@ -62,4 +62,9 @@ public class UserXSkinController {
         UserXSkinDTO dto = service.updateSkinBelongiong(idBelonging, idUser, idSkin);
         return ResponseEntity.ok(dto);
     }
+    @PostMapping("/giveSkins/ToUsersWithout")
+    public ResponseEntity<String> giveSkinsToUsersWithout() {
+        String result = service.giveSkinsToUsersWithout();
+        return ResponseEntity.ok(result);
+    }
 }

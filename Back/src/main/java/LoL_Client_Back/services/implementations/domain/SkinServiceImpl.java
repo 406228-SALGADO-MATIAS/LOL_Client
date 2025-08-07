@@ -7,6 +7,7 @@ import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.association.UserXSkinEntity;
 import LoL_Client_Back.entities.domain.ChampionEntity;
 import LoL_Client_Back.entities.domain.SkinEntity;
+import LoL_Client_Back.entities.domain.UserEntity;
 import LoL_Client_Back.entities.reference.SkinTierEntity;
 import LoL_Client_Back.entities.transaction.LootInventorySkinsEntity;
 import LoL_Client_Back.repositories.association.UserXChampionRepository;
@@ -25,10 +26,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class SkinServiceImpl implements SkinService {

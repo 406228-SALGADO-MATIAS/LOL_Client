@@ -62,4 +62,9 @@ public class UserXChampionController {
         UserXChampionDTO dto = service.updateChampionBelongiong(idBelonging, idUser, idChampion, masteryLevel);
         return ResponseEntity.ok(dto);
     }
+    @PostMapping("/giveChampions/toUsersWithout")
+    public ResponseEntity<String> giveChampionsToUsersWithout() {
+        String result = service.giveChampionsToUsersWithNoChampions();
+        return ResponseEntity.ok(result);
+    }
 }

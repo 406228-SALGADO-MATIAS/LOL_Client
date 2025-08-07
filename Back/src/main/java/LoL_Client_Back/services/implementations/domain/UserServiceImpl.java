@@ -39,10 +39,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -379,6 +376,61 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
 
         return "User with id "+id + " successfully deleted";
+    }
+
+    @Override
+    public List<UserLootMatchesDTO> create100ForServer(ServerOption serverOption)
+    {
+
+        ServerRegionEntity serverRegion = getServerByName(serverOption.getFullName());
+        List<RankTierEntity> ranks = rankTierRepository.findAll();
+
+        List<String> usernames = new ArrayList<>(UserDataProvider.usernames());
+        List<String> passwords = new ArrayList<>(UserDataProvider.passwords());
+        List<String> emails = new ArrayList<>(UserDataProvider.emails());
+        List<String> nicknames = new ArrayList<>(UserDataProvider.nicknames());
+
+        // Shuffle
+        Collections.shuffle(usernames);
+        Collections.shuffle(passwords);
+        Collections.shuffle(emails);
+        Collections.shuffle(nicknames);
+
+        List<UserEntity> users = new ArrayList<>();
+
+        for (int i = 0; i < 100; i++) {
+            UserEntity user = new UserEntity();
+            user.setUsername(usernames.get(i));
+            user.setPassword(passwords.get(i));
+            user.setEmail(emails.get(i));
+            user.setNickname(nicknames.get(i));
+            user.setRegistrationDate(LocalDateTime.now().minusDays((long) (Math.random() * 365)));
+            user.setBlueEssence(1000 + new Random().nextInt(4000));
+            user.setRiotPoints(500 + new Random().nextInt(1500));
+            user.setServer(serverRegion);
+
+            // First 90 users have rank (10 to 10)
+            if (i < 90) {
+                int rankIndex = i / 10;
+                user.setRank(ranks.get(rankIndex));
+            } else {
+                user.setRank(null);
+            }
+
+            users.add(user);
+        }
+
+        List<UserEntity> savedUsers = userRepository.saveAll(users);
+        List<UserLootMatchesDTO> returnList = new ArrayList<>();
+        for (UserEntity u : savedUsers)
+        {
+            UserMatches matches = userMatchesService.createUserMatches(u);
+            UserLoot loot = userLootService.createUserLoot(u);
+            User userSaved = modelMapper.map(u,User.class);
+
+            returnList.add(dtoBuilder.buildUserLootMatchesDTO(userSaved,loot,matches));
+        }
+        return returnList;
     }
 
     private RankTierEntity getRankByName(String rankname)

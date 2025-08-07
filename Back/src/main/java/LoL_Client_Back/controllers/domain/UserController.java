@@ -151,7 +151,12 @@ public class UserController {
     {
         return ResponseEntity.ok(userService.updateUser(id,userDTO,serverOption,rankTiers));
     }
-    
+
+    @PostMapping("/100usersForServer")
+    public ResponseEntity<List<UserLootMatchesDTO>> create100Users (@RequestParam ServerOption serverOption)
+    {
+        return ResponseEntity.ok(userService.create100ForServer(serverOption));
+    }
 
 
 

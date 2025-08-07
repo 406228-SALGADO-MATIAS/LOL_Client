@@ -1,5 +1,6 @@
 package LoL_Client_Back.repositories.domain;
 
+import LoL_Client_Back.entities.domain.ChampionEntity;
 import LoL_Client_Back.entities.domain.SkinEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -17,4 +18,5 @@ public interface SkinRepository extends JpaRepository<SkinEntity,Long> {
     Optional<SkinEntity> findByNameIgnoreCase(String name);
     List<SkinEntity> findByIdNotIn(List<Long> ids);
     List<SkinEntity> findByChampion_IdIn(List <Long> ids);
+    List<SkinEntity> findByChampionIn(List <ChampionEntity> championEntities);
 }

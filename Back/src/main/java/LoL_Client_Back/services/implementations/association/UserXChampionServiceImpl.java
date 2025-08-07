@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class UserXChampionServiceImpl implements UserXChampionService {
@@ -161,6 +162,72 @@ public class UserXChampionServiceImpl implements UserXChampionService {
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Did not find champion belonging with id " +idBelonging+ " to update");
+    }
+
+    @Override
+    public String giveChampionsToUsersWithNoChampions()
+    {
+        List<UserEntity> usersWithoutChampions = userXChampionRepository.findUsersWithoutChampions();
+
+        if (usersWithoutChampions.isEmpty()) {
+            return "There are no users with no champions";
+        }
+
+        List<ChampionEntity> championsTop = championRepository.findByRole_id(1L);
+        List<ChampionEntity> championsJg = championRepository.findByRole_id(2L);
+        List<ChampionEntity> championsMid = championRepository.findByRole_id(3L);
+        List<ChampionEntity> championsAdc = championRepository.findByRole_id(4L);
+        List<ChampionEntity> championsSupport = championRepository.findByRole_id(5L);
+
+        List<UserXChampionEntity> newBelongings = new ArrayList<>();
+        Random random = new Random();
+
+        for (UserEntity u : usersWithoutChampions)
+        {
+            UserXChampionEntity topPick = new UserXChampionEntity();
+            topPick.setUser(u);
+            topPick.setChampion(randomFrom(championsTop, random));
+            topPick.setMasteryLevel(0);
+            topPick.setAdquisitionDate(LocalDateTime.now());
+            newBelongings.add(topPick);
+
+            UserXChampionEntity jgPick = new UserXChampionEntity();
+            jgPick.setUser(u);
+            jgPick.setChampion(randomFrom(championsJg, random));
+            jgPick.setMasteryLevel(0);
+            jgPick.setAdquisitionDate(LocalDateTime.now());
+            newBelongings.add(jgPick);
+
+            UserXChampionEntity midPick = new UserXChampionEntity();
+            midPick.setUser(u);
+            midPick.setChampion(randomFrom(championsMid, random));
+            midPick.setMasteryLevel(0);
+            midPick.setAdquisitionDate(LocalDateTime.now());
+            newBelongings.add(midPick);
+
+            UserXChampionEntity adcPick = new UserXChampionEntity();
+            adcPick.setUser(u);
+            adcPick.setChampion(randomFrom(championsAdc, random));
+            adcPick.setMasteryLevel(0);
+            adcPick.setAdquisitionDate(LocalDateTime.now());
+            newBelongings.add(adcPick);
+
+            UserXChampionEntity supportPick = new UserXChampionEntity();
+            supportPick.setUser(u);
+            supportPick.setChampion(randomFrom(championsSupport, random));
+            supportPick.setMasteryLevel(0);
+            supportPick.setAdquisitionDate(LocalDateTime.now());
+            newBelongings.add(supportPick);
+        }
+
+        userXChampionRepository.saveAll(newBelongings);
+
+        return "Champions were assigned to " + usersWithoutChampions.size() + " users.";
+
+    }
+
+    private ChampionEntity randomFrom(List<ChampionEntity> list, Random random) {
+        return list.get(random.nextInt(list.size()));
     }
 
     private void verifyExistingRegister(UserEntity user, ChampionEntity champion) {

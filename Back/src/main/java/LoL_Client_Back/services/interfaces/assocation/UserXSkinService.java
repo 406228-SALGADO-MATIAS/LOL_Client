@@ -15,4 +15,5 @@ public interface UserXSkinService {
     void deleteById (Long id);
     UserXSkinDTO createSkinBelonging(Long idUser, Long idChampion);
     UserXSkinDTO updateSkinBelongiong(Long idBelonging, Long idUser, Long idChampion);
+    String giveSkinsToUsersWithout();
 }
