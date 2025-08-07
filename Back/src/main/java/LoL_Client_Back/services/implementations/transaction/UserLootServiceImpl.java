@@ -1,5 +1,6 @@
 package LoL_Client_Back.services.implementations.transaction;
 
+import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.loot.LootInventoryChampionDTO;
 import LoL_Client_Back.dtos.loot.LootInventoryIconDTO;
 import LoL_Client_Back.dtos.loot.LootInventorySkinDTO;
@@ -66,13 +67,15 @@ public class UserLootServiceImpl implements UserLootService {
     LootInventorySkinsRepository lootInventorySkinsRepository;
     @Autowired
     LootInventoryIconsRepository lootInventoryIconsRepository;
+    @Autowired
+    DTOBuilder dtoBuilder;
 
     @Override
     public UserLootDTO findById(Long id, boolean showInactives) {
        Optional <UserLootEntity> optional = userLootRepository.findById(id);
        if (optional.isEmpty())
            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find user loot with id "+id);
-       return buildUserLootDTO(optional.get(),showInactives);
+       return dtoBuilder.buildUserLootDTO(optional.get(),showInactives);
     }
 
     @Override
@@ -84,7 +87,7 @@ public class UserLootServiceImpl implements UserLootService {
         List<UserLootDTO> dtoList = new ArrayList<>();
         for (UserLootEntity entity : list)
         {
-            dtoList.add(buildUserLootDTO(entity,showInactives));
+            dtoList.add(dtoBuilder.buildUserLootDTO(entity,showInactives));
         }
         return dtoList;
     }
@@ -116,7 +119,7 @@ public class UserLootServiceImpl implements UserLootService {
                 if (optional.isEmpty())
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user loot with loot "+userLootType+" id : "+idLoot);
 
-                return buildUserLootDTO(optional.get(),showInactives);
+                return dtoBuilder.buildUserLootDTO(optional.get(),showInactives);
             case "CHAMPIONS":
                 optional = lootInventoryChampionsRepository.
                         findUserLootByLootInventoryChampionId(idLoot);
@@ -124,7 +127,7 @@ public class UserLootServiceImpl implements UserLootService {
                 if (optional.isEmpty())
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user loot with loot "+userLootType+" id : "+idLoot);
 
-                return buildUserLootDTO(optional.get(), showInactives);
+                return dtoBuilder.buildUserLootDTO(optional.get(), showInactives);
             case "ICONS":
                 optional = lootInventoryIconsRepository.
                         findUserLootByLootInventoryIconId(idLoot);
@@ -132,7 +135,7 @@ public class UserLootServiceImpl implements UserLootService {
                 if (optional.isEmpty())
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user loot with loot "+userLootType+" id : "+idLoot);
 
-                return buildUserLootDTO(optional.get(), showInactives);
+                return dtoBuilder.buildUserLootDTO(optional.get(), showInactives);
             default:
                 throw new IllegalArgumentException("Not supported loot type " + userLootType);
         }
@@ -168,7 +171,7 @@ public class UserLootServiceImpl implements UserLootService {
                 if (orangeEssence != null) userLootEntity.setOrangeEssence(orangeEssence);
                 else userLootEntity.setOrangeEssence(1000);
 
-                return buildUserLootDTO(userLootRepository.save(userLootEntity),showInactives);
+                return dtoBuilder.buildUserLootDTO(userLootRepository.save(userLootEntity),showInactives);
             }
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find user with id " + idUser);
@@ -184,14 +187,14 @@ public class UserLootServiceImpl implements UserLootService {
 
             if (optionalUserLoot.isPresent())  //THE USER HAS LOOT
             {
-                return buildUserLootDTO(optionalUserLoot.get(),showInactives);
+                return dtoBuilder.buildUserLootDTO(optionalUserLoot.get(),showInactives);
             }
             else //USERS DOES NOT HAVE LOOT -> create
             {
                 UserLootEntity userLootEntity = new UserLootEntity();
                 userLootEntity.setUser(optional.get());
 
-                return buildUserLootDTO(
+                return dtoBuilder.buildUserLootDTO(
                         userLootRepository.save(userLootEntity),showInactives);
             }
         }
@@ -223,7 +226,7 @@ public class UserLootServiceImpl implements UserLootService {
 
             if (orangeEssence != null) userLootEntity.setOrangeEssence(orangeEssence);
 
-            return buildUserLootDTO(userLootRepository.save(userLootEntity),showInactives);
+            return dtoBuilder.buildUserLootDTO(userLootRepository.save(userLootEntity),showInactives);
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user with id "+idUser);
     }
@@ -288,7 +291,7 @@ public class UserLootServiceImpl implements UserLootService {
             }
         }
 
-        return buildUserLootDTO(userLootRepository.save(loot),showInactives);
+        return dtoBuilder.buildUserLootDTO(userLootRepository.save(loot),showInactives);
     }
 
     @Override
@@ -341,7 +344,7 @@ public class UserLootServiceImpl implements UserLootService {
 
                     userXChampionRepository.save(userXChampion);
 
-                    return buildUserLootDTO(userLoot,showInactives);
+                    return dtoBuilder.buildUserLootDTO(userLoot,showInactives);
                 }
                 else throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         "The user does not have enough blue essence : "+userBlueEssence + " < "+enchantPrice);
@@ -360,7 +363,7 @@ public class UserLootServiceImpl implements UserLootService {
             userEntity.setBlueEssence(userBlueEssence);
             userRepository.save(userEntity); // update user
 
-            return buildUserLootDTO(userLoot,showInactives);
+            return dtoBuilder.buildUserLootDTO(userLoot,showInactives);
         }
     }
 
@@ -421,7 +424,7 @@ public class UserLootServiceImpl implements UserLootService {
 
                         userXSkinRepository.save(userXSkin);
 
-                        return buildUserLootDTO(userLoot,showInactives);
+                        return dtoBuilder.buildUserLootDTO(userLoot,showInactives);
                     }
                     else throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                             "The user does not have enough orange essence : "+userOrangeEssence + " < "+enchantPrice);
@@ -444,7 +447,7 @@ public class UserLootServiceImpl implements UserLootService {
             userLoot.setOrangeEssence(userOrangeEssence);
             userLootRepository.save(userLoot); //update user orange essence
 
-            return buildUserLootDTO(userLoot,showInactives);
+            return dtoBuilder.buildUserLootDTO(userLoot,showInactives);
         }
     }
 
@@ -496,7 +499,7 @@ public class UserLootServiceImpl implements UserLootService {
 
                     userXIconRepository.save(userXIcon);
 
-                    return buildUserLootDTO(userLoot,showInactives);
+                    return dtoBuilder.buildUserLootDTO(userLoot,showInactives);
                 }
                 else throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         "The user does not have enough blue essence : "+userBlueEssence + " < "+enchantPrice);
@@ -515,7 +518,7 @@ public class UserLootServiceImpl implements UserLootService {
             userEntity.setBlueEssence(userBlueEssence);
             userRepository.save(userEntity); // update user
 
-            return buildUserLootDTO(userLoot,showInactives);
+            return dtoBuilder.buildUserLootDTO(userLoot,showInactives);
         }
     }
 
@@ -566,7 +569,7 @@ public class UserLootServiceImpl implements UserLootService {
 
         userLoot.addLootChampion(newLoot);
         userLootRepository.save(userLoot);
-        return buildUserLootDTO(userLoot,showInactives);
+        return dtoBuilder.buildUserLootDTO(userLoot,showInactives);
     }
 
     @Override
@@ -616,7 +619,7 @@ public class UserLootServiceImpl implements UserLootService {
         userLoot.addLootSkin(newLoot);
         userLootRepository.save(userLoot);
 
-        return buildUserLootDTO(userLoot, showInactives);
+        return dtoBuilder.buildUserLootDTO(userLoot, showInactives);
     }
 
     @Override
@@ -666,7 +669,7 @@ public class UserLootServiceImpl implements UserLootService {
         userLoot.addLootIcon(newLoot);
         userLootRepository.save(userLoot);
 
-        return buildUserLootDTO(userLoot, showInactives);
+        return dtoBuilder.buildUserLootDTO(userLoot, showInactives);
     }
 
     @Override
@@ -720,7 +723,7 @@ public class UserLootServiceImpl implements UserLootService {
                 throw new IllegalArgumentException("Not supported loot type: " + lootType);
         }
 
-        return buildUserLootDTO(userLoot, showInactives);
+        return dtoBuilder.buildUserLootDTO(userLoot, showInactives);
     }
 
     @Override
@@ -924,66 +927,6 @@ public class UserLootServiceImpl implements UserLootService {
         //IF THE USER HAS ALL THE ICONS
         return getRandomElement(iconRepository.findAll(), random);
 
-    }
-
-    private UserLootDTO buildUserLootDTO(UserLootEntity userLootEntity, boolean showInactives) {
-
-        UserLootDTO dto = customMapper.map(userLootEntity, UserLootDTO.class);
-        dto.setUserId(userLootEntity.getUser().getId());
-        dto.setUserBlueEssence(userLootEntity.getUser().getBlueEssence());
-
-        //INVENTORY LISTS
-
-        //CHAMPIONS
-        List<LootInventoryChampionDTO> championsInventory = new ArrayList<>();
-
-        for (LootInventoryChampionsEntity c : userLootEntity.getChampions()) {
-
-            if (!showInactives && !c.getIsActive()) continue;
-
-            LootInventoryChampionDTO dtoC = customMapper.map(c, LootInventoryChampionDTO.class);
-            dtoC.setIdUserLoot(c.getLoot().getId());
-            dtoC.setChampionName(c.getChampion().getName());
-            dtoC.setImageUrl(c.getChampion().getImage());
-            dtoC.setBlueEssenceCost(c.getChampion().getPrice().getEnchantPrice());
-            dtoC.setDisenchantRefund(c.getChampion().getPrice().getDisenchantBlueEssence());
-            championsInventory.add(dtoC);
-        }
-        dto.setChampionsInventory(championsInventory);
-        //ICONS
-        List<LootInventoryIconDTO> iconsInventory = new ArrayList<>();
-
-        for (LootInventoryIconsEntity i : userLootEntity.getIcons()) {
-
-            if (!showInactives && !i.getIsActive()) continue;
-
-            LootInventoryIconDTO dtoI = customMapper.map(i, LootInventoryIconDTO.class);
-            dtoI.setIdUserLoot(i.getLoot().getId());
-            dtoI.setIconName(i.getIcon().getIcon());
-            dtoI.setImageUrl(i.getIcon().getImage());
-            dtoI.setBlueEssenceCost(i.getIcon().getPrice().getBlueEssenceCost());
-            dtoI.setDisenchantRefund(i.getIcon().getPrice().getDisenchantBlueEssence());
-            iconsInventory.add(dtoI);
-        }
-        dto.setIconsInventory(iconsInventory);
-        //SKINS
-        List<LootInventorySkinDTO> skinsInventory = new ArrayList<>();
-
-        for (LootInventorySkinsEntity s : userLootEntity.getSkins()) {
-
-            if (!showInactives && !s.getIsActive()) continue;
-
-            LootInventorySkinDTO dtoS = customMapper.map(s, LootInventorySkinDTO.class);
-            dtoS.setIdUserLoot(s.getLoot().getId());
-            dtoS.setSkinName(s.getSkin().getName());
-            dtoS.setImageUrl(s.getSkin().getImage());
-            dtoS.setOrangeEssenceCost(s.getSkin().getTier().getOrangeEssenceCost());
-            dtoS.setDisenchantRefund(s.getSkin().getTier().getDisenchantOrangeEssence());
-            skinsInventory.add(dtoS);
-        }
-        dto.setSkinsInventory(skinsInventory);
-
-        return dto;
     }
 
     private LootInventoryChampionsEntity buildNewLootChampionEntity(ChampionEntity champion, UserLootEntity lootEntity)

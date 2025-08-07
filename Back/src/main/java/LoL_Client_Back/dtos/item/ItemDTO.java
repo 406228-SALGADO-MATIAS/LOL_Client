@@ -1,4 +1,4 @@
-package LoL_Client_Back.dtos;
+package LoL_Client_Back.dtos.item;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;

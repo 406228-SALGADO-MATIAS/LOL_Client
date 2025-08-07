@@ -1,5 +1,6 @@
 package LoL_Client_Back.services.implementations.association;
 
+import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.association.UserXSkinDTO;
 import LoL_Client_Back.entities.association.UserXSkinEntity;
 import LoL_Client_Back.entities.domain.SkinEntity;
@@ -34,30 +35,32 @@ public class UserXSkinServiceImpl implements UserXSkinService {
     ModelMapper customMapper;
     @Autowired
     UserXChampionService userXChampionService;
+    @Autowired
+    DTOBuilder dtoBuilder;
 
     @Override
     public UserXSkinDTO findById(Long id) {
         Optional<UserXSkinEntity> optional = userXSkinRepository.findById(id);
         if (optional.isPresent()) {
-            return buildUserXSkinDTO(optional.get());
+            return dtoBuilder.buildUserXSkinDTO(optional.get());
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find skin belonging with id " + id);
     }
 
     @Override
     public List<UserXSkinDTO> getAll() {
-        return buildListUserXChampionDTO(userXSkinRepository.findAll(), "Did not find any skin belongings");
+        return dtoBuilder.buildListUserXSkinDTO(userXSkinRepository.findAll(), "Did not find any skin belongings");
     }
 
     @Override
     public List<UserXSkinDTO> findBySkinId(Long id) {
-        return buildListUserXChampionDTO(userXSkinRepository.findBySkin_Id(id),
+        return dtoBuilder.buildListUserXSkinDTO(userXSkinRepository.findBySkin_Id(id),
                 "Did not find any skin belongings for the skin id " + id);
     }
 
     @Override
     public List<UserXSkinDTO> findByUserId(Long id) {
-        return buildListUserXChampionDTO(userXSkinRepository.findByUser_Id(id),
+        return dtoBuilder.buildListUserXSkinDTO(userXSkinRepository.findByUser_Id(id),
                 "Did not find any skin belongings for the user id " + id);
     }
 
@@ -69,7 +72,7 @@ public class UserXSkinServiceImpl implements UserXSkinService {
             if (u.isPresent()) {
                 Optional<UserXSkinEntity> opt = userXSkinRepository.findByUserAndSkin(u.get(), s.get());
                 if (opt.isPresent()) {
-                    return buildUserXSkinDTO(opt.get());
+                    return dtoBuilder.buildUserXSkinDTO(opt.get());
                 }
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "The user with id " + userId + ", nicknamed " + u.get().getNickname() +
@@ -107,7 +110,7 @@ public class UserXSkinServiceImpl implements UserXSkinService {
                 entity.setSkin(s.get());
                 entity.setUser(u.get());
                 entity.setAdquisitionDate(LocalDateTime.now());
-                return buildUserXSkinDTO(userXSkinRepository.save(entity));
+                return dtoBuilder.buildUserXSkinDTO(userXSkinRepository.save(entity));
             }
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find skin with id " + idSkin);
         }
@@ -133,7 +136,7 @@ public class UserXSkinServiceImpl implements UserXSkinService {
                     updated.setAdquisitionDate(LocalDateTime.now());
                     updated.setUser(u.get());
                     updated.setSkin(s.get());
-                    return buildUserXSkinDTO(userXSkinRepository.save(updated));
+                    return dtoBuilder.buildUserXSkinDTO(userXSkinRepository.save(updated));
                 }
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Did not find skin with id " + idSkin + " to update");
@@ -145,44 +148,6 @@ public class UserXSkinServiceImpl implements UserXSkinService {
                 "Did not find skin belonging with id " + idBelonging + " to update");
     }
 
-    private UserXSkinDTO buildUserXSkinDTO(UserXSkinEntity entity) {
-
-        UserXSkinDTO dto = customMapper.map(entity, UserXSkinDTO.class);
-        dto.setIdUser(entity.getUser().getId());
-        dto.setNickname(entity.getUser().getNickname());
-
-        if (entity.getUser().getServer() != null) {
-            dto.setServer(entity.getUser().getServer().getServer());
-        }
-
-        if (entity.getUser().getRank() != null) {
-            dto.setRank(entity.getUser().getRank().getRank());
-        }
-
-        dto.setSkinId(entity.getSkin().getId());
-        dto.setSkinName(entity.getSkin().getName());
-
-        if (entity.getSkin().getTier() != null)
-        {
-            dto.setRpPrice(entity.getSkin().getTier().getRpCost());
-        }
-        return dto;
-    }
-
-    private List<UserXSkinDTO> buildListUserXChampionDTO
-            (List<UserXSkinEntity> list, String errorMsg)
-    {
-        if (!list.isEmpty())
-        {
-            List<UserXSkinDTO> dtoList = new ArrayList<>();
-            for (UserXSkinEntity u : list)
-            {
-                dtoList.add(buildUserXSkinDTO(u));
-            }
-            return dtoList;
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,errorMsg);
-    }
     private void verifyChampionBelonging(Long idUser, Long idChampion) {
         try {
             userXChampionService.findByUserAndChampion(idChampion, idUser);

@@ -1,7 +1,6 @@
 package LoL_Client_Back.controllers.association;
 
 import LoL_Client_Back.dtos.association.UserXChampionDTO;
-import LoL_Client_Back.models.association.UserXChampion;
 import LoL_Client_Back.services.interfaces.assocation.UserXChampionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

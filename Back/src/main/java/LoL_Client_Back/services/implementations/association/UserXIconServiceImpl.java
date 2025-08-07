@@ -1,5 +1,6 @@
 package LoL_Client_Back.services.implementations.association;
 
+import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.association.UserXIconDTO;
 import LoL_Client_Back.entities.association.UserXIconEntity;
 import LoL_Client_Back.entities.domain.UserEntity;
@@ -35,11 +36,14 @@ public class UserXIconServiceImpl implements UserXIconService {
     @Qualifier("customModelMapper")
     private ModelMapper customMapper;
 
+    @Autowired
+    DTOBuilder dtoBuilder;
+
     @Override
     public UserXIconDTO findById(Long id) {
         Optional<UserXIconEntity> opt = userXIconRepository.findById(id);
         if (opt.isPresent()) {
-            return buildUserXIconDTO(opt.get());
+            return dtoBuilder.buildUserXIconDTO(opt.get());
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Did not find icon belonging with id " + id);
@@ -47,19 +51,19 @@ public class UserXIconServiceImpl implements UserXIconService {
 
     @Override
     public List<UserXIconDTO> getAll() {
-        return buildListUserXIconDTO(userXIconRepository.findAll(),
+        return dtoBuilder.buildListUserXIconDTO(userXIconRepository.findAll(),
                 "Did not find any icon belongings");
     }
 
     @Override
     public List<UserXIconDTO> findByIconId(Long id) {
-        return buildListUserXIconDTO(userXIconRepository.findByIcon_Id(id),
+        return dtoBuilder.buildListUserXIconDTO(userXIconRepository.findByIcon_Id(id),
                 "Did not find any icon belongings for the icon id " + id);
     }
 
     @Override
     public List<UserXIconDTO> findByUserId(Long id) {
-        return buildListUserXIconDTO(userXIconRepository.findByUser_Id(id),
+        return dtoBuilder.buildListUserXIconDTO(userXIconRepository.findByUser_Id(id),
                 "Did not find any icon belongings for the user id " + id);
     }
 
@@ -73,7 +77,7 @@ public class UserXIconServiceImpl implements UserXIconService {
                 Optional<UserXIconEntity> opt = userXIconRepository.
                         findByUserAndIcon(u.get(), i.get());
                 if (opt.isPresent()) {
-                    return buildUserXIconDTO(opt.get());
+                    return dtoBuilder.buildUserXIconDTO(opt.get());
                 }
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "The user with id " + userId + ", nicknamed " + u.get().getNickname() +
@@ -110,7 +114,7 @@ public class UserXIconServiceImpl implements UserXIconService {
                 entity.setIcon(i.get());
                 entity.setUser(u.get());
                 entity.setAdquisitionDate(LocalDateTime.now());
-                return buildUserXIconDTO(userXIconRepository.save(entity));
+                return dtoBuilder.buildUserXIconDTO(userXIconRepository.save(entity));
             }
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Did not find icon with id " + idIcon);
@@ -133,7 +137,7 @@ public class UserXIconServiceImpl implements UserXIconService {
                     updated.setAdquisitionDate(LocalDateTime.now());
                     updated.setUser(u.get());
                     updated.setIcon(i.get());
-                    return buildUserXIconDTO(userXIconRepository.save(updated));
+                    return dtoBuilder.buildUserXIconDTO(userXIconRepository.save(updated));
                 }
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Did not find icon with id " + idIcon + " to update");
@@ -143,36 +147,6 @@ public class UserXIconServiceImpl implements UserXIconService {
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Did not find icon belonging with id " + idBelonging + " to update");
-    }
-
-    private UserXIconDTO buildUserXIconDTO(UserXIconEntity entity) {
-        UserXIconDTO dto = customMapper.map(entity, UserXIconDTO.class);
-        dto.setId(entity.getId());
-        dto.setIdIcon(entity.getIcon().getId());
-        dto.setIcon(entity.getIcon().getIcon());
-        dto.setBlueEssencePrice(entity.getIcon().getPrice().getBlueEssenceCost());
-        dto.setIdUser(entity.getUser().getId());
-        dto.setNickname(entity.getUser().getNickname());
-
-        if (entity.getUser().getServer() != null) {
-            dto.setServer(entity.getUser().getServer().getServer());
-        }
-        if (entity.getUser().getRank() != null) {
-            dto.setRank(entity.getUser().getRank().getRank());
-        }
-
-        return dto;
-    }
-
-    private List<UserXIconDTO> buildListUserXIconDTO(List<UserXIconEntity> list, String errorMsg) {
-        if (!list.isEmpty()) {
-            List<UserXIconDTO> dtoList = new ArrayList<>();
-            for (UserXIconEntity u : list) {
-                dtoList.add(buildUserXIconDTO(u));
-            }
-            return dtoList;
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, errorMsg);
     }
 
     private void verifyExistingRegister(UserEntity user, ProfileIconEntity icon) {

@@ -1,4 +1,4 @@
-package ar.edu.utn.frc.tup.lc.iii.utils.validations.password;
+package LoL_Client_Back.utils.validations.password;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

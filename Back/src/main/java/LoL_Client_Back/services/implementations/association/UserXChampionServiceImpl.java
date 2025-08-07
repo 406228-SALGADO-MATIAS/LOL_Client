@@ -1,5 +1,6 @@
 package LoL_Client_Back.services.implementations.association;
 
+import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.association.UserXChampionDTO;
 import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.association.UserXSkinEntity;
@@ -34,6 +35,8 @@ public class UserXChampionServiceImpl implements UserXChampionService {
     ChampionRepository championRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    DTOBuilder dtoBuilder;
 
     @Override
     public UserXChampionDTO findById(Long id) {
@@ -41,26 +44,26 @@ public class UserXChampionServiceImpl implements UserXChampionService {
                 userXChampionRepository.findById(id);
         if (optional.isPresent())
         {
-            return buildUserXChampionDTO(optional.get());
+            return dtoBuilder.buildUserXChampionDTO(optional.get());
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find champion belonging with id "+id);
     }
 
     @Override
     public List<UserXChampionDTO> getAll() {
-        return buildListUserXChampionDTO(userXChampionRepository.findAll(),
+        return dtoBuilder.buildListUserXChampionDTO(userXChampionRepository.findAll(),
                 "Did not find any champion belongings");
     }
 
     @Override
     public List<UserXChampionDTO> findByChampionId(Long id) {
-        return buildListUserXChampionDTO(userXChampionRepository.findByChampion_Id(id),
+        return dtoBuilder.buildListUserXChampionDTO(userXChampionRepository.findByChampion_Id(id),
                 "Did not find any champion belongings for the champion id "+id);
     }
 
     @Override
     public List<UserXChampionDTO> findByUserId(Long id) {
-        return buildListUserXChampionDTO(userXChampionRepository.findByUser_Id(id),
+        return dtoBuilder.buildListUserXChampionDTO(userXChampionRepository.findByUser_Id(id),
                 "Did not find any champion belongings for the user id "+id);
     }
 
@@ -76,7 +79,7 @@ public class UserXChampionServiceImpl implements UserXChampionService {
                         userXChampionRepository.findByUserAndChampion(u.get(),c.get());
                 if (opt.isPresent())
                 {
-                    return buildUserXChampionDTO(opt.get());
+                    return dtoBuilder.buildUserXChampionDTO(opt.get());
                 }
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "The user with id "+userId+", nicknamed " +u.get().getNickname()+
@@ -116,7 +119,7 @@ public class UserXChampionServiceImpl implements UserXChampionService {
                 entity.setUser(u.get());
                 entity.setMasteryLevel(0);
                 entity.setAdquisitionDate(LocalDateTime.now());
-                return buildUserXChampionDTO(userXChampionRepository.save(entity));
+                return dtoBuilder.buildUserXChampionDTO(userXChampionRepository.save(entity));
             }
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Did not find champion with id " +idChampion);
@@ -148,7 +151,7 @@ public class UserXChampionServiceImpl implements UserXChampionService {
                     }
                     updated.setUser(u.get());
                     updated.setChampion(c.get());
-                    return buildUserXChampionDTO(userXChampionRepository.save(updated));
+                    return dtoBuilder.buildUserXChampionDTO(userXChampionRepository.save(updated));
                 }
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Did not find champion with id " +idChampion + " to update");
@@ -160,40 +163,6 @@ public class UserXChampionServiceImpl implements UserXChampionService {
                 "Did not find champion belonging with id " +idBelonging+ " to update");
     }
 
-    private UserXChampionDTO buildUserXChampionDTO(UserXChampionEntity entity) {
-
-        UserXChampionDTO dto = customMapper.map(entity, UserXChampionDTO.class);
-        dto.setIdUser(entity.getUser().getId());
-        dto.setNickname(entity.getUser().getNickname());
-
-        if (entity.getUser().getServer() != null) {
-            dto.setServer(entity.getUser().getServer().getServer());
-        }
-
-        if (entity.getUser().getRank() != null) {
-            dto.setRank(entity.getUser().getRank().getRank());
-        }
-
-        dto.setChampionId(entity.getChampion().getId());
-        dto.setChampionName(entity.getChampion().getName());
-
-        return dto;
-    }
-
-    private List<UserXChampionDTO> buildListUserXChampionDTO
-            (List<UserXChampionEntity> list, String errorMsg)
-    {
-        if (!list.isEmpty())
-        {
-            List<UserXChampionDTO> dtoList = new ArrayList<>();
-            for (UserXChampionEntity u : list)
-            {
-                dtoList.add(buildUserXChampionDTO(u));
-            }
-            return dtoList;
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,errorMsg);
-    }
     private void verifyExistingRegister(UserEntity user, ChampionEntity champion) {
         Optional<UserXChampionEntity> opt =
                 userXChampionRepository.findByUserAndChampion(user, champion);

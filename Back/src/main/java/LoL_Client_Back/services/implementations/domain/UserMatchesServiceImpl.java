@@ -5,15 +5,11 @@ import LoL_Client_Back.entities.domain.UserEntity;
 import LoL_Client_Back.entities.domain.UserMatchesEntity;
 import LoL_Client_Back.entities.reference.MapEntity;
 import LoL_Client_Back.entities.reference.TeamEntity;
-import LoL_Client_Back.models.domain.PlayerMatchDetail;
 import LoL_Client_Back.models.domain.UserMatches;
 import LoL_Client_Back.repositories.domain.UserMatchesRepository;
 import LoL_Client_Back.services.interfaces.domain.UserMatchesService;
-import jakarta.persistence.EntityNotFoundException;
-import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

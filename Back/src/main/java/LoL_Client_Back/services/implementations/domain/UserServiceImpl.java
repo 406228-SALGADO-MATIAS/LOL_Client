@@ -1,5 +1,6 @@
 package LoL_Client_Back.services.implementations.domain;
 
+import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.user.*;
 import LoL_Client_Back.dtos.enums.MatchType;
 import LoL_Client_Back.dtos.enums.ServerOption;
@@ -13,10 +14,6 @@ import LoL_Client_Back.entities.domain.UserMatchesEntity;
 import LoL_Client_Back.entities.reference.RankTierEntity;
 import LoL_Client_Back.entities.reference.ServerRegionEntity;
 import LoL_Client_Back.entities.transaction.UserLootEntity;
-import LoL_Client_Back.models.association.UserXChampion;
-import LoL_Client_Back.models.association.UserXIcon;
-import LoL_Client_Back.models.association.UserXSkin;
-import LoL_Client_Back.models.domain.PlayerMatchDetail;
 import LoL_Client_Back.models.domain.User;
 import LoL_Client_Back.models.domain.UserMatches;
 import LoL_Client_Back.models.transaction.UserLoot;
@@ -77,13 +74,15 @@ public class UserServiceImpl implements UserService {
     MatchRepository matchRepository;
     @Autowired
     UserLootRepository userLootRepository;
+    @Autowired
+    DTOBuilder dtoBuilder;
 
     @Override
     public UserMatchesDTO findById(Long id) {
         Optional<UserEntity> optUserEntity = userRepository.findById(id);
         if (optUserEntity.isPresent())
         {
-            return buildUserMatchesDTO(optUserEntity.get());
+            return dtoBuilder.buildUserMatchesDTO(optUserEntity.get());
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user with id "+id);
     }
@@ -130,7 +129,7 @@ public class UserServiceImpl implements UserService {
             UserMatches matches = userMatchesService.createUserMatches(userEntitySaved);
             UserLoot loot = userLootService.createUserLoot(userEntitySaved);
             User userSaved = modelMapper.map(userEntitySaved,User.class);
-            return buildUserLootMatchesDTO(userSaved,loot,matches);
+            return dtoBuilder.buildUserLootMatchesDTO(userSaved,loot,matches);
 
         } else {
             String errorMsg = checkRepeatedUserData(userDTO,serverRegionEntity);
@@ -149,7 +148,7 @@ public class UserServiceImpl implements UserService {
         {
             UserEntity userEntity = optionalUserEntity.get();
 
-            return buildUserMatchesDTO(userEntity);
+            return dtoBuilder.buildUserMatchesDTO(userEntity);
         }
         throw new EntityNotFoundException("Did not find user with email "+email);
     }
@@ -158,7 +157,7 @@ public class UserServiceImpl implements UserService {
     public List<UserMatchesDTO> findUsersByEmail(String email) {
         List<UserEntity> usersEntity = userRepository.findByEmailIgnoreCaseContaining(email);
 
-        return buildUserMatchesDTOList
+        return dtoBuilder.buildUserMatchesDTOList
                 (usersEntity,"Did not find users with email: "+email);
     }
 
@@ -167,7 +166,7 @@ public class UserServiceImpl implements UserService {
 
         List<UserEntity> usersEntity = userRepository.findByNicknameIgnoreCaseContaining(nickname);
 
-        return buildUserMatchesDTOList
+        return dtoBuilder.buildUserMatchesDTOList
                 (usersEntity, "Did not find users with nickname: "+nickname);
     }
 
@@ -180,7 +179,7 @@ public class UserServiceImpl implements UserService {
         List<UserEntity> usersEntity = userRepository.
                 findByNicknameIgnoreCaseContainingAndServer(nickname,serverRegion);
 
-        return buildUserMatchesDTOList
+        return dtoBuilder.buildUserMatchesDTOList
                 (usersEntity,"Did not find users with nickname: "+nickname+
                 " and server: "+serverOptions.getFullName());
     }
@@ -189,7 +188,7 @@ public class UserServiceImpl implements UserService {
     public List<UserMatchesDTO> findUsersByUsername(String username) {
         List<UserEntity> usersEntity =
                 userRepository.findByUsernameIgnoreCaseContaining(username);
-        return buildUserMatchesDTOList
+        return dtoBuilder.buildUserMatchesDTOList
                 (usersEntity,"Did not find users with username ("+username+")");
     }
 
@@ -219,7 +218,7 @@ public class UserServiceImpl implements UserService {
             if (errorMsg.equals("No repeated data")) {
                 UserEntity updatedUser =
                         buildUpdatedUserEntity(userFound,userDTO,rankTierEntity,serverEntity);
-                return buildUserMatchesDTO(userRepository.save(updatedUser));
+                return dtoBuilder.buildUserMatchesDTO(userRepository.save(updatedUser));
             }
             throw new ResponseStatusException(HttpStatus.CONFLICT,errorMsg);
         }
@@ -231,7 +230,7 @@ public class UserServiceImpl implements UserService {
 
          if (rankTierOption == UserRankTier.Unranked)
          {
-             return buildUserMatchesDTOList(userRepository.findByRankIsNull(),
+             return dtoBuilder.buildUserMatchesDTOList(userRepository.findByRankIsNull(),
                     "Did not find users with rank tier "+rankTierOption.name());
          }
          Optional<RankTierEntity> optionalRankTier =
@@ -239,7 +238,7 @@ public class UserServiceImpl implements UserService {
          if (optionalRankTier.isPresent())
          {
              RankTierEntity rankTierEntity = optionalRankTier.get();
-             return buildUserMatchesDTOList(userRepository.findByRank(rankTierEntity),
+             return dtoBuilder.buildUserMatchesDTOList(userRepository.findByRank(rankTierEntity),
                      "Did not find users with rank tier "+rankTierOption.name());
          }
          throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find rank tier "+rankTierOption.name()+" in the database");
@@ -256,7 +255,7 @@ public class UserServiceImpl implements UserService {
             List<UserMatchesWinrateDTO> dtoList = new ArrayList<>();
             for (UserMatchesEntity u : entityList)
             {
-                dtoList.add(buildUserMatchesWinrateDTO(u,matchType));
+                dtoList.add(dtoBuilder.buildUserMatchesWinrateDTO(u,matchType));
             }
             List<UserMatchesWinrateDTO> dtoFilteredList =
                     filterByWinrate(reorderListByWinrate(dtoList,matchType),minWinrate);
@@ -280,7 +279,7 @@ public class UserServiceImpl implements UserService {
             List<UserMatchesWinrateDTO> dtoList = new ArrayList<>();
             for (UserMatchesEntity u : entityList)
             {
-                dtoList.add(buildUserMatchesWinrateDTO(u,matchType));
+                dtoList.add(dtoBuilder.buildUserMatchesWinrateDTO(u,matchType));
             }
             List<UserMatchesWinrateDTO> dtoFilteredList =
                     filterByMatchesPlayed(reorderListByMatchesPlayed(dtoList,matchType),minMatchesPlayed);
@@ -298,7 +297,7 @@ public class UserServiceImpl implements UserService {
     public List<UserMatchesDTO> findUsersByRegistrationDate(LocalDateTime date) {
         List<UserEntity> userEntities = userRepository.
                 findByRegistrationDateGreaterThanEqualOrderByRegistrationDateAsc(date);
-        return buildUserMatchesDTOList
+        return dtoBuilder.buildUserMatchesDTOList
                 (userEntities,"Did not find user with registration date" + date + " or higher");
     }
 
@@ -314,13 +313,13 @@ public class UserServiceImpl implements UserService {
             userEntityList = userRepository.findByRankAndServer
                     (getRankByName(rank.name()),getServerByName(server.getFullName()));
         }
-        return buildUserMatchesDTOList(userEntityList,
+        return dtoBuilder.buildUserMatchesDTOList(userEntityList,
                "Did not find users on server "+server.name()+" that are "+rank.name());
     }
 
     @Override
     public List<UserMatchesDTO> findUsersByServer(ServerOption server) {
-       return buildUserMatchesDTOList
+       return dtoBuilder.buildUserMatchesDTOList
                (userRepository.findByServer(getServerByName(server.getFullName())),
                "Did not find users on the server "+server.name());
     }
@@ -438,43 +437,6 @@ public class UserServiceImpl implements UserService {
         return list;
     }
 
-    private UserMatchesWinrateDTO buildUserMatchesWinrateDTO(UserMatchesEntity uM, MatchType matchType)
-    {
-        UserMatchesWinrateDTO dto = new UserMatchesWinrateDTO();
-        UserEntity u = uM.getUser();
-
-        dto.setUser_id(u.getId());
-        dto.setNickname(u.getNickname());
-        dto.setRank(u.getRank().getRank());
-        dto.setServer(u.getServer().getServer());
-
-        switch (matchType) {
-            case RANKED -> {
-                dto.setRankedsPlayed(uM.getRankedsPlayed());
-                dto.setRankedWins(uM.getRankedWins());
-                dto.setRankedWinrate(calculateWinrate(uM.getRankedsPlayed(), uM.getRankedWins()));
-            }
-            case NORMAL -> {
-                dto.setNormalGamesPlayed(uM.getNormalGamesPlayed());
-                dto.setNormalWins(uM.getNormalWins());
-                dto.setNormalWinrate(calculateWinrate(uM.getNormalGamesPlayed(), uM.getNormalWins()));
-            }
-            case ARAM -> {
-                dto.setAramsPlayed(uM.getAramsPlayed());
-                dto.setAramWins(uM.getAramWins());
-                dto.setAramWinrate(calculateWinrate(uM.getAramsPlayed(), uM.getAramWins()));
-            }
-        }
-        return dto;
-    }
-
-    private Double calculateWinrate(double gamesPlayed, double wins) {
-        if (gamesPlayed == 0) {
-            return 0.0;
-        }
-        return (wins / gamesPlayed) * 100;
-    }
-
     private List<UserMatchesEntity> getUserMatchesListByTypeAndServer(MatchType matchType,
                                                                       ServerRegionEntity serverRegion)
     {
@@ -519,63 +481,6 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
-    private UserLootMatchesDTO buildUserLootMatchesDTO (User user, UserLoot loot, UserMatches matches)
-    {
-        UserLootMatchesDTO dto = new UserLootMatchesDTO();
-        dto.setUser_id(user.getId());
-        dto.setUsername(user.getUsername());
-        dto.setPassword(user.getPassword());
-        dto.setEmail(user.getEmail());
-        dto.setNickname(user.getNickname());
-        dto.setRegistrationDate(user.getRegistrationDate());
-        if (user.getRank() != null)
-        {
-            dto.setRank(user.getRank().getRank());
-        }
-        dto.setServer(user.getServer().getServer());
-
-        dto.setChests(loot.getChests());
-        dto.setKeys(loot.getKeys());
-        dto.setLoot_id(loot.getId());
-
-        dto.setMatches_id(matches.getId());
-        dto.setNormalGamesPlayed(matches.getNormalGamesPlayed());
-        dto.setRankedsPlayed(matches.getRankedsPlayed());
-        dto.setAramsPlayed(matches.getAramsPlayed());
-
-        return dto;
-    }
-
-    private UserMatchesDTO buildUserMatchesDTO (UserEntity user) {
-
-        UserMatchesDTO dto = new UserMatchesDTO();
-        dto.setUser_id(user.getId());
-        dto.setUsername(user.getUsername());
-        dto.setPassword(user.getPassword());
-        dto.setEmail(user.getEmail());
-        dto.setNickname(user.getNickname());
-        dto.setRegistrationDate(user.getRegistrationDate());
-
-        if (user.getRank() != null)
-        {
-            dto.setRank(user.getRank().getRank());
-        }
-
-        dto.setServer(user.getServer().getServer());
-
-
-        UserMatches userMatches =
-                userMatchesService.findByUser
-                        (modelMapper.map(user,UserEntity.class));
-
-        dto.setMatches_id(userMatches.getId());
-        dto.setNormalGamesPlayed(userMatches.getNormalGamesPlayed());
-        dto.setRankedsPlayed(userMatches.getRankedsPlayed());
-        dto.setAramsPlayed(userMatches.getAramsPlayed());
-
-        return dto;
-    }
-
     private String checkRepeatedUserData(UserDTO userDTO, ServerRegionEntity serverRegion) {
 
 
@@ -599,20 +504,6 @@ public class UserServiceImpl implements UserService {
         return serverRegionRepository.findByServer(serverName)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.BAD_REQUEST, "Did not find server named " + serverName));
-    }
-
-    private List<UserMatchesDTO> buildUserMatchesDTOList (List<UserEntity> usersEntity, String errorMsg)
-    {
-        List<UserMatchesDTO> userMatchesDTOS = new ArrayList<>();
-        if (!usersEntity.isEmpty())
-        {
-            for (UserEntity u : usersEntity)
-            {
-                userMatchesDTOS.add(buildUserMatchesDTO(u));
-            }
-            return userMatchesDTOS;
-        }
-        throw new EntityNotFoundException(errorMsg);
     }
 
     private void validateEmail(String email) {
@@ -646,7 +537,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public void validatePassword(String password) {
+    private void validatePassword(String password) {
         if (password == null || password.trim().isEmpty()) {
             throw new RuntimeException("Password cannot be null or empty.");
         }

@@ -1,13 +1,11 @@
 package LoL_Client_Back.services.implementations.reference;
 
+import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.reference.ProfileIconDTO;
 import LoL_Client_Back.entities.association.UserXIconEntity;
 import LoL_Client_Back.entities.reference.ChampionTierPriceEntity;
 import LoL_Client_Back.entities.reference.ProfileIconEntity;
 import LoL_Client_Back.entities.transaction.LootInventoryIconsEntity;
-import LoL_Client_Back.models.association.UserXIcon;
-import LoL_Client_Back.models.reference.ChampionTierPrice;
-import LoL_Client_Back.models.transaction.LootInventoryIcons;
 import LoL_Client_Back.repositories.association.UserXIconRepository;
 import LoL_Client_Back.repositories.reference.ChampionTierPriceRepository;
 import LoL_Client_Back.repositories.reference.ProfileIconRepository;
@@ -39,22 +37,24 @@ public class ProfileIconServiceImpl implements ProfileIconService {
     UserXIconRepository userXIconRepository;
     @Autowired
     LootInventoryIconsRepository lootInventoryIconsRepository;
+    @Autowired
+    DTOBuilder dtoBuilder;
 
     @Override
     public ProfileIconDTO getById(Long id) {
-        return buildIconDTO(null,repository.findById(id),
+        return dtoBuilder.buildIconDTO(null,repository.findById(id),
                 "Did not find any icon with id "+id);
     }
 
     @Override
     public List<ProfileIconDTO> getAll() {
-        return buildDtoList(repository.findAll(),
+        return dtoBuilder.buildDtoList(repository.findAll(),
                 "Did not find any profile icons");
     }
 
     @Override
     public List<ProfileIconDTO> findByName(String name) {
-        return buildDtoList(repository.findByIconIgnoreCaseContaining(name),
+        return dtoBuilder.buildDtoList(repository.findByIconIgnoreCaseContaining(name),
                 "Did not find any profile icons by the name "+name);
     }
 
@@ -68,7 +68,7 @@ public class ProfileIconServiceImpl implements ProfileIconService {
         icon.setImage(imageUrl);
         icon.setPrice(getPriceOrThrow(blueEssencePrice));
 
-        return buildIconDTO(repository.save(icon), Optional.empty(),"");
+        return dtoBuilder.buildIconDTO(repository.save(icon), Optional.empty(),"");
     }
 
     @Override
@@ -82,7 +82,7 @@ public class ProfileIconServiceImpl implements ProfileIconService {
             if (iconName != null) update.setIcon(iconName);
             if (imageUrl !=null) update.setImage(imageUrl);
             update.setPrice(getPriceOrThrow(blueEssencePrice));
-            return buildIconDTO(update,Optional.empty(),"");
+            return dtoBuilder.buildIconDTO(update,Optional.empty(),"");
          }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Did not find profile icon with id " + id);
@@ -109,7 +109,7 @@ public class ProfileIconServiceImpl implements ProfileIconService {
         if (!ownership.isEmpty()) {
             List<ProfileIconDTO> iconsList = new ArrayList<>();
             for (UserXIconEntity u : ownership) {
-                iconsList.add(buildIconDTO
+                iconsList.add(dtoBuilder.buildIconDTO
                         (u.getIcon(),Optional.empty(),""));
             }
             return iconsList;
@@ -130,39 +130,9 @@ public class ProfileIconServiceImpl implements ProfileIconService {
             for (UserXIconEntity u : ownershipList){
                 ownedIconsIds.add(u.getIcon().getId());
             }
-            return buildDtoList(repository.findByIdNotIn(ownedIconsIds),errorMsg);
+            return dtoBuilder.buildDtoList(repository.findByIdNotIn(ownedIconsIds),errorMsg);
         }
-        return buildDtoList(repository.findAll(),errorMsg);
-    }
-
-    private ProfileIconDTO buildIconDTO (ProfileIconEntity iconEnt, Optional<ProfileIconEntity> optional,
-                                         String notFoundMsg) {
-        ProfileIconDTO dto;
-        if (optional != null && optional.isPresent())
-        {
-            dto = customMapper.map(optional.get(),ProfileIconDTO.class);
-            dto.setBlueEssencePrice(optional.get().getPrice().getBlueEssenceCost());
-            return dto;
-        }
-        else if (iconEnt != null)
-        {
-            dto = customMapper.map(iconEnt,ProfileIconDTO.class);
-            dto.setBlueEssencePrice(iconEnt.getPrice().getBlueEssenceCost());
-            return dto;
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,notFoundMsg);
-    }
-
-    private List<ProfileIconDTO> buildDtoList (List<ProfileIconEntity> list, String errorMsg) {
-        if (!list.isEmpty()) {
-            List<ProfileIconDTO> dtoList = new ArrayList<>();
-            for (ProfileIconEntity i : list)
-            {
-                dtoList.add(buildIconDTO(i,Optional.empty(),""));
-            }
-            return  dtoList;
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,errorMsg);
+        return dtoBuilder.buildDtoList(repository.findAll(),errorMsg);
     }
 
     private void checkPreexistenceIconName(String name, ProfileIconEntity iconToUpdate)

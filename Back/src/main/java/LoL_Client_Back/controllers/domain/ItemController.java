@@ -1,7 +1,7 @@
 package LoL_Client_Back.controllers.domain;
 
 import LoL_Client_Back.dtos.enums.ChampionStyle;
-import LoL_Client_Back.dtos.ItemDTO;
+import LoL_Client_Back.dtos.item.ItemDTO;
 import LoL_Client_Back.services.interfaces.domain.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,27 +1,21 @@
 package LoL_Client_Back.services.implementations.domain;
 
+import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.enums.ServerOption;
 import LoL_Client_Back.dtos.enums.UserRankTier;
 import LoL_Client_Back.dtos.match.MatchDTO;
-import LoL_Client_Back.dtos.match.PlayerMatchDetailDTO;
-import LoL_Client_Back.dtos.match.PlayerMatchItemDTO;
 import LoL_Client_Back.dtos.user.UserMatchesDTO;
 import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.domain.*;
 import LoL_Client_Back.entities.reference.*;
-import LoL_Client_Back.models.domain.PlayerMatchDetail;
-import LoL_Client_Back.models.reference.RankTier;
 import LoL_Client_Back.repositories.association.UserXChampionRepository;
 import LoL_Client_Back.repositories.domain.ItemRepository;
 import LoL_Client_Back.repositories.domain.MatchRepository;
-import LoL_Client_Back.repositories.domain.UserMatchesRepository;
 import LoL_Client_Back.repositories.domain.UserRepository;
 import LoL_Client_Back.repositories.reference.*;
 import LoL_Client_Back.services.interfaces.domain.MatchService;
-import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -31,15 +25,11 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import java.time.LocalDateTime;
-import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 @Service
 public class MatchServiceImpl implements MatchService {
 
-    @Autowired
-    @Qualifier("customModelMapper")
-    ModelMapper customMapper;
     @Autowired
     MatchRepository matchRepository;
     @Autowired
@@ -62,13 +52,15 @@ public class MatchServiceImpl implements MatchService {
     UserMatchesServiceImpl userMatchesService;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    DTOBuilder dtoBuilder;
 
     @Override
     public MatchDTO getMatchById(Long matchId, boolean showChampionImg, boolean showItemImg) {
         Optional<MatchEntity> optional =
                 matchRepository.findById(matchId);
         if (optional.isPresent())
-            return buildMatchDTO(optional.get(),showChampionImg,showItemImg);
+            return dtoBuilder.buildMatchDTO(optional.get(),showChampionImg,showItemImg);
         else throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find match id "+matchId);
     }
 
@@ -79,7 +71,7 @@ public class MatchServiceImpl implements MatchService {
                 matchRepository.findTop10MatchesByUserId(userId);
         if (!userMatches.isEmpty())
         {
-            return buildMatchDTOList(userMatches,showChampionImg,showItemImg);
+            return dtoBuilder.buildMatchDTOList(userMatches,showChampionImg,showItemImg);
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find matches for the user");
     }
@@ -91,23 +83,25 @@ public class MatchServiceImpl implements MatchService {
                 matchRepository.findAll();
         if (!matches.isEmpty())
         {
-            return buildMatchDTOList(matches,showChampionImg,showItemImg);
+            return dtoBuilder.buildMatchDTOList(matches,showChampionImg,showItemImg);
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find matches");
     }
 
     @Override
     public MatchDTO createMatch(ServerOption serverOption, String gameMode, String map, UserRankTier elo,
-                                boolean showChampion, boolean showItem) {
+                                boolean showChampion, boolean showItem)
+    {
         MatchEntity match = buildMatchEntity(null,serverOption, gameMode, map, elo, null, null);
         MatchEntity matchSaved = matchRepository.save(match);
         //UPDATING USER MATCHES
         userMatchesService.updateUsers(matchSaved.getPlayerDetails());
-        return buildMatchDTO(matchSaved, showChampion, showItem);
+        return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
     }
 
     @Override
-    public MatchDTO createMatchForUser(Long userId, String gameMode, String map, boolean showChampion, boolean showItem) {
+    public MatchDTO createMatchForUser(Long userId, String gameMode, String map, boolean showChampion, boolean showItem)
+    {
 
         Optional<UserEntity> optionalUser = userRepository.findById(userId);
         UserEntity user;
@@ -126,7 +120,7 @@ public class MatchServiceImpl implements MatchService {
         MatchEntity matchSaved = matchRepository.save(match);
         //UPDATING USER MATCHES
         userMatchesService.updateUsers(matchSaved.getPlayerDetails());
-        return buildMatchDTO(matchSaved, showChampion, showItem);
+        return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
     }
 
     @Override
@@ -148,7 +142,7 @@ public class MatchServiceImpl implements MatchService {
         MatchEntity matchSaved = matchRepository.save(match);
         //UPDATING USER MATCHES
         userMatchesService.updateUsers(matchSaved.getPlayerDetails());
-        return buildMatchDTO(matchSaved, showChampion, showItem);
+        return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
     }
 
     @Override
@@ -179,7 +173,7 @@ public class MatchServiceImpl implements MatchService {
                                 (buildMatchEntity(matchToUpdate,userServer,gameMode,map,userElo,optionalUserId,null));
 
                         userMatchesService.updateUsers(matchUpdated.getPlayerDetails()); //UPDATE USER MATCHES (wins & loses)
-                        return buildMatchDTO(matchUpdated, showChampion,showItem);
+                        return dtoBuilder.buildMatchDTO(matchUpdated, showChampion,showItem);
 
                     }
                     else // WITH SPECIFIC ROLE (IGNORE parameter "map" && add "optionalRole")
@@ -188,7 +182,7 @@ public class MatchServiceImpl implements MatchService {
                                 (buildMatchEntity(matchToUpdate,userServer,gameMode,"SUMMONERS RIFT",userElo,optionalUserId,optionalRole));
 
                         userMatchesService.updateUsers(matchUpdated.getPlayerDetails()); //UPDATE USER MATCHES (wins & loses)
-                        return buildMatchDTO(matchUpdated, showChampion,showItem);
+                        return dtoBuilder.buildMatchDTO(matchUpdated, showChampion,showItem);
                     }
                 }
                 else  //USER DOES NOT EXIST
@@ -200,7 +194,7 @@ public class MatchServiceImpl implements MatchService {
                     (buildMatchEntity(matchToUpdate,serverOption,gameMode,map,elo,null,null));
 
             userMatchesService.updateUsers(matchUpdated.getPlayerDetails()); //UPDATE USER MATCHES (wins & loses)
-            return buildMatchDTO(matchUpdated, showChampion,showItem);
+            return dtoBuilder.buildMatchDTO(matchUpdated, showChampion,showItem);
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find the match with id provided");
     }
@@ -212,84 +206,6 @@ public class MatchServiceImpl implements MatchService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find match id "+id + " to delete");
         matchRepository.delete(optional.get());
 
-    }
-
-    //MATCH DTO LIST
-
-    private List<MatchDTO> buildMatchDTOList(List<MatchEntity> matchEntities,
-                                             boolean showChampion, boolean showItem) {
-        List<MatchDTO> matchDTOs = new ArrayList<>();
-        for (MatchEntity matchEntity : matchEntities) {
-            MatchDTO dto = buildMatchDTO(matchEntity, showChampion, showItem);
-            matchDTOs.add(dto);
-        }
-        return matchDTOs;
-    }
-
-    //MATCH DTO
-    private MatchDTO buildMatchDTO(MatchEntity matchEntity,
-                                   boolean showChampion, boolean showItem) {
-        MatchDTO matchDTO = customMapper.map(matchEntity, MatchDTO.class);
-        matchDTO.setServerRegion(matchEntity.getServerRegion().getServer());
-        matchDTO.setMap(matchEntity.getMap().getMap());
-        matchDTO.setWinnerTeam(matchEntity.getWinnerTeam().getTeamColor());
-        //details
-        matchDTO.setPlayers(buildPlayerMatchDetailDTOList
-                (matchEntity.getPlayerDetails(), showChampion, showItem));
-        return matchDTO;
-    }
-
-    //DETAIL DTO
-    private List<PlayerMatchDetailDTO> buildPlayerMatchDetailDTOList(List<PlayerMatchDetailEntity> detailEntities,
-                                                                     boolean showChampion, boolean showItem) {
-        List<PlayerMatchDetailDTO> dtoList = new ArrayList<>();
-
-        for (PlayerMatchDetailEntity detail : detailEntities) {
-            PlayerMatchDetailDTO dto = customMapper.map(detail, PlayerMatchDetailDTO.class);
-            dto.setId(detail.getId());
-            dto.setMatchId(detail.getMatch().getId());
-            dto.setTeamMember(detail.getTeam().getTeamColor());
-
-            if (detail.getRole() != null) { //FOR ARAM, THERE ARE NO ROLES
-                dto.setRole(detail.getRole().getRole());
-            }
-
-            dto.setChampion(detail.getChampion().getName());
-            dto.setUserNickname(detail.getUser().getNickname());
-            dto.setIdUser(detail.getUser().getId());
-            if (detail.getUser().getRank() == null) {
-                dto.setElo("UNRANKED");
-            } else
-                dto.setElo(detail.getUser().getRank().getRank());
-
-            if (showChampion)
-                dto.setImageUrlChampion(detail.getChampion().getImage());
-
-            dto.setItems(buildPlayerMatchItemsDTOList(detail.getItems(), showItem));
-
-            dtoList.add(dto);
-        }
-        return dtoList;
-    }
-
-    //ITEMS DTO
-    private List<PlayerMatchItemDTO> buildPlayerMatchItemsDTOList(List<PlayerMatchItemEntity> playerItems,
-                                                                  boolean showItem) {
-        List<PlayerMatchItemDTO> dtoList = new ArrayList<>();
-        for (PlayerMatchItemEntity playerItem : playerItems) {
-            PlayerMatchItemDTO dto = new PlayerMatchItemDTO();
-            dto.setId(playerItem.getId());
-            dto.setIdItem(playerItem.getItem().getId());
-            dto.setIdMatchDetail(playerItem.getPlayerMatchDetail().getId());
-            dto.setItemName(playerItem.getItem().getName());
-            dto.setType(playerItem.getItem().getItemType().getStyle());
-            if (playerItem.getItem().getItemType2() != null)
-                dto.setType2(playerItem.getItem().getItemType2().getStyle());
-            if (showItem)
-                dto.setImageUrlItem(playerItem.getItem().getImage());
-            dtoList.add(dto);
-        }
-        return dtoList;
     }
 
     private MatchEntity buildMatchEntity(MatchEntity matchToUpdate,ServerOption serverOption, String gameMode, String map, UserRankTier elo,
@@ -324,7 +240,8 @@ public class MatchServiceImpl implements MatchService {
                 detail.setMatch(null); // optional to be sure
             }
 
-        } else {
+        }
+        else {
             matchEntity = new MatchEntity();
         }
 

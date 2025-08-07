@@ -1,7 +1,8 @@
 package LoL_Client_Back.services.implementations.domain;
 
+import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.enums.ChampionStyle;
-import LoL_Client_Back.dtos.ItemDTO;
+import LoL_Client_Back.dtos.item.ItemDTO;
 import LoL_Client_Back.entities.domain.ItemEntity;
 import LoL_Client_Back.entities.domain.MatchEntity;
 import LoL_Client_Back.entities.reference.ChampionStyleEntity;
@@ -18,7 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -38,39 +38,41 @@ public class ItemServiceImpl implements ItemService {
     PlayerMatchItemRepository playerMatchItemRepository;
     @Autowired
     MatchRepository matchRepository;
+    @Autowired
+    DTOBuilder dtoBuilder;
 
     @Override
     public ItemDTO findById(Long id) {
         Optional<ItemEntity> optional =
                 itemRepository.findById(id);
         if (optional.isPresent()){
-            return buildItemDTO(optional.get());
+            return dtoBuilder.buildItemDTO(optional.get());
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find item by id "+id);
     }
 
     @Override
     public List<ItemDTO> getByItemType(ChampionStyle style) {
-        return buildItemDTOList(itemRepository.findByItemType(getChampionStyle(style.name())),
+        return dtoBuilder.buildItemDTOList(itemRepository.findByItemType(getChampionStyle(style.name())),
                 "Did not find champions with style "+style.name());
     }
 
     @Override
     public List<ItemDTO> findByName(String name) {
-        return buildItemDTOList(itemRepository.findByNameIgnoreCaseContaining(name),
+        return dtoBuilder.buildItemDTOList(itemRepository.findByNameIgnoreCaseContaining(name),
                 "Did not find items named like "+name);
     }
 
     @Override
     public List<ItemDTO> getAll() {
         List<ItemEntity> entities = itemRepository.findAll();
-        return buildItemDTOList(entities, "Did not find any items");
+        return dtoBuilder.buildItemDTOList(entities, "Did not find any items");
     }
 
     @Override
     public List<ItemDTO> getByItemType1Or2(ChampionStyle style) {
         ChampionStyleEntity s = getChampionStyle(style.name());
-        return buildItemDTOList(itemRepository.findByItemTypeOrItemType2(s,s),
+        return dtoBuilder.buildItemDTOList(itemRepository.findByItemTypeOrItemType2(s,s),
                 "Did not find item types to be "+style.name());
     }
 
@@ -81,7 +83,7 @@ public class ItemServiceImpl implements ItemService {
         checkRepeatedItemName(item.getName(),null);
         if (!existsItemWithSameStats(item))
         {
-            return buildItemDTO(itemRepository.save(item));
+            return dtoBuilder.buildItemDTO(itemRepository.save(item));
         }
         throw new ResponseStatusException(HttpStatus.CONFLICT,
                 "There is already an item with those stats");
@@ -96,7 +98,7 @@ public class ItemServiceImpl implements ItemService {
             checkRepeatedItemName(item.getName(),item.getId());
             if (!existsItemWithSameStats(item))
             {
-                return buildItemDTO(itemRepository.save(item));
+                return dtoBuilder.buildItemDTO(itemRepository.save(item));
             }
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "There is already an item with those stats");
@@ -142,32 +144,6 @@ public class ItemServiceImpl implements ItemService {
         return ent;
     }
 
-
-    private ItemDTO buildItemDTO (ItemEntity item)
-    {
-        ItemDTO dto = customMapper.map(item,ItemDTO.class);
-        if (item.getItemType() != null)
-        {
-            dto.setItemType(item.getItemType().getStyle());
-        }
-        if (item.getItemType2() != null) {
-            dto.setItemType2(item.getItemType2().getStyle());
-        }
-        return dto;
-    }
-
-    private List<ItemDTO> buildItemDTOList (List<ItemEntity> list, String errorMsg)
-    {
-        if (!list.isEmpty())
-        {
-            List<ItemDTO> dtoList = new ArrayList<>();
-            for (ItemEntity i : list) {
-                dtoList.add(buildItemDTO(i));
-            }
-            return dtoList;
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,errorMsg);
-    }
 
     private ChampionStyleEntity getChampionStyle (String style)
     {

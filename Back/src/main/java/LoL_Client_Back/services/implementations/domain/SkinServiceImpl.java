@@ -1,6 +1,6 @@
 package LoL_Client_Back.services.implementations.domain;
 
-import LoL_Client_Back.dtos.champion.ChampionDTO;
+import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.skin.SkinDTO;
 import LoL_Client_Back.dtos.enums.Champion;
 import LoL_Client_Back.entities.association.UserXChampionEntity;
@@ -9,7 +9,6 @@ import LoL_Client_Back.entities.domain.ChampionEntity;
 import LoL_Client_Back.entities.domain.SkinEntity;
 import LoL_Client_Back.entities.reference.SkinTierEntity;
 import LoL_Client_Back.entities.transaction.LootInventorySkinsEntity;
-import LoL_Client_Back.models.association.UserXSkin;
 import LoL_Client_Back.repositories.association.UserXChampionRepository;
 import LoL_Client_Back.repositories.association.UserXSkinRepository;
 import LoL_Client_Back.repositories.domain.ChampionRepository;
@@ -51,28 +50,30 @@ public class SkinServiceImpl implements SkinService {
     UserXChampionRepository userXChampionRepository;
     @Autowired
     LootInventorySkinsRepository lootInventorySkinsRepository;
+    @Autowired
+    DTOBuilder dtoBuilder;
 
     @Override
     public List<SkinDTO> getAllSkins() {
-        return buildSkinDTOList(skinRepository.findAll(),
+        return dtoBuilder.buildSkinDTOList(skinRepository.findAll(),
                 "Did not find any skins in the database");
     }
 
     @Override
     public List<SkinDTO> findSkinsByChampionName(Champion championName) {
-        return buildSkinDTOList(skinRepository.findByChampion_Name(championName.getDisplayName()),
+        return dtoBuilder.buildSkinDTOList(skinRepository.findByChampion_Name(championName.getDisplayName()),
                 "Did not find skins for the champion "+championName.getDisplayName());
     }
 
     @Override
     public List<SkinDTO> findSkinsByRpCost(String filter, Integer rpCost) {
         if (filter.equals("GREATER")) {
-            return buildSkinDTOList(skinRepository.
+            return dtoBuilder.buildSkinDTOList(skinRepository.
                     findByTier_RpCostGreaterThanEqualOrderByTier_RpCostAsc(rpCost),
                     "Did not find skins with rp cost higher than "+rpCost);
         }
         if (filter.equals("LESSER")) {
-            return buildSkinDTOList(skinRepository.
+            return dtoBuilder.buildSkinDTOList(skinRepository.
                             findByTier_RpCostLessThanEqualOrderByTier_RpCostDesc(rpCost),
                     "Did not find skins with rp cost lesser than "+rpCost);
         }
@@ -81,20 +82,20 @@ public class SkinServiceImpl implements SkinService {
 
     @Override
     public List<SkinDTO> findSkinsByName(String name) {
-        return buildSkinDTOList(skinRepository.findByNameIgnoreCaseContaining(name),
+        return dtoBuilder.buildSkinDTOList(skinRepository.findByNameIgnoreCaseContaining(name),
                 "Did not find skins named like'"+name+"'");
     }
 
     @Override
     public SkinDTO getSkinById(Long id) {
         Optional<SkinEntity> skinEntityOptional = skinRepository.findById(id);
-        if (skinEntityOptional.isPresent()) return buildSkinDTO(skinEntityOptional.get());
+        if (skinEntityOptional.isPresent()) return dtoBuilder.buildSkinDTO(skinEntityOptional.get());
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find skin with id "+id);
     }
 
     @Override
     public List<SkinDTO> findSkinsByChampionId(Long id) {
-        return buildSkinDTOList(skinRepository.findByChampion_Id(id),
+        return dtoBuilder.buildSkinDTOList(skinRepository.findByChampion_Id(id),
                 "Did not find skins for the champion id "+id);
     }
 
@@ -106,7 +107,7 @@ public class SkinServiceImpl implements SkinService {
         s.setName(name);
         s.setImage(imageUrl);
         s.setReleaseDate(LocalDate.now());
-        return buildSkinDTO(skinRepository.save(s));
+        return dtoBuilder.buildSkinDTO(skinRepository.save(s));
     }
 
     @Override
@@ -120,7 +121,7 @@ public class SkinServiceImpl implements SkinService {
             s.setName(name);
             s.setImage(imageUrl);
             s.setReleaseDate(LocalDate.now());
-            return buildSkinDTO(skinRepository.save(s));
+            return dtoBuilder.buildSkinDTO(skinRepository.save(s));
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find skin with id "+skinId + " to update");
     }
@@ -145,7 +146,7 @@ public class SkinServiceImpl implements SkinService {
         if (!list.isEmpty()) {
             List<SkinDTO> championList = new ArrayList<>();
             for (UserXSkinEntity u : list) {
-                championList.add(buildSkinDTO(u.getSkin()));
+                championList.add(dtoBuilder.buildSkinDTO(u.getSkin()));
             }
             return championList;
         }
@@ -163,10 +164,10 @@ public class SkinServiceImpl implements SkinService {
             for (UserXSkinEntity u : list) {
                 skinsOwnedIds.add(u.getSkin().getId());
             }
-            return buildSkinDTOList(skinRepository.findByIdNotIn(skinsOwnedIds),
+            return dtoBuilder.buildSkinDTOList(skinRepository.findByIdNotIn(skinsOwnedIds),
                     "The user with id \"+idUser +\" has all the skins");
         }
-        return buildSkinDTOList(skinRepository.findAll(),
+        return dtoBuilder.buildSkinDTOList(skinRepository.findAll(),
                 "There are no skins in the database");
     }
 
@@ -205,10 +206,9 @@ public class SkinServiceImpl implements SkinService {
         }
 
         // Return the list of skins the user can purchase
-        return buildSkinDTOList(filtered,
+        return dtoBuilder.buildSkinDTOList(filtered,
                 "The user does have all the skins of the champions he owns");
     }
-
 
     public SkinEntity getSkinWithChampionAndTierOnly(Long championId, Integer rpCost) {
         ChampionEntity champion = championRepository.findById(championId)
@@ -225,25 +225,6 @@ public class SkinServiceImpl implements SkinService {
         return skin;
     }
 
-
-    private SkinDTO buildSkinDTO (SkinEntity s) {
-        SkinDTO dto = customMapper.map(s,SkinDTO.class);
-        dto.setChampionName(s.getChampion().getName());
-        dto.setRpCost(s.getTier().getRpCost());
-        dto.setOrangeEssenceCost(s.getTier().getOrangeEssenceCost());
-        return dto;
-    }
-
-    private List<SkinDTO> buildSkinDTOList (List<SkinEntity> list, String errorMsg) {
-        if (!list.isEmpty()) {
-            List<SkinDTO> dtos = new ArrayList<>();
-            for (SkinEntity s : list) {
-                dtos.add(buildSkinDTO(s));
-            }
-            return dtos;
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,errorMsg);
-    }
     private void checkRepeatedSkinName(String name, Long currentSkinId) {
         Optional<SkinEntity> existingSkin = skinRepository.findByNameIgnoreCase(name);
         if (existingSkin.isPresent() && !Objects.equals(existingSkin.get().getId(), currentSkinId)) {

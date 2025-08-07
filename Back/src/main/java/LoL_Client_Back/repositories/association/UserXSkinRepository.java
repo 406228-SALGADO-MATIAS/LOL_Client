@@ -3,7 +3,6 @@ package LoL_Client_Back.repositories.association;
 import LoL_Client_Back.entities.association.UserXSkinEntity;
 import LoL_Client_Back.entities.domain.SkinEntity;
 import LoL_Client_Back.entities.domain.UserEntity;
-import LoL_Client_Back.models.association.UserXSkin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,5 +1,6 @@
 package LoL_Client_Back.services.implementations.domain;
 
+import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.champion.ChampionDTO;
 import LoL_Client_Back.dtos.enums.ChampionDifficulty;
 import LoL_Client_Back.dtos.enums.ChampionRole;
@@ -15,9 +16,7 @@ import LoL_Client_Back.entities.reference.ChampionTierPriceEntity;
 import LoL_Client_Back.entities.reference.RoleEntity;
 import LoL_Client_Back.entities.transaction.LootInventoryChampionsEntity;
 import LoL_Client_Back.entities.transaction.LootInventorySkinsEntity;
-import LoL_Client_Back.models.association.UserXChampion;
 import LoL_Client_Back.models.domain.Champion;
-import LoL_Client_Back.models.transaction.LootInventoryChampions;
 import LoL_Client_Back.repositories.association.UserXChampionRepository;
 import LoL_Client_Back.repositories.association.UserXSkinRepository;
 import LoL_Client_Back.repositories.domain.ChampionRepository;
@@ -27,7 +26,6 @@ import LoL_Client_Back.repositories.domain.SkinRepository;
 import LoL_Client_Back.repositories.reference.*;
 import LoL_Client_Back.repositories.transaction.LootInventoryChampionsRepository;
 import LoL_Client_Back.repositories.transaction.LootInventorySkinsRepository;
-import LoL_Client_Back.services.interfaces.assocation.UserXChampionService;
 import LoL_Client_Back.services.interfaces.domain.ChampionService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -74,30 +72,32 @@ public class ChampionServiceImpl implements ChampionService {
     MatchRepository matchRepository;
     @Autowired
     PlayerMatchDetailRepository matchDetailRepository;
+    @Autowired
+    DTOBuilder dtoBuilder;
 
 
     @Override
     public List<ChampionDTO> getAllChampions() {
-        return buildChampionDTOList(championRepository.findAll(),
+        return dtoBuilder.buildChampionDTOList(championRepository.findAll(),
                 "Did not find any champions");
     }
 
     @Override
     public List<ChampionDTO> findChampionsByName(String name) {
-        return buildChampionDTOList(championRepository.findByNameIgnoreCaseContaining(name),
+        return dtoBuilder.buildChampionDTOList(championRepository.findByNameIgnoreCaseContaining(name),
                 "Did not find champions named "+name);
     }
 
     @Override
     public List<ChampionDTO> findChampionsByDifficulty(ChampionDifficulty difficulty) {
-        return buildChampionDTOList(championRepository.findByDifficulty(getChampionDifficulty(difficulty.name())),
+        return dtoBuilder.buildChampionDTOList(championRepository.findByDifficulty(getChampionDifficulty(difficulty.name())),
                 "Did not find champions with difficulty "+difficulty);
     }
 
     @Override
     public List<ChampionDTO> findChampionsByRole(ChampionRole championRole) {
         RoleEntity rol = getChampionRole(championRole.name());
-        return buildChampionDTOList(championRepository.findByRoleOrRole2(rol,rol),
+        return dtoBuilder.buildChampionDTOList(championRepository.findByRoleOrRole2(rol,rol),
                 "Did no find champions with main rol or side rol to be "+championRole.name());
     }
 
@@ -105,7 +105,7 @@ public class ChampionServiceImpl implements ChampionService {
     public List<ChampionDTO> findByRoleOrRole2AndStyleOrStyle2(ChampionRole role, ChampionStyle style) {
         RoleEntity r = getChampionRole(role.name());
         ChampionStyleEntity s = getChampionStyle(style.name());
-        return buildChampionDTOList(championRepository.
+        return dtoBuilder.buildChampionDTOList(championRepository.
                         findByRoleOrRole2AndStyleOrStyle2(r,r,s,s)
         ,"Did not find champions with any rol as "+role.name() + "and any style as "+style.name());
     }
@@ -114,28 +114,28 @@ public class ChampionServiceImpl implements ChampionService {
     public List<ChampionDTO> findByRoleAndStyleOrStyle2(ChampionRole role, ChampionStyle style) {
         RoleEntity r = getChampionRole(role.name());
         ChampionStyleEntity s = getChampionStyle(style.name());
-        return buildChampionDTOList(championRepository.findByRoleAndStyleOrRoleAndStyle2(r,s,r,s),
+        return dtoBuilder.buildChampionDTOList(championRepository.findByRoleAndStyleOrRoleAndStyle2(r,s,r,s),
                 "Did not find champions with main rol "+role.name()+" and any style as "+style.name());
     }
 
     @Override
     public List<ChampionDTO> findByMainRole(ChampionRole role) {
         RoleEntity r = getChampionRole(role.name());
-        return buildChampionDTOList(championRepository.findByRole(r),
+        return dtoBuilder.buildChampionDTOList(championRepository.findByRole(r),
                 "Did not find champions with main role "+role.name());
     }
 
     @Override
     public List<ChampionDTO> findByMainStyle(ChampionStyle style) {
         ChampionStyleEntity s = getChampionStyle(style.name());
-        return buildChampionDTOList(championRepository.findByStyle(s),
+        return dtoBuilder.buildChampionDTOList(championRepository.findByStyle(s),
                 "Did not find champions with main style "+style.name());
     }
 
     @Override
     public List<ChampionDTO> findByStyle(ChampionStyle style) {
         ChampionStyleEntity s = getChampionStyle(style.name());
-        return buildChampionDTOList(championRepository.findByStyleOrStyle2(s,s),
+        return dtoBuilder.buildChampionDTOList(championRepository.findByStyleOrStyle2(s,s),
                 "Did not find champions with any style"+style.name());
     }
 
@@ -143,12 +143,12 @@ public class ChampionServiceImpl implements ChampionService {
     public List<ChampionDTO> findByDate(LocalDate date, String filter) {
         if (filter.equals("AFTER"))
         {
-            return buildChampionDTOList(championRepository.findByReleaseDateAfterOrderByReleaseDateAsc(date),
+            return dtoBuilder.buildChampionDTOList(championRepository.findByReleaseDateAfterOrderByReleaseDateAsc(date),
                     "Did not find champions which release date is after the date "+date);
         }
         if (filter.equals("BEFORE"))
         {
-            return buildChampionDTOList(championRepository.findByReleaseDateBeforeOrderByReleaseDateDesc(date),
+            return dtoBuilder.buildChampionDTOList(championRepository.findByReleaseDateBeforeOrderByReleaseDateDesc(date),
                     "Did not find champions which release date is before the date "+date);
         }
         throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,"Invalid filter "+filter);
@@ -157,13 +157,13 @@ public class ChampionServiceImpl implements ChampionService {
     @Override
     public List<ChampionDTO> findByWinrate(Double winrate, String filter) {
         if (filter.equals("GREATER")) {
-            return buildChampionDTOList(
+            return dtoBuilder.buildChampionDTOList(
                     championRepository.findByWinrateGreaterThanEqualOrderByWinrateAsc(winrate),
                     "No champions found with winrate greater than " + winrate
             );
         }
         if (filter.equals("LESSER")) {
-            return buildChampionDTOList(
+            return dtoBuilder.buildChampionDTOList(
                     championRepository.findByWinrateLessThanEqualOrderByWinrateDesc(winrate),
                     "No champions found with winrate less than " + winrate
             );
@@ -174,13 +174,13 @@ public class ChampionServiceImpl implements ChampionService {
     @Override
     public List<ChampionDTO> findByBlueEssenceCost(Integer cost, String filter) {
         if (filter.equals("HIGHER")) {
-            return buildChampionDTOList(
+            return dtoBuilder.buildChampionDTOList(
                     championRepository.findByPrice_BlueEssenceCostGreaterThanEqualOrderByPrice_BlueEssenceCostAsc(cost),
                     "No champions found with blue essence cost greater than or equal to " + cost
             );
         }
         if (filter.equals("LESSER")) {
-            return buildChampionDTOList(
+            return dtoBuilder.buildChampionDTOList(
                     championRepository.findByPrice_BlueEssenceCostLessThanEqualOrderByPrice_BlueEssenceCostDesc(cost),
                     "No champions found with blue essence cost less than or equal to " + cost
             );
@@ -194,7 +194,7 @@ public class ChampionServiceImpl implements ChampionService {
                 championRepository.findById(id);
         if (entity.isPresent())
         {
-            return buildChampionDTO(entity.get());
+            return dtoBuilder.buildChampionDTO(entity.get());
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Did not find champion with id " + id );
@@ -240,7 +240,7 @@ public class ChampionServiceImpl implements ChampionService {
             champion.setRole(role != null ? getChampionRole(role.name()) : null);
             champion.setRole2(role2 != null ? getChampionRole(role2.name()) : null);
 
-            return buildChampionDTO(championRepository.save(champion));
+            return dtoBuilder.buildChampionDTO(championRepository.save(champion));
         }
         throw new ResponseStatusException(HttpStatus.CONFLICT,
                 "There is already a champion named "+name + " in the database. Try another name");
@@ -333,7 +333,7 @@ public class ChampionServiceImpl implements ChampionService {
        if (!list.isEmpty()) {
            List<ChampionDTO> championList = new ArrayList<>();
            for (UserXChampionEntity u : list) {
-               championList.add(buildChampionDTO(u.getChampion()));
+               championList.add(dtoBuilder.buildChampionDTO(u.getChampion()));
            }
            return championList;
        }
@@ -354,7 +354,7 @@ public class ChampionServiceImpl implements ChampionService {
                championsOwnedIds.add(u.getChampion().getId());
             }
         }
-        return buildChampionDTOList(championRepository.findByIdNotIn(championsOwnedIds),
+        return dtoBuilder.buildChampionDTOList(championRepository.findByIdNotIn(championsOwnedIds),
                 "The user has all the champions, " +
                         "there are no champions available for acquisition");
 
@@ -399,47 +399,5 @@ public class ChampionServiceImpl implements ChampionService {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find difficulty "+difficulty);
     }
 
-    private ChampionDTO buildChampionDTO(ChampionEntity c) {
-        ChampionDTO dto = customMapper.map(c, ChampionDTO.class);
 
-        if (c.getPrice() != null && c.getPrice().getBlueEssenceCost() != null) {
-            dto.setBlueEssencePrice(c.getPrice().getBlueEssenceCost());
-        }
-
-        if (c.getRole() != null && c.getRole().getRole() != null) {
-            dto.setMainRole(c.getRole().getRole());
-        }
-
-        if (c.getRole2() != null && c.getRole2().getRole() != null) {
-            dto.setSideRole(c.getRole2().getRole());
-        }
-
-        if (c.getDifficulty() != null && c.getDifficulty().getDifficulty() != null) {
-            dto.setDifficulty(c.getDifficulty().getDifficulty());
-        }
-
-        if (c.getStyle() != null && c.getStyle().getStyle() != null) {
-            dto.setStyle(c.getStyle().getStyle());
-        }
-
-        if (c.getStyle2() != null && c.getStyle2().getStyle() != null) {
-            dto.setStyle2(c.getStyle2().getStyle());
-        }
-
-        return dto;
-    }
-
-    private List<ChampionDTO> buildChampionDTOList (List<ChampionEntity> championEntities, String errorMsg)
-    {
-        if (!championEntities.isEmpty())
-        {
-            List<ChampionDTO> dtoList = new ArrayList<>();
-            for (ChampionEntity c : championEntities)
-            {
-                dtoList.add(buildChampionDTO(c));
-            }
-            return dtoList;
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,errorMsg);
-    }
 }

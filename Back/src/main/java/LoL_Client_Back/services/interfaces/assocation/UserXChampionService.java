@@ -1,8 +1,6 @@
 package LoL_Client_Back.services.interfaces.assocation;
 
 import LoL_Client_Back.dtos.association.UserXChampionDTO;
-import LoL_Client_Back.entities.association.UserXChampionEntity;
-import LoL_Client_Back.models.association.UserXChampion;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
