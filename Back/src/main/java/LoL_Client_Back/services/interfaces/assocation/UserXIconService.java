@@ -15,4 +15,5 @@ public interface UserXIconService {
     void deleteById(Long id);
     UserXIconDTO createIconBelonging(Long idUser, Long idIcon);
     UserXIconDTO updateIconBelonging(Long idBelonging, Long idUser, Long idIcon);
+    String giveIconsToAllUsers();
 }

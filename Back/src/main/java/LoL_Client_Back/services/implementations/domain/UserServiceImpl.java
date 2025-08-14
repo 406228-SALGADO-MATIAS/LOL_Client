@@ -145,7 +145,8 @@ public class UserServiceImpl implements UserService {
         {
             UserEntity userEntity = optionalUserEntity.get();
 
-            return dtoBuilder.buildUserMatchesDTO(userEntity);
+            return dtoBuilder.buildUserMatchesDTO
+                    (userEntity);
         }
         throw new EntityNotFoundException("Did not find user with email "+email);
     }
@@ -282,7 +283,7 @@ public class UserServiceImpl implements UserService {
                     filterByMatchesPlayed(reorderListByMatchesPlayed(dtoList,matchType),minMatchesPlayed);
             if (dtoFilteredList.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "No users found with matchtype " + matchType + ", server " + serverOption + " and that played more than > " + minMatchesPlayed+" games");
+                        "No users found with matchtype " + matchType + ", server " + serverOption + " and that played at least " + minMatchesPlayed+" games");
             }
             return dtoFilteredList;
         }
@@ -610,6 +611,15 @@ public class UserServiceImpl implements UserService {
         if (!trimmedPassword.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*")) {
             throw new RuntimeException("Password must contain at least one special character.");
         }
+    }
+
+    private String getUserFirstIcon (Long idUser)
+    {
+       List<UserXIconEntity> x =
+               userXIconRepository.findByUser_Id(idUser);
+       if (x.isEmpty())
+           return "";
+       return x.get(0).getIcon().getImage();
     }
 }
 

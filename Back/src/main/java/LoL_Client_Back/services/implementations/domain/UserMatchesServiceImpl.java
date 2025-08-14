@@ -65,23 +65,26 @@ public class UserMatchesServiceImpl implements UserMatchesService {
         if (optional.isPresent()) matches = optional.get();
         else matches.setUser(player.getUser());
 
-        if (ranked)
+        if (map.getId().equals(1L))
         {
-            int rankedsPlayed = matches.getRankedsPlayed() + 1;
-            if (didPlayerWin) {
-                int rankedWins = matches.getRankedWins() + 1;
-                matches.setRankedWins(rankedWins);
+            if (ranked)
+            {
+                int rankedsPlayed = matches.getRankedsPlayed() + 1;
+                if (didPlayerWin) {
+                    int rankedWins = matches.getRankedWins() + 1;
+                    matches.setRankedWins(rankedWins);
+                }
+                matches.setRankedsPlayed(rankedsPlayed);
             }
-            matches.setRankedsPlayed(rankedsPlayed);
-        }
-        else if (map.getId().equals(1L))
-        {
-            int normalsPlayed = matches.getNormalGamesPlayed() + 1;
-            if (didPlayerWin){
-                int normalWins = matches.getNormalWins() + 1;
-                matches.setNormalWins(normalWins);
+            else
+            {
+                int normalsPlayed = matches.getNormalGamesPlayed() + 1;
+                if (didPlayerWin){
+                    int normalWins = matches.getNormalWins() + 1;
+                    matches.setNormalWins(normalWins);
+                }
+                matches.setNormalGamesPlayed(normalsPlayed);
             }
-            matches.setNormalGamesPlayed(normalsPlayed);
         }
         else
         {

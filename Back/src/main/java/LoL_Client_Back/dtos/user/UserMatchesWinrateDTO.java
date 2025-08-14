@@ -2,6 +2,7 @@ package LoL_Client_Back.dtos.user;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,8 @@ public class UserMatchesWinrateDTO {
     private String nickname;
     private String rank = "UNRANKED";
     private String server;
+    @Lob
+    private String icon;
     private Integer rankedsPlayed;
     private Integer rankedWins;
     private Double rankedWinrate;

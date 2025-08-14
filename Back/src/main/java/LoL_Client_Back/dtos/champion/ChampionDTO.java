@@ -2,6 +2,7 @@ package LoL_Client_Back.dtos.champion;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +25,6 @@ public class ChampionDTO {
     private String difficulty;
     private String style;
     private String style2;
+    @Lob
+    private String imageUrl;
 }

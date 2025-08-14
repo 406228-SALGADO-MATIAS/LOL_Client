@@ -208,6 +208,24 @@ public class MatchServiceImpl implements MatchService {
 
     }
 
+    @Override
+    public String generateRankedGames()
+    {
+        for (ServerOption server : ServerOption.values())
+        {
+            for (UserRankTier tier : UserRankTier.values())
+            {
+                // 4 games per tier on each server
+                createMatch(server,"RANKED","SUMMONERS RIFT",tier,true,true);
+                createMatch(server,"RANKED","SUMMONERS RIFT",tier,true,true);
+                createMatch(server,"RANKED","SUMMONERS RIFT",tier,true,true);
+                createMatch(server,"RANKED","SUMMONERS RIFT",tier,true,true);
+            }
+        }
+        return "Successfully added matches to each Server. " +
+                "4 matches per tier on each server = 40 per server = 160 matches in total";
+    }
+
     private MatchEntity buildMatchEntity(MatchEntity matchToUpdate,ServerOption serverOption, String gameMode, String map, UserRankTier elo,
                                          Long optionalUserId, String optionalRole)
     {

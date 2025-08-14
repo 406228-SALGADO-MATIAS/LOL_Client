@@ -19,6 +19,7 @@ public interface MatchService {
     MatchDTO updateMatchById(Long matchId, ServerOption serverOption, String gameMode, String map, UserRankTier elo,
                              Long optionalUserId, String optionalRole, boolean showChampion, boolean showItem);
     void delete (Long id);
+    String generateRankedGames();
 
 
 }

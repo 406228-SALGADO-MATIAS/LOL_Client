@@ -31,6 +31,7 @@ import LoL_Client_Back.entities.transaction.UserLootEntity;
 import LoL_Client_Back.models.domain.User;
 import LoL_Client_Back.models.domain.UserMatches;
 import LoL_Client_Back.models.transaction.UserLoot;
+import LoL_Client_Back.repositories.association.UserXIconRepository;
 import LoL_Client_Back.services.interfaces.domain.UserMatchesService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -54,6 +55,8 @@ public class DTOBuilder
     ModelMapper modelMapper;
     @Autowired
     UserMatchesService userMatchesService;
+    @Autowired
+    UserXIconRepository userXIconRepository;
 
     public List<MatchDTO> buildMatchDTOList(List<MatchEntity> matchEntities,
                                              boolean showChampion, boolean showItem) {
@@ -160,6 +163,8 @@ public class DTOBuilder
     public ChampionDTO buildChampionDTO(ChampionEntity c) {
         ChampionDTO dto = customMapper.map(c, ChampionDTO.class);
 
+        dto.setImageUrl(c.getImage());
+
         if (c.getPrice() != null && c.getPrice().getBlueEssenceCost() != null) {
             dto.setBlueEssencePrice(c.getPrice().getBlueEssenceCost());
         }
@@ -227,8 +232,12 @@ public class DTOBuilder
 
         dto.setUser_id(u.getId());
         dto.setNickname(u.getNickname());
-        dto.setRank(u.getRank().getRank());
+        if (u.getRank() != null)
+        {
+            dto.setRank(u.getRank().getRank());
+        }
         dto.setServer(u.getServer().getServer());
+        dto.setIcon(getUserFirstIcon(uM.getUser().getId()));
 
         switch (matchType) {
             case RANKED -> {
@@ -280,6 +289,7 @@ public class DTOBuilder
         dto.setNormalGamesPlayed(matches.getNormalGamesPlayed());
         dto.setRankedsPlayed(matches.getRankedsPlayed());
         dto.setAramsPlayed(matches.getAramsPlayed());
+        dto.setIcon(getUserFirstIcon(user.getId()));
 
         return dto;
     }
@@ -309,6 +319,7 @@ public class DTOBuilder
         dto.setNormalGamesPlayed(userMatches.getNormalGamesPlayed());
         dto.setRankedsPlayed(userMatches.getRankedsPlayed());
         dto.setAramsPlayed(userMatches.getAramsPlayed());
+        dto.setUserIcon(getUserFirstIcon(user.getId()));
 
         return dto;
     }
@@ -519,5 +530,14 @@ public class DTOBuilder
         dto.setSkinsInventory(skinsInventory);
 
         return dto;
+    }
+
+    private String getUserFirstIcon (Long idUser)
+    {
+        List<UserXIconEntity> x =
+                userXIconRepository.findByUser_Id(idUser);
+        if (x.isEmpty())
+            return "";
+        return x.get(0).getIcon().getImage();
     }
 }

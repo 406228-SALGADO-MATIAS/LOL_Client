@@ -112,6 +112,11 @@ public class MatchController
         matchService.delete(id);
         return ResponseEntity.ok("Match with ID " + id + " has been successfully deleted.");
     }
+    @PostMapping("/generate-ranked-games")
+    public ResponseEntity<String> generateRankedGames() {
+        String result = matchService.generateRankedGames();
+        return ResponseEntity.ok(result);
+    }
 
 
 

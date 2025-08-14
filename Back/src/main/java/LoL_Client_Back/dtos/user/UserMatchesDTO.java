@@ -1,6 +1,7 @@
 package LoL_Client_Back.dtos.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,10 +21,11 @@ public class UserMatchesDTO {
     private LocalDateTime registrationDate;
     private String rank = "UNRANKED";
     private String server;
-
     private Long matches_id;
     private Integer normalGamesPlayed = 0;
     private Integer rankedsPlayed = 0;
     private Integer aramsPlayed = 0;
+    @Lob
+    private String userIcon;
 
 }

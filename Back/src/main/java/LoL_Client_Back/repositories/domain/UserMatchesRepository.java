@@ -17,7 +17,7 @@ public interface UserMatchesRepository extends JpaRepository<UserMatchesEntity,L
 
     @Query("""
         SELECT u FROM UserMatchesEntity u
-        WHERE u.rankedWins > 1
+        WHERE u.rankedsPlayed > 0
         AND u.user.server = :server
         ORDER BY u.rankedsPlayed DESC
         """)
@@ -25,7 +25,7 @@ public interface UserMatchesRepository extends JpaRepository<UserMatchesEntity,L
 
     @Query("""
         SELECT u FROM UserMatchesEntity u
-        WHERE u.normalWins > 1
+        WHERE u.normalGamesPlayed >0
         AND u.user.server = :server
         ORDER BY u.normalGamesPlayed DESC
         """)
@@ -33,7 +33,7 @@ public interface UserMatchesRepository extends JpaRepository<UserMatchesEntity,L
 
     @Query("""
         SELECT u FROM UserMatchesEntity u
-        WHERE u.aramWins > 1
+        WHERE u.aramsPlayed > 0
         AND u.user.server = :server
         ORDER BY u.aramsPlayed DESC
         """)

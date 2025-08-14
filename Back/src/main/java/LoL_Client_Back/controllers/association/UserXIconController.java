@@ -60,4 +60,10 @@ public class UserXIconController {
         UserXIconDTO dto = service.updateIconBelonging(idBelonging, idUser, idIcon);
         return ResponseEntity.ok(dto);
     }
+
+    @PostMapping("/give-icons-to-all")
+    public ResponseEntity<String> giveIconsToAllUsers() {
+        String result = service.giveIconsToAllUsers();
+        return ResponseEntity.ok(result);
+    }
 }

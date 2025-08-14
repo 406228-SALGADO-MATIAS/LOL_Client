@@ -17,9 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserXIconServiceImpl implements UserXIconService {
@@ -147,6 +145,38 @@ public class UserXIconServiceImpl implements UserXIconService {
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Did not find icon belonging with id " + idBelonging + " to update");
+    }
+
+    @Override
+    public String giveIconsToAllUsers() {
+        List<UserEntity> users =
+                userRepository.findAll();
+        if (users.isEmpty())
+            throw new ResponseStatusException
+                    (HttpStatus.NOT_FOUND,"There are no users in the database to give icons");
+        List<UserXIconEntity> newBelongings = new ArrayList<>();
+        for (UserEntity user : users)
+        {
+             List<ProfileIconEntity> iconsAvailable =
+                     userXIconRepository.findIconsNotOwnedByUser(user.getId());
+
+            Collections.shuffle(iconsAvailable);
+
+            int count = 0;
+            while (count < 4 && !iconsAvailable.isEmpty()) {
+                ProfileIconEntity selectedIcon = iconsAvailable.remove(0);
+
+                UserXIconEntity belonging = new UserXIconEntity();
+                belonging.setUser(user);
+                belonging.setIcon(selectedIcon);
+                belonging.setAdquisitionDate(LocalDateTime.now());
+
+                newBelongings.add(belonging);
+                count++;
+            }
+        }
+        userXIconRepository.saveAll(newBelongings);
+        return "Successfully added icons to all players ("+ users.size() + ")";
     }
 
     private void verifyExistingRegister(UserEntity user, ProfileIconEntity icon) {

@@ -2,6 +2,7 @@ package LoL_Client_Back.dtos.user;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,8 @@ public class UserLootMatchesDTO {
     private LocalDateTime registrationDate;
     private String rank = "UNRANKED";
     private String server;
+    @Lob
+    private String icon;
 
     private Long loot_id;
     private Integer chests;
