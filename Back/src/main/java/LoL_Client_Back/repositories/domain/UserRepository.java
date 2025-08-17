@@ -21,7 +21,7 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
             "OR (u.server = :server " +
             "AND (u.username = :username OR u.nickname = :nickname))")
 
-    Optional<UserEntity> findExistingUserData(
+    List<UserEntity> findExistingUserData(
             @Param("email") String email,
             @Param("server") ServerRegionEntity server,
             @Param("username") String username,
@@ -29,14 +29,14 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
     );
 
     //unique email
-    Optional<UserEntity> findByEmailIgnoreCase(String email);
+    Optional<UserEntity> findFirstByEmailIgnoreCase(String email);
 
     //similar emails
     List<UserEntity> findByEmailIgnoreCaseContaining(String email);
 
     //specifics
-    Optional<UserEntity> findByUsernameAndServer(String username, ServerRegionEntity server);
-    Optional<UserEntity> findByNicknameIgnoreCaseAndServer(String nickname, ServerRegionEntity server);
+    Optional<UserEntity> findFirstByUsernameAndServer(String username, ServerRegionEntity server);
+    Optional<UserEntity> findFirstByNicknameIgnoreCaseAndServer(String nickname, ServerRegionEntity server);
 
     //nicknames
     List<UserEntity> findByNicknameIgnoreCaseContaining(String nickname);

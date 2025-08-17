@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bienvenido</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f2f5;
+    }
+    .welcome-box {
+        background-color: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        text-align: center;
+        width: 350px;
+    }
+    .welcome-box h1 {
+        margin-bottom: 30px;
+    }
+    .welcome-box button {
+        width: 120px;
+        margin: 10px;
+    }
+</style>
+</head>
+<body>
+
+<div class="welcome-box">
+    <h1>Bienvenido</h1>
+    <p>Selecciona una opción para continuar:</p>
+    <button class="btn btn-primary" onclick="goLogin()">Login</button>
+    <button class="btn btn-secondary" onclick="goCreate()">Create User</button>
+</div>
+
+<script>
+function goLogin() {
+    window.location.href = 'login.html';
+}
+
+function goCreate() {
+    window.location.href = 'register.html';
+}
+</script>
+
+</body>
+</html>

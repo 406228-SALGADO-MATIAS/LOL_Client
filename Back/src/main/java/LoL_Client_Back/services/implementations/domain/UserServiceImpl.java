@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
                 getServerByName(serverName);
 
         //Check existing user data
-        Optional<UserEntity> optionalUserEntity =
+        List <UserEntity> optionalUserEntity =
                 userRepository.findExistingUserData
                         (email, serverRegionEntity, username, nickname);
 
@@ -139,7 +139,7 @@ public class UserServiceImpl implements UserService {
     public UserMatchesDTO findByEmail(String email) {
 
         Optional<UserEntity> optionalUserEntity
-                = userRepository.findByEmailIgnoreCase(email);
+                = userRepository.findFirstByEmailIgnoreCase(email);
 
         if (optionalUserEntity.isPresent())
         {
@@ -537,17 +537,17 @@ public class UserServiceImpl implements UserService {
     private String checkRepeatedUserData(UserDTO userDTO, ServerRegionEntity serverRegion) {
 
 
-        if (userRepository.findByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
+        if (userRepository.findFirstByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
             return "The email ("+userDTO.getEmail()+") does already exist.";
         }
 
-        if (userRepository.findByUsernameAndServer(userDTO.getUsername(), serverRegion).isPresent()) {
+        if (userRepository.findFirstByUsernameAndServer(userDTO.getUsername(), serverRegion).isPresent()) {
             return "The username ("+userDTO.getUsername()+") is currently in use on the server ("+serverRegion.getServer()+")";
         }
 
-        if (userRepository.findByNicknameIgnoreCaseAndServer(userDTO.getNickname(), serverRegion).isPresent())
+        if (userRepository.findFirstByNicknameIgnoreCaseAndServer(userDTO.getNickname(), serverRegion).isPresent())
         {
-            return "The nickanem ("+userDTO.getNickname()+") is currently in use on the server ("+serverRegion.getServer()+")";
+            return "The nickname ("+userDTO.getNickname()+") is currently in use on the server ("+serverRegion.getServer()+")";
         }
 
         return "No repeated data";
