@@ -87,8 +87,8 @@ document.getElementById('createForm').addEventListener('submit', async (e)=>{
             document.getElementById('message').classList.remove('text-danger');
             document.getElementById('message').classList.add('text-success');
 
-            // Redirigir a landing después de 2 seg
-            setTimeout(()=> window.location.href = 'index.html', 2000);
+            // Redirigir a intro después de 2 seg
+            setTimeout(()=> window.location.href = 'intro.html', 2000);
         } else {
             const data = await res.json();
             document.getElementById('message').innerText = data.message || 'Error al registrar usuario';

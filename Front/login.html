@@ -96,6 +96,10 @@
 
         // Mostrar solo un mensaje genérico de éxito
         messageDiv.innerHTML = `<span class="text-success">Login exitoso</span>`;
+        // Redirigir a menu.html después de 1 segundo
+         setTimeout(() => {
+          window.location.href = "menu.html";
+        }, 1000);
 
       } catch (error) {
         console.error(error);

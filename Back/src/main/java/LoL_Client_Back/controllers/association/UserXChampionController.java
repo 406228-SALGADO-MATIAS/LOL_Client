@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("UserXChampion")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserXChampionController {
     @Autowired
     UserXChampionService service;

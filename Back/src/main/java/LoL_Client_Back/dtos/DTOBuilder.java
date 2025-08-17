@@ -354,6 +354,7 @@ public class DTOBuilder
 
         dto.setChampionId(entity.getChampion().getId());
         dto.setChampionName(entity.getChampion().getName());
+        dto.setImage(entity.getChampion().getImage());
 
         return dto;
     }
@@ -373,6 +374,7 @@ public class DTOBuilder
         if (entity.getUser().getRank() != null) {
             dto.setRank(entity.getUser().getRank().getRank());
         }
+        dto.setImage(entity.getIcon().getImage());
 
         return dto;
     }
@@ -409,6 +411,7 @@ public class DTOBuilder
         {
             dto.setRpPrice(entity.getSkin().getTier().getRpCost());
         }
+        dto.setImage(entity.getSkin().getImage());
         return dto;
     }
 
