@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collections</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Navbar grande central */
+      .navbar-custom {
+        background-color: #343a40;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .navbar-custom .nav-item .nav-link {
+        color: #fff;
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin: 0 15px;
+        cursor: pointer;
+      }
+      .navbar-custom .nav-item .nav-link:hover {
+        color: #ff9800;
+      }
+
+      /* Contenedor principal */
+      .content {
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 80px);
+      }
+
+      /* Placeholder de sección */
+      .placeholder {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #343a40;
+      }
+      .btn-filter {
+        width: 100%; /* que ocupe todo el ancho de la columna */
+        padding: 0.8rem; /* más alto que btn-sm */
+        font-size: 1rem; /* un poco más grande */
+        font-weight: 500;
+        border-radius: 6px;
+        margin-bottom: 0.5rem; /* separa los botones */
+        transition: transform 0.2s, background-color 0.2s;
+      }
+
+      .btn-filter:hover {
+        transform: scale(1.05);
+        opacity: 0.85;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar grande central -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+      <!-- Botón volver a menu -->
+      <a class="navbar-brand text-white" href="menu.html">Menu</a>
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Champions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Skins</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Icons</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Items</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Contenido central -->
+    <div class="container-fluid mt-3">
+      <div class="row">
+        <!-- Columna izquierda: menú vertical -->
+        <div
+          class="bg-light p-4"
+          style="height: 100vh; position: sticky; top: 0; width: 13%"
+        >
+          <h5>Filtros / Acciones</h5>
+          <!-- Aquí podés agregar más botones o controles -->
+          <!-- Checkbox Mostrar no obtenidos -->
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="showNotOwned" />
+            <label class="form-check-label" for="showNotOwned">
+              Mostrar no obtenidos
+            </label>
+          </div>
+          <select id="filterSelect" class="form-select">
+            <option value="">-- Seleccionar filtro --</option>
+            <option value="difficulty">Dificultad</option>
+            <option value="role">Rol</option>
+            <option value="role2">Rol Secundario</option>
+            <option value="style">Estilo</option>
+            <option value="style2">Estilo secundario</option>
+          </select>
+        </div>
+
+        <!-- Columna derecha: contenido principal -->
+        <div class="col-md-10">
+          <div id="collectionsContainer">
+            <!-- Aquí se cargan dinámicamente los campeones -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/javascript/championCollections.js"></script>
+  </body>
+</html>
