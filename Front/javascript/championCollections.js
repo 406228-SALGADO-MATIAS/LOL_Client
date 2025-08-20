@@ -83,7 +83,7 @@ function renderChampions() {
   champions.forEach((champ, index) => {
     if (index % 5 === 0) {
       row = document.createElement("div");
-      row.classList.add("row", "mb-4");
+      row.classList.add("row", "mb-2"); // menos espacio entre filas
       collectionsContainer.appendChild(row);
     }
 
@@ -102,7 +102,7 @@ function createChampionCard(champ) {
   const card = document.createElement("div");
   card.classList.add("card", "mb-2");
   card.style.width = "108%";
-  card.style.height = "360px";
+  card.style.height = "340px";
   card.style.overflow = "hidden";
 
   const img = document.createElement("img");
@@ -173,7 +173,7 @@ function renderChampionsByCategory({
     group.forEach((champ, index) => {
       if (index % 5 === 0) {
         row = document.createElement("div");
-        row.classList.add("row", "mb-4");
+        row.classList.add("row", "mb-2"); // menos espacio entre filas
         collectionsContainer.appendChild(row);
       }
       row.appendChild(createChampionCard(champ));
@@ -195,7 +195,7 @@ function renderChampionsByCategory({
       emptyGroup.forEach((champ, index) => {
         if (index % 5 === 0) {
           row = document.createElement("div");
-          row.classList.add("row", "mb-4");
+          row.classList.add("row", "mb-2"); // menos espacio entre filas
           collectionsContainer.appendChild(row);
         }
         row.appendChild(createChampionCard(champ));
