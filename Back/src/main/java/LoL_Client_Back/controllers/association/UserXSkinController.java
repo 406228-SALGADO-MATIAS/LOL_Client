@@ -67,4 +67,10 @@ public class UserXSkinController {
         String result = service.giveSkinsToUsersWithout();
         return ResponseEntity.ok(result);
     }
+    @PostMapping("/unlockSkin")
+    public ResponseEntity<UserXSkinDTO> unlockSkin(@RequestParam Long idUser,
+                                                   @RequestParam Long idSkin) {
+        UserXSkinDTO dto = service.unlockSkin(idUser, idSkin);
+        return ResponseEntity.ok(dto);
+    }
 }

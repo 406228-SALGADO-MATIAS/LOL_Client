@@ -11,6 +11,8 @@ import LoL_Client_Back.repositories.association.UserXChampionRepository;
 import LoL_Client_Back.repositories.domain.ChampionRepository;
 import LoL_Client_Back.repositories.domain.UserRepository;
 import LoL_Client_Back.services.interfaces.assocation.UserXChampionService;
+import jakarta.transaction.Transactional;
+import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -224,6 +226,39 @@ public class UserXChampionServiceImpl implements UserXChampionService {
 
         return "Champions were assigned to " + usersWithoutChampions.size() + " users.";
 
+    }
+
+    @Transactional
+    @Override
+    public UserXChampionDTO unlockChampion(Long idUser, Long idChampion) {
+        UserEntity user = userRepository.findById(idUser)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Did not find user with id " + idUser));
+
+        ChampionEntity champion = championRepository.findById(idChampion)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Did not find champion with id " + idChampion));
+
+        verifyExistingRegister(user, champion);
+
+        int championCost = champion.getPrice().getBlueEssenceCost();
+        int userBlueEssence = user.getBlueEssence();
+
+        if (userBlueEssence < championCost) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "The user does not have enough blue essence to buy this champion");
+        }
+
+        user.setBlueEssence(userBlueEssence - championCost);
+        userRepository.save(user);
+
+        UserXChampionEntity userXChampion = new UserXChampionEntity();
+        userXChampion.setUser(user);
+        userXChampion.setChampion(champion);
+        userXChampion.setMasteryLevel(0);
+        userXChampion.setAdquisitionDate(LocalDateTime.now());
+
+        return dtoBuilder.buildUserXChampionDTO(userXChampionRepository.save(userXChampion));
     }
 
     private ChampionEntity randomFrom(List<ChampionEntity> list, Random random) {

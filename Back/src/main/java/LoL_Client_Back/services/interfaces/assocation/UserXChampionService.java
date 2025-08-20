@@ -16,4 +16,5 @@ public interface UserXChampionService {
     UserXChampionDTO createChampionBelonging(Long idUser,Long idChampion);
     UserXChampionDTO updateChampionBelongiong(Long idBelonging, Long idUser, Long idChampion, Integer masteryLevel);
     String giveChampionsToUsersWithNoChampions();
+    UserXChampionDTO unlockChampion (Long idUser, Long idChampion);
 }

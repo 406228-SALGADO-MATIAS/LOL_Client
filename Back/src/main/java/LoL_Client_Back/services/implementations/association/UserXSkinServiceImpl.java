@@ -13,6 +13,7 @@ import LoL_Client_Back.repositories.domain.SkinRepository;
 import LoL_Client_Back.repositories.domain.UserRepository;
 import LoL_Client_Back.services.interfaces.assocation.UserXChampionService;
 import LoL_Client_Back.services.interfaces.assocation.UserXSkinService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -203,6 +204,42 @@ public class UserXSkinServiceImpl implements UserXSkinService {
         userXSkinRepository.saveAll(newBelongings);
         return "Skins were assigned to " + usersWithoutSkins.size() + " users.";
     }
+
+    @Transactional
+    @Override
+    public UserXSkinDTO unlockSkin(Long idUser, Long idSkin) {
+
+        UserEntity user = userRepository.findById(idUser)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Did not find user with id " + idUser));
+
+        SkinEntity skin = skinRepository.findById(idSkin)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Did not find skin with id " + idSkin));
+
+        verifyChampionBelonging(idUser, skin.getChampion().getId());
+
+        verifyExistingRegister(user, skin);
+
+        Integer skinCost = skin.getTier().getRpCost();
+        Integer userRiotPoints = user.getRiotPoints();
+
+        if (userRiotPoints < skinCost) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "The user does not have enough Riot Points to buy this skin");
+        }
+
+        user.setRiotPoints(userRiotPoints - skinCost);
+        userRepository.save(user);
+
+        UserXSkinEntity userXSkin = new UserXSkinEntity();
+        userXSkin.setUser(user);
+        userXSkin.setSkin(skin);
+        userXSkin.setAdquisitionDate(LocalDateTime.now());
+
+        return dtoBuilder.buildUserXSkinDTO(userXSkinRepository.save(userXSkin));
+    }
+
 
     private void verifyChampionBelonging(Long idUser, Long idChampion) {
         try {

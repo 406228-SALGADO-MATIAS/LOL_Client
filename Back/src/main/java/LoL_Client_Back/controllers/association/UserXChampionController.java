@@ -68,4 +68,12 @@ public class UserXChampionController {
         String result = service.giveChampionsToUsersWithNoChampions();
         return ResponseEntity.ok(result);
     }
+
+    @PostMapping("/unlockChampion")
+    public ResponseEntity<UserXChampionDTO> unlockChampion(@RequestParam Long idUser,
+                                                                    @RequestParam Long idChampion)
+    {
+        UserXChampionDTO dto = service.unlockChampion(idUser, idChampion);
+        return ResponseEntity.ok(dto);
+    }
 }

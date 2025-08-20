@@ -12,7 +12,7 @@ function sortChampionsAlphabetically(champions) {
 }
 
 // Función que carga desde el backend
-async function loadChampions() {
+async function loadChampions(activeFilter = null) {
   collectionsContainer.innerHTML = "";
 
   try {
@@ -23,21 +23,21 @@ async function loadChampions() {
       ),
     ]);
 
-    // si ownedRes falla, lo dejamos como array vacío
     ownedData = ownedRes.ok ? await ownedRes.json() : [];
-
-    // si notOwnedRes falla, sí mostramos error porque siempre debería haber
     if (!notOwnedRes.ok) {
-      collectionsContainer.innerHTML = `<p class="text-center text-danger">Error cargando campeones no poseídos</p>`;
+      collectionsContainer.innerHTML = `<p class="text-center text-danger">Error cargando campeones no adquiridos</p>`;
       return;
     }
-
     notOwnedData = await notOwnedRes.json();
 
-    // 👉 actualizar los contadores
     updateChampionCounters();
 
-    renderChampions(); // primera vez
+    // Aplicamos filtro si se pasó, sino render normal
+    if (activeFilter) {
+      applyFilter(activeFilter);
+    } else {
+      renderChampions();
+    }
   } catch (err) {
     collectionsContainer.innerHTML = `<p class="text-center text-danger">${err.message}</p>`;
   }
@@ -92,6 +92,79 @@ function renderChampions() {
   });
 }
 
+// Modal
+const modal = document.getElementById("championModal");
+const modalImg = document.getElementById("modalImage");
+const closeModal = document.getElementById("modalClose");
+const unlockButton = document.getElementById("unlockButton");
+
+// Función para abrir modal
+function openModal(champ) {
+  modalImg.src = champ.imageUrl;
+
+  const userBE = parseInt(document.getElementById("userBE").textContent, 10);
+
+  // Si ya lo tiene
+  if (champ.owned) {
+    unlockButton.textContent = "DESBLOQUEADO";
+    unlockButton.style.backgroundColor = "#999";
+    unlockButton.style.cursor = "not-allowed";
+    unlockButton.onclick = null; // <- esto asegura que no haga nada
+  }
+  // Si no lo tiene
+  else {
+    // Chequeo de BE
+    if (userBE >= champ.blueEssencePrice) {
+      unlockButton.textContent = `DESBLOQUEAR: BE ${
+        champ.blueEssencePrice || "N/A"
+      }`;
+      unlockButton.style.backgroundColor = "#bf6c00ff";
+      unlockButton.style.cursor = "pointer";
+
+      unlockButton.onclick = async () => {
+        try {
+          const res = await fetch(
+            `http://localhost:8080/UserXChampion/unlockChampion?idUser=${userId}&idChampion=${champ.id}`,
+            { method: "POST" }
+          );
+
+          if (res.ok) {
+            const data = await res.json();
+            alert(`✅ ${champ.name} desbloqueado con éxito!`);
+
+            await loadChampions(document.getElementById("filterSelect").value);
+            await loadUserProfile();
+            modal.style.display = "none";
+          } else {
+            const errText = await res.text();
+            alert(`❌ Error al desbloquear ${champ.name}: ${errText}`);
+          }
+        } catch (err) {
+          alert(`⚠️ Error de red: ${err.message}`);
+        }
+      };
+    } else {
+      // Si no alcanza BE
+      unlockButton.textContent = `NECESITA BE ${champ.blueEssencePrice}`;
+      unlockButton.style.backgroundColor = "#999";
+      unlockButton.style.cursor = "not-allowed";
+      unlockButton.onclick = null;
+    }
+  }
+  applyFilter();
+  modal.style.display = "flex";
+}
+
+// Cerrar modal
+closeModal.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+
+// Click fuera del contenido cierra modal
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) modal.style.display = "none";
+});
+
 // Crea un <div class="col-md-2"> con la tarjeta de un campeón
 function createChampionCard(champ) {
   const col = document.createElement("div");
@@ -125,6 +198,11 @@ function createChampionCard(champ) {
   card.appendChild(img);
   card.appendChild(name);
   col.appendChild(card);
+
+  // Evento click para expandir
+  card.addEventListener("click", () => {
+    openModal(champ); // pasamos el objeto completo
+  });
 
   return col;
 }
@@ -261,8 +339,10 @@ function renderChampionsByBlueEssence() {
 }
 
 // Función central que decide qué renderizar
-function applyFilter() {
-  const activeFilter = document.getElementById("filterSelect").value;
+// Y modificamos applyFilter para poder pasarle el filtro como parámetro
+function applyFilter(filterValue = null) {
+  const activeFilter =
+    filterValue || document.getElementById("filterSelect").value;
 
   if (activeFilter === "difficulty") renderChampionsByDifficulty();
   else if (activeFilter === "role") renderChampionsByRole();
@@ -322,7 +402,6 @@ function getChampionObjectPosition(name) {
   ];
   const veryLargeRight = [
     "Jinx",
-    "Caitlyn",
     "Karma",
     "Shen",
     "Zed",
@@ -332,7 +411,7 @@ function getChampionObjectPosition(name) {
     "Jarvan IV",
     "Tryndamere",
   ];
-  const superRight = ["Fizz", "Braum", "Draven"];
+  const superRight = ["Fizz", "Braum", "Draven", "Caitlyn"];
   const verySmallLeft = ["Kai'Sa", "Mordekaiser", "Ivern"];
 
   if (verySmallRight.includes(name)) position += 7;
@@ -350,15 +429,20 @@ function getChampionObjectPosition(name) {
 document.addEventListener("DOMContentLoaded", loadChampions);
 
 // Checkbox para mostrar campeones no obtenidos
-document.getElementById("showNotOwned").addEventListener("change", applyFilter);
+// Checkbox para mostrar campeones no obtenidos
+document.getElementById("showNotOwned").addEventListener("change", () => {
+  applyFilter(document.getElementById("filterSelect").value);
+});
 
 // Dropdown filtros
-document.getElementById("filterSelect").addEventListener("change", applyFilter);
+document.getElementById("filterSelect").addEventListener("change", (e) => {
+  applyFilter(e.target.value);
+});
 
 // Listener en tiempo real de la busqueda
-document
-  .getElementById("searchChampion")
-  .addEventListener("input", applyFilter);
+document.getElementById("searchChampion").addEventListener("input", () => {
+  applyFilter(document.getElementById("filterSelect").value);
+});
 
 // Si hacés click en el nav Champions → recarga
 document.querySelectorAll(".nav-link").forEach((link) => {

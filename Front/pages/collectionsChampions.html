@@ -9,6 +9,7 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
     <style>
+      /* --- Estilos refactorizados --- */
       body {
         padding-top: 105px;
         background-color: #e2e2e2;
@@ -22,9 +23,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        top: 60px; /* altura del mainNavbar */
+        top: 60px;
         z-index: 1030;
       }
+
       .navbar-custom .nav-item .nav-link {
         color: #fff;
         font-weight: bold;
@@ -32,33 +34,113 @@
         margin: 0 15px;
         cursor: pointer;
       }
+
       .navbar-custom .nav-item .nav-link:hover {
         color: #ff9800;
       }
 
-      /* Contenedor principal */
-      .content {
-        margin-top: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: calc(100vh - 80px);
-        margin-left: 15.5%; /* mismo ancho que la sidebar */
+      /* Sidebar */
+      .sidebar {
+        position: fixed;
+        top: 100px;
+        left: 0;
+        bottom: 0;
+        width: 15.5%;
+        background-color: #cfcfcf;
+        overflow-y: auto;
+        padding: 1rem;
       }
 
-      /* Placeholder de sección */
-      .placeholder {
+      /* Contador de campeones */
+      .counter-box {
+        text-align: center;
+        border: 10px solid #f8f9fa;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .counter-box .number-large {
+        font-size: 3rem;
+        font-weight: bold;
+      }
+
+      .counter-box .number-medium {
         font-size: 2rem;
         font-weight: bold;
-        color: #343a40;
       }
+
+      .counter-box .label {
+        font-size: 0.9rem;
+        color: #666;
+      }
+
+      /* Buscador */
+      .champ-search {
+        width: 100%;
+        max-width: 180px;
+        padding: 0.4rem 0.6rem;
+        border-radius: 0.4rem;
+        border: 1px solid #ccc;
+        font-size: 0.9rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s ease-in-out;
+        display: block;
+        margin-bottom: 1rem;
+      }
+
+      .champ-search:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+      }
+
+      /* Checkbox */
+      .form-check-input {
+        width: 20px;
+        height: 20px;
+        margin-right: 2rem;
+      }
+
+      .form-check-label {
+        font-size: 1rem;
+        cursor: pointer;
+        margin-left: 0.5rem;
+      }
+
+      /* Dropdown */
+      .custom-select {
+        width: 180px;
+        padding: 0.5rem 0.8rem;
+        border-radius: 0.5rem;
+        border: 1px solid #007bff;
+        background-color: #f0f8ff;
+        color: #343a40;
+        font-size: 1rem;
+        font-weight: 500;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        appearance: none;
+        cursor: pointer;
+        display: block;
+        margin: 0 0 1rem 0; /* izquierda alineada, separada abajo */
+        margin-top: 1rem; /* separación del checkbox */
+      }
+
+      /* Main content */
+      .main-content {
+        margin-left: 15.5%;
+        margin-right: 1%;
+        margin-top: -2%;
+      }
+
+      /* Botones de filtro */
       .btn-filter {
-        width: 100%; /* que ocupe todo el ancho de la columna */
-        padding: 0.8rem; /* más alto que btn-sm */
-        font-size: 1rem; /* un poco más grande */
+        width: 100%;
+        padding: 0.8rem;
+        font-size: 1rem;
         font-weight: 500;
         border-radius: 6px;
-        margin-bottom: 0.5rem; /* separa los botones */
+        margin-bottom: 0.5rem;
         transition: transform 0.2s, background-color 0.2s;
       }
 
@@ -67,47 +149,121 @@
         opacity: 0.85;
         cursor: pointer;
       }
-      .champ-search {
-        width: 100%; /* ocupa el ancho disponible de la columna */
-        max-width: 180px; /* límite máximo de ancho */
-        padding: 0.4rem 0.6rem; /* compacto y cómodo */
-        border-radius: 0.4rem;
-        border: 1px solid #ccc;
-        font-size: 0.9rem;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        transition: all 0.2s ease-in-out;
-        display: block; /* que respete el flujo del div */
+
+      /* Placeholder */
+      .placeholder {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #343a40;
       }
 
-      .champ-search:focus {
-        outline: none;
-        border-color: #007bff;
-        box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+      /* Contenedor central */
+      .content {
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 80px);
+        margin-left: 15.5%;
       }
-      .sidebar {
+
+      .modal-overlay {
+        display: none; /* oculto por defecto */
         position: fixed;
-        top: 100px; /* mainNavbar 60 + navbar-custom 45 */
+        top: 0;
         left: 0;
-        bottom: 0;
-        width: 15.5%;
-        background-color: #cfcfcf;
-        overflow-y: auto;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
       }
-      .main-content {
-        margin-left: 15.5%; /* espacio para el sidebar */
-        margin-right: 1%; /* margen derecho simétrico, ajustable */
-        margin-top: -2%;
+
+      .modal-content {
+        position: relative;
+        background-color: #343434;
+        padding: 1rem;
+        border-radius: 8px;
+        text-align: center;
+        max-width: 900px; /* antes 500px, ahora más ancho */
+        width: 90%;
+        max-height: 90%; /* que no sobrepase la pantalla */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden; /* evita scroll feo si la imagen es gigante */
+      }
+
+      .modal-content img {
+        max-width: 100%;
+        max-height: 80vh; /* ocupa hasta 80% del alto de la pantalla */
+        height: auto;
+        border-radius: 6px;
+      }
+
+      /* Botón por defecto (para desbloquear) */
+      #unlockButton {
+        margin-top: 1rem;
+        padding: 0.8rem 1.5rem;
+        font-size: 1.3rem; /* más grande */
+        font-weight: bold; /* negrita */
+        background-color: #ff8c00;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* leve sombra */
+        transition: transform 0.1s ease, opacity 0.2s ease;
+      }
+
+      #unlockButton:hover {
+        opacity: 0.9;
+        transform: scale(1.05); /* pequeño zoom en hover */
+      }
+
+      /* Botón cuando ya está desbloqueado */
+      #unlockButton.disabled {
+        background-color: #999;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+      }
+
+      #modalClose {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.6
+        ); /* fondo oscuro semi-transparente */
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        line-height: 35px; /* para centrar la X verticalmente */
+        border-radius: 50%; /* botón redondo */
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      #modalClose:hover {
+        background-color: rgba(0, 0, 0, 0.85);
       }
     </style>
   </head>
+
   <body>
     <!-- Main Navbar -->
     <div id="navbar-container"></div>
+
     <!-- Segundo navbar -->
-    <nav
-      class="navbar navbar-expand-lg navbar-custom fixed-top"
-      style="top: 60px; z-index: 1030"
-    >
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
       <div
         class="container-fluid d-flex justify-content-between align-items-center"
       >
@@ -124,89 +280,62 @@
     <!-- Contenido central -->
     <div class="container-fluid mt-5">
       <!-- Sidebar fijo -->
-      <div class="sidebar p-4">
+      <div class="sidebar">
         <!-- Contador de campeones -->
-        <div
-          class="mb-4 text-center rounded p-3"
-          style="border: 10px solid #f8f9fa !important"
-        >
-          <div id="counter-total" style="font-size: 3rem; font-weight: bold">
-            0
-          </div>
-          <div style="font-size: 0.9rem; color: #666">TOTAL</div>
+        <div class="counter-box">
+          <div id="counter-total" class="number-large">0</div>
+          <div class="label">TOTAL</div>
           <div class="my-2"></div>
-          <div id="counter-posesion" style="font-size: 2rem; font-weight: bold">
-            0
-          </div>
-          <div style="font-size: 0.9rem; color: #666">POSESIÓN</div>
+          <div id="counter-posesion" class="number-medium">0</div>
+          <div class="label">POSESIÓN</div>
         </div>
 
         <!-- Buscador -->
-        <div class="mb-3 d-flex justify-content-center">
-          <input
-            type="text"
-            class="champ-search"
-            id="searchChampion"
-            placeholder="Buscar campeón..."
-          />
-        </div>
+        <input
+          type="text"
+          class="champ-search"
+          id="searchChampion"
+          placeholder="Buscar campeón..."
+        />
 
         <!-- Checkbox -->
-        <div class="mb-3 d-flex align-items-center px-4">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="showNotOwned"
-            style="width: 20px; height: 20px; margin-right: 2rem"
-          />
-          <label
-            class="form-check-label"
-            for="showNotOwned"
-            style="font-size: 1rem; cursor: pointer; margin-left: 0.5rem"
+        <div class="form-check d-flex align-items-center">
+          <input class="form-check-input" type="checkbox" id="showNotOwned" />
+          <label class="form-check-label" for="showNotOwned"
             >No obtenidos</label
           >
         </div>
 
         <!-- Dropdown -->
-        <div class="mb-3 d-flex justify-content-center">
-          <select
-            id="filterSelect"
-            class="form-select custom-select"
-            style="
-              width: 180px;
-              padding: 0.5rem 0.8rem;
-              border-radius: 0.5rem;
-              border: 1px solid #007bff;
-              background-color: #f0f8ff;
-              color: #343a40;
-              font-size: 1rem;
-              font-weight: 500;
-              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-              appearance: none;
-              cursor: pointer;
-            "
-          >
-            <option value="">Todos</option>
-            <option value="difficulty">Dificultad</option>
-            <option value="role">Rol</option>
-            <option value="role2">Rol Secundario</option>
-            <option value="style">Estilo</option>
-            <option value="style2">Estilo secundario</option>
-            <option value="price">Precio</option>
-          </select>
-        </div>
+        <select id="filterSelect" class="form-select custom-select">
+          <option value="">Todos</option>
+          <option value="difficulty">Dificultad</option>
+          <option value="role">Rol</option>
+          <option value="role2">Rol Secundario</option>
+          <option value="style">Estilo</option>
+          <option value="style2">Estilo secundario</option>
+          <option value="price">Precio</option>
+        </select>
       </div>
 
       <!-- Contenido principal -->
-      <div class="main-content" style="margin-left: 15.5%">
+      <div class="main-content">
         <div id="collectionsContainer">
           <!-- Aquí se cargan dinámicamente los campeones -->
         </div>
       </div>
     </div>
+    <!-- Modal para expansión de campeón -->
+    <div id="championModal" class="modal-overlay">
+      <div class="modal-content">
+        <img id="modalImage" src="" alt="Champion" />
+        <!-- Botón que muestra el precio y la acción -->
+        <button id="unlockButton">DESBLOQUEAR</button>
+        <span id="modalClose">&times;</span>
+      </div>
+    </div>
 
     <script src="/javascript/championCollections.js"></script>
-    <!-- sigue cargando las collections -->
 
     <script>
       fetch("/pages/mainNavbar.html")
@@ -215,7 +344,6 @@
           const container = document.getElementById("navbar-container");
           container.innerHTML = html;
 
-          // Fijar el navbar principal arriba
           const mainNav = container.querySelector("nav");
           mainNav.style.position = "fixed";
           mainNav.style.top = "0";
@@ -223,7 +351,6 @@
           mainNav.style.width = "100%";
           mainNav.style.zIndex = "1040";
 
-          // Cargar el JS del mainNavbar para que inicialice los datos del usuario
           const script = document.createElement("script");
           script.src = "/javascript/mainNavbar.js";
           document.body.appendChild(script);

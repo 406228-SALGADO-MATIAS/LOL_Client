@@ -66,4 +66,10 @@ public class UserXIconController {
         String result = service.giveIconsToAllUsers();
         return ResponseEntity.ok(result);
     }
+    @PostMapping("/unlockIcon")
+    public ResponseEntity<UserXIconDTO> unlockIcon(@RequestParam Long idUser,
+                                                   @RequestParam Long idIcon) {
+        UserXIconDTO dto = service.unlockIcon(idUser, idIcon);
+        return ResponseEntity.ok(dto);
+    }
 }

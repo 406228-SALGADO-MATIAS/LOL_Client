@@ -9,6 +9,7 @@ import LoL_Client_Back.repositories.association.UserXIconRepository;
 import LoL_Client_Back.repositories.domain.UserRepository;
 import LoL_Client_Back.repositories.reference.ProfileIconRepository;
 import LoL_Client_Back.services.interfaces.assocation.UserXIconService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -178,6 +179,40 @@ public class UserXIconServiceImpl implements UserXIconService {
         userXIconRepository.saveAll(newBelongings);
         return "Successfully added icons to all players ("+ users.size() + ")";
     }
+
+    @Transactional
+    @Override
+    public UserXIconDTO unlockIcon(Long idUser, Long idIcon) {
+
+        UserEntity user = userRepository.findById(idUser)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Did not find user with id " + idUser));
+
+        ProfileIconEntity icon = iconRepository.findById(idIcon)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Did not find icon with id " + idIcon));
+
+        verifyExistingRegister(user, icon);
+
+        Integer iconCost = icon.getPrice().getBlueEssenceCost();
+        Integer userBlueEssence = user.getBlueEssence();
+
+        if (userBlueEssence < iconCost) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "The user does not have enough Riot Points to buy this icon");
+        }
+
+        user.setBlueEssence(userBlueEssence - iconCost);
+        userRepository.save(user);
+
+        UserXIconEntity userXIcon = new UserXIconEntity();
+        userXIcon.setUser(user);
+        userXIcon.setIcon(icon);
+        userXIcon.setAdquisitionDate(LocalDateTime.now());
+
+        return dtoBuilder.buildUserXIconDTO(userXIconRepository.save(userXIcon));
+    }
+
 
     private void verifyExistingRegister(UserEntity user, ProfileIconEntity icon) {
         Optional<UserXIconEntity> opt = userXIconRepository.findByUserAndIcon(user, icon);
