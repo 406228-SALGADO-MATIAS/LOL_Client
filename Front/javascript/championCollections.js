@@ -106,11 +106,7 @@ function createChampionCard(champ) {
   card.style.overflow = "hidden";
 
   const img = document.createElement("img");
-  if (champ.name === "Draven") {
-    img.src = "https://drive.google.com/uc?export=view&id=1zJsMCcDjP14pnPDDVyU-CslHM8aEeZmz";
-  } else {
-    img.src = champ.imageUrl;
-  }
+  img.src = champ.imageUrl;
   img.alt = champ.name;
   img.style.width = "108%";
   img.style.height = "360px";
@@ -286,7 +282,6 @@ function getChampionObjectPosition(name) {
 
   const verySmallRight = [
     "Dr. Mundo",
-    "Milio",
     "Rek'Sai",
     "Zilean",
     "Skarner",
@@ -296,11 +291,10 @@ function getChampionObjectPosition(name) {
   const smallRight = [
     "Aatrox",
     "Aurelion Sol",
-    "Hecarim",
     "Renekton",
-    "Urgot",
     "Senna",
     "Twitch",
+    "Milio",
   ];
   const midRight = [
     "Cho'Gath",
@@ -313,6 +307,8 @@ function getChampionObjectPosition(name) {
     "Bardo",
     "Katarina",
     "Renata",
+    "Urgot",
+    "Hecarim",
   ];
   const largeRight = [
     "Graves",
@@ -320,7 +316,6 @@ function getChampionObjectPosition(name) {
     "Fiora",
     "Kha'Zix",
     "Malphite",
-    "Tryndamere",
     "Vladimir",
     "Trundle",
     "Singed",
@@ -335,6 +330,7 @@ function getChampionObjectPosition(name) {
     "Twisted Fate",
     "Vi",
     "Jarvan IV",
+    "Tryndamere",
   ];
   const superRight = ["Fizz", "Braum", "Draven"];
   const verySmallLeft = ["Kai'Sa", "Mordekaiser", "Ivern"];
