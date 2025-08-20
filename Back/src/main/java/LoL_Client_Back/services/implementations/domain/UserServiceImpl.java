@@ -434,6 +434,14 @@ public class UserServiceImpl implements UserService {
         return returnList;
     }
 
+    @Override
+    public UserProfileDTO getUserProfileById(Long id) {
+        Optional<UserEntity> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user with id "+id);
+        return dtoBuilder.buildUserProfileDTO(optionalUser.get());
+    }
+
     private RankTierEntity getRankByName(String rankname)
     {
         Optional<RankTierEntity> optionalRankTier =

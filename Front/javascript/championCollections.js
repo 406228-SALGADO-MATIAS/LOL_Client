@@ -23,13 +23,19 @@ async function loadChampions() {
       ),
     ]);
 
-    if (!ownedRes.ok || !notOwnedRes.ok) {
-      collectionsContainer.innerHTML = `<p class="text-center text-danger">Error cargando campeones</p>`;
+    // si ownedRes falla, lo dejamos como array vacío
+    ownedData = ownedRes.ok ? await ownedRes.json() : [];
+
+    // si notOwnedRes falla, sí mostramos error porque siempre debería haber
+    if (!notOwnedRes.ok) {
+      collectionsContainer.innerHTML = `<p class="text-center text-danger">Error cargando campeones no poseídos</p>`;
       return;
     }
 
-    ownedData = await ownedRes.json();
     notOwnedData = await notOwnedRes.json();
+
+    // 👉 actualizar los contadores
+    updateChampionCounters();
 
     renderChampions(); // primera vez
   } catch (err) {
@@ -37,10 +43,28 @@ async function loadChampions() {
   }
 }
 
+// Función que pisa los valores en el HTML
+function updateChampionCounters() {
+  const total = ownedData.length + notOwnedData.length;
+  const posesion = ownedData.length;
+
+  const totalEl = document.getElementById("counter-total");
+  const posesionEl = document.getElementById("counter-posesion");
+
+  if (totalEl) totalEl.textContent = total;
+  if (posesionEl) posesionEl.textContent = posesion;
+}
+
 // Función que decide qué mostrar
 function renderChampions() {
   collectionsContainer.innerHTML = "";
   const showNotOwned = document.getElementById("showNotOwned").checked;
+
+  //fijarse si tiene algo escrito el filtro por nombre
+  const query = document
+    .getElementById("searchChampion")
+    .value.trim()
+    .toLowerCase();
 
   // Combinamos campeones propios y, si está activo, los no obtenidos
   let champions = [
@@ -48,6 +72,10 @@ function renderChampions() {
     ...(showNotOwned ? notOwnedData.map((c) => ({ ...c, owned: false })) : []),
   ];
 
+  //filtrar por busqueda de nombre
+  if (query) {
+    champions = champions.filter((c) => c.name.toLowerCase().includes(query));
+  }
   // Orden alfabético
   champions = sortChampionsAlphabetically(champions);
 
@@ -78,21 +106,25 @@ function createChampionCard(champ) {
   card.style.overflow = "hidden";
 
   const img = document.createElement("img");
-  img.src = champ.imageUrl;
+  if (champ.name === "Draven") {
+    img.src = "https://drive.google.com/uc?export=view&id=1zJsMCcDjP14pnPDDVyU-CslHM8aEeZmz";
+  } else {
+    img.src = champ.imageUrl;
+  }
   img.alt = champ.name;
   img.style.width = "108%";
   img.style.height = "360px";
   img.style.objectFit = "cover";
-  img.style.objectPosition = "60% center";
+  img.style.objectPosition = getChampionObjectPosition(champ.name);
 
   if (!champ.owned) {
-    img.style.filter = "grayscale(100%)";
-    img.style.opacity = "0.6";
+    img.style.filter = "grayscale(95%)";
+    img.style.opacity = "0.70";
   }
 
   const name = document.createElement("div");
   name.classList.add("card-body", "p-2");
-  name.innerHTML = `<strong>${champ.name}</strong>`;
+  name.innerHTML = `<strong>${champ.name.replace(/´/g, "'")}</strong>`;
 
   card.appendChild(img);
   card.appendChild(name);
@@ -101,34 +133,46 @@ function createChampionCard(champ) {
   return col;
 }
 
-function renderChampionsByDifficulty() {
+function renderChampionsByCategory({
+  attribute,
+  categories,
+  formatTitle,
+  includeEmptyGroup,
+  emptyGroupTitle,
+}) {
   collectionsContainer.innerHTML = "";
   const showNotOwned = document.getElementById("showNotOwned").checked;
 
-  // Creamos la colección completa según checkbox
+  //fijarse si tiene algo escrito el filtro por nombre
+  const query = document
+    .getElementById("searchChampion")
+    .value.trim()
+    .toLowerCase();
+
   let champions = [
     ...ownedData.map((c) => ({ ...c, owned: true })),
     ...(showNotOwned ? notOwnedData.map((c) => ({ ...c, owned: false })) : []),
   ];
 
-  // Agrupamos por dificultad
-  const difficulties = ["Easy", "Medium", "Hard"];
-  difficulties.forEach((diff) => {
-    // Filtramos campeones de esta dificultad
-    let group = champions.filter((c) => c.difficulty === diff);
+  //filtrar por busqueda de nombre
+  if (query) {
+    champions = champions.filter((c) => c.name.toLowerCase().includes(query));
+  }
 
-    // Ordenamos alfabéticamente
+  categories.forEach((cat) => {
+    let group = champions.filter((c) => c[attribute] === cat);
     group = sortChampionsAlphabetically(group);
+    if (!group.length) return;
 
-    if (group.length === 0) return; // Si no hay campeones, saltamos
-
-    // Título del grupo
-    const title = document.createElement("h4");
-    title.textContent = diff;
+    const title = document.createElement("h3");
+    title.textContent = formatTitle ? formatTitle(cat) : cat;
+    title.innerHTML = `<strong>${(formatTitle
+      ? formatTitle(cat)
+      : cat
+    ).toUpperCase()}</strong>`;
     title.classList.add("mt-3");
     collectionsContainer.appendChild(title);
 
-    // Fila de tarjetas
     let row;
     group.forEach((champ, index) => {
       if (index % 5 === 0) {
@@ -136,224 +180,88 @@ function renderChampionsByDifficulty() {
         row.classList.add("row", "mb-4");
         collectionsContainer.appendChild(row);
       }
-
-      // Reutilizamos la función de creación de tarjeta
       row.appendChild(createChampionCard(champ));
     });
+  });
+
+  // Campeones que no tienen ese atributo
+  if (includeEmptyGroup) {
+    let emptyGroup = champions.filter((c) => !c[attribute]);
+    if (emptyGroup.length) {
+      emptyGroup = sortChampionsAlphabetically(emptyGroup);
+
+      const title = document.createElement("h3");
+      title.innerHTML = `<strong>${emptyGroupTitle.toUpperCase()}</strong>`;
+      title.classList.add("mt-3");
+      collectionsContainer.appendChild(title);
+
+      let row;
+      emptyGroup.forEach((champ, index) => {
+        if (index % 5 === 0) {
+          row = document.createElement("div");
+          row.classList.add("row", "mb-4");
+          collectionsContainer.appendChild(row);
+        }
+        row.appendChild(createChampionCard(champ));
+      });
+    }
+  }
+}
+
+function renderChampionsByDifficulty() {
+  renderChampionsByCategory({
+    attribute: "difficulty",
+    categories: ["Easy", "Medium", "Hard"],
   });
 }
 
 function renderChampionsByRole() {
-  collectionsContainer.innerHTML = "";
-  const showNotOwned = document.getElementById("showNotOwned").checked;
-
-  // Creamos la colección completa según checkbox
-  let champions = [
-    ...ownedData.map((c) => ({ ...c, owned: true })),
-    ...(showNotOwned ? notOwnedData.map((c) => ({ ...c, owned: false })) : []),
-  ];
-
-  // Roles en orden que queremos mostrar
-  const roles = ["TOP", "JUNGLE", "MID", "ADC", "SUPPORT"];
-
-  roles.forEach((role) => {
-    // Filtramos campeones por mainRole
-    let group = champions.filter((c) => c.mainRole === role);
-
-    // Ordenamos alfabéticamente
-    group = sortChampionsAlphabetically(group);
-
-    if (group.length === 0) return; // Si no hay campeones en este rol, saltamos
-
-    // Título del grupo
-    const title = document.createElement("h4");
-    title.textContent =
-      role.charAt(0).toUpperCase() + role.slice(1).toLowerCase();
-    title.classList.add("mt-3");
-    collectionsContainer.appendChild(title);
-
-    // Fila de tarjetas
-    let row;
-    group.forEach((champ, index) => {
-      if (index % 5 === 0) {
-        row = document.createElement("div");
-        row.classList.add("row", "mb-4");
-        collectionsContainer.appendChild(row);
-      }
-
-      // Reutilizamos la función de creación de tarjeta
-      row.appendChild(createChampionCard(champ));
-    });
+  renderChampionsByCategory({
+    attribute: "mainRole",
+    categories: ["TOP", "JUNGLE", "MID", "ADC", "SUPPORT"],
+    formatTitle: (role) =>
+      role.charAt(0).toUpperCase() + role.slice(1).toLowerCase(),
   });
 }
 
 function renderChampionsByStyle() {
-  collectionsContainer.innerHTML = "";
-  const showNotOwned = document.getElementById("showNotOwned").checked;
-
-  // Combinamos campeones propios y, si está activo, los no obtenidos
-  let champions = [
-    ...ownedData.map((c) => ({ ...c, owned: true })),
-    ...(showNotOwned ? notOwnedData.map((c) => ({ ...c, owned: false })) : []),
-  ];
-
-  // Orden de estilos que queremos mostrar
-  const styles = ["Fighter", "Marksman", "Mage", "Assassin", "Tank", "Support"];
-
-  styles.forEach((style) => {
-    // Filtramos campeones por style
-    let group = champions.filter((c) => c.style === style);
-
-    // Orden alfabético
-    group = sortChampionsAlphabetically(group);
-
-    if (group.length === 0) return; // Si no hay campeones en este estilo, saltamos
-
-    // Título del grupo con primera letra mayúscula
-    const title = document.createElement("h4");
-    title.textContent =
-      style.charAt(0).toUpperCase() + style.slice(1).toLowerCase();
-    title.classList.add("mt-3");
-    collectionsContainer.appendChild(title);
-
-    // Fila de tarjetas
-    let row;
-    group.forEach((champ, index) => {
-      if (index % 5 === 0) {
-        row = document.createElement("div");
-        row.classList.add("row", "mb-4");
-        collectionsContainer.appendChild(row);
-      }
-
-      // Reutilizamos la función de creación de tarjeta
-      row.appendChild(createChampionCard(champ));
-    });
+  renderChampionsByCategory({
+    attribute: "style",
+    categories: ["Fighter", "Marksman", "Mage", "Assassin", "Tank", "Support"],
+    formatTitle: (style) =>
+      style.charAt(0).toUpperCase() + style.slice(1).toLowerCase(),
   });
 }
 
 function renderChampionsByRole2() {
-  collectionsContainer.innerHTML = "";
-  const showNotOwned = document.getElementById("showNotOwned").checked;
-
-  let champions = [
-    ...ownedData.map((c) => ({ ...c, owned: true })),
-    ...(showNotOwned ? notOwnedData.map((c) => ({ ...c, owned: false })) : []),
-  ];
-
-  // Orden de roles que queremos mostrar
-  const roles = ["TOP", "JUNGLE", "MID", "ADC", "SUPPORT"];
-
-  // Recorremos en orden fijo
-  roles.forEach((role) => {
-    let group = champions
-      .filter((c) => c.sideRole === role)
-      .sort((a, b) => a.name.localeCompare(b.name));
-
-    if (group.length === 0) return;
-
-    const title = document.createElement("h4");
-    title.textContent =
-      role.charAt(0).toUpperCase() + role.slice(1).toLowerCase();
-    title.classList.add("mt-3");
-    collectionsContainer.appendChild(title);
-
-    let row;
-    group.forEach((champ, index) => {
-      if (index % 5 === 0) {
-        row = document.createElement("div");
-        row.classList.add("row", "mb-4");
-        collectionsContainer.appendChild(row);
-      }
-      row.appendChild(createChampionCard(champ));
-    });
+  renderChampionsByCategory({
+    attribute: "sideRole",
+    categories: ["TOP", "JUNGLE", "MID", "ADC", "SUPPORT"],
+    formatTitle: (role) =>
+      role.charAt(0).toUpperCase() + role.slice(1).toLowerCase(),
+    includeEmptyGroup: true,
+    emptyGroupTitle: "Sin rol secundario",
   });
-
-  // Campeones sin sideRole
-  const withoutSideRole = champions
-    .filter((c) => !c.sideRole)
-    .sort((a, b) => a.name.localeCompare(b.name));
-
-  if (withoutSideRole.length > 0) {
-    const title = document.createElement("h4");
-    title.textContent = "SIN ROL SECUNDARIO";
-    title.classList.add("mt-3");
-    collectionsContainer.appendChild(title);
-
-    let row;
-    withoutSideRole.forEach((champ, index) => {
-      if (index % 5 === 0) {
-        row = document.createElement("div");
-        row.classList.add("row", "mb-4");
-        collectionsContainer.appendChild(row);
-      }
-      row.appendChild(createChampionCard(champ));
-    });
-  }
 }
 
 function renderChampionsByStyle2() {
-  collectionsContainer.innerHTML = "";
-  const showNotOwned = document.getElementById("showNotOwned").checked;
-
-  // Combinamos campeones propios y, si está activo, los no obtenidos
-  let champions = [
-    ...ownedData.map((c) => ({ ...c, owned: true })),
-    ...(showNotOwned ? notOwnedData.map((c) => ({ ...c, owned: false })) : []),
-  ];
-
-  // Orden de estilos secundarios que queremos mostrar
-  const styles = ["Fighter", "Marksman", "Mage", "Assassin", "Tank", "Support"];
-
-  // Para cada estilo definido
-  styles.forEach((style) => {
-    // Filtramos campeones por style2
-    let group = champions.filter((c) => c.style2 === style);
-
-    // Orden alfabético
-    group = sortChampionsAlphabetically(group);
-
-    if (group.length === 0) return;
-
-    // Título del grupo
-    const title = document.createElement("h4");
-    title.textContent =
-      style.charAt(0).toUpperCase() + style.slice(1).toLowerCase();
-    title.classList.add("mt-3");
-    collectionsContainer.appendChild(title);
-
-    // Fila de tarjetas
-    let row;
-    group.forEach((champ, index) => {
-      if (index % 5 === 0) {
-        row = document.createElement("div");
-        row.classList.add("row", "mb-4");
-        collectionsContainer.appendChild(row);
-      }
-      row.appendChild(createChampionCard(champ));
-    });
+  renderChampionsByCategory({
+    attribute: "style2",
+    categories: ["Fighter", "Marksman", "Mage", "Assassin", "Tank", "Support"],
+    formatTitle: (style) =>
+      style.charAt(0).toUpperCase() + style.slice(1).toLowerCase(),
+    includeEmptyGroup: true,
+    emptyGroupTitle: "Sin estilo secundario",
   });
-
-  // Grupo especial: sin estilo secundario
-  let noStyleGroup = champions.filter((c) => !c.style2);
-
-  if (noStyleGroup.length > 0) {
-    noStyleGroup = sortChampionsAlphabetically(noStyleGroup);
-
-    const title = document.createElement("h4");
-    title.textContent = "Sin estilo secundario";
-    title.classList.add("mt-3");
-    collectionsContainer.appendChild(title);
-
-    let row;
-    noStyleGroup.forEach((champ, index) => {
-      if (index % 5 === 0) {
-        row = document.createElement("div");
-        row.classList.add("row", "mb-4");
-        collectionsContainer.appendChild(row);
-      }
-      row.appendChild(createChampionCard(champ));
-    });
-  }
+}
+function renderChampionsByBlueEssence() {
+  renderChampionsByCategory({
+    attribute: "blueEssencePrice",
+    categories: [450, 1350, 3150, 4800, 6300, 7800],
+    formatTitle: (price) => `BE: ${price}`, // le ponemos un prefijo para mostrarlo bonito
+    includeEmptyGroup: true,
+    emptyGroupTitle: "Sin precio definido",
+  });
 }
 
 // Función central que decide qué renderizar
@@ -365,7 +273,81 @@ function applyFilter() {
   else if (activeFilter === "style") renderChampionsByStyle();
   else if (activeFilter === "style2") renderChampionsByStyle2();
   else if (activeFilter === "role2") renderChampionsByRole2();
+  else if (activeFilter === "price") renderChampionsByBlueEssence();
   else renderChampions();
+}
+
+function getChampionObjectPosition(name) {
+  // Normalizamos las comillas raras
+  name = name.replace(/´/g, "'");
+
+  // Default
+  let position = 50;
+
+  const verySmallRight = [
+    "Dr. Mundo",
+    "Milio",
+    "Rek'Sai",
+    "Zilean",
+    "Skarner",
+    "Ornn",
+    "Zeri",
+  ];
+  const smallRight = [
+    "Aatrox",
+    "Aurelion Sol",
+    "Hecarim",
+    "Renekton",
+    "Urgot",
+    "Senna",
+    "Twitch",
+  ];
+  const midRight = [
+    "Cho'Gath",
+    "Alistar",
+    "Rengar",
+    "Gragas",
+    "Xerath",
+    "Warwick",
+    "Zac",
+    "Bardo",
+    "Katarina",
+    "Renata",
+  ];
+  const largeRight = [
+    "Graves",
+    "Fizz",
+    "Fiora",
+    "Kha'Zix",
+    "Malphite",
+    "Tryndamere",
+    "Vladimir",
+    "Trundle",
+    "Singed",
+  ];
+  const veryLargeRight = [
+    "Jinx",
+    "Caitlyn",
+    "Karma",
+    "Shen",
+    "Zed",
+    "Lucian",
+    "Twisted Fate",
+    "Vi",
+    "Jarvan IV",
+  ];
+  const superRight = ["Fizz", "Braum", "Draven"];
+  const verySmallLeft = ["Kai'Sa", "Mordekaiser", "Ivern"];
+
+  if (verySmallRight.includes(name)) position += 7;
+  else if (smallRight.includes(name)) position += 15;
+  else if (midRight.includes(name)) position += 22;
+  else if (largeRight.includes(name)) position += 35;
+  else if (veryLargeRight.includes(name)) position += 42;
+  else if (superRight.includes(name)) position += 50;
+  else if (verySmallLeft.includes(name)) position -= 7;
+
+  return `${position}% center`;
 }
 
 // Inicialización
@@ -376,6 +358,11 @@ document.getElementById("showNotOwned").addEventListener("change", applyFilter);
 
 // Dropdown filtros
 document.getElementById("filterSelect").addEventListener("change", applyFilter);
+
+// Listener en tiempo real de la busqueda
+document
+  .getElementById("searchChampion")
+  .addEventListener("input", applyFilter);
 
 // Si hacés click en el nav Champions → recarga
 document.querySelectorAll(".nav-link").forEach((link) => {

@@ -1,70 +1,178 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menu Principal</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    body {
-      background-color: #f5f5f5;
-    }
-    .navbar {
-      padding: 1.5rem; /* Más grande */
-    }
-    .btn-play {
-      background-color: orange;
-      color: white;
-      font-weight: bold;
-      font-size: 1.2rem;
-      padding: 0.6rem 1.5rem;
-      border-radius: 8px;
-      transition: transform 0.2s;
-    }
-    .btn-play:hover {
-      transform: scale(1.05);
-      background-color: darkorange;
-    }
-    .navbar-nav .nav-link {
-      font-size: 1.1rem;
-      font-weight: 500;
-    }
-  </style>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu Principal</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background-color: #f5f5f5;
+      }
+      .navbar {
+        padding: 1.5rem; /* Más grande */
+      }
+      .btn-play {
+        background-color: orange;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2rem;
+        padding: 0.6rem 1.5rem;
+        border-radius: 8px;
+        transition: transform 0.2s;
+      }
+      .btn-play:hover {
+        transform: scale(1.05);
+        background-color: darkorange;
+      }
+      .navbar-nav .nav-link {
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+      <div class="container-fluid">
+        <!-- Botón Play a la izquierda -->
+        <a class="btn btn-play mr-3" href="#">Play</a>
 
-  <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
-    <div class="container-fluid">
-      
-      <!-- Botón Play a la izquierda -->
-      <a class="btn btn-play mr-3" href="#">Play</a>
+        <!-- Perfil en el centro -->
+        <div
+          id="userProfileBox"
+          class="d-flex align-items-center text-white position-absolute"
+          style="left: 50%; transform: translateX(-50%); height: 60px"
+        >
+          <div style="height: 100%; display: flex; align-items: center">
+            <img
+              id="userIcon"
+              src=""
+              alt="Icon"
+              class="rounded"
+              style="
+                height: 80%;
+                min-height: 48px;
+                max-height: 60px;
+                aspect-ratio: 1 / 1;
+                object-fit: contain;
+                margin-right: 0.5rem;
+              "
+            />
+            <div>
+              <div
+                id="userNickname"
+                style="font-size: 1.2rem; font-weight: bold"
+              >
+                NICK
+              </div>
+              <div style="font-size: 0.8rem">
+                BE: <span id="userBE">0</span> &nbsp; | &nbsp; RP:
+                <span id="userRP">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <!-- Menú a la derecha -->
-      <div class="collapse navbar-collapse justify-content-end">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Loot</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/pages/collectionsChampions.html">Collections</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
-          </li>
-          <li class="nav-item">
-          <a class="btn btn-primary ml-3" href="/pages/intro.html">Cerrar Sesión</a>
-        </li>
-        </ul>
+        <!-- Menú a la derecha -->
+        <div class="collapse navbar-collapse justify-content-end">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Loot</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/collectionsChampions.html"
+                >Collections</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a
+                id="logoutBtn"
+                class="btn btn-primary ml-3"
+                href="/pages/intro.html"
+                >Cerrar Sesión</a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
+    </nav>
+
+    <!-- Contenido vacío por ahora -->
+    <div class="container text-center mt-5">
+      <h2>Bienvenido al cliente</h2>
+      <p>Selecciona una opción en el menú para comenzar.</p>
     </div>
-  </nav>
 
-  <!-- Contenido vacío por ahora -->
-  <div class="container text-center mt-5">
-    <h2>Bienvenido al cliente</h2>
-    <p>Selecciona una opción en el menú para comenzar.</p>
-  </div>
+    <script>
+      function checkSession() {
+        const userId = sessionStorage.getItem("userId");
+        if (!userId) {
+          alert("Error: No hay sesión activa. Serás redirigido al login.");
+          window.location.href = "/pages/intro.html";
+        }
+      }
 
-</body>
+      // chequeo normal cuando se carga la página
+      document.addEventListener("DOMContentLoaded", checkSession);
+
+      // chequeo también cuando vuelves con "atrás" desde el navegador
+      window.addEventListener("pageshow", checkSession);
+
+      // cerrar sesión → limpiar storage
+      document.addEventListener("DOMContentLoaded", () => {
+        const logoutBtn = document.getElementById("logoutBtn");
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", () => {
+            sessionStorage.removeItem("userId");
+          });
+        }
+      });
+
+      async function loadUserProfile() {
+        const userId = sessionStorage.getItem("userId");
+        if (!userId) return;
+
+        try {
+          const res = await fetch(
+            `http://localhost:8080/users/getProfileById/${userId}`
+          );
+          if (!res.ok) throw new Error("Error cargando perfil");
+
+          const data = await res.json();
+
+          // setear valores en la cajita
+          document.getElementById("userNickname").textContent =
+            data.nickname || "Sin nick";
+          document.getElementById("userBE").textContent = data.blueEssence ?? 0;
+          document.getElementById("userRP").textContent = data.riotPoints ?? 0;
+
+          // icono
+          const userIcon = document.getElementById("userIcon");
+          if (data.iconImage) {
+            userIcon.src = data.iconImage; // URL directo
+          } else {
+            userIcon.src = "/assets/default-icon.png";
+          }
+
+          // Opcional: forzar dimensiones como en las tarjetas
+          userIcon.style.width = "auto";
+          userIcon.style.height = "80%";
+          userIcon.style.objectFit = "cover";
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      // cargar apenas se abre menu.html
+      window.addEventListener("DOMContentLoaded", loadUserProfile);
+      window.addEventListener("pageshow", loadUserProfile);
+    </script>
+  </body>
 </html>

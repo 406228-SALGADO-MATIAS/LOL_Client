@@ -30,4 +30,5 @@ public interface UserService {
     LoginResponseDTO login (ServerOption serverOption, String username, String password);
     String delete (Long id);
     List<UserLootMatchesDTO> create100ForServer(ServerOption serverOption);
+    UserProfileDTO getUserProfileById (Long id);
 }

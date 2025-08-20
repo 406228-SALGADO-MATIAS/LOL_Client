@@ -18,6 +18,7 @@ import LoL_Client_Back.dtos.skin.SkinDTO;
 import LoL_Client_Back.dtos.user.UserLootMatchesDTO;
 import LoL_Client_Back.dtos.user.UserMatchesDTO;
 import LoL_Client_Back.dtos.user.UserMatchesWinrateDTO;
+import LoL_Client_Back.dtos.user.UserProfileDTO;
 import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.association.UserXIconEntity;
 import LoL_Client_Back.entities.association.UserXSkinEntity;
@@ -542,5 +543,16 @@ public class DTOBuilder
         if (x.isEmpty())
             return "";
         return x.get(0).getIcon().getImage();
+    }
+
+    public UserProfileDTO buildUserProfileDTO (UserEntity userEntity)
+    {
+        UserProfileDTO dto = new UserProfileDTO();
+        dto.setServer(userEntity.getServer().getServer());
+        dto.setBlueEssence(userEntity.getBlueEssence());
+        dto.setIconImage(getUserFirstIcon(userEntity.getId()));
+        dto.setRiotPoints(userEntity.getRiotPoints());
+        dto.setNickname(userEntity.getNickname());
+        return  dto;
     }
 }
