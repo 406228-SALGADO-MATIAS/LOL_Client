@@ -55,39 +55,43 @@ function updateChampionCounters() {
   if (posesionEl) posesionEl.textContent = posesion;
 }
 
-// Función que decide qué mostrar
-function renderChampions() {
-  collectionsContainer.innerHTML = "";
-  const showNotOwned = document.getElementById("showNotOwned").checked;
+function filterByQuery(champions, query) {
+  if (!query) return champions;
+  return champions.filter((c) => c.name.toLowerCase().includes(query));
+}
 
-  //fijarse si tiene algo escrito el filtro por nombre
+function filterByOwnership(ownedData, showNotOwned, notOwnedData) {
+  return [
+    ...ownedData.map((c) => ({ ...c, owned: true })),
+    ...(showNotOwned ? notOwnedData.map((c) => ({ ...c, owned: false })) : []),
+  ];
+}
+
+function getFilteredChampions() {
+  const showNotOwned = document.getElementById("showNotOwned").checked;
   const query = document
     .getElementById("searchChampion")
     .value.trim()
     .toLowerCase();
 
-  // Combinamos campeones propios y, si está activo, los no obtenidos
-  let champions = [
-    ...ownedData.map((c) => ({ ...c, owned: true })),
-    ...(showNotOwned ? notOwnedData.map((c) => ({ ...c, owned: false })) : []),
-  ];
+  let champions = filterByOwnership(ownedData, showNotOwned, notOwnedData);
+  champions = filterByQuery(champions, query);
 
-  //filtrar por busqueda de nombre
-  if (query) {
-    champions = champions.filter((c) => c.name.toLowerCase().includes(query));
-  }
-  // Orden alfabético
-  champions = sortChampionsAlphabetically(champions);
+  return sortChampionsAlphabetically(champions);
+}
+
+// Función que decide qué mostrar
+function renderChampions() {
+  collectionsContainer.innerHTML = "";
+  const champions = getFilteredChampions();
 
   let row;
   champions.forEach((champ, index) => {
     if (index % 5 === 0) {
       row = document.createElement("div");
-      row.classList.add("row", "mb-2"); // menos espacio entre filas
+      row.classList.add("row", "mb-2");
       collectionsContainer.appendChild(row);
     }
-
-    // Reutilizamos la función que crea la tarjeta
     row.appendChild(createChampionCard(champ));
   });
 }
@@ -98,71 +102,73 @@ const modalImg = document.getElementById("modalImage");
 const closeModal = document.getElementById("modalClose");
 const unlockButton = document.getElementById("unlockButton");
 
-// Función para abrir modal
-function openModal(champ) {
-  modalImg.src = champ.imageUrl;
+function showModal() {
+  modal.style.display = "flex";
+}
 
+function hideModal() {
+  modal.style.display = "none";
+}
+
+async function handleUnlock(champ) {
+  try {
+    const res = await fetch(
+      `http://localhost:8080/UserXChampion/unlockChampion?idUser=${userId}&idChampion=${champ.id}`,
+      { method: "POST" }
+    );
+
+    if (res.ok) {
+      await res.json();
+      alert(`✅ ${champ.name} desbloqueado con éxito!`);
+      await loadChampions(document.getElementById("filterSelect").value);
+      await loadUserProfile();
+      hideModal();
+    } else {
+      const errText = await res.text();
+      alert(`❌ Error al desbloquear ${champ.name}: ${errText}`);
+    }
+  } catch (err) {
+    alert(`⚠️ Error de red: ${err.message}`);
+  }
+}
+
+function updateUnlockButton(champ) {
   const userBE = parseInt(document.getElementById("userBE").textContent, 10);
 
-  // Si ya lo tiene
   if (champ.owned) {
     unlockButton.textContent = "DESBLOQUEADO";
     unlockButton.style.backgroundColor = "#999";
     unlockButton.style.cursor = "not-allowed";
-    unlockButton.onclick = null; // <- esto asegura que no haga nada
+    unlockButton.onclick = null;
+  } else if (userBE >= champ.blueEssencePrice) {
+    unlockButton.textContent = `DESBLOQUEAR: BE ${
+      champ.blueEssencePrice || "N/A"
+    }`;
+    unlockButton.style.backgroundColor = "#bf6c00ff";
+    unlockButton.style.cursor = "pointer";
+    unlockButton.onclick = () => handleUnlock(champ);
+  } else {
+    unlockButton.textContent = `NECESITA BE ${champ.blueEssencePrice}`;
+    unlockButton.style.backgroundColor = "#999";
+    unlockButton.style.cursor = "not-allowed";
+    unlockButton.onclick = null;
   }
-  // Si no lo tiene
-  else {
-    // Chequeo de BE
-    if (userBE >= champ.blueEssencePrice) {
-      unlockButton.textContent = `DESBLOQUEAR: BE ${
-        champ.blueEssencePrice || "N/A"
-      }`;
-      unlockButton.style.backgroundColor = "#bf6c00ff";
-      unlockButton.style.cursor = "pointer";
+}
 
-      unlockButton.onclick = async () => {
-        try {
-          const res = await fetch(
-            `http://localhost:8080/UserXChampion/unlockChampion?idUser=${userId}&idChampion=${champ.id}`,
-            { method: "POST" }
-          );
-
-          if (res.ok) {
-            const data = await res.json();
-            alert(`✅ ${champ.name} desbloqueado con éxito!`);
-
-            await loadChampions(document.getElementById("filterSelect").value);
-            await loadUserProfile();
-            modal.style.display = "none";
-          } else {
-            const errText = await res.text();
-            alert(`❌ Error al desbloquear ${champ.name}: ${errText}`);
-          }
-        } catch (err) {
-          alert(`⚠️ Error de red: ${err.message}`);
-        }
-      };
-    } else {
-      // Si no alcanza BE
-      unlockButton.textContent = `NECESITA BE ${champ.blueEssencePrice}`;
-      unlockButton.style.backgroundColor = "#999";
-      unlockButton.style.cursor = "not-allowed";
-      unlockButton.onclick = null;
-    }
-  }
-  applyFilter();
-  modal.style.display = "flex";
+// Función para abrir modal
+function openModal(champ) {
+  modalImg.src = champ.imageUrl;
+  updateUnlockButton(champ);
+  applyFilter(); // refresca la lista si hace falta
+  showModal();
 }
 
 // Cerrar modal
-closeModal.addEventListener("click", () => {
-  modal.style.display = "none";
-});
+closeModal.addEventListener("click", hideModal);
 
 // Click fuera del contenido cierra modal
 modal.addEventListener("click", (e) => {
-  if (e.target === modal) modal.style.display = "none";
+  if (e.target === modal) hideModal();
 });
 
 // Crea un <div class="col-md-2"> con la tarjeta de un campeón
@@ -207,6 +213,18 @@ function createChampionCard(champ) {
   return col;
 }
 
+function appendChampionRows(container, champions, cardsPerRow = 5) {
+  let row;
+  champions.forEach((champ, index) => {
+    if (index % cardsPerRow === 0) {
+      row = document.createElement("div");
+      row.classList.add("row", "mb-2");
+      container.appendChild(row);
+    }
+    row.appendChild(createChampionCard(champ));
+  });
+}
+
 function renderChampionsByCategory({
   attribute,
   categories,
@@ -215,31 +233,14 @@ function renderChampionsByCategory({
   emptyGroupTitle,
 }) {
   collectionsContainer.innerHTML = "";
-  const showNotOwned = document.getElementById("showNotOwned").checked;
+  const champions = getFilteredChampions();
 
-  //fijarse si tiene algo escrito el filtro por nombre
-  const query = document
-    .getElementById("searchChampion")
-    .value.trim()
-    .toLowerCase();
-
-  let champions = [
-    ...ownedData.map((c) => ({ ...c, owned: true })),
-    ...(showNotOwned ? notOwnedData.map((c) => ({ ...c, owned: false })) : []),
-  ];
-
-  //filtrar por busqueda de nombre
-  if (query) {
-    champions = champions.filter((c) => c.name.toLowerCase().includes(query));
-  }
-
+  // Render de cada categoría
   categories.forEach((cat) => {
     let group = champions.filter((c) => c[attribute] === cat);
-    group = sortChampionsAlphabetically(group);
     if (!group.length) return;
 
     const title = document.createElement("h3");
-    title.textContent = formatTitle ? formatTitle(cat) : cat;
     title.innerHTML = `<strong>${(formatTitle
       ? formatTitle(cat)
       : cat
@@ -247,39 +248,29 @@ function renderChampionsByCategory({
     title.classList.add("mt-3");
     collectionsContainer.appendChild(title);
 
-    let row;
-    group.forEach((champ, index) => {
-      if (index % 5 === 0) {
-        row = document.createElement("div");
-        row.classList.add("row", "mb-2"); // menos espacio entre filas
-        collectionsContainer.appendChild(row);
-      }
-      row.appendChild(createChampionCard(champ));
-    });
+    appendChampionRows(collectionsContainer, group); // <- función reutilizada
   });
 
-  // Campeones que no tienen ese atributo
+  // Render del grupo vacío si aplica
   if (includeEmptyGroup) {
     let emptyGroup = champions.filter((c) => !c[attribute]);
     if (emptyGroup.length) {
-      emptyGroup = sortChampionsAlphabetically(emptyGroup);
-
       const title = document.createElement("h3");
       title.innerHTML = `<strong>${emptyGroupTitle.toUpperCase()}</strong>`;
       title.classList.add("mt-3");
       collectionsContainer.appendChild(title);
 
-      let row;
-      emptyGroup.forEach((champ, index) => {
-        if (index % 5 === 0) {
-          row = document.createElement("div");
-          row.classList.add("row", "mb-2"); // menos espacio entre filas
-          collectionsContainer.appendChild(row);
-        }
-        row.appendChild(createChampionCard(champ));
-      });
+      appendChampionRows(collectionsContainer, emptyGroup); // <- función reutilizada
     }
   }
+}
+
+function renderChampionsByOwnership() {
+  renderChampionsByCategory({
+    attribute: "owned",
+    categories: [true, false],
+    formatTitle: (owned) => (owned ? "Adquiridos" : "No adquiridos"),
+  });
 }
 
 function renderChampionsByDifficulty() {
@@ -350,11 +341,14 @@ function applyFilter(filterValue = null) {
   else if (activeFilter === "style2") renderChampionsByStyle2();
   else if (activeFilter === "role2") renderChampionsByRole2();
   else if (activeFilter === "price") renderChampionsByBlueEssence();
+  else if (activeFilter === "ownership") renderChampionsByOwnership();
   else renderChampions();
+  // Mover scroll al top después de renderizar
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function getChampionObjectPosition(name) {
-  // Normalizamos las comillas raras
+  // Normalizamos las comillas
   name = name.replace(/´/g, "'");
 
   // Default
@@ -428,7 +422,6 @@ function getChampionObjectPosition(name) {
 // Inicialización
 document.addEventListener("DOMContentLoaded", loadChampions);
 
-// Checkbox para mostrar campeones no obtenidos
 // Checkbox para mostrar campeones no obtenidos
 document.getElementById("showNotOwned").addEventListener("change", () => {
   applyFilter(document.getElementById("filterSelect").value);

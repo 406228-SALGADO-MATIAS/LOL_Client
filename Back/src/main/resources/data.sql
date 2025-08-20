@@ -69,7 +69,7 @@ INSERT INTO champions VALUES
 (4, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_0.jpg&w=1200&q=75', 'Zac', DATE '2013-03-29', 52.1, 2, 5, 2, 1, 5, 3),
 (5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75', 'Zilean', DATE '2009-04-18', 51.0, 2, 2, 5, 3, 6, 3),
 (6, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_0.jpg&w=1200&q=75', 'Jinx', DATE '2013-10-10', 50.8, 2, 5, 4, NULL, 2, NULL),
-(7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGraves_0.jpg&w=1200&q=75', 'Graves', DATE '2011-10-13', 51.5, 2, 4, 2, 1, 1, NULL),
+(7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGraves_0.jpg&w=1200&q=75', 'Graves', DATE '2011-10-13', 51.5, 2, 4, 2, 1, 1, 4),
 (8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75', 'Karma', DATE '2011-02-01', 49.8, 2, 3, 5, 3, 6, 3),
 (9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75', 'Twitch', DATE '2009-05-01', 50.0, 2, 3, 4, 2, 2, 3),
 (10, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwistedFate_0.jpg&w=1200&q=75', 'Twisted Fate', DATE '2009-02-21', 48.7, 2, 2, 3, 1, 3, 2),
