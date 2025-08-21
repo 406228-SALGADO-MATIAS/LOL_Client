@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("UserXSkin")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserXSkinController {
     @Autowired
     UserXSkinService service;

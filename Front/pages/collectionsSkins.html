@@ -22,7 +22,7 @@
       >
         <a class="navbar-brand text-white" href="menu.html">Volver</a>
         <ul class="navbar-nav mx-auto">
-          <li class="nav-item"><a class="nav-link" href="#">Champions</a></li>
+          <li class="nav-item"><a class="nav-link" href="collectionsChampions.html">Champions</a></li>
           <li class="nav-item"><a class="nav-link" href="collectionsSkins.html">Skins</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Icons</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Items</a></li>
@@ -34,7 +34,7 @@
     <div class="container-fluid mt-5">
       <!-- Sidebar fijo -->
       <div class="sidebar">
-        <!-- Contador de campeones -->
+        <!-- Contador de skins -->
         <div class="counter-box">
           <div id="counter-total" class="number-large">0</div>
           <div class="label">TOTAL</div>
@@ -44,6 +44,12 @@
         </div>
 
         <!-- Buscador -->
+        <input
+          type="text"
+          class="skin-search"
+          id="searchSkin"
+          placeholder="Buscar skin..."
+        />
         <input
           type="text"
           class="champ-search"
@@ -63,12 +69,8 @@
         <select id="filterSelect" class="form-select custom-select">
           <option value="">Todos</option>
           <option value="ownership">Posesión</option>
-          <option value="difficulty">Dificultad</option>
-          <option value="role">Rol</option>
-          <option value="role2">Rol Secundario</option>
-          <option value="style">Estilo</option>
-          <option value="style2">Estilo secundario</option>
-          <option value="price">Precio</option>
+          <option value="tier">Nivel</option>
+          <option value="champion">Campeón</option>
         </select>
       </div>
 
@@ -80,7 +82,7 @@
       </div>
     </div>
     <!-- Modal para expansión de campeón -->
-    <div id="championModal" class="modal-overlay">
+    <div id="skinModal" class="modal-overlay">
       <div class="modal-content">
         <img id="modalImage" src="" alt="Champion" />
         <!-- Botón que muestra el precio y la acción -->
@@ -89,7 +91,7 @@
       </div>
     </div>
 
-    <script src="/javascript/collectionsChampions.js"></script>
+    <script src="/javascript/collectionsSkins.js"></script>
 
     <script>
       fetch("/pages/mainNavbar.html")

@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("UserXIcon")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserXIconController {
     @Autowired
     private UserXIconService service;
