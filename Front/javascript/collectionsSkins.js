@@ -1,6 +1,11 @@
 const collectionsContainer = document.getElementById("collectionsContainer");
 const userId = sessionStorage.getItem("userId");
 
+const modal = document.getElementById("skinModal"); // suponiendo que tenés un modal en el HTML
+const modalImg = document.getElementById("modalImage");
+const closeModal = document.getElementById("modalClose");
+const unlockButton = document.getElementById("unlockButton");
+
 let ownedSkins = [];
 let notOwnedSkins = [];
 
@@ -44,6 +49,24 @@ async function loadSkins(activeFilter = null) {
     }
   } catch (err) {
     collectionsContainer.innerHTML = `<p class="text-center text-danger">${err.message}</p>`;
+  }
+}
+
+let ownedChampions = [];
+
+async function loadUserChampions() {
+  try {
+    const res = await fetch(
+      `http://localhost:8080/champions/userChampions/${userId}`
+    );
+    if (res.ok) {
+      ownedChampions = await res.json();
+    } else {
+      ownedChampions = [];
+    }
+  } catch (err) {
+    console.error("Error cargando campeones del usuario:", err);
+    ownedChampions = [];
   }
 }
 
@@ -140,33 +163,43 @@ function createSkinCard(skin) {
   card.style.width = "108%";
   card.style.height = "340px";
   card.style.overflow = "hidden";
+  card.style.display = "flex";
+  card.style.flexDirection = "column"; // 🟢 Igual que champions, columna flexible
 
-  // Imagen más protagonista
+  // Contenedor para la imagen
+  const imgContainer = document.createElement("div");
+  imgContainer.style.height = "300px"; // 🟢 Mantener proporción mayor
+  imgContainer.style.overflow = "hidden";
+  imgContainer.style.display = "flex";
+  imgContainer.style.alignItems = "center";
+  imgContainer.style.justifyContent = "center";
+
   const img = document.createElement("img");
   img.src = skin.image;
   img.alt = `${skin.name} - ${skin.championName}`;
   img.style.width = "108%";
-  img.style.height = "90%"; // antes 360px, ahora ocupa más espacio
+  img.style.height = "100%"; // 🟢 Ocupa todo el contenedor
   img.style.objectFit = "cover";
+  img.style.objectPosition = getSkinObjectPosition(skin.name); // 🟢 Posición específica
+
+  // Si quieres zoom o posición específica como en campeones
+  // img.style.objectPosition = getSkinObjectPosition(skin.name);
+  // img.style.transform = `scale(${getSkinZoom(skin.name)})`;
 
   if (!skin.owned) {
     img.style.filter = "grayscale(95%)";
     img.style.opacity = "0.7";
   }
 
-  // Contenedor de nombres
-  const name = document.createElement("div");
-  name.classList.add("card-body", "p-0"); // menos padding para que ocupe menos
-  name.style.lineHeight = "0.9"; // reduce separación vertical
-  name.innerHTML = `
-    <strong style="font-size: 1rem;">${skin.championName.replace(
-      /´/g,
-      "'"
-    )}</strong><br>
-    <strong style="font-size: 0.7rem;">${skin.name.replace(/´/g, "'")}</strong>
-  `;
+  imgContainer.appendChild(img);
 
-  card.appendChild(img);
+  // Nombre de la skin
+  const name = document.createElement("div");
+  name.classList.add("card-body", "p-2");
+  name.style.flex = "0 0 32px"; // 🟢 Reducimos el espacio del área blanca
+  name.innerHTML = `<strong>${skin.name.replace(/´/g, "'")}</strong>`;
+
+  card.appendChild(imgContainer);
   card.appendChild(name);
   col.appendChild(card);
 
@@ -174,6 +207,100 @@ function createSkinCard(skin) {
   card.addEventListener("click", () => openModal(skin));
 
   return col;
+}
+
+function getSkinObjectPosition(name) {
+  // Normalizamos las comillas
+  name = name.replace(/´/g, "'");
+
+  // Default
+  let position = 50;
+
+  // +7%
+  const verySmallRight = [
+    "Nurse Akali",
+    "Ashen Lord Aurelion Sol",
+    "Mecha Aurelion Sol",
+    "Astronaut Bard",
+    "Snow Day Bard",
+    "Candy King Ivern",
+  ];
+
+  // +15%
+  const smallRight = ["Arcade Kai'Sa"];
+
+  // +22%
+  const midRight = [
+    "Dragonslayer Braum",
+    "Santa Braum",
+    "Commando Galio",
+    "Gatekeeper Galio",
+    "Hillbilly Gragas",
+    "Elderwood Hecarim",
+    "Battle Cat Jinx",
+    "Warring Kingdoms Jarvan IV",
+    "High Noon Lucian",
+    "Rain Shepherd Milio",
+    "Lord Mordekaiser",
+    "PROJECT: Mordekaiser",
+  ];
+
+  // +35%
+  const largeRight = [
+    "Longhorn Alistar",
+    "Arcane Caitlyn",
+    "Primetime Draven",
+    "Soaring Sword Fiora",
+    "Fisherman Fizz",
+    "Pool Party Graves",
+    "Arcade Hecarim",
+    "Dunkmaster Ivern",
+    "Mecha Kha'Zix"
+  ];
+
+  // +42%
+  const veryLargeRight = [
+    "Mecha Aatrox",
+    "Jurassic Cho'Gath",
+    "Tundra Fizz",
+    "Riot Graves",
+    "Kitty Cat Katarina",
+    "PROJECT Lucian",
+  ];
+
+  // +50%
+  const superRight = [
+    "Gentleman Cho'Gath",
+    "Pool Party Mundo",
+    "Soul Reaver Draven",
+    "Headmistress Fiora",
+    "Gragas, Esq.",
+    "Darkforge Jarvan IV",
+    "Coral Reef Malphite",
+    "Slay Belle Katarina",
+    "Glacial Malphite",
+  ];
+
+  // -7%
+  const verySmallLeft = [
+    "Corporate Mundo",
+    "Odyssey Jinx",
+    "Tranquility Dragon Karma",
+  ];
+
+  //-17%
+  const smallLeft = ["Moo Cow Alistar"];
+
+  if (verySmallRight.includes(name)) position += 7;
+  else if (smallRight.includes(name)) position += 15;
+  else if (midRight.includes(name)) position += 22;
+  else if (largeRight.includes(name)) position += 35;
+  else if (veryLargeRight.includes(name)) position += 42;
+  else if (superRight.includes(name)) position += 50;
+  else if (verySmallLeft.includes(name)) position -= 7;
+  else if (smallLeft.includes(name)) position -= 17;
+
+  return `${position}% center`;
 }
 
 function renderSkinsByCategory({
@@ -253,7 +380,7 @@ function renderSkinsByOwnership() {
     categories: [true, false],
     formatTitle: (owned) => (owned ? "ADQUIRIDOS" : "NO ADQUIRIDOS"),
     includeEmptyGroup: false,
-    ignoreSearch: true, // 🔹 importante
+    ignoreSearch: false, // 🔹 importante
   });
 }
 
@@ -270,7 +397,55 @@ function renderSkinsByRPCost() {
       return `MYTHIC - RP ${rp}`;
     },
     includeEmptyGroup: false,
-    ignoreSearch: true, // 🔹 importante
+    ignoreSearch: false, // 🔹 importante
+  });
+}
+
+// Exclusivo de skins
+function renderSkinsByAvailableness() {
+  collectionsContainer.innerHTML = "";
+
+  const userRP = parseInt(document.getElementById("userRP").textContent, 10);
+  const skins = getFilteredSkins();
+
+  // Definimos las categorías con su lógica
+  const categories = [
+    {
+      title: "ADQUIRED",
+      filter: (skin) => skin.owned,
+    },
+    {
+      title: "OBTAINABLE",
+      filter: (skin) =>
+        !skin.owned &&
+        ownedChampions.some((c) => c.name === skin.championName) &&
+        userRP >= skin.rpCost,
+    },
+    {
+      title: "NEED RP",
+      filter: (skin) =>
+        !skin.owned &&
+        ownedChampions.some((c) => c.name === skin.championName) &&
+        userRP < skin.rpCost,
+    },
+    {
+      title: "NEED CHAMPION",
+      filter: (skin) =>
+        !skin.owned &&
+        !ownedChampions.some((c) => c.name === skin.championName),
+    },
+  ];
+
+  categories.forEach((cat) => {
+    const group = skins.filter(cat.filter);
+    if (!group.length) return;
+
+    const title = document.createElement("h3");
+    title.innerHTML = `<strong>${cat.title}</strong>`;
+    title.classList.add("mt-3");
+    collectionsContainer.appendChild(title);
+
+    appendSkinRows(collectionsContainer, group);
   });
 }
 
@@ -288,6 +463,114 @@ function renderSkinsByChampion() {
   });
 }
 
+async function handleUnlockSkin(skin) {
+  // Guardamos la posición actual
+  const prevScroll = window.scrollY;
+  try {
+    const res = await fetch(
+      `http://localhost:8080/UserXSkin/unlockSkin?idUser=${userId}&idSkin=${skin.id}`,
+      { method: "POST" }
+    );
+
+    if (res.ok) {
+      await res.json();
+      alert(`✅ ${skin.name} desbloqueada con éxito!`);
+      await loadUserProfile(); // 👈 primero actualizamos el RP
+      await loadSkins(document.getElementById("filterSelect").value); // 👈 luego recargamos las skins
+      // asi se actualiza la categoria de skins obtenibles para la compra
+      hideModal();
+
+      // Volvemos a la posición anterior
+      window.scrollTo({ top: prevScroll, behavior: "auto" });
+    } else {
+      const errText = await res.text();
+      alert(`❌ Error al desbloquear ${skin.name}: ${errText}`);
+    }
+  } catch (err) {
+    alert(`⚠️ Error de red: ${err.message}`);
+  }
+}
+
+function updateUnlockButtonSkin(skin, championName) {
+  const userRP = parseInt(document.getElementById("userRP").textContent, 10);
+
+  // Verificar si el usuario tiene el campeón
+  const hasChampion = ownedChampions.some((c) => c.name === championName);
+
+  if (skin.owned) {
+    unlockButton.textContent = "DESBLOQUEADO";
+    unlockButton.style.backgroundColor = "#999";
+    unlockButton.style.cursor = "not-allowed";
+    unlockButton.onclick = null;
+  } else if (!hasChampion) {
+    unlockButton.textContent = "NECESITA EL CAMPEÓN";
+    unlockButton.style.backgroundColor = "#999";
+    unlockButton.style.cursor = "not-allowed";
+    unlockButton.onclick = null;
+  } else if (userRP >= skin.rpCost) {
+    unlockButton.textContent = `DESBLOQUEAR: RP ${skin.rpCost}`;
+    unlockButton.style.backgroundColor = "#bf6c00ff";
+    unlockButton.style.cursor = "pointer";
+    unlockButton.onclick = () => handleUnlockSkin(skin);
+  } else {
+    unlockButton.textContent = `NECESITA RP ${skin.rpCost}`;
+    unlockButton.style.backgroundColor = "#999";
+    unlockButton.style.cursor = "not-allowed";
+    unlockButton.onclick = null;
+  }
+}
+
+function openModal(skin) {
+  modalImg.src = skin.image;
+  updateUnlockButtonSkin(skin, skin.championName); // 👈 le pasamos también el campeón
+
+  showModal();
+}
+
+function showModal() {
+  modal.style.display = "flex"; // o "block", según tu CSS
+}
+
+function hideModal() {
+  modal.style.display = "none";
+}
+
+async function loadUserProfile() {
+  const userId = sessionStorage.getItem("userId");
+  if (!userId) return;
+
+  try {
+    const res = await fetch(
+      `http://localhost:8080/users/getProfileById/${userId}`
+    );
+    if (!res.ok) throw new Error("Error cargando perfil");
+
+    const data = await res.json();
+
+    const nicknameEl = document.getElementById("userNickname");
+    let serverShort = "";
+    if (data.server) {
+      const match = data.server.match(/\(([^)]+)\)/);
+      if (match) serverShort = match[1];
+    }
+
+    nicknameEl.innerHTML = `${
+      data.nickname || "Sin nick"
+    }<span style="font-weight: normal; font-size: 1.3rem">#${serverShort}</span>`;
+
+    document.getElementById("userBE").textContent = data.blueEssence ?? 0;
+    document.getElementById("userRP").textContent = data.riotPoints ?? 0;
+
+    const userIcon = document.getElementById("userIcon");
+    userIcon.src = data.iconImage || "/assets/default-icon.png";
+    userIcon.style.width = "auto";
+    userIcon.style.height = "100%";
+    userIcon.style.objectFit = "cover";
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 function applyFilter(filter) {
   // Scroll arriba al aplicar filtro
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -302,13 +585,19 @@ function applyFilter(filter) {
     case "champion":
       renderSkinsByChampion(); // Falta implementar
       break;
+    case "availableness":
+      renderSkinsByAvailableness(); // ← nuevo filtro
+      break;
     default:
       renderSkins();
   }
 }
 
 // Inicialización al cargar la página
-document.addEventListener("DOMContentLoaded", () => loadSkins());
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadUserChampions(); // 👈 primero traemos campeones
+  await loadSkins(); // 👈 después las skins
+});
 
 // Checkbox “No obtenidas”
 document.getElementById("showNotOwned").addEventListener("change", () => {
@@ -329,11 +618,27 @@ document.getElementById("searchChampion").addEventListener("input", () => {
   applyFilter(document.getElementById("filterSelect").value);
 });
 
+// Cerrar modal con la "X"
+closeModal.addEventListener("click", hideModal);
+
+// Cerrar modal al hacer click afuera del contenido
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) hideModal();
+});
+
 // Click en el nav → recarga de skins si se hace click en “Skins”
 document.querySelectorAll(".nav-link").forEach((link) => {
   link.addEventListener("click", (e) => {
     if (e.target.innerText === "Skins") {
       e.preventDefault();
+
+      // Limpiar filtros
+      document.getElementById("filterSelect").value = "all"; // o el valor por defecto si tenés uno
+      document.getElementById("showNotOwned").checked = false;
+      document.getElementById("searchSkin").value = "";
+      document.getElementById("searchChampion").value = "";
+
+      // Cargar skins sin filtros
       loadSkins();
     }
   });

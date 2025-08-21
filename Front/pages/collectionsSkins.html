@@ -22,8 +22,12 @@
       >
         <a class="navbar-brand text-white" href="menu.html">Volver</a>
         <ul class="navbar-nav mx-auto">
-          <li class="nav-item"><a class="nav-link" href="collectionsChampions.html">Champions</a></li>
-          <li class="nav-item"><a class="nav-link" href="collectionsSkins.html">Skins</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="collectionsChampions.html">Champions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="collectionsSkins.html">Skins</a>
+          </li>
           <li class="nav-item"><a class="nav-link" href="#">Icons</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Items</a></li>
         </ul>
@@ -40,7 +44,7 @@
           <div class="label">TOTAL</div>
           <div class="my-2"></div>
           <div id="counter-posesion" class="number-medium">0</div>
-          <div class="label">POSESIÓN</div>
+          <div class="label">ADQUIRIDOS</div>
         </div>
 
         <!-- Buscador -->
@@ -67,10 +71,12 @@
 
         <!-- Dropdown -->
         <select id="filterSelect" class="form-select custom-select">
-          <option value="">Todos</option>
+          <option value="all">Todos</option>
+          <option value="availableness">Disponibilidad</option>
           <option value="ownership">Posesión</option>
-          <option value="tier">Nivel</option>
+          <option value="tier">Precio</option>
           <option value="champion">Campeón</option>
+          
         </select>
       </div>
 

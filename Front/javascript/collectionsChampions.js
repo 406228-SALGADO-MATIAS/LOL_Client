@@ -55,9 +55,14 @@ function updateChampionCounters() {
   if (posesionEl) posesionEl.textContent = posesion;
 }
 
+function normalize(str) {
+  return str.replace(/´/g, "'").toLowerCase();
+}
+
 function filterByQuery(champions, query) {
   if (!query) return champions;
-  return champions.filter((c) => c.name.toLowerCase().includes(query));
+  const normalizedQuery = normalize(query);
+  return champions.filter((c) => normalize(c.name).includes(normalizedQuery));
 }
 
 function filterByOwnership(ownedData, showNotOwned, notOwnedData) {
@@ -111,6 +116,8 @@ function hideModal() {
 }
 
 async function handleUnlock(champ) {
+  // Guardamos la posición actual
+  const prevScroll = window.scrollY;
   try {
     const res = await fetch(
       `http://localhost:8080/UserXChampion/unlockChampion?idUser=${userId}&idChampion=${champ.id}`,
@@ -123,6 +130,9 @@ async function handleUnlock(champ) {
       await loadChampions(document.getElementById("filterSelect").value);
       await loadUserProfile();
       hideModal();
+
+      // Volvemos a la posición anterior
+      window.scrollTo({ top: prevScroll, behavior: "auto" });
     } else {
       const errText = await res.text();
       alert(`❌ Error al desbloquear ${champ.name}: ${errText}`);
@@ -159,7 +169,7 @@ function updateUnlockButton(champ) {
 function openModal(champ) {
   modalImg.src = champ.imageUrl;
   updateUnlockButton(champ);
-  applyFilter(); // refresca la lista si hace falta
+  // refresca la lista si hace falta
   showModal();
 }
 
@@ -183,31 +193,45 @@ function createChampionCard(champ) {
   card.style.width = "108%";
   card.style.height = "340px";
   card.style.overflow = "hidden";
+  card.style.display = "flex";
+  card.style.flexDirection = "column";
+
+  // Contenedor para la imagen
+  const imgContainer = document.createElement("div");
+  imgContainer.style.height = "300px"; // Más alto, menos margen blanco
+  imgContainer.style.overflow = "hidden";
+  imgContainer.style.display = "flex";
+  imgContainer.style.alignItems = "center";
+  imgContainer.style.justifyContent = "center";
 
   const img = document.createElement("img");
   img.src = champ.imageUrl;
   img.alt = champ.name;
   img.style.width = "108%";
-  img.style.height = "360px";
+  img.style.height = "100%";
   img.style.objectFit = "cover";
   img.style.objectPosition = getChampionObjectPosition(champ.name);
+  img.style.transform = `scale(${getChampionZoom(champ.name)})`;
 
   if (!champ.owned) {
     img.style.filter = "grayscale(95%)";
     img.style.opacity = "0.70";
   }
 
+  imgContainer.appendChild(img);
+
+  // Nombre con menos alto
   const name = document.createElement("div");
   name.classList.add("card-body", "p-2");
+  name.style.flex = "0 0 32px"; // Más chico el área blanca
   name.innerHTML = `<strong>${champ.name.replace(/´/g, "'")}</strong>`;
 
-  card.appendChild(img);
+  card.appendChild(imgContainer);
   card.appendChild(name);
   col.appendChild(card);
 
-  // Evento click para expandir
   card.addEventListener("click", () => {
-    openModal(champ); // pasamos el objeto completo
+    openModal(champ);
   });
 
   return col;
@@ -344,6 +368,7 @@ function applyFilter(filterValue = null) {
   else if (activeFilter === "ownership") renderChampionsByOwnership();
   else renderChampions();
   // Mover scroll al top después de renderizar
+
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -361,10 +386,11 @@ function getChampionObjectPosition(name) {
     "Skarner",
     "Ornn",
     "Zeri",
+    "Aurelion Sol",
   ];
   const smallRight = [
     "Aatrox",
-    "Aurelion Sol",
+    "Urgot",
     "Renekton",
     "Senna",
     "Twitch",
@@ -381,7 +407,6 @@ function getChampionObjectPosition(name) {
     "Bardo",
     "Katarina",
     "Renata",
-    "Urgot",
     "Hecarim",
   ];
   const largeRight = [
@@ -406,7 +431,7 @@ function getChampionObjectPosition(name) {
     "Tryndamere",
   ];
   const superRight = ["Fizz", "Braum", "Draven", "Caitlyn"];
-  const verySmallLeft = ["Kai'Sa", "Mordekaiser", "Ivern"];
+  const verySmallLeft = ["Kai'Sa", "Mordekaiser", "Ivern", "Galio"];
 
   if (verySmallRight.includes(name)) position += 7;
   else if (smallRight.includes(name)) position += 15;
@@ -417,6 +442,48 @@ function getChampionObjectPosition(name) {
   else if (verySmallLeft.includes(name)) position -= 7;
 
   return `${position}% center`;
+}
+
+function getChampionZoom(name) {
+  name = name.replace(/´/g, "'");
+
+  // Valor por defecto
+  let zoom = 1.0;
+
+  // 7
+  const smallZoom = [
+    "Aurelion Sol",
+    "Zilean",
+    "Akali",
+    "Bardo",
+    "Aatrox",
+    "Alistar",
+    "Gragas",
+    "Hecarim",
+    "Shen",
+    "Twitch",
+    "Urgot",
+    "Caitlyn",
+    "Galio",
+    "Jarvan IV",
+    "Kai'Sa",
+  ];
+  //15
+  const mediumZoom = ["Jinx", "Zed", "Braum", "Kha'Zix", "Renata", "Vi"];
+  //25
+  const largeZoom = ["Karma", "Lucian"];
+  //35
+  const veryLargeZoom = [];
+  //50
+  const superZoom = ["Draven"];
+
+  if (smallZoom.includes(name)) zoom = 1.07;
+  else if (mediumZoom.includes(name)) zoom = 1.15;
+  else if (largeZoom.includes(name)) zoom = 1.25;
+  else if (veryLargeZoom.includes(name)) zoom = 1.35;
+  else if (superZoom.includes(name)) zoom = 1.5;
+
+  return zoom;
 }
 
 // Inicialización
@@ -442,6 +509,13 @@ document.querySelectorAll(".nav-link").forEach((link) => {
   link.addEventListener("click", (e) => {
     if (e.target.innerText === "Champions") {
       e.preventDefault();
+
+      // Limpiar filtros
+      document.getElementById("filterSelect").value = "all"; // o "Todos" si tu valor por defecto es ese
+      document.getElementById("showNotOwned").checked = false;
+      document.getElementById("searchChampion").value = "";
+
+      // Cargar campeones sin filtros
       loadChampions();
     }
   });

@@ -536,8 +536,9 @@ public class UserServiceImpl implements UserService {
         userEntity.setPassword(userDTO.getPassword());
         userEntity.setEmail(userDTO.getEmail());
         userEntity.setRegistrationDate(LocalDateTime.now());
-        userEntity.setBlueEssence(6300);
-        userEntity.setRiotPoints(300);
+        // for testing purposes:
+        userEntity.setBlueEssence(18000);
+        userEntity.setRiotPoints(4000);
         userEntity.setServer(server);
         return userEntity;
     }
