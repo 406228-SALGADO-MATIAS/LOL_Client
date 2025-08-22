@@ -23,7 +23,9 @@
         <a class="navbar-brand text-white" href="menu.html">Volver</a>
         <ul class="navbar-nav mx-auto">
           <li class="nav-item"><a class="nav-link" href="#">Champions</a></li>
-          <li class="nav-item"><a class="nav-link" href="collectionsSkins.html">Skins</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="collectionsSkins.html">Skins</a>
+          </li>
           <li class="nav-item"><a class="nav-link" href="#">Icons</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Items</a></li>
         </ul>
@@ -90,6 +92,11 @@
     </div>
 
     <script src="/javascript/collectionsChampions.js"></script>
+    <script src="/components/collectionsChampions/filterChampions.js"></script>
+    <script src="/components/collectionsChampions/imageRepositionChampions.js"></script>
+    <script src="/components/visualsDom/modal.js"></script>
+    <script src="/components/visualsDom/card.js"></script>
+    <script src="/components/collectionsChampions/renderChampions.js"></script>
 
     <script>
       fetch("/pages/mainNavbar.html")
