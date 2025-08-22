@@ -1,10 +1,12 @@
 package LoL_Client_Back.controllers.association;
 
+import LoL_Client_Back.dtos.UpdateStatementDTO;
 import LoL_Client_Back.dtos.association.UserXIconDTO;
 import LoL_Client_Back.services.interfaces.assocation.UserXIconService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -73,4 +75,20 @@ public class UserXIconController {
         UserXIconDTO dto = service.unlockIcon(idUser, idIcon);
         return ResponseEntity.ok(dto);
     }
+
+    @GetMapping(value = "/generateIconUpdates", produces = "text/plain")
+    public ResponseEntity<String> generateIconUpdates() {
+        try {
+            List<UpdateStatementDTO> updates = service.getUpdateUsers();
+            StringBuilder sb = new StringBuilder();
+            for (UpdateStatementDTO dto : updates) {
+                sb.append(dto.getStatement()).append("\n");
+            }
+            return ResponseEntity.ok(sb.toString());
+        } catch (ResponseStatusException ex) {
+            // Devuelve el mensaje de error como texto plano
+            return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
+        }
+    }
+
 }

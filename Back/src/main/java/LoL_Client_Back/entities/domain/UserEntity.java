@@ -1,4 +1,5 @@
 package LoL_Client_Back.entities.domain;
+import LoL_Client_Back.entities.reference.ProfileIconEntity;
 import LoL_Client_Back.entities.reference.RankTierEntity;
 import LoL_Client_Back.entities.reference.ServerRegionEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -36,5 +37,9 @@ public class UserEntity {
     @JoinColumn
     @ManyToOne
     private ServerRegionEntity server;
+    @JoinColumn(nullable = true)
+    @ManyToOne
+    private ProfileIconEntity icon;
+
 
 }

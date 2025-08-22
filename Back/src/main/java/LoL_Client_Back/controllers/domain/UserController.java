@@ -165,6 +165,13 @@ public class UserController {
         return ResponseEntity.ok(userService.create100ForServer(serverOption));
     }
 
+    @PutMapping("/{idUser}/icon/{idIcon}")
+    public ResponseEntity<UserProfileDTO> updateUserIcon(
+            @PathVariable Long idUser,
+            @PathVariable Long idIcon) {
+        UserProfileDTO updatedUser = userService.updateUserIconImage(idUser, idIcon);
+        return ResponseEntity.ok(updatedUser);
+    }
 
 
 

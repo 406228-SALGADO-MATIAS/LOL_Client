@@ -217,7 +217,8 @@ INSERT INTO items VALUES
 
 ALTER TABLE ITEMS ALTER COLUMN ID RESTART WITH 92;
 
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (1, 2800, 'matias.romero@gmail.com', 'Matix', 'pw_matias1', TIMESTAMP '2021-05-10 13:22:00', 520, 'matias.romero', 1, 3),
 (2, 1500, 'luciano.soto@yahoo.com', 'Lucs', 'pw_luciano2', TIMESTAMP '2022-07-08 15:45:20', 0, 'luciano.soto', 1, 3),
 (3, 3200, 'diego.sal@gmail.com', 'Diegorl', 'pw_diego3', TIMESTAMP '2023-03-17 10:05:45', 750, 'diego.salinas', 1, 3),
@@ -252,7 +253,8 @@ INSERT INTO users VALUES
 (32, 3900, 'german.roldan@gmail.com', 'Gerox', 'pw_german2', TIMESTAMP '2022-06-22 16:00:00', 750, 'german.roldan', 4, 3),
 (33, 4300, 'leo.mansilla@gmail.com', 'Leobas', 'pw_leo3', TIMESTAMP '2023-05-13 10:30:00', 400, 'leo.mansilla', 4, 3),
 (34, 3700, 'daniel.q@gmail.com', 'DaniKDA', 'pw_dani4', TIMESTAMP '2022-01-19 09:10:00', 1350, 'daniel.quiroga', 4, 3);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (35, 2900, 'julianrey@gmail.com', 'Julvyn', 'pw_julian5', TIMESTAMP '2020-10-07 20:00:00', 520, 'julian.rey', 4, 3),
 (36, 3200, 'bruno.espinoza@gmail.com', 'Brunex', 'pw_bruno6', TIMESTAMP '2021-11-28 17:45:00', 975, 'bruno.espinoza', 4, 3),
 (37, 4100, 'mauricio.diaz@gmail.com', 'Mauuu', 'pw_mau7', TIMESTAMP '2023-03-02 19:55:10', 0, 'mauricio.diaz', 4, 3),
@@ -287,7 +289,8 @@ INSERT INTO users VALUES
 (66, 5900, 'rodrigo.bustos@gmail.com', 'Rodrixx', 'pw_rodri6', TIMESTAMP '2021-06-28 20:00:00', 400, 'rodrigo.bustos', 7, 3),
 (67, 6300, 'fede.gomez@gmail.com', 'F3de', 'pw_fede7', TIMESTAMP '2022-03-19 11:10:00', 1820, 'federico.gomez', 7, 3),
 (68, 6200, 'maxi.vera@gmail.com', 'MaxV', 'pw_maxi8', TIMESTAMP '2021-09-13 08:50:00', 750, 'maximiliano.vera', 7, 3);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (69, 6100, 'cristian.araya@gmail.com', 'CrisA', 'pw_cris9', TIMESTAMP '2020-10-03 12:30:00', 1350, 'cristian.araya', 7, 3),
 (70, 5800, 'agostina.lopez@gmail.com', 'Agos', 'pw_ago10', TIMESTAMP '2022-01-07 17:45:00', 975, 'agostina.lopez', 7, 3),
 (71, 6700, 'manuel.castro@gmail.com', 'Manucas', 'pw_manu1', TIMESTAMP '2023-03-01 16:20:00', 1820, 'manuel.castro', 8, 3),
@@ -321,7 +324,8 @@ INSERT INTO users VALUES
 (99, 2000, 'esteban.silva@hotmail.com', 'Est3ban', 'pw_esteban19', TIMESTAMP '2020-07-05 21:35:27', 720, 'esteban.silva', NULL, 3),
 (100, 2500, 'rocio.perez@gmail.com', 'Rochi', 'pw_rocio20', TIMESTAMP '2023-05-09 10:10:10', 1100, 'rocio.perez', NULL, 3),
 (101, 4676, 'zhonyaboy@mail.com', 'DeadlyCombo', 'ganknow123', TIMESTAMP '2024-12-28 20:14:23.257564', 1353, 'ClashChad', 1, 2);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+ VALUES
 (102, 4668, 'truedamage@mail.com', 'PeelPro', 'dominionmain', TIMESTAMP '2024-10-28 20:14:23.258563', 1082, 'UltWhiffer', 1, 2),
 (103, 2433, 'teemoslayer@mail.com', 'TankCarry', 'outscale88', TIMESTAMP '2025-04-15 20:14:23.258563', 1936, 'LaneLord', 1, 2),
 (104, 3010, 'petcollector@mail.com', 'HextechAddict', 'league4ever', TIMESTAMP '2025-07-23 20:14:23.258563', 637, 'BaronMaster', 1, 2),
@@ -354,7 +358,7 @@ INSERT INTO users VALUES
 (131, 4576, 'supportcarry@mail.com', 'SpiritWalker', 'outdrafted', TIMESTAMP '2025-04-04 20:14:23.259565', 695, 'MapMute', 4, 2),
 (132, 3661, 'redsmite@mail.com', 'AFKSupport', 'supportcarry', TIMESTAMP '2024-09-30 20:14:23.259565', 967, 'MidGap', 4, 2),
 (133, 4662, 'elderstealer@mail.com', 'SupportMain', 'farmordie', TIMESTAMP '2025-04-22 20:14:23.259565', 695, 'SilenceCaster', 4, 2);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)VALUES
 (134, 3505, 'luluheals@mail.com', 'LastHitGod', 'macroplay', TIMESTAMP '2025-03-17 20:14:23.259565', 775, 'ArcaneBlitz', 4, 2),
 (135, 3055, 'ultwhiffer@mail.com', 'FlameMaster', '1trickpony', TIMESTAMP '2025-08-01 20:14:23.259565', 1000, 'SoloBaron', 4, 2),
 (136, 2471, 'objectiveboi@mail.com', 'LoLGuru', 'riftOP', TIMESTAMP '2024-09-29 20:14:23.259565', 1642, 'MapReader', 4, 2),
@@ -387,7 +391,8 @@ INSERT INTO users VALUES
 (163, 4937, 'csking@mail.com', 'EarlyDominate', 'trollking23', TIMESTAMP '2025-07-09 20:14:23.259565', 680, 'WomboCombo', 7, 2),
 (164, 2779, 'divegod@mail.com', 'ShieldQueen', 'sidelanegod', TIMESTAMP '2025-07-18 20:14:23.259565', 1873, 'BackdoorPro', 7, 2),
 (165, 2763, 'fastrecall@mail.com', 'SmiteStealer', 'pentaReady', TIMESTAMP '2025-02-16 20:14:23.259565', 1627, 'StunTrain', 7, 2);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (166, 3096, 'splitpusher@mail.com', 'CannonStealer', 'qwer1234', TIMESTAMP '2025-07-14 20:14:23.259565', 1941, 'EarlyRoam', 7, 2),
 (167, 3346, 'earlyroam@mail.com', 'CheeseWizard', 'ggezwp', TIMESTAMP '2024-11-17 20:14:23.259565', 1044, 'TeemoSlayer', 7, 2),
 (168, 3193, 'outplaygenius@mail.com', 'BaronCaller', 'matchmakerbad', TIMESTAMP '2024-11-28 20:14:23.259565', 960, 'YasuoMain', 7, 2),
@@ -420,7 +425,8 @@ INSERT INTO users VALUES
 (195, 1955, 'pinkward@mail.com', 'HealsOP', 'qhitbox', TIMESTAMP '2024-09-10 20:14:23.261079', 1730, 'LuluHeals', NULL, 2),
 (196, 2831, 'pentakilljoe@mail.com', 'TeleportChad', 'justoutplayed', TIMESTAMP '2025-01-21 20:14:23.261079', 1719, 'QSpamLord', NULL, 2),
 (197, 3770, 'afkmaster@mail.com', 'SoulHunter', 'wardabuser', TIMESTAMP '2024-11-08 20:14:23.261079', 1963, 'VoidRunner', NULL, 2);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (198, 3375, 'yasumain@mail.com', 'TheSionMain', 'bronze4life', TIMESTAMP '2024-09-09 20:14:23.261079', 1479, 'TurboTank', NULL, 2),
 (199, 2634, 'crimsonblade@mail.com', 'StompMachine', 'intbutcute', TIMESTAMP '2025-05-13 20:14:23.261079', 1815, 'DragonDrake', NULL, 2),
 (200, 1879, 'macrogamer@mail.com', 'JungleSniper', 'carrymeplz', TIMESTAMP '2025-07-26 20:14:23.261079', 1748, 'MetaBreaker', NULL, 2),
@@ -453,7 +459,8 @@ INSERT INTO users VALUES
 (227, 4291, 'csking@mail.com', 'NextGenADC', 'matchmakerbad', TIMESTAMP '2025-03-30 20:14:33.584148', 1700, 'PentakillJoe', 3, 4),
 (228, 4926, 'lategamecarry@mail.com', 'DiveMePls', 'pentaReady', TIMESTAMP '2024-10-04 20:14:33.584148', 1110, 'SoloBaron', 3, 4),
 (229, 2568, 'xpthief@mail.com', 'EarlyDominate', 'boostedape', TIMESTAMP '2025-03-11 20:14:33.584148', 1244, 'TiltProof', 3, 4);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (230, 3334, 'elderstealer@mail.com', 'TheZedHead', 'dontintme', TIMESTAMP '2025-05-01 20:14:33.584148', 1105, 'DodgeMaster', 3, 4),
 (231, 3217, 'skillshothit@mail.com', 'ChampMaster', 'ganknow123', TIMESTAMP '2025-03-28 20:14:33.584148', 764, 'MetaBreaker', 4, 4),
 (232, 3785, 'threshhook@mail.com', 'DeadlyCombo', 'goldlead', TIMESTAMP '2025-03-28 20:14:33.584148', 849, 'ThreshHook', 4, 4),
@@ -486,7 +493,8 @@ INSERT INTO users VALUES
 (259, 1225, 'quickgank@mail.com', 'BanMeZed', 'macroplay', TIMESTAMP '2024-09-30 20:14:33.584148', 1272, 'BlueSmite', 6, 4),
 (260, 1086, 'honor4life@mail.com', 'FakerClone', 'password987', TIMESTAMP '2025-02-21 20:14:33.584148', 1297, 'EarlyRoam', 6, 4),
 (261, 2855, 'sneakyfox@mail.com', 'SkillZoner', 'ggnoob', TIMESTAMP '2024-12-14 20:14:33.584148', 1359, 'MapMute', 7, 4);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (262, 3968, 'intdetector@mail.com', 'AFKSupport', 'rankreset', TIMESTAMP '2025-02-20 20:14:33.584148', 991, 'ElderCaller', 7, 4),
 (263, 1192, 'smitemachine@mail.com', 'StompMachine', 'bronze4life', TIMESTAMP '2025-05-08 20:14:33.584148', 1650, 'ClutchSaver', 7, 4),
 (264, 2975, 'mapmute@mail.com', 'YuumiOnTop', 'pass123', TIMESTAMP '2024-12-06 20:14:33.584148', 1603, 'SplitPusher', 7, 4),
@@ -519,7 +527,8 @@ INSERT INTO users VALUES
 (291, 3372, 'divegod@mail.com', 'ClutchFiddles', 'blueessence', TIMESTAMP '2025-05-04 20:14:33.584148', 963, 'ZhonyaBoy', NULL, 4),
 (292, 2718, 'ultwhiffer@mail.com', 'SoloQStar', 'carrymeplz', TIMESTAMP '2025-03-27 20:14:33.584148', 1134, 'MapReader', NULL, 4),
 (293, 1445, 'objectiveboi@mail.com', 'AutoCrit', 'goldrush', TIMESTAMP '2025-08-04 20:14:33.584148', 1208, 'FastRecall', NULL, 4);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (294, 2333, 'ghostchaser@mail.com', 'SupportMain', 'wardpls13', TIMESTAMP '2024-10-25 20:14:33.584148', 1519, 'SkillshotHit', NULL, 4),
 (295, 3751, 'stuntrain@mail.com', 'CarryLord', 'newmeta23', TIMESTAMP '2025-08-06 20:14:33.584148', 1457, 'ArcaneBlitz', NULL, 4),
 (296, 2631, 'exodiateam@mail.com', 'GhostedMid', 'intbutcute', TIMESTAMP '2025-05-16 20:14:33.584148', 532, 'CSKing', NULL, 4),
@@ -552,7 +561,8 @@ INSERT INTO users VALUES
 (323, 3581, 'goldfunnel@mail.com', 'PeelPro', 'elotilt', TIMESTAMP '2024-11-12 20:14:41.208685', 878, 'MacroGamer', 3, 1),
 (324, 3144, 'divegod@mail.com', 'JungleSniper', 'redsmite22', TIMESTAMP '2024-11-11 20:14:41.208685', 812, 'LuluHeals', 3, 1),
 (325, 4727, 'voidlingspam@mail.com', 'PassiveBeast', 'xpeke2025', TIMESTAMP '2025-06-29 20:14:41.208685', 1612, 'ZhonyaBoy', 3, 1);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (326, 2976, 'elderstealer@mail.com', 'ADC4Life', 'ffplz', TIMESTAMP '2024-10-30 20:14:41.208685', 1147, 'BlueSmite', 3, 1),
 (327, 3407, 'eldercaller@mail.com', 'AramOnly', 'clutchking', TIMESTAMP '2025-01-27 20:14:41.208685', 1919, 'LoLFiesta', 3, 1),
 (328, 1198, 'ffvoteno@mail.com', 'OutscaleChamp', 'luxqhit', TIMESTAMP '2024-12-26 20:14:41.208685', 1094, 'BlueNexus', 3, 1),
@@ -585,7 +595,8 @@ INSERT INTO users VALUES
 (355, 4308, 'riftwalker@mail.com', 'DeadlyCombo', 'rankgod99', TIMESTAMP '2024-10-30 20:14:41.208685', 1556, 'StunTrain', 6, 1),
 (356, 4526, 'unkillable@mail.com', 'WavePunisher', 'supportcarry', TIMESTAMP '2024-08-28 20:14:41.208685', 1589, 'SoloBaron', 6, 1),
 (357, 1983, 'oldrunesguy@mail.com', 'OPShaco', 'shadowLOL', TIMESTAMP '2025-01-03 20:14:41.208685', 1032, 'BackdoorPro', 6, 1);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (358, 4699, 'roamingwolf@mail.com', 'SnowballSolo', 'goldlead', TIMESTAMP '2024-11-30 20:14:41.208685', 1357, 'ThreshHook', 6, 1),
 (359, 3104, 'truedamage@mail.com', 'SpiritWalker', 'griefgamer', TIMESTAMP '2024-12-22 20:14:41.208685', 583, 'QSpamLord', 6, 1),
 (360, 1085, 'cooldownking@mail.com', 'UltForStyle', 'drake123', TIMESTAMP '2024-08-22 20:14:41.208685', 1566, 'CSKing', 6, 1),
@@ -618,7 +629,8 @@ INSERT INTO users VALUES
 (387, 3608, 'macrogamer@mail.com', 'MetaGhost', 'hunter2', TIMESTAMP '2025-01-26 20:14:41.208685', 894, 'OutplayGenius', 9, 1),
 (388, 1071, 'lanerlost@mail.com', 'DiveMePls', 'safefarm', TIMESTAMP '2024-10-29 20:14:41.208685', 1936, 'GarenSmash', 9, 1),
 (389, 3772, 'outplaygenius@mail.com', 'TheSionMain', 'inhibdance', TIMESTAMP '2025-03-30 20:14:41.208685', 785, 'RiftWalker', 9, 1);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (390, 2205, 'crimsonblade@mail.com', 'JukeMachine', 'goredrinker', TIMESTAMP '2025-05-02 20:14:41.208685', 879, 'ExodiaTeam', 9, 1),
 (391, 1816, 'yasumain@mail.com', 'HealsOP', 'pentaReady', TIMESTAMP '2025-03-25 20:14:41.208685', 1609, 'WomboCombo', NULL, 1),
 (392, 2296, 'arcaneblitz@mail.com', 'BanMeZed', 'kill2win', TIMESTAMP '2025-02-12 20:14:41.208685', 1712, 'ZedTheDead', NULL, 1),
@@ -14989,3 +15001,404 @@ INSERT INTO user_matches VALUES
 (400, 0, 0, 0, 0, 2, 4, 400);
 
 ALTER TABLE USER_MATCHES ALTER COLUMN ID RESTART WITH 401;
+
+UPDATE users SET icon_id = 1 WHERE id = 1;
+UPDATE users SET icon_id = 3 WHERE id = 2;
+UPDATE users SET icon_id = 5 WHERE id = 3;
+UPDATE users SET icon_id = 7 WHERE id = 4;
+UPDATE users SET icon_id = 9 WHERE id = 5;
+UPDATE users SET icon_id = 11 WHERE id = 6;
+UPDATE users SET icon_id = 13 WHERE id = 7;
+UPDATE users SET icon_id = 15 WHERE id = 8;
+UPDATE users SET icon_id = 17 WHERE id = 9;
+UPDATE users SET icon_id = 19 WHERE id = 10;
+UPDATE users SET icon_id = 44 WHERE id = 11;
+UPDATE users SET icon_id = 13 WHERE id = 12;
+UPDATE users SET icon_id = 3 WHERE id = 13;
+UPDATE users SET icon_id = 42 WHERE id = 14;
+UPDATE users SET icon_id = 31 WHERE id = 15;
+UPDATE users SET icon_id = 7 WHERE id = 16;
+UPDATE users SET icon_id = 1 WHERE id = 17;
+UPDATE users SET icon_id = 46 WHERE id = 18;
+UPDATE users SET icon_id = 31 WHERE id = 19;
+UPDATE users SET icon_id = 21 WHERE id = 20;
+UPDATE users SET icon_id = 15 WHERE id = 21;
+UPDATE users SET icon_id = 41 WHERE id = 22;
+UPDATE users SET icon_id = 44 WHERE id = 23;
+UPDATE users SET icon_id = 33 WHERE id = 24;
+UPDATE users SET icon_id = 28 WHERE id = 25;
+UPDATE users SET icon_id = 14 WHERE id = 26;
+UPDATE users SET icon_id = 11 WHERE id = 27;
+UPDATE users SET icon_id = 23 WHERE id = 28;
+UPDATE users SET icon_id = 28 WHERE id = 29;
+UPDATE users SET icon_id = 34 WHERE id = 30;
+UPDATE users SET icon_id = 49 WHERE id = 31;
+UPDATE users SET icon_id = 41 WHERE id = 32;
+UPDATE users SET icon_id = 16 WHERE id = 33;
+UPDATE users SET icon_id = 48 WHERE id = 34;
+UPDATE users SET icon_id = 4 WHERE id = 35;
+UPDATE users SET icon_id = 14 WHERE id = 36;
+UPDATE users SET icon_id = 48 WHERE id = 37;
+UPDATE users SET icon_id = 39 WHERE id = 38;
+UPDATE users SET icon_id = 35 WHERE id = 39;
+UPDATE users SET icon_id = 1 WHERE id = 40;
+UPDATE users SET icon_id = 10 WHERE id = 41;
+UPDATE users SET icon_id = 28 WHERE id = 42;
+UPDATE users SET icon_id = 22 WHERE id = 43;
+UPDATE users SET icon_id = 18 WHERE id = 44;
+UPDATE users SET icon_id = 8 WHERE id = 45;
+UPDATE users SET icon_id = 35 WHERE id = 46;
+UPDATE users SET icon_id = 4 WHERE id = 47;
+UPDATE users SET icon_id = 48 WHERE id = 48;
+UPDATE users SET icon_id = 9 WHERE id = 49;
+UPDATE users SET icon_id = 48 WHERE id = 50;
+UPDATE users SET icon_id = 32 WHERE id = 51;
+UPDATE users SET icon_id = 44 WHERE id = 52;
+UPDATE users SET icon_id = 15 WHERE id = 53;
+UPDATE users SET icon_id = 22 WHERE id = 54;
+UPDATE users SET icon_id = 33 WHERE id = 55;
+UPDATE users SET icon_id = 26 WHERE id = 56;
+UPDATE users SET icon_id = 4 WHERE id = 57;
+UPDATE users SET icon_id = 48 WHERE id = 58;
+UPDATE users SET icon_id = 38 WHERE id = 59;
+UPDATE users SET icon_id = 26 WHERE id = 60;
+UPDATE users SET icon_id = 8 WHERE id = 61;
+UPDATE users SET icon_id = 13 WHERE id = 62;
+UPDATE users SET icon_id = 3 WHERE id = 63;
+UPDATE users SET icon_id = 49 WHERE id = 64;
+UPDATE users SET icon_id = 15 WHERE id = 65;
+UPDATE users SET icon_id = 4 WHERE id = 66;
+UPDATE users SET icon_id = 46 WHERE id = 67;
+UPDATE users SET icon_id = 9 WHERE id = 68;
+UPDATE users SET icon_id = 23 WHERE id = 69;
+UPDATE users SET icon_id = 42 WHERE id = 70;
+UPDATE users SET icon_id = 28 WHERE id = 71;
+UPDATE users SET icon_id = 10 WHERE id = 72;
+UPDATE users SET icon_id = 26 WHERE id = 73;
+UPDATE users SET icon_id = 43 WHERE id = 74;
+UPDATE users SET icon_id = 12 WHERE id = 75;
+UPDATE users SET icon_id = 6 WHERE id = 76;
+UPDATE users SET icon_id = 5 WHERE id = 77;
+UPDATE users SET icon_id = 46 WHERE id = 78;
+UPDATE users SET icon_id = 40 WHERE id = 79;
+UPDATE users SET icon_id = 39 WHERE id = 80;
+UPDATE users SET icon_id = 38 WHERE id = 81;
+UPDATE users SET icon_id = 47 WHERE id = 82;
+UPDATE users SET icon_id = 6 WHERE id = 83;
+UPDATE users SET icon_id = 7 WHERE id = 84;
+UPDATE users SET icon_id = 21 WHERE id = 85;
+UPDATE users SET icon_id = 49 WHERE id = 86;
+UPDATE users SET icon_id = 42 WHERE id = 87;
+UPDATE users SET icon_id = 44 WHERE id = 88;
+UPDATE users SET icon_id = 41 WHERE id = 89;
+UPDATE users SET icon_id = 49 WHERE id = 90;
+UPDATE users SET icon_id = 10 WHERE id = 91;
+UPDATE users SET icon_id = 27 WHERE id = 92;
+UPDATE users SET icon_id = 44 WHERE id = 93;
+UPDATE users SET icon_id = 14 WHERE id = 94;
+UPDATE users SET icon_id = 18 WHERE id = 95;
+UPDATE users SET icon_id = 41 WHERE id = 96;
+UPDATE users SET icon_id = 25 WHERE id = 97;
+UPDATE users SET icon_id = 18 WHERE id = 98;
+UPDATE users SET icon_id = 6 WHERE id = 99;
+UPDATE users SET icon_id = 7 WHERE id = 100;
+UPDATE users SET icon_id = 9 WHERE id = 101;
+UPDATE users SET icon_id = 25 WHERE id = 102;
+UPDATE users SET icon_id = 48 WHERE id = 103;
+UPDATE users SET icon_id = 40 WHERE id = 104;
+UPDATE users SET icon_id = 23 WHERE id = 105;
+UPDATE users SET icon_id = 25 WHERE id = 106;
+UPDATE users SET icon_id = 5 WHERE id = 107;
+UPDATE users SET icon_id = 27 WHERE id = 108;
+UPDATE users SET icon_id = 26 WHERE id = 109;
+UPDATE users SET icon_id = 48 WHERE id = 110;
+UPDATE users SET icon_id = 42 WHERE id = 111;
+UPDATE users SET icon_id = 28 WHERE id = 112;
+UPDATE users SET icon_id = 38 WHERE id = 113;
+UPDATE users SET icon_id = 28 WHERE id = 114;
+UPDATE users SET icon_id = 14 WHERE id = 115;
+UPDATE users SET icon_id = 25 WHERE id = 116;
+UPDATE users SET icon_id = 35 WHERE id = 117;
+UPDATE users SET icon_id = 14 WHERE id = 118;
+UPDATE users SET icon_id = 26 WHERE id = 119;
+UPDATE users SET icon_id = 44 WHERE id = 120;
+UPDATE users SET icon_id = 24 WHERE id = 121;
+UPDATE users SET icon_id = 39 WHERE id = 122;
+UPDATE users SET icon_id = 12 WHERE id = 123;
+UPDATE users SET icon_id = 43 WHERE id = 124;
+UPDATE users SET icon_id = 46 WHERE id = 125;
+UPDATE users SET icon_id = 20 WHERE id = 126;
+UPDATE users SET icon_id = 17 WHERE id = 127;
+UPDATE users SET icon_id = 1 WHERE id = 128;
+UPDATE users SET icon_id = 33 WHERE id = 129;
+UPDATE users SET icon_id = 36 WHERE id = 130;
+UPDATE users SET icon_id = 14 WHERE id = 131;
+UPDATE users SET icon_id = 24 WHERE id = 132;
+UPDATE users SET icon_id = 15 WHERE id = 133;
+UPDATE users SET icon_id = 4 WHERE id = 134;
+UPDATE users SET icon_id = 3 WHERE id = 135;
+UPDATE users SET icon_id = 45 WHERE id = 136;
+UPDATE users SET icon_id = 38 WHERE id = 137;
+UPDATE users SET icon_id = 41 WHERE id = 138;
+UPDATE users SET icon_id = 33 WHERE id = 139;
+UPDATE users SET icon_id = 42 WHERE id = 140;
+UPDATE users SET icon_id = 7 WHERE id = 141;
+UPDATE users SET icon_id = 28 WHERE id = 142;
+UPDATE users SET icon_id = 11 WHERE id = 143;
+UPDATE users SET icon_id = 49 WHERE id = 144;
+UPDATE users SET icon_id = 45 WHERE id = 145;
+UPDATE users SET icon_id = 36 WHERE id = 146;
+UPDATE users SET icon_id = 16 WHERE id = 147;
+UPDATE users SET icon_id = 27 WHERE id = 148;
+UPDATE users SET icon_id = 27 WHERE id = 149;
+UPDATE users SET icon_id = 39 WHERE id = 150;
+UPDATE users SET icon_id = 21 WHERE id = 151;
+UPDATE users SET icon_id = 43 WHERE id = 152;
+UPDATE users SET icon_id = 7 WHERE id = 153;
+UPDATE users SET icon_id = 14 WHERE id = 154;
+UPDATE users SET icon_id = 19 WHERE id = 155;
+UPDATE users SET icon_id = 5 WHERE id = 156;
+UPDATE users SET icon_id = 14 WHERE id = 157;
+UPDATE users SET icon_id = 9 WHERE id = 158;
+UPDATE users SET icon_id = 2 WHERE id = 159;
+UPDATE users SET icon_id = 18 WHERE id = 160;
+UPDATE users SET icon_id = 9 WHERE id = 161;
+UPDATE users SET icon_id = 43 WHERE id = 162;
+UPDATE users SET icon_id = 24 WHERE id = 163;
+UPDATE users SET icon_id = 21 WHERE id = 164;
+UPDATE users SET icon_id = 33 WHERE id = 165;
+UPDATE users SET icon_id = 21 WHERE id = 166;
+UPDATE users SET icon_id = 38 WHERE id = 167;
+UPDATE users SET icon_id = 42 WHERE id = 168;
+UPDATE users SET icon_id = 47 WHERE id = 169;
+UPDATE users SET icon_id = 45 WHERE id = 170;
+UPDATE users SET icon_id = 50 WHERE id = 171;
+UPDATE users SET icon_id = 9 WHERE id = 172;
+UPDATE users SET icon_id = 35 WHERE id = 173;
+UPDATE users SET icon_id = 6 WHERE id = 174;
+UPDATE users SET icon_id = 22 WHERE id = 175;
+UPDATE users SET icon_id = 48 WHERE id = 176;
+UPDATE users SET icon_id = 48 WHERE id = 177;
+UPDATE users SET icon_id = 4 WHERE id = 178;
+UPDATE users SET icon_id = 27 WHERE id = 179;
+UPDATE users SET icon_id = 9 WHERE id = 180;
+UPDATE users SET icon_id = 4 WHERE id = 181;
+UPDATE users SET icon_id = 21 WHERE id = 182;
+UPDATE users SET icon_id = 18 WHERE id = 183;
+UPDATE users SET icon_id = 43 WHERE id = 184;
+UPDATE users SET icon_id = 39 WHERE id = 185;
+UPDATE users SET icon_id = 2 WHERE id = 186;
+UPDATE users SET icon_id = 29 WHERE id = 187;
+UPDATE users SET icon_id = 31 WHERE id = 188;
+UPDATE users SET icon_id = 30 WHERE id = 189;
+UPDATE users SET icon_id = 26 WHERE id = 190;
+UPDATE users SET icon_id = 9 WHERE id = 191;
+UPDATE users SET icon_id = 38 WHERE id = 192;
+UPDATE users SET icon_id = 22 WHERE id = 193;
+UPDATE users SET icon_id = 47 WHERE id = 194;
+UPDATE users SET icon_id = 2 WHERE id = 195;
+UPDATE users SET icon_id = 35 WHERE id = 196;
+UPDATE users SET icon_id = 35 WHERE id = 197;
+UPDATE users SET icon_id = 17 WHERE id = 198;
+UPDATE users SET icon_id = 45 WHERE id = 199;
+UPDATE users SET icon_id = 17 WHERE id = 200;
+UPDATE users SET icon_id = 8 WHERE id = 201;
+UPDATE users SET icon_id = 3 WHERE id = 202;
+UPDATE users SET icon_id = 14 WHERE id = 203;
+UPDATE users SET icon_id = 37 WHERE id = 204;
+UPDATE users SET icon_id = 16 WHERE id = 205;
+UPDATE users SET icon_id = 48 WHERE id = 206;
+UPDATE users SET icon_id = 7 WHERE id = 207;
+UPDATE users SET icon_id = 5 WHERE id = 208;
+UPDATE users SET icon_id = 11 WHERE id = 209;
+UPDATE users SET icon_id = 26 WHERE id = 210;
+UPDATE users SET icon_id = 10 WHERE id = 211;
+UPDATE users SET icon_id = 40 WHERE id = 212;
+UPDATE users SET icon_id = 21 WHERE id = 213;
+UPDATE users SET icon_id = 14 WHERE id = 214;
+UPDATE users SET icon_id = 3 WHERE id = 215;
+UPDATE users SET icon_id = 18 WHERE id = 216;
+UPDATE users SET icon_id = 33 WHERE id = 217;
+UPDATE users SET icon_id = 33 WHERE id = 218;
+UPDATE users SET icon_id = 1 WHERE id = 219;
+UPDATE users SET icon_id = 11 WHERE id = 220;
+UPDATE users SET icon_id = 46 WHERE id = 221;
+UPDATE users SET icon_id = 3 WHERE id = 222;
+UPDATE users SET icon_id = 12 WHERE id = 223;
+UPDATE users SET icon_id = 34 WHERE id = 224;
+UPDATE users SET icon_id = 4 WHERE id = 225;
+UPDATE users SET icon_id = 10 WHERE id = 226;
+UPDATE users SET icon_id = 7 WHERE id = 227;
+UPDATE users SET icon_id = 47 WHERE id = 228;
+UPDATE users SET icon_id = 21 WHERE id = 229;
+UPDATE users SET icon_id = 20 WHERE id = 230;
+UPDATE users SET icon_id = 20 WHERE id = 231;
+UPDATE users SET icon_id = 46 WHERE id = 232;
+UPDATE users SET icon_id = 2 WHERE id = 233;
+UPDATE users SET icon_id = 25 WHERE id = 234;
+UPDATE users SET icon_id = 24 WHERE id = 235;
+UPDATE users SET icon_id = 28 WHERE id = 236;
+UPDATE users SET icon_id = 19 WHERE id = 237;
+UPDATE users SET icon_id = 9 WHERE id = 238;
+UPDATE users SET icon_id = 3 WHERE id = 239;
+UPDATE users SET icon_id = 34 WHERE id = 240;
+UPDATE users SET icon_id = 11 WHERE id = 241;
+UPDATE users SET icon_id = 49 WHERE id = 242;
+UPDATE users SET icon_id = 44 WHERE id = 243;
+UPDATE users SET icon_id = 38 WHERE id = 244;
+UPDATE users SET icon_id = 27 WHERE id = 245;
+UPDATE users SET icon_id = 13 WHERE id = 246;
+UPDATE users SET icon_id = 23 WHERE id = 247;
+UPDATE users SET icon_id = 36 WHERE id = 248;
+UPDATE users SET icon_id = 19 WHERE id = 249;
+UPDATE users SET icon_id = 15 WHERE id = 250;
+UPDATE users SET icon_id = 25 WHERE id = 251;
+UPDATE users SET icon_id = 32 WHERE id = 252;
+UPDATE users SET icon_id = 11 WHERE id = 253;
+UPDATE users SET icon_id = 29 WHERE id = 254;
+UPDATE users SET icon_id = 38 WHERE id = 255;
+UPDATE users SET icon_id = 38 WHERE id = 256;
+UPDATE users SET icon_id = 42 WHERE id = 257;
+UPDATE users SET icon_id = 14 WHERE id = 258;
+UPDATE users SET icon_id = 1 WHERE id = 259;
+UPDATE users SET icon_id = 26 WHERE id = 260;
+UPDATE users SET icon_id = 11 WHERE id = 261;
+UPDATE users SET icon_id = 11 WHERE id = 262;
+UPDATE users SET icon_id = 48 WHERE id = 263;
+UPDATE users SET icon_id = 22 WHERE id = 264;
+UPDATE users SET icon_id = 20 WHERE id = 265;
+UPDATE users SET icon_id = 9 WHERE id = 266;
+UPDATE users SET icon_id = 30 WHERE id = 267;
+UPDATE users SET icon_id = 35 WHERE id = 268;
+UPDATE users SET icon_id = 22 WHERE id = 269;
+UPDATE users SET icon_id = 17 WHERE id = 270;
+UPDATE users SET icon_id = 9 WHERE id = 271;
+UPDATE users SET icon_id = 13 WHERE id = 272;
+UPDATE users SET icon_id = 18 WHERE id = 273;
+UPDATE users SET icon_id = 12 WHERE id = 274;
+UPDATE users SET icon_id = 21 WHERE id = 275;
+UPDATE users SET icon_id = 16 WHERE id = 276;
+UPDATE users SET icon_id = 26 WHERE id = 277;
+UPDATE users SET icon_id = 16 WHERE id = 278;
+UPDATE users SET icon_id = 34 WHERE id = 279;
+UPDATE users SET icon_id = 21 WHERE id = 280;
+UPDATE users SET icon_id = 4 WHERE id = 281;
+UPDATE users SET icon_id = 36 WHERE id = 282;
+UPDATE users SET icon_id = 38 WHERE id = 283;
+UPDATE users SET icon_id = 23 WHERE id = 284;
+UPDATE users SET icon_id = 13 WHERE id = 285;
+UPDATE users SET icon_id = 37 WHERE id = 286;
+UPDATE users SET icon_id = 5 WHERE id = 287;
+UPDATE users SET icon_id = 14 WHERE id = 288;
+UPDATE users SET icon_id = 48 WHERE id = 289;
+UPDATE users SET icon_id = 42 WHERE id = 290;
+UPDATE users SET icon_id = 41 WHERE id = 291;
+UPDATE users SET icon_id = 46 WHERE id = 292;
+UPDATE users SET icon_id = 15 WHERE id = 293;
+UPDATE users SET icon_id = 8 WHERE id = 294;
+UPDATE users SET icon_id = 46 WHERE id = 295;
+UPDATE users SET icon_id = 8 WHERE id = 296;
+UPDATE users SET icon_id = 36 WHERE id = 297;
+UPDATE users SET icon_id = 38 WHERE id = 298;
+UPDATE users SET icon_id = 13 WHERE id = 299;
+UPDATE users SET icon_id = 23 WHERE id = 300;
+UPDATE users SET icon_id = 2 WHERE id = 301;
+UPDATE users SET icon_id = 26 WHERE id = 302;
+UPDATE users SET icon_id = 30 WHERE id = 303;
+UPDATE users SET icon_id = 45 WHERE id = 304;
+UPDATE users SET icon_id = 34 WHERE id = 305;
+UPDATE users SET icon_id = 42 WHERE id = 306;
+UPDATE users SET icon_id = 18 WHERE id = 307;
+UPDATE users SET icon_id = 23 WHERE id = 308;
+UPDATE users SET icon_id = 26 WHERE id = 309;
+UPDATE users SET icon_id = 29 WHERE id = 310;
+UPDATE users SET icon_id = 24 WHERE id = 311;
+UPDATE users SET icon_id = 48 WHERE id = 312;
+UPDATE users SET icon_id = 9 WHERE id = 313;
+UPDATE users SET icon_id = 30 WHERE id = 314;
+UPDATE users SET icon_id = 22 WHERE id = 315;
+UPDATE users SET icon_id = 40 WHERE id = 316;
+UPDATE users SET icon_id = 4 WHERE id = 317;
+UPDATE users SET icon_id = 36 WHERE id = 318;
+UPDATE users SET icon_id = 39 WHERE id = 319;
+UPDATE users SET icon_id = 27 WHERE id = 320;
+UPDATE users SET icon_id = 4 WHERE id = 321;
+UPDATE users SET icon_id = 5 WHERE id = 322;
+UPDATE users SET icon_id = 22 WHERE id = 323;
+UPDATE users SET icon_id = 34 WHERE id = 324;
+UPDATE users SET icon_id = 41 WHERE id = 325;
+UPDATE users SET icon_id = 32 WHERE id = 326;
+UPDATE users SET icon_id = 23 WHERE id = 327;
+UPDATE users SET icon_id = 8 WHERE id = 328;
+UPDATE users SET icon_id = 5 WHERE id = 329;
+UPDATE users SET icon_id = 35 WHERE id = 330;
+UPDATE users SET icon_id = 8 WHERE id = 331;
+UPDATE users SET icon_id = 35 WHERE id = 332;
+UPDATE users SET icon_id = 36 WHERE id = 333;
+UPDATE users SET icon_id = 21 WHERE id = 334;
+UPDATE users SET icon_id = 39 WHERE id = 335;
+UPDATE users SET icon_id = 22 WHERE id = 336;
+UPDATE users SET icon_id = 40 WHERE id = 337;
+UPDATE users SET icon_id = 49 WHERE id = 338;
+UPDATE users SET icon_id = 21 WHERE id = 339;
+UPDATE users SET icon_id = 47 WHERE id = 340;
+UPDATE users SET icon_id = 6 WHERE id = 341;
+UPDATE users SET icon_id = 43 WHERE id = 342;
+UPDATE users SET icon_id = 1 WHERE id = 343;
+UPDATE users SET icon_id = 9 WHERE id = 344;
+UPDATE users SET icon_id = 38 WHERE id = 345;
+UPDATE users SET icon_id = 50 WHERE id = 346;
+UPDATE users SET icon_id = 50 WHERE id = 347;
+UPDATE users SET icon_id = 25 WHERE id = 348;
+UPDATE users SET icon_id = 30 WHERE id = 349;
+UPDATE users SET icon_id = 37 WHERE id = 350;
+UPDATE users SET icon_id = 2 WHERE id = 351;
+UPDATE users SET icon_id = 5 WHERE id = 352;
+UPDATE users SET icon_id = 17 WHERE id = 353;
+UPDATE users SET icon_id = 41 WHERE id = 354;
+UPDATE users SET icon_id = 1 WHERE id = 355;
+UPDATE users SET icon_id = 23 WHERE id = 356;
+UPDATE users SET icon_id = 2 WHERE id = 357;
+UPDATE users SET icon_id = 44 WHERE id = 358;
+UPDATE users SET icon_id = 40 WHERE id = 359;
+UPDATE users SET icon_id = 49 WHERE id = 360;
+UPDATE users SET icon_id = 38 WHERE id = 361;
+UPDATE users SET icon_id = 16 WHERE id = 362;
+UPDATE users SET icon_id = 22 WHERE id = 363;
+UPDATE users SET icon_id = 49 WHERE id = 364;
+UPDATE users SET icon_id = 29 WHERE id = 365;
+UPDATE users SET icon_id = 48 WHERE id = 366;
+UPDATE users SET icon_id = 22 WHERE id = 367;
+UPDATE users SET icon_id = 25 WHERE id = 368;
+UPDATE users SET icon_id = 1 WHERE id = 369;
+UPDATE users SET icon_id = 37 WHERE id = 370;
+UPDATE users SET icon_id = 8 WHERE id = 371;
+UPDATE users SET icon_id = 12 WHERE id = 372;
+UPDATE users SET icon_id = 10 WHERE id = 373;
+UPDATE users SET icon_id = 37 WHERE id = 374;
+UPDATE users SET icon_id = 49 WHERE id = 375;
+UPDATE users SET icon_id = 24 WHERE id = 376;
+UPDATE users SET icon_id = 33 WHERE id = 377;
+UPDATE users SET icon_id = 7 WHERE id = 378;
+UPDATE users SET icon_id = 27 WHERE id = 379;
+UPDATE users SET icon_id = 27 WHERE id = 380;
+UPDATE users SET icon_id = 15 WHERE id = 381;
+UPDATE users SET icon_id = 17 WHERE id = 382;
+UPDATE users SET icon_id = 29 WHERE id = 383;
+UPDATE users SET icon_id = 8 WHERE id = 384;
+UPDATE users SET icon_id = 9 WHERE id = 385;
+UPDATE users SET icon_id = 32 WHERE id = 386;
+UPDATE users SET icon_id = 37 WHERE id = 387;
+UPDATE users SET icon_id = 11 WHERE id = 388;
+UPDATE users SET icon_id = 16 WHERE id = 389;
+UPDATE users SET icon_id = 1 WHERE id = 390;
+UPDATE users SET icon_id = 22 WHERE id = 391;
+UPDATE users SET icon_id = 45 WHERE id = 392;
+UPDATE users SET icon_id = 16 WHERE id = 393;
+UPDATE users SET icon_id = 3 WHERE id = 394;
+UPDATE users SET icon_id = 7 WHERE id = 395;
+UPDATE users SET icon_id = 23 WHERE id = 396;
+UPDATE users SET icon_id = 27 WHERE id = 397;
+UPDATE users SET icon_id = 46 WHERE id = 398;
+UPDATE users SET icon_id = 4 WHERE id = 399;
+UPDATE users SET icon_id = 31 WHERE id = 400;

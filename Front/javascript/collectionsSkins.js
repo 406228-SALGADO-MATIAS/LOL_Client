@@ -63,19 +63,6 @@ function updateSkinCounters() {
   if (posesionEl) posesionEl.textContent = posesion;
 }
 
-// Filtrado por nombre skin
-function filterByQuery(skins, query) {
-  if (!query) return skins;
-
-  // Normalizamos query: reemplazamos ´ por '
-  const normalizedQuery = query.replace(/´/g, "'").toLowerCase();
-
-  return skins.filter((s) =>
-    // Normalizamos también los nombres de skins
-    s.name.replace(/´/g, "'").toLowerCase().includes(normalizedQuery)
-  );
-}
-
 async function handleUnlockSkin(skin) {
   // Guardamos la posición actual
   const prevScroll = window.scrollY;

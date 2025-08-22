@@ -33,7 +33,14 @@ async function loadUserProfile() {
     document.getElementById("userRP").textContent = data.riotPoints ?? 0;
 
     const userIcon = document.getElementById("userIcon");
-    userIcon.src = data.iconImage || "/assets/default-icon.png";
+
+    // Si no hay icono o viene vacío, asignamos el "none.jpg"
+    const iconSrc =
+      data.iconImage && data.iconImage.trim() !== ""
+        ? data.iconImage
+        : "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true";
+
+    userIcon.src = iconSrc;
     userIcon.style.width = "auto";
     userIcon.style.height = "100%";
     userIcon.style.objectFit = "cover";
@@ -49,7 +56,9 @@ loadUserProfile();
 // Configurar logout
 const logoutBtn = document.getElementById("logoutBtn");
 if (logoutBtn) {
-  logoutBtn.addEventListener("click", () => sessionStorage.removeItem("userId"));
+  logoutBtn.addEventListener("click", () =>
+    sessionStorage.removeItem("userId")
+  );
 }
 
 // Volver a cargar cuando se vuelve a la página
@@ -57,4 +66,3 @@ window.addEventListener("pageshow", () => {
   checkSession();
   loadUserProfile();
 });
-

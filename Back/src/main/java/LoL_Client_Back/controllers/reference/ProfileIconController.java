@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("ProfileIcon")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProfileIconController {
     @Autowired
     ProfileIconService profileIconService;

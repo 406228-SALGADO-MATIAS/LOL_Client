@@ -4,6 +4,7 @@ import LoL_Client_Back.dtos.enums.MatchType;
 import LoL_Client_Back.dtos.enums.ServerOption;
 import LoL_Client_Back.dtos.enums.UserRankTier;
 import LoL_Client_Back.models.domain.User;
+import jakarta.persistence.Lob;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -31,4 +32,5 @@ public interface UserService {
     String delete (Long id);
     List<UserLootMatchesDTO> create100ForServer(ServerOption serverOption);
     UserProfileDTO getUserProfileById (Long id);
+    UserProfileDTO updateUserIconImage (Long idUser, Long idIcon);
 }

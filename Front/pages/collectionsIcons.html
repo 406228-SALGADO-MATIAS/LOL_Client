@@ -8,6 +8,7 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
+    
     <link rel="stylesheet" href="/css/collectionsChampions.css" />
   </head>
 
@@ -22,11 +23,13 @@
       >
         <a class="navbar-brand text-white" href="menu.html">Volver</a>
         <ul class="navbar-nav mx-auto">
-          <li class="nav-item"><a class="nav-link" href="#">Champions</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="collectionsChampions.html">Champions</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="collectionsSkins.html">Skins</a>
           </li>
-          <li class="nav-item"><a class="nav-link" href="collectionsIcons.html">Icons</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Icons</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Items</a></li>
         </ul>
       </div>
@@ -49,8 +52,8 @@
         <input
           type="text"
           class="champ-search"
-          id="searchChampion"
-          placeholder="Buscar campeón..."
+          id="searchIcon"
+          placeholder="Buscar icono..."
         />
 
         <!-- Checkbox -->
@@ -65,12 +68,6 @@
         <select id="filterSelect" class="form-select custom-select">
           <option value="all">Todos</option>
           <option value="ownership">Posesión</option>
-          <option value="difficulty">Dificultad</option>
-          <option value="role">Rol</option>
-          <option value="role2">Rol Secundario</option>
-          <option value="style">Estilo</option>
-          <option value="style2">Estilo secundario</option>
-          <option value="price">Precio</option>
         </select>
       </div>
 
@@ -81,22 +78,22 @@
         </div>
       </div>
     </div>
-    <!-- Modal para expansión de campeón -->
-    <div id="championModal" class="modal-overlay">
-      <div class="modal-content">
-        <img id="modalImage" src="" alt="Champion" />
-        <!-- Botón que muestra el precio y la acción -->
-        <button id="unlockButton">DESBLOQUEAR</button>
-        <span id="modalClose">&times;</span>
+    <!-- Modal para iconos -->
+    <div id="iconModal" class="modal-overlay">
+       <div class="modal-content-small">
+        <img id="iconModalImage" src="" alt="Icon" />
+        <button id="unlockButtonIcon" class="unlock-button">DESBLOQUEAR</button>
+        <span id="iconModalClose" class="modal-close">&times;</span>
       </div>
     </div>
 
-    <script src="/javascript/collectionsChampions.js"></script>
-    <script src="/components/collectionsChampions/filterChampions.js"></script>
-    <script src="/components/collectionsChampions/imageRepositionChampions.js"></script>
+    
+
+    <script src="/javascript/collectionsIcons.js"></script>
+    <script src="/components/collectionsIcons/filterIcons.js"></script>
     <script src="/components/visualsDom/modal.js"></script>
-    <script src="/components/visualsDom/card.js"></script>
-    <script src="/components/collectionsChampions/renderChampions.js"></script>
+    <script src="/components/visualsDom/cardSmall.js"></script>
+    <script src="/components/collectionsIcons/renderIcons.js"></script>
 
     <script>
       fetch("/pages/mainNavbar.html")

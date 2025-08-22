@@ -12,7 +12,7 @@ public class UserProfileDTO {
     private String nickname;
     private String server;
     @Lob
-    private String iconImage;
+    private String iconImage = "";
     private Integer riotPoints;
     private Integer blueEssence;
 }

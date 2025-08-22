@@ -67,3 +67,36 @@ window.showModalChamp = showModalChamp;
 window.hideModalChamp = hideModalChamp;
 window.showModalSkin = showModalSkin;
 window.hideModalSkin = hideModalSkin;
+
+// ==========================
+// Modal Icon
+// ==========================
+const modalIcon = document.getElementById("iconModal");
+const modalIconImg = document.getElementById("iconModalImage");
+const closeModalIcon = document.getElementById("iconModalClose");
+const unlockButtonIcon = document.getElementById("unlockButtonIcon");
+
+if (closeModalIcon)
+  closeModalIcon.addEventListener("click", () => hideModalIcon());
+if (modalIcon)
+  modalIcon.addEventListener("click", (e) => {
+    if (e.target === modalIcon) hideModalIcon();
+  });
+
+function showModalIcon() {
+  if (modalIcon) modalIcon.style.display = "flex";
+}
+
+function hideModalIcon() {
+  if (modalIcon) modalIcon.style.display = "none";
+}
+
+function openModalIcon(icon) {
+  if (modalIconImg) modalIconImg.src = icon.image;
+  updateUnlockButtonIcon(icon);
+  showModalIcon();
+}
+
+window.openModalIcon = openModalIcon;
+window.showModalIcon = showModalIcon;
+window.hideModalIcon = hideModalIcon;

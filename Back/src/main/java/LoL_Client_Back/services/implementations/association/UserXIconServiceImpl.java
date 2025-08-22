@@ -1,6 +1,7 @@
 package LoL_Client_Back.services.implementations.association;
 
 import LoL_Client_Back.dtos.DTOBuilder;
+import LoL_Client_Back.dtos.UpdateStatementDTO;
 import LoL_Client_Back.dtos.association.UserXIconDTO;
 import LoL_Client_Back.entities.association.UserXIconEntity;
 import LoL_Client_Back.entities.domain.UserEntity;
@@ -199,7 +200,7 @@ public class UserXIconServiceImpl implements UserXIconService {
 
         if (userBlueEssence < iconCost) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "The user does not have enough Riot Points to buy this icon");
+                    "The user does not have enough Blue essence to buy this icon");
         }
 
         user.setBlueEssence(userBlueEssence - iconCost);
@@ -211,6 +212,11 @@ public class UserXIconServiceImpl implements UserXIconService {
         userXIcon.setAdquisitionDate(LocalDateTime.now());
 
         return dtoBuilder.buildUserXIconDTO(userXIconRepository.save(userXIcon));
+    }
+
+    @Override
+    public List<UpdateStatementDTO> getUpdateUsers() {
+        return dtoBuilder.buildUpdateStatementDTOs(userRepository.findAll());
     }
 
 

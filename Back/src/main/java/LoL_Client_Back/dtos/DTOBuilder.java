@@ -541,8 +541,10 @@ public class DTOBuilder
         List<UserXIconEntity> x =
                 userXIconRepository.findByUser_Id(idUser);
         if (x.isEmpty())
-            return "";
-        return x.get(0).getIcon().getImage();
+            return "";  //does not have icons
+        if (x.get(0).getUser().getIcon() == null) // if he has no icon assigned
+            return x.get(0).getIcon().getImage(); // get his first
+        return x.get(0).getUser().getIcon().getImage(); // show icon assigned
     }
 
     public UserProfileDTO buildUserProfileDTO (UserEntity userEntity)
@@ -550,9 +552,35 @@ public class DTOBuilder
         UserProfileDTO dto = new UserProfileDTO();
         dto.setServer(userEntity.getServer().getServer());
         dto.setBlueEssence(userEntity.getBlueEssence());
-        dto.setIconImage(getUserFirstIcon(userEntity.getId()));
+
+        if (userEntity.getIcon() != null)
+            dto.setIconImage(userEntity.getIcon().getImage());
+
         dto.setRiotPoints(userEntity.getRiotPoints());
         dto.setNickname(userEntity.getNickname());
         return  dto;
+    }
+
+    public List<UpdateStatementDTO> buildUpdateStatementDTOs (List<UserEntity> users)
+    {
+        List <UpdateStatementDTO> updateList = new ArrayList<>();
+        for (UserEntity user : users)
+        {
+            List<UserXIconEntity> iconEntities =
+                    userXIconRepository.findByUser_Id(user.getId());
+
+            if (iconEntities.isEmpty())
+                throw new ResponseStatusException
+                        (HttpStatus.NOT_FOUND,"The user with id "+ user.getId() +
+                                " does not have any icon to give him");
+
+            UpdateStatementDTO dto = new UpdateStatementDTO();
+            String sentence = "UPDATE users SET icon_id = "
+                    + iconEntities.get(0).getIcon().getId()
+                    + " WHERE id = "+ user.getId() + ";";
+            dto.setStatement(sentence);
+            updateList.add(dto);
+        }
+        return updateList;
     }
 }

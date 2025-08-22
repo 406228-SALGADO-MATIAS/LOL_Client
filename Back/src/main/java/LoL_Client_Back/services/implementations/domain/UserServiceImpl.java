@@ -11,6 +11,7 @@ import LoL_Client_Back.entities.association.UserXSkinEntity;
 import LoL_Client_Back.entities.domain.MatchEntity;
 import LoL_Client_Back.entities.domain.UserEntity;
 import LoL_Client_Back.entities.domain.UserMatchesEntity;
+import LoL_Client_Back.entities.reference.ProfileIconEntity;
 import LoL_Client_Back.entities.reference.RankTierEntity;
 import LoL_Client_Back.entities.reference.ServerRegionEntity;
 import LoL_Client_Back.entities.transaction.UserLootEntity;
@@ -24,6 +25,7 @@ import LoL_Client_Back.repositories.domain.MatchRepository;
 import LoL_Client_Back.repositories.domain.PlayerMatchDetailRepository;
 import LoL_Client_Back.repositories.domain.UserMatchesRepository;
 import LoL_Client_Back.repositories.domain.UserRepository;
+import LoL_Client_Back.repositories.reference.ProfileIconRepository;
 import LoL_Client_Back.repositories.reference.RankTierRepository;
 import LoL_Client_Back.repositories.reference.ServerRegionRepository;
 import LoL_Client_Back.repositories.transaction.UserLootRepository;
@@ -71,6 +73,8 @@ public class UserServiceImpl implements UserService {
     MatchRepository matchRepository;
     @Autowired
     UserLootRepository userLootRepository;
+    @Autowired
+    ProfileIconRepository profileIconRepository;
     @Autowired
     DTOBuilder dtoBuilder;
 
@@ -440,6 +444,23 @@ public class UserServiceImpl implements UserService {
         if (optionalUser.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user with id "+id);
         return dtoBuilder.buildUserProfileDTO(optionalUser.get());
+    }
+
+    @Override
+    public UserProfileDTO updateUserIconImage(Long idUser, Long idIcon) {
+        Optional<UserEntity> optionalUser = userRepository.findById(idUser);
+        if (optionalUser.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user with id "+idUser);
+
+        Optional<ProfileIconEntity> optional = profileIconRepository.findById(idIcon);
+        if (optional.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find icon with id "+idIcon);
+
+        UserEntity updatedUser = optionalUser.get();
+        updatedUser.setIcon(optional.get());
+
+        return dtoBuilder.buildUserProfileDTO(userRepository.save(updatedUser));
+
     }
 
     private RankTierEntity getRankByName(String rankname)
