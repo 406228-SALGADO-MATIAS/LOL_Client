@@ -162,7 +162,7 @@ function getSkinObjectPosition(name) {
   ];
 
   // +30
-  const midlargeRight = ["Night Hunter Rengar"];
+  const midlargeRight = ["Night Hunter Rengar",];
 
   // +35%
   const largeRight = [
@@ -178,6 +178,7 @@ function getSkinObjectPosition(name) {
     "Soulstealer Vladimir",
     "Shockblade Zed",
     "Santa Braum",
+    "Time Machine Zilean",
   ];
 
   // +42%
@@ -195,7 +196,7 @@ function getSkinObjectPosition(name) {
     "Warring Kingdoms Tryndamere",
     "Scorched Earth Xerath",
     "Pool Party Renekton",
-    "Time Machine Zilean",
+    
     "Pool Party Graves",
   ];
 

@@ -128,3 +128,12 @@
   font-size: clamp(0.9rem, 1vw, 1rem);
   font-weight: bold; /* negrita */
 }
+
+.sidebar-label {
+  display: block;                /* ocupa toda la línea */
+  text-align: left;              /* alineado a la izquierda */
+  font-size: clamp(0.9rem, 1vw, 1.5rem);  /* igual que los labels de checkbox */
+  font-weight: bold;             /* negrita */
+  margin: 0.5rem 5%;             /* margen arriba/abajo y lateral para no pegar al borde */
+  color: #333;                   /* gris oscuro, legible */
+}

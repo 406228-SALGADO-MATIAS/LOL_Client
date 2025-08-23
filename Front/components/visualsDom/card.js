@@ -7,32 +7,28 @@ function createSkinCard(skin) {
 
   const card = document.createElement("div");
   card.classList.add("card", "mb-2");
-  card.style.width = "108%";
-  card.style.height = "340px";
+  card.style.width = "110%";
+  card.style.height = "45vh"; // 🔥 altura relativa al viewport → 2 filas visibles
   card.style.overflow = "hidden";
   card.style.display = "flex";
-  card.style.flexDirection = "column"; // 🟢 Igual que champions, columna flexible
+  card.style.flexDirection = "column";
 
   // Contenedor para la imagen
   const imgContainer = document.createElement("div");
-  imgContainer.style.height = "300px"; // 🟢 Mantener proporción mayor
-  imgContainer.style.overflow = "hidden";
+  imgContainer.style.flex = "0 0 90%"; // 🔥 imagen ocupa la mayor parte
   imgContainer.style.display = "flex";
   imgContainer.style.alignItems = "center";
   imgContainer.style.justifyContent = "center";
+  imgContainer.style.overflow = "hidden";
 
   const img = document.createElement("img");
   img.src = skin.image;
   img.alt = `${skin.name} - ${skin.championName}`;
-  img.style.width = "108%";
-  img.style.height = "100%"; // 🟢 Ocupa todo el contenedor
+  img.style.width = "100%";
+  img.style.height = "100%";
   img.style.objectFit = "cover";
-  img.style.objectPosition = getSkinObjectPosition(skin.name); // 🟢 Posición específica
+  img.style.objectPosition = getSkinObjectPosition(skin.name);
   img.style.transform = `scale(${getSkinZoom(skin.name)})`;
-
-  // Si quieres zoom o posición específica como en campeones
-  // img.style.objectPosition = getSkinObjectPosition(skin.name);
-  // img.style.transform = `scale(${getSkinZoom(skin.name)})`;
 
   if (!skin.owned) {
     img.style.filter = "grayscale(95%)";
@@ -44,7 +40,9 @@ function createSkinCard(skin) {
   // Nombre de la skin
   const name = document.createElement("div");
   name.classList.add("card-body", "p-2");
-  name.style.flex = "0 0 32px"; // 🟢 Reducimos el espacio del área blanca
+  name.style.flex = "0 0 15%"; // 🔥 resto del espacio para el nombre
+  name.style.fontSize = "1rem"; // igual que campeones
+  name.style.textAlign = "center";
   name.innerHTML = `<strong>${skin.name.replace(/´/g, "'")}</strong>`;
 
   card.appendChild(imgContainer);
@@ -58,6 +56,7 @@ function createSkinCard(skin) {
 }
 
 // Crea un <div class="col-md-2"> con la tarjeta de un campeón
+// Crea un <div class="col-md-2"> con la tarjeta de un campeón
 function createChampionCard(champ) {
   const col = document.createElement("div");
   col.classList.add("col-md-2", "text-center");
@@ -66,24 +65,24 @@ function createChampionCard(champ) {
 
   const card = document.createElement("div");
   card.classList.add("card", "mb-2");
-  card.style.width = "108%";
-  card.style.height = "340px";
+  card.style.width = "110%";
+  card.style.height = "45vh"; // 🔥 altura relativa al viewport → 2 filas visibles
   card.style.overflow = "hidden";
   card.style.display = "flex";
   card.style.flexDirection = "column";
 
   // Contenedor para la imagen
   const imgContainer = document.createElement("div");
-  imgContainer.style.height = "300px"; // Más alto, menos margen blanco
-  imgContainer.style.overflow = "hidden";
+  imgContainer.style.flex = "0 0 90%"; // 🔥 imagen ocupa la mayor parte
   imgContainer.style.display = "flex";
   imgContainer.style.alignItems = "center";
   imgContainer.style.justifyContent = "center";
+  imgContainer.style.overflow = "hidden";
 
   const img = document.createElement("img");
   img.src = champ.imageUrl;
   img.alt = champ.name;
-  img.style.width = "108%";
+  img.style.width = "100%";
   img.style.height = "100%";
   img.style.objectFit = "cover";
   img.style.objectPosition = getChampionObjectPosition(champ.name);
@@ -96,10 +95,12 @@ function createChampionCard(champ) {
 
   imgContainer.appendChild(img);
 
-  // Nombre con menos alto
+  // Nombre con proporción menor
   const name = document.createElement("div");
   name.classList.add("card-body", "p-2");
-  name.style.flex = "0 0 32px"; // Más chico el área blanca
+  name.style.flex = "0 0 15%"; // 🔥 resto del espacio para el nombre
+  name.style.fontSize = "1rem"; // un poco más grande
+  name.style.textAlign = "center";
   name.innerHTML = `<strong>${champ.name.replace(/´/g, "'")}</strong>`;
 
   card.appendChild(imgContainer);
