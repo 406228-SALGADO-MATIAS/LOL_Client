@@ -1,0 +1,130 @@
+/* sidebar.css */
+
+/* Contador */
+.counter-box {
+  text-align: center;
+  border: 10px solid #f8f9fa;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.counter-box .number-large {
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+.counter-box .number-medium {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.counter-box .label {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Buscador */
+.skin-search,
+.champ-search {
+  width: 90%;
+  max-width: clamp(220px, 30vw, 400px);
+  padding: clamp(0.6rem, 1vh, 1rem) clamp(0.8rem, 1vw, 1rem); /* un poco más */
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  font-size: clamp(0.9rem, 1vw, 1.1rem);
+  line-height: 1.4; /* agrega line-height para que no se corte */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease-in-out;
+  display: block;
+  margin: 1rem auto;
+  box-sizing: border-box;
+}
+
+
+.skin-search:focus,
+.champ-search:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+}
+
+/* Checkbox */
+.form-check-input {
+  width: 20px;
+  height: 20px;
+  margin-right: 2rem;
+}
+
+.form-check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;        /* separa checkbox y texto */
+  width: fit-content;  /* ajusta al contenido, no al 100% */
+  margin: 0 auto;      /* centra todo el bloque en su contenedor */
+}
+
+.form-check-label {
+  margin: 0;                 /* elimina margenes automáticos que pueda tener */
+  cursor: pointer;
+}
+
+/* Dropdown */
+.custom-select {
+ width: 90%;
+  max-width: 400px;   /* fija el máximo ancho */
+  min-width: 220px;   /* evita que se haga demasiado pequeño */
+  padding: 0.5rem 0.8rem; /* padding fijo seguro */
+  font-size: 1rem;     /* fuente legible y consistente */
+  border-radius: 0.5rem;
+  border: 1px solid #007bff;
+  background-color: #f0f8ff;
+  color: #343a40;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  appearance: none;
+  cursor: pointer;
+  display: block;
+  margin: 1rem auto;
+  box-sizing: border-box; /* muy importante */
+}
+
+/* Botones de filtro */
+.btn-filter {
+  width: 90%;
+  max-width: clamp(220px, 30vw, 400px); /* igual que el search/dropdown */
+  padding: clamp(0.6rem, 2vh, 1rem);
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+  font-weight: 500;
+  border-radius: 0.5rem;
+  margin: 0.5rem auto; /* centrado */
+  transition: transform 0.2s, background-color 0.2s;
+  display: block;
+}
+
+.btn-filter:hover {
+  transform: scale(1.05);
+  opacity: 0.85;
+  cursor: pointer;
+}
+.checkbox-group {
+  display: flex;              /* contenedor flex */
+  justify-content: center;    /* centra horizontalmente todo */
+  align-items: center;        /* alinea checkbox y label en línea */
+  gap: 0.5rem;                /* espacio entre checkbox y texto */
+  margin: 0 auto;             /* centra el grupo en su contenedor */
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: clamp(1rem, 1.5vw, 1.5rem); /* tamaño del checkbox */
+  height: clamp(1rem, 1.5vw, 1.5rem);
+  margin: 0;                          /* sin margenes extra */
+}
+
+.checkbox-group label {
+  display: inline-block;
+  margin: 0;
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  font-weight: bold; /* negrita */
+}

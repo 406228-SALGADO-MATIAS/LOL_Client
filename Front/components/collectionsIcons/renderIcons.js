@@ -2,16 +2,7 @@
 function renderIcons() {
   collectionsContainer.innerHTML = "";
   const icons = getFilteredIcons();
-
-  let row;
-  icons.forEach((icon, index) => {
-    if (index % 7 === 0) {
-      row = document.createElement("div");
-      row.classList.add("row", "mb-2");
-      collectionsContainer.appendChild(row);
-    }
-    row.appendChild(createIconCard(icon));
-  });
+  appendIconRows(collectionsContainer, icons);
 }
 
 function renderIconsByCategory({

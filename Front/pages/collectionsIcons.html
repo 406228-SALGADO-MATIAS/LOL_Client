@@ -8,8 +8,11 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
-    
-    <link rel="stylesheet" href="/css/collectionsChampions.css" />
+
+    <link rel="stylesheet" href="/css/collections.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/modalCollections.css" />
+    <link rel="stylesheet" href="/css/sidebar.css" />
   </head>
 
   <body>
@@ -17,12 +20,12 @@
     <div id="navbar-container"></div>
 
     <!-- Segundo navbar -->
-    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <nav class="navbar navbar-custom fixed-top">
       <div
         class="container-fluid d-flex justify-content-between align-items-center"
       >
         <a class="navbar-brand text-white" href="menu.html">Volver</a>
-        <ul class="navbar-nav mx-auto">
+        <ul class="navbar-nav mx-auto d-flex flex-row">
           <li class="nav-item">
             <a class="nav-link" href="collectionsChampions.html">Champions</a>
           </li>
@@ -57,13 +60,10 @@
         />
 
         <!-- Checkbox -->
-        <div class="form-check d-flex align-items-center">
-          <input class="form-check-input" type="checkbox" id="showNotOwned" />
-          <label class="form-check-label" for="showNotOwned"
-            >No obtenidos</label
-          >
+        <div class="checkbox-group">
+          <input type="checkbox" id="showNotOwned" />
+          <label for="showNotOwned">No obtenidos</label>
         </div>
-
         <!-- Dropdown -->
         <select id="filterSelect" class="form-select custom-select">
           <option value="all">Todos</option>
@@ -80,14 +80,12 @@
     </div>
     <!-- Modal para iconos -->
     <div id="iconModal" class="modal-overlay">
-       <div class="modal-content-small">
+      <div class="modal-content-small">
         <img id="iconModalImage" src="" alt="Icon" />
         <button id="unlockButtonIcon" class="unlock-button">DESBLOQUEAR</button>
         <span id="iconModalClose" class="modal-close">&times;</span>
       </div>
     </div>
-
-    
 
     <script src="/javascript/collectionsIcons.js"></script>
     <script src="/components/collectionsIcons/filterIcons.js"></script>
