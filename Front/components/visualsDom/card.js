@@ -7,8 +7,8 @@ function createSkinCard(skin) {
 
   const card = document.createElement("div");
   card.classList.add("card", "mb-2");
-  card.style.width = "110%";
-  card.style.height = "45vh"; // 🔥 altura relativa al viewport → 2 filas visibles
+  card.style.width = "105%";
+  card.style.height = "43vh"; // 🔥 altura relativa al viewport → 2 filas visibles
   card.style.overflow = "hidden";
   card.style.display = "flex";
   card.style.flexDirection = "column";
@@ -65,8 +65,8 @@ function createChampionCard(champ) {
 
   const card = document.createElement("div");
   card.classList.add("card", "mb-2");
-  card.style.width = "110%";
-  card.style.height = "45vh"; // 🔥 altura relativa al viewport → 2 filas visibles
+  card.style.width = "105%";
+  card.style.height = "43vh"; // 🔥 altura relativa al viewport → 2 filas visibles
   card.style.overflow = "hidden";
   card.style.display = "flex";
   card.style.flexDirection = "column";

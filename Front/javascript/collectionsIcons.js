@@ -11,9 +11,6 @@ console.log("showNotOwned:", document.getElementById("showNotOwned"));
 // Cargar íconos desde backend
 async function loadIcons(activeFilter = null) {
   collectionsContainer.innerHTML = "";
-
-  
-
   try {
     // Llamo en paralelo: todos los íconos y los que tiene el usuario
     const [allRes, ownedRes] = await Promise.all([

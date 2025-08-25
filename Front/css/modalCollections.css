@@ -109,3 +109,47 @@
   transform: none;
 }
 
+
+#itemModal.modal-overlay {
+  display: none; /* oculto por defecto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;   /* centra en eje X */
+  align-items: center;       /* centra en eje Y */
+  z-index: 2000;
+}
+
+#itemModal .modal-content-small {
+  position: relative;
+  background-color: #343434;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  display: flex;      
+  flex-direction: row; /* items a la izquierda + info a la derecha */
+  align-items: center;
+  overflow: hidden;
+  width: 95%;
+  max-width: 700px;
+  max-height: 100%;
+}
+
+#itemModal .modal-content-small img {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+#itemModalImage {
+  width: 45%;       /* todo el ancho del contenedor */
+  height: auto;
+  max-height: 85vh;  /* que nunca pase de la pantalla */
+  object-fit: contain;
+  border-radius: 8px;
+}
+

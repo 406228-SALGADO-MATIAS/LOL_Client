@@ -8,6 +8,7 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
+
     <link rel="stylesheet" href="/css/collections.css" />
     <link rel="stylesheet" href="/css/layout.css" />
     <link rel="stylesheet" href="/css/modalCollections.css" />
@@ -19,20 +20,22 @@
     <div id="navbar-container"></div>
 
     <!-- Segundo navbar -->
-    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <nav class="navbar navbar-custom fixed-top">
       <div
         class="container-fluid d-flex justify-content-between align-items-center"
       >
         <a class="navbar-brand text-white" href="menu.html">Volver</a>
         <ul class="navbar-nav mx-auto d-flex flex-row">
-          <li class="nav-item"><a class="nav-link" href="#">Champions</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="collectionsChampions.html">Champions</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="collectionsSkins.html">Skins</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="collectionsIcons.html">Icons</a>
           </li>
-          <li class="nav-item"><a class="nav-link" href="collectionsItems.html">Items</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Items</a></li>
         </ul>
       </div>
     </nav>
@@ -45,35 +48,31 @@
         <div class="counter-box">
           <div id="counter-total" class="number-large">0</div>
           <div class="label">TOTAL</div>
-          <div class="my-2"></div>
-          <div id="counter-posesion" class="number-medium">0</div>
-          <div class="label">ADQUIRIDOS</div>
         </div>
 
         <!-- Buscador -->
         <input
           type="text"
           class="champ-search"
-          id="searchChampion"
-          placeholder="Buscar campeón..."
+          id="searchItem"
+          placeholder="Buscar item..."
         />
-
-        <!-- Checkbox -->
-        <div class="checkbox-group">
-          <input type="checkbox" id="showNotOwned" />
-          <label for="showNotOwned">No obtenidos</label>
-        </div>
-
         <!-- Dropdown -->
-        <select id="filterSelect" class="form-select custom-select">
+        <select id="filterItems" class="form-select custom-select">
           <option value="all">Todos</option>
-          <option value="ownership">Posesión</option>
-          <option value="difficulty">Dificultad</option>
-          <option value="role">Rol</option>
-          <option value="role2">Rol Secundario</option>
-          <option value="style">Estilo</option>
-          <option value="style2">Estilo secundario</option>
-          <option value="price">Precio</option>
+          <option value="style1">Tipo</option>
+        </select>
+
+        <!-- Dropdown de ordenar -->
+        <label for="sortItems" class="sidebar-label">Ordenar por</label>
+        <select id="sortItems" class="form-select custom-select">
+          <option value="">Ninguno</option>
+          <option value="attackDamage">Attack Damage</option>
+          <option value="armor">Armor</option>
+          <option value="health">Health</option>
+          <option value="abilityPower">Ability Power</option>
+          <option value="magicResistance">Magic Resistance</option>
+          <option value="cost">Coste</option>
         </select>
       </div>
 
@@ -84,22 +83,41 @@
         </div>
       </div>
     </div>
-    <!-- Modal para expansión de campeón -->
-    <div id="championModal" class="modal-overlay">
-      <div class="modal-content">
-        <img id="modalImage" src="" alt="Champion" />
-        <!-- Botón que muestra el precio y la acción -->
-        <button id="unlockButton">DESBLOQUEAR</button>
-        <span id="modalClose">&times;</span>
+    <!-- Modal para items -->
+    <div id="itemModal" class="modal-overlay">
+      <div class="modal-content-small">
+        <div
+          id="itemModalImageContainer"
+          style="
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <img id="itemModalImage" src="" alt="Item" />
+        </div>
+        <div
+          id="itemModalInfo"
+          style="
+            flex: 1;
+            padding-left: 1rem;
+            color: white;
+            overflow-y: auto;
+            max-height: 80vh;
+          "
+        >
+          <!-- Aquí se inyectarán stats y descripción -->
+        </div>
+        <div id="itemModalClose">&times;</div>
       </div>
     </div>
 
-    <script src="/javascript/collectionsChampions.js"></script>
-    <script src="/components/collectionsChampions/filterChampions.js"></script>
-    <script src="/components/collectionsChampions/imageRepositionChampions.js"></script>
-    <script src="/components/visualsDom/modal.js"></script>
-    <script src="/components/visualsDom/card.js"></script>
-    <script src="/components/collectionsChampions/renderChampions.js"></script>
+    <script src="/javascript/collectionsItems.js"></script>
+    <script src="/components/collectionsItems/filterItems.js"></script>
+    <script src="/components/visualsDom/itemModal.js"></script>
+    <script src="/components/visualsDom/cardSmall.js"></script>
+    <script src="/components/collectionsItems/renderItems.js"></script>
 
     <script>
       fetch("/pages/mainNavbar.html")
