@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loot</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/css/sideBarLoot.css" />
+    <link rel="stylesheet" href="/css/lootCards.css" />
+    <link rel="stylesheet" href="/css/layoutLoot.css" />
+    <link rel="stylesheet" href="/css/lootHooverModal.css" />
+  </head>
+
+  <body>
+    <!-- Main Navbar -->
+    <div id="navbar-container"></div>
+
+    <div class="container-fluid mt-5">
+      <div class="row">
+        <!-- Sidebar -->
+        <div class="col-12 col-md-4 sidebar p-3">
+          <!-- Buscador -->
+          <input
+            type="text"
+            class="form-control mb-3"
+            id="searchLoot"
+            placeholder="Buscar..."
+          />
+
+          <!-- Categorías -->
+          <div class="loot-category">
+            <h5>Materiales</h5>
+            <div id="materialContainer" class="row">
+              <!-- Aquí se cargarán dinámicamente los materiales -->
+            </div>
+          </div>
+
+          <div class="loot-category">
+            <h5>Campeones</h5>
+            <div id="championContainer" class="row">
+              <!-- Aquí se cargarán dinámicamente los campeones -->
+            </div>
+          </div>
+
+          <div class="loot-category">
+            <h5>Skins</h5>
+            <div id="skinContainer" class="row">
+              <!-- Aquí se cargarán dinámicamente las skins -->
+            </div>
+          </div>
+
+          <div class="loot-category">
+            <h5>Iconos</h5>
+            <div id="iconContainer" class="row">
+              <!-- Aquí se cargarán dinámicamente los iconos -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-12 col-md-8 main-content p-3">
+          <div id="lootModalContainer">
+            <!-- Aquí se abrirán dinámicamente las modals -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Primero definiciones -->
+    <script src="/components/visualsDom/cardLoot.js"></script>
+    <script src="/components/loot/modalHooverLoot.js"></script>
+    <script src="/components/loot/renderLoot.js"></script>
+
+    <!-- Después, el que llama a esas funciones -->
+    <script src="/javascript/loot.js"></script>
+
+    <script>
+      // Navbar dinámico
+      fetch("/pages/mainNavbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          const container = document.getElementById("navbar-container");
+          container.innerHTML = html;
+
+          const mainNav = container.querySelector("nav");
+          mainNav.style.position = "fixed";
+          mainNav.style.top = "0";
+          mainNav.style.left = "0";
+          mainNav.style.width = "100%";
+          mainNav.style.zIndex = "1040";
+
+          const script = document.createElement("script");
+          script.src = "/javascript/mainNavbar.js";
+          document.body.appendChild(script);
+        })
+        .catch((err) => console.error(err));
+    </script>
+  </body>
+</html>

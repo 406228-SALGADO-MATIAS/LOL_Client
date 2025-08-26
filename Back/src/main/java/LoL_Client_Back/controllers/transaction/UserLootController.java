@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/userLoot")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserLootController {
     @Autowired
     private UserLootService userLootService;

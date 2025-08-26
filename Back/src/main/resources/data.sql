@@ -59,8 +59,8 @@ INSERT INTO skin_tiers VALUES
 (2, 150, 450, 750, 'Standard'),
 (3, 195, 675, 975, 'Deluxe'),
 (4, 270, 1050, 1350, 'Epic'),
-(5, 400, 1300, 1820, 'Legendary'),
-(6, 600, 1800, 3250, 'Mythic');
+(5, 400, 1520, 1820, 'Legendary'),
+(6, 600, 2100, 3250, 'Definitive');
 
 INSERT INTO champions VALUES
 (1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_0.jpg&w=1200&q=75', 'Lucian', DATE '2013-08-27', 50.5, 2, 4, 4, 3, 2, NULL),
