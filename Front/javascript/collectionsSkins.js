@@ -99,22 +99,22 @@ function updateUnlockButtonSkin(skin, championName) {
 
   if (skin.owned) {
     unlockButtonSkin.textContent = "DESBLOQUEADO";
-    unlockButtonSkin.style.backgroundColor = "#999";
+    unlockButtonSkin.style.backgroundColor = "#5e5e5eff";
     unlockButtonSkin.style.cursor = "not-allowed";
     unlockButtonSkin.onclick = null;
   } else if (!hasChampion) {
     unlockButtonSkin.textContent = "NECESITA EL CAMPEÓN";
-    unlockButtonSkin.style.backgroundColor = "#999";
+    unlockButtonSkin.style.backgroundColor = "#b69b009c";
     unlockButtonSkin.style.cursor = "not-allowed";
     unlockButtonSkin.onclick = null;
   } else if (userRP >= skin.rpCost) {
     unlockButtonSkin.textContent = `DESBLOQUEAR: RP ${skin.rpCost}`;
-    unlockButtonSkin.style.backgroundColor = "#bf6c00ff";
+    unlockButtonSkin.style.backgroundColor = "#2600ff";
     unlockButtonSkin.style.cursor = "pointer";
     unlockButtonSkin.onclick = () => handleUnlockSkin(skin);
   } else {
     unlockButtonSkin.textContent = `NECESITA RP ${skin.rpCost}`;
-    unlockButtonSkin.style.backgroundColor = "#999";
+    unlockButtonSkin.style.backgroundColor = "#500000ff";
     unlockButtonSkin.style.cursor = "not-allowed";
     unlockButtonSkin.onclick = null;
   }

@@ -1,0 +1,15 @@
+body {
+  min-height: 100vh; /* asegura que cubra toda la pantalla */
+  margin: 0;
+  background: linear-gradient(135deg, #051220, #081c31); /* degradado azul oscuro */
+  font-family: Arial, sans-serif;
+  color: #f0f0f0;
+}
+
+/* Contenedor central */
+.container.text-center.mt-5 {
+  background: linear-gradient(135deg, #081c31, #0c2e50); /* degradado un poco distinto */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}

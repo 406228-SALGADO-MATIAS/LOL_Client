@@ -46,7 +46,7 @@ function renderSkinsByCategory({
       "'"
     );
     title.innerHTML = `<strong>${displayCat.toUpperCase()}</strong>`;
-    title.classList.add("mt-3");
+    title.classList.add("mt-3", "category-title");
     collectionsContainer.appendChild(title);
 
     appendSkinRows(collectionsContainer, group);
@@ -65,7 +65,7 @@ function renderSkinsByCategory({
     if (emptyGroup.length) {
       const title = document.createElement("h3");
       title.innerHTML = `<strong>${emptyGroupTitle.toUpperCase()}</strong>`;
-      title.classList.add("mt-3");
+      title.classList.add("mt-3", "category-title");
       collectionsContainer.appendChild(title);
 
       appendSkinRows(collectionsContainer, emptyGroup);
@@ -141,7 +141,7 @@ function renderSkinsByAvailableness() {
 
     const title = document.createElement("h3");
     title.innerHTML = `<strong>${cat.title}</strong>`;
-    title.classList.add("mt-3");
+    title.classList.add("mt-3", "category-title");
     collectionsContainer.appendChild(title);
 
     appendSkinRows(collectionsContainer, group);

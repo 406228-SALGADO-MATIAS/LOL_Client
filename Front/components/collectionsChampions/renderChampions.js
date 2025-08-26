@@ -34,7 +34,7 @@ function renderChampionsByCategory({
       ? formatTitle(cat)
       : cat
     ).toUpperCase()}</strong>`;
-    title.classList.add("mt-3");
+    title.classList.add("mt-3", "category-title"); 
     collectionsContainer.appendChild(title);
 
     appendChampionRows(collectionsContainer, group); // <- función reutilizada
@@ -46,7 +46,7 @@ function renderChampionsByCategory({
     if (emptyGroup.length) {
       const title = document.createElement("h3");
       title.innerHTML = `<strong>${emptyGroupTitle.toUpperCase()}</strong>`;
-      title.classList.add("mt-3");
+      title.classList.add("mt-3", "category-title"); 
       collectionsContainer.appendChild(title);
 
       appendChampionRows(collectionsContainer, emptyGroup); // <- función reutilizada

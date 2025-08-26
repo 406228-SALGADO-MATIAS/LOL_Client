@@ -5,25 +5,28 @@ const modalItemInfo = document.getElementById("itemModalInfo");
 const closeModalItem = document.getElementById("itemModalClose");
 
 // Imagen → en su contenedor propio
-const modalItemImageContainer = document.getElementById("itemModalImageContainer");
+const modalItemImageContainer = document.getElementById(
+  "itemModalImageContainer"
+);
 if (modalItemImageContainer) {
   modalItemImageContainer.innerHTML = ""; // limpiar antes
   modalItemImageContainer.appendChild(modalItemImg);
 }
 
 // Eventos
-if (closeModalItem) closeModalItem.addEventListener("click", () => hideModalItem());
+if (closeModalItem)
+  closeModalItem.addEventListener("click", () => hideModalItem());
 if (modalItem)
   modalItem.addEventListener("click", (e) => {
     if (e.target === modalItem) hideModalItem();
   });
 
 function showModalItem() {
-  if (modalItem) modalItem.style.display = "flex";
+  if (modalItem) modalItem.classList.add("show");
 }
 
 function hideModalItem() {
-  if (modalItem) modalItem.style.display = "none";
+  if (modalItem) modalItem.classList.remove("show");
 }
 
 // Abrir modal con un item
@@ -33,7 +36,9 @@ function openModalItem(item) {
   if (modalItemImg) modalItemImg.src = item.image || "/assets/default-item.png";
 
   // Imagen a la izquierda
-  const modalItemImageContainer = document.getElementById("itemModalImageContainer");
+  const modalItemImageContainer = document.getElementById(
+    "itemModalImageContainer"
+  );
   if (modalItemImageContainer) {
     modalItemImageContainer.innerHTML = "";
     modalItemImageContainer.appendChild(modalItemImg);
@@ -58,7 +63,7 @@ function openModalItem(item) {
       magicResistance: "Magic Resist",
       coolDownReduction: "Cool Down Red.",
       manaRegeneration: "Mana Regen",
-      healingAndShieldPower: "Healing & Shield"
+      healingAndShieldPower: "Healing & Shield",
     };
 
     for (const key in fields) {
@@ -73,14 +78,16 @@ function openModalItem(item) {
     if (item.effect) {
       const effectP = document.createElement("p");
       effectP.style.marginTop = "1.5rem";
-      effectP.innerHTML = `<strong>Efecto:</strong> ${item.effect.replace(/\\n/g, "<br>")}`;
+      effectP.innerHTML = `<strong>Efecto:</strong> ${item.effect.replace(
+        /\\n/g,
+        "<br>"
+      )}`;
       modalItemInfo.appendChild(effectP);
     }
   }
 
   showModalItem();
 }
-
 
 // Hacer global si lo querés llamar desde cards
 window.openModalItem = openModalItem;

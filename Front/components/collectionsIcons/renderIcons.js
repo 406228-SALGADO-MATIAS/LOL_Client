@@ -37,7 +37,7 @@ function renderIconsByCategory({
       "'"
     );
     title.innerHTML = `<strong>${displayCat.toUpperCase()}</strong>`;
-    title.classList.add("mt-3");
+    title.classList.add("mt-3", "category-title"); 
     collectionsContainer.appendChild(title);
 
     appendIconRows(collectionsContainer, group);
@@ -56,7 +56,7 @@ function renderIconsByCategory({
     if (emptyGroup.length) {
       const title = document.createElement("h3");
       title.innerHTML = `<strong>${emptyGroupTitle.toUpperCase()}</strong>`;
-      title.classList.add("mt-3");
+      title.classList.add("mt-3", "category-title"); 
       collectionsContainer.appendChild(title);
 
       appendIconRows(collectionsContainer, emptyGroup);

@@ -28,7 +28,7 @@ function renderItemsByStyle() {
 
     const title = document.createElement("h3");
     title.innerHTML = `<strong>${cat.label.toUpperCase()}</strong>`;
-    title.classList.add("mt-3");
+    title.classList.add("mt-3", "category-title"); 
     collectionsContainer.appendChild(title);
 
     appendItemRows(collectionsContainer, group);
@@ -44,10 +44,9 @@ function renderItemsByStyle() {
   if (emptyGroup.length) {
     const title = document.createElement("h3");
     title.innerHTML = `<strong>SIN CATEGORÍA</strong>`;
-    title.classList.add("mt-3");
+    title.classList.add("mt-3", "category-title"); 
     collectionsContainer.appendChild(title);
 
     appendItemRows(collectionsContainer, emptyGroup);
   }
 }
-

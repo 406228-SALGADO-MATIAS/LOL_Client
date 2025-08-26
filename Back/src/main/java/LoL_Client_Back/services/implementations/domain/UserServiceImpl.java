@@ -30,6 +30,7 @@ import LoL_Client_Back.repositories.reference.RankTierRepository;
 import LoL_Client_Back.repositories.reference.ServerRegionRepository;
 import LoL_Client_Back.repositories.transaction.UserLootRepository;
 import LoL_Client_Back.services.interfaces.assocation.UserXChampionService;
+import LoL_Client_Back.services.interfaces.assocation.UserXSkinService;
 import LoL_Client_Back.services.interfaces.domain.UserMatchesService;
 import LoL_Client_Back.services.interfaces.domain.UserService;
 import LoL_Client_Back.services.interfaces.transaction.UserLootService;
@@ -80,6 +81,8 @@ public class UserServiceImpl implements UserService {
     DTOBuilder dtoBuilder;
     @Autowired
     UserXChampionService userXChampionService;
+    @Autowired
+    UserXSkinService userXSkinService;
 
     @Override
     public UserMatchesDTO findById(Long id) {
@@ -135,6 +138,7 @@ public class UserServiceImpl implements UserService {
             User userSaved = modelMapper.map(userEntitySaved,User.class);
 
             userXChampionService.giveChampionsToUsersWithNoChampions();
+            userXSkinService.giveSkinsToUsersWithout();
             
             return dtoBuilder.buildUserLootMatchesDTO(userSaved,loot,matches);
 

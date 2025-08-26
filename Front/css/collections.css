@@ -1,8 +1,25 @@
 /* collections.css */
-
+body {
+  padding-top: 105px;
+  background: linear-gradient(90deg, #051220, #0b3846);
+  margin: 0;
+}
 /* Placeholder */
 .placeholder {
   font-size: 2rem;
   font-weight: bold;
   color: #343a40;
+}
+
+.category-title {
+  font-size: 2.2rem; /* más grande  */
+  font-weight: 400; /* semi bold, menos tosco */
+  text-align: left;
+  color: #eed600ce; 
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 5px rgba(0,0,0,0.6);
+  border-bottom: 3px solid rgba(255,255,255,0.2); /* subrayado  */
+  padding-bottom: 0.3rem;
 }

@@ -15,11 +15,11 @@ if (modalChamp)
   });
 
 function showModalChamp() {
-  if (modalChamp) modalChamp.style.display = "flex";
+  if (modalChamp) modalChamp.classList.add('show');
 }
 
 function hideModalChamp() {
-  if (modalChamp) modalChamp.style.display = "none";
+  if (modalChamp) modalChamp.classList.remove('show');
 }
 
 function openModal(champ) {
@@ -45,11 +45,11 @@ if (modalSkin)
   });
 
 function showModalSkin() {
-  if (modalSkin) modalSkin.style.display = "flex";
+  if (modalSkin) modalSkin.classList.add('show');
 }
 
 function hideModalSkin() {
-  if (modalSkin) modalSkin.style.display = "none";
+  if (modalSkin) modalSkin.classList.remove('show');
 }
 
 function openModalSkin(skin) {
@@ -84,11 +84,11 @@ if (modalIcon)
   });
 
 function showModalIcon() {
-  if (modalIcon) modalIcon.style.display = "flex";
+  if (modalIcon) modalIcon.classList.add('show');
 }
 
 function hideModalIcon() {
-  if (modalIcon) modalIcon.style.display = "none";
+  if (modalIcon) modalIcon.classList.remove('show');
 }
 
 function openModalIcon(icon) {

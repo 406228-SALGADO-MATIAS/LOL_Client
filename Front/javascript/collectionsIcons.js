@@ -94,19 +94,19 @@ function updateUnlockButtonIcon(icon) {
   if (icon.owned) {
     // Icono ya adquirido
     unlockButtonIcon.textContent = "USAR";
-    unlockButtonIcon.style.backgroundColor = "#28a745"; // verde
+    unlockButtonIcon.style.backgroundColor = "#125823ff"; // verde
     unlockButtonIcon.style.cursor = "pointer";
     unlockButtonIcon.onclick = () => handleUseIcon(icon); // función que luego implementes
   } else if (userBE >= icon.blueEssencePrice) {
     // Puede comprar
     unlockButtonIcon.textContent = `DESBLOQUEAR: BE ${icon.blueEssencePrice}`;
-    unlockButtonIcon.style.backgroundColor = "#bf6c00ff"; // naranja
+    unlockButtonIcon.style.backgroundColor = "#2600ff"; // naranja
     unlockButtonIcon.style.cursor = "pointer";
     unlockButtonIcon.onclick = () => handleUnlockIcon(icon); // función que luego implementes
   } else {
     // No tiene BE suficiente
     unlockButtonIcon.textContent = `NECESITA BE ${icon.blueEssencePrice}`;
-    unlockButtonIcon.style.backgroundColor = "#999"; // gris
+    unlockButtonIcon.style.backgroundColor = "#500000ff"; // gris
     unlockButtonIcon.style.cursor = "not-allowed";
     unlockButtonIcon.onclick = null;
   }

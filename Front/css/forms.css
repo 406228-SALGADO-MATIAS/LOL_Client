@@ -1,0 +1,140 @@
+/* forms.css */
+
+/* Body: centrado general y fondo */
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #051220, #081c31);
+  font-family: Arial, sans-serif;
+}
+
+/* Contenedor general de formularios */
+.form-box {
+  background-color: #0a1c33;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  width: 350px;
+  color: #f0f0f0;
+}
+
+/* Títulos */
+.form-box h1,
+.form-box h2,
+.form-box h3 {
+  margin-bottom: 25px;
+  font-weight: bold;
+  color: #eed600ce;
+}
+
+/* Inputs y selects */
+.form-box input,
+.form-box select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #333;
+  background-color: #142b45;
+  color: #f0f0f0;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-box input:focus,
+.form-box select:focus {
+  outline: none;
+  border-color: #eed600ce;
+  box-shadow: 0 0 6px #eed600ce;
+}
+
+/* Botones */
+.form-box button {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.form-box .btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.form-box .btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.form-box .btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.form-box .btn-secondary:hover {
+  background-color: #495057;
+}
+
+.form-box .btn-success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.form-box .btn-success:hover {
+  background-color: #1e7e34;
+}
+
+/* Mensajes */
+.form-box .message {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.form-box .message.text-success {
+  color: #28a745;
+}
+
+.form-box .message.text-danger {
+  color: #ff6b6b;
+}
+
+/* Intro-box: solo para botones de intro */
+.welcome-box {
+  background-color: #0a1c33;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  width: 350px;
+  color: #f0f0f0;
+}
+
+.welcome-box h1 {
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #eed600ce;
+}
+
+.welcome-box button {
+  width: 120px;
+  margin: 10px;
+  font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+  .form-box,
+  .welcome-box {
+    width: 90%;
+    padding: 30px;
+  }
+}

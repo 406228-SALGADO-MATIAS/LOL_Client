@@ -64,6 +64,21 @@
 
   <!-- Estilos específicos del navbar -->
   <style>
+    #navbar-container nav {
+      background: linear-gradient(360deg, #081c31, #0c2e50);
+    }
+
+    #navbar-container nav a {
+      color: #ffffff !important;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 0 15px;
+    }
+
+    #navbar-container nav a.nav-link:hover {
+      color: #ff9800 !important;
+    }
+
     .btn-play {
       background-color: orange;
       color: white;
@@ -72,6 +87,7 @@
       padding: 0.6rem 1.5rem;
       border-radius: 8px;
       transition: transform 0.2s;
+      color: #fff !important;
     }
     .btn-play:hover {
       transform: scale(1.05);
@@ -82,13 +98,16 @@
       font-weight: 500;
     }
     #logoutBtn {
-      background-color: #dc3545 !important; /* rojo */
-      border-color: #dc3545 !important;
+      background-color: #79000c !important; /* rojo */
+      border-color: #000000 !important;
+      transition: transform 0.2s; /* animación igual que btn-play */
+      border-radius: 8px; /* mismo borde redondeado que btn-play */
     }
 
     #logoutBtn:hover {
-      background-color: #bb2d3b !important; /* más oscuro en hover */
-      border-color: #b02a37 !important;
+      background-color: #61000a !important; /* más oscuro en hover */
+      border-color: #464646 !important;
+      transform: scale(1.05);     /* efecto de hover igual que btn-play */
     }
   </style>
 </nav>

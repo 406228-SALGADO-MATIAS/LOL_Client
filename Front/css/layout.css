@@ -1,13 +1,8 @@
 /* layout.css */
-body {
-  padding-top: 105px;
-  background-color: #e2e2e2;
-  margin: 0;
-}
 
 /* Navbar */
 .navbar-custom {
-  background-color: #343a40;
+  background: linear-gradient(360deg, #081c31, #0c2e50);
   height: 45px;
   display: flex;
   align-items: center;
@@ -55,4 +50,18 @@ body {
   align-items: center;
   height: calc(100vh - 80px);
   margin-left: 15.5%;
+}
+
+/* Hacer que "Volver" tenga los mismos estilos que los links del menú */
+.navbar-custom .navbar-brand {
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0 15px;
+  cursor: pointer;
+  transition: color 0.2s; /* suaviza el hover */
+}
+
+.navbar-custom .navbar-brand:hover {
+  color: #ff9800 !important;
 }

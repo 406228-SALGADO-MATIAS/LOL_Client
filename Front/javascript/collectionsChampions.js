@@ -80,19 +80,19 @@ function updateUnlockButton(champ) {
 
   if (champ.owned) {
     unlockButton.textContent = "DESBLOQUEADO";
-    unlockButton.style.backgroundColor = "#999";
+    unlockButton.style.backgroundColor = "#5e5e5eff";
     unlockButton.style.cursor = "not-allowed";
     unlockButton.onclick = null;
   } else if (userBE >= champ.blueEssencePrice) {
     unlockButton.textContent = `DESBLOQUEAR: BE ${
       champ.blueEssencePrice || "N/A"
     }`;
-    unlockButton.style.backgroundColor = "#bf6c00ff";
+    unlockButton.style.backgroundColor = "#2600ff";
     unlockButton.style.cursor = "pointer";
     unlockButton.onclick = () => handleUnlock(champ);
   } else {
     unlockButton.textContent = `NECESITA BE ${champ.blueEssencePrice}`;
-    unlockButton.style.backgroundColor = "#999";
+    unlockButton.style.backgroundColor = "#500000ff";
     unlockButton.style.cursor = "not-allowed";
     unlockButton.onclick = null;
   }

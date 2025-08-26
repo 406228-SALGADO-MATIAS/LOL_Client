@@ -179,13 +179,14 @@ public class UserXSkinServiceImpl implements UserXSkinService {
 
             List<SkinEntity> availableSkins = skinRepository.findByChampionIn(champions);
 
-            if (availableSkins == null || availableSkins.size() < 2) {
+            if (availableSkins == null || availableSkins.size() < 3) {
                 continue; // if the champion does not have skins (should never happen)
             }
 
             Collections.shuffle(availableSkins, random);
             SkinEntity skin1 = availableSkins.get(0);
             SkinEntity skin2 = availableSkins.get(1);
+            SkinEntity skin3 = availableSkins.get(2);
 
             UserXSkinEntity belonging1 = new UserXSkinEntity();
             belonging1.setUser(user);
@@ -197,8 +198,14 @@ public class UserXSkinServiceImpl implements UserXSkinService {
             belonging2.setSkin(skin2);
             belonging2.setAdquisitionDate(LocalDateTime.now());
 
+            UserXSkinEntity belonging3 = new UserXSkinEntity();
+            belonging3.setUser(user);
+            belonging3.setSkin(skin3);
+            belonging3.setAdquisitionDate(LocalDateTime.now());
+
             newBelongings.add(belonging1);
             newBelongings.add(belonging2);
+            newBelongings.add(belonging3);
         }
 
         userXSkinRepository.saveAll(newBelongings);
