@@ -12,8 +12,12 @@ function renderLootGrid(containerId, items, type) {
   }
 
   groupedItems.forEach((item) => {
-    const card = createLootCard(item, item.type); // <-- usar item.type real
-    attachHoverModal(card, item, item.type); // <-- idem
+    // Para materiales, cada item ya trae su type: "chest" | "masterChest" | "key" | "orangeEssence"
+    // Para lo demás, usá el `type` del parámetro ("champion" | "skin" | "icon")
+    const resolvedType = type === "material" ? item.type : type;
+
+    const card = createLootCard(item, resolvedType);
+    attachHoverModal(card, item, resolvedType);
     grid.appendChild(card);
   });
 
@@ -47,7 +51,7 @@ function normalizeItem(item, type) {
   else if (type === "material") name = item.materialName;
   else name = "Loot";
 
-  return { ...item, name };
+  return { ...item, name , type};
 }
 
 // Agrupa por nombre y suma cantidad

@@ -9,6 +9,7 @@ let materialsInventory = {};
 let ownedChampions = [];
 let ownedSkins = [];
 let ownedIcons = [];
+let activableSkins = []; // <- AÑADIR ESTO
 
 async function loadOwnedCollections() {
   if (!userId) return;
@@ -68,16 +69,16 @@ function getItemStatus(item, type) {
     if (
       ownedSkins.some((s) => s.name === item.name || s.name === item.skinName)
     ) {
-      return "OWNED"; // en colección
+      return "OWNED";
     }
     if (
       activableSkins.some(
         (s) => s.name === item.name || s.name === item.skinName
       )
     ) {
-      return "ACTIVABLE"; // puede desbloquear
+      return "ACTIVABLE";
     }
-    return "NEEDS_CHAMPION"; // no tiene el campeón
+    return "NEEDS_CHAMPION";
   }
 
   if (type === "icon") {
@@ -88,9 +89,20 @@ function getItemStatus(item, type) {
       : "ACTIVABLE";
   }
 
+  // ✅ Cofres
+  if (type === "chest" || type === "masterChest") {
+    return materialsInventory.keys > 0 ? "OPENABLE" : "NEEDS_KEY";
+  }
+
+  // ✅ Materiales que no tienen estado (key / orange essence)
+  if (type === "key" || type === "orangeEssence") {
+    return "MATERIAL";
+  }
+
+  // Fallback si alguna vez te llega 'material' genérico
   if (type === "material") {
-    const itemName = item.name || item.materialName;
-    if (itemName.toLowerCase().includes("chest")) {
+    const itemName = (item.name || item.materialName || "").toLowerCase();
+    if (itemName.includes("chest")) {
       return materialsInventory.keys > 0 ? "OPENABLE" : "NEEDS_KEY";
     }
     return "MATERIAL";
