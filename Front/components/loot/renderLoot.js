@@ -12,8 +12,8 @@ function renderLootGrid(containerId, items, type) {
   }
 
   groupedItems.forEach((item) => {
-    const card = createLootCard(item, type);
-    attachHoverModal(card, item, type);
+    const card = createLootCard(item, item.type); // <-- usar item.type real
+    attachHoverModal(card, item, item.type); // <-- idem
     grid.appendChild(card);
   });
 
@@ -76,25 +76,28 @@ function buildMaterialItems(materials) {
       imageUrl:
         "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/lootMaterials/chest.png?raw=true",
       quantity: materials.chests,
+      type: "chest",
     },
     {
       materialName: "Master Chest",
       imageUrl:
         "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/lootMaterials/masterChest.png?raw=true",
       quantity: materials.masterChests,
+      type: "masterChest",
     },
     {
       materialName: "Key",
       imageUrl:
         "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/lootMaterials/key.png?raw=true",
       quantity: materials.keys,
+      type: "key",
     },
     {
       materialName: "Orange Essence",
       imageUrl:
         "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/lootMaterials/orangeEssence.png?raw=true",
       quantity: materials.orangeEssence,
+      type: "orangeEssence",
     },
   ];
 }
-
