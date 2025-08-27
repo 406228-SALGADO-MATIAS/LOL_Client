@@ -2,8 +2,8 @@
   position: absolute;
   display: none;
   flex-direction: column;
-  width: 15vw;       /* ancho fijo o relativo */
-  max-height: 30vh;   /* limitar altura */
+  width: 13vw;       /* ancho fijo o relativo */
+  max-height: 37vh;   /* limitar altura */
   background-color: #222;
   border-radius: 8px;
   padding: 0.5rem;

@@ -14,6 +14,18 @@ function createLootCard(item, type) {
     img.style.opacity = "0.6";
   }
 
+  if (type === "champion") {
+    img.style.objectPosition = getchampionObjectPosition(item.name);
+    img.style.transform = `scale(${getChampionZoom(item.name)})`;
+    
+  }
+
+  if (type === "skin") {
+    img.style.objectPosition = getskinObjectPosition(item.name);
+    img.style.transform = `scale(${getSkinZoom(item.name)})`;
+    
+  }
+
   card.appendChild(img);
 
   // 👉 Contador

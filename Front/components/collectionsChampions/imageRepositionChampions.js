@@ -111,3 +111,6 @@ function getChampionZoom(name) {
 
   return zoom;
 }
+
+window.getChampionZoom = function(name) {  }
+window.getchampionObjectPosition = function(name) {  }

@@ -25,7 +25,7 @@ function createHoverModal(item, type) {
   img.style.borderRadius = "4px";
 
   // Aquí agregas las líneas para limitar altura y mantener proporción
-  img.style.maxHeight = "12vh"; // evita que sobresalga del modal
+  img.style.maxHeight = "19vh"; // evita que sobresalga del modal
   img.style.objectFit = "contain"; // mantiene la proporción y no recorta
 
   modal.appendChild(img);
