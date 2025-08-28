@@ -9,7 +9,7 @@ let materialsInventory = {};
 let ownedChampions = [];
 let ownedSkins = [];
 let ownedIcons = [];
-let activableSkins = []; // <- AÑADIR ESTO
+let activableSkins = []; 
 
 async function loadOwnedCollections() {
   if (!userId) return;
@@ -135,7 +135,7 @@ async function loadLootItems() {
       masterChests: userLoot.masterChests,
       keys: userLoot.keys,
       orangeEssence: userLoot.orangeEssence,
-      // blueEssence lo ignoramos si querés
+      
     };
 
     renderMaterials(materialsInventory);
@@ -188,7 +188,7 @@ async function loadUserProfile() {
 // Inicialización
 document.addEventListener("DOMContentLoaded", async () => {
   await loadUserProfile();
-  await loadOwnedCollections(); // <-- nueva carga
+  await loadOwnedCollections(); 
   await loadLootItems();
 });
 

@@ -14,7 +14,7 @@ function createLootCard(item, type) {
     img.style.opacity = "0.6";
   }
 
-  if (type === "champion") {
+  /* if (type === "champion") {
     img.style.objectPosition = getchampionObjectPosition(item.name);
     img.style.transform = `scale(${getChampionZoom(item.name)})`;
     
@@ -24,7 +24,7 @@ function createLootCard(item, type) {
     img.style.objectPosition = getskinObjectPosition(item.name);
     img.style.transform = `scale(${getSkinZoom(item.name)})`;
     
-  }
+  }*/
 
   card.appendChild(img);
 
@@ -41,6 +41,13 @@ function createLootCard(item, type) {
     badge.style.padding = "2px 6px";
     badge.style.borderRadius = "6px";
     card.appendChild(badge);
+  }
+
+  // 👉 Click especial para cofres
+  if (type === "chest" || type === "masterChest") {
+    card.addEventListener("click", () => {
+      createChestClickModal(item, type); // acá abrimos el modal que armamos antes
+    });
   }
 
   return card;

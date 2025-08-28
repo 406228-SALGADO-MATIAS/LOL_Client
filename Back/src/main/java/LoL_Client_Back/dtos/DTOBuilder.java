@@ -6,10 +6,7 @@ import LoL_Client_Back.dtos.association.UserXSkinDTO;
 import LoL_Client_Back.dtos.champion.ChampionDTO;
 import LoL_Client_Back.dtos.enums.MatchType;
 import LoL_Client_Back.dtos.item.ItemDTO;
-import LoL_Client_Back.dtos.loot.LootInventoryChampionDTO;
-import LoL_Client_Back.dtos.loot.LootInventoryIconDTO;
-import LoL_Client_Back.dtos.loot.LootInventorySkinDTO;
-import LoL_Client_Back.dtos.loot.UserLootDTO;
+import LoL_Client_Back.dtos.loot.*;
 import LoL_Client_Back.dtos.match.MatchDTO;
 import LoL_Client_Back.dtos.match.PlayerMatchDetailDTO;
 import LoL_Client_Back.dtos.match.PlayerMatchItemDTO;
@@ -582,5 +579,28 @@ public class DTOBuilder
             updateList.add(dto);
         }
         return updateList;
+    }
+
+    public NewItemDTO buildNewItemDTO(Object obj) {
+        if (obj instanceof LootInventoryChampionsEntity champInv) {
+            return new NewItemDTO(
+                    champInv.getChampion().getImage(),
+                    champInv.getChampion().getName(),
+                    champInv.getIsActive() != null && champInv.getIsActive()
+            );
+        } else if (obj instanceof LootInventoryIconsEntity iconInv) {
+            return new NewItemDTO(
+                    iconInv.getIcon().getImage(),
+                    iconInv.getIcon().getIcon(),
+                    iconInv.getIsActive() != null && iconInv.getIsActive()
+            );
+        } else if (obj instanceof LootInventorySkinsEntity skinInv) {
+            return new NewItemDTO(
+                    skinInv.getSkin().getImage(),
+                    skinInv.getSkin().getName(),
+                    skinInv.getIsActive() != null && skinInv.getIsActive()
+            );
+        }
+        throw new IllegalArgumentException("Unsupported object type: " + obj.getClass());
     }
 }

@@ -249,5 +249,3 @@ function getSkinObjectPosition(name) {
   return `${position}% center`;
 }
 
-window.getSkinZoom = function(name) {  }
-window.getskinObjectPosition = function(name) {  }

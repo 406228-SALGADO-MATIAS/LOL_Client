@@ -74,18 +74,6 @@ function createHoverChestModal(item, type) {
 
   const status = getItemStatus(item, type);
   switch (status) {
-    case "OWNED":
-      topName.textContent = "En colección";
-      topName.style.color = "red";
-      break;
-    case "ACTIVABLE":
-      topName.textContent = "Activable";
-      topName.style.color = "limegreen";
-      break;
-    case "NEEDS_CHAMPION":
-      topName.textContent = "Necesita el campeón";
-      topName.style.color = "orange";
-      break;
     case "OPENABLE":
       topName.textContent = "Abrir";
       topName.style.color = "limegreen";
@@ -142,14 +130,6 @@ function createHoverItemModal(item, type) {
       break;
     case "NEEDS_CHAMPION":
       topName.textContent = "Necesita el campeón";
-      topName.style.color = "orange";
-      break;
-    case "OPENABLE":
-      topName.textContent = "Abrir";
-      topName.style.color = "limegreen";
-      break;
-    case "NEEDS_KEY":
-      topName.textContent = "Necesita llave";
       topName.style.color = "orange";
       break;
     default:
