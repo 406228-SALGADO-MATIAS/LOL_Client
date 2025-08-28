@@ -56,60 +56,19 @@ async function loadOwnedCollections() {
   }
 }
 
-function getItemStatus(item, type) {
-  if (type === "champion") {
-    return ownedChampions.some(
-      (c) => c.name === item.name || c.name === item.championName
-    )
-      ? "OWNED"
-      : "ACTIVABLE";
-  }
+async function handleOpenChest(type) {
+  const endpoint =
+    type === "chest"
+      ? `http://localhost:8080/userLoot/openChests/normal/${userId}`
+      : `http://localhost:8080/userLoot/openChests/master/${userId}`;
 
-  if (type === "skin") {
-    if (
-      ownedSkins.some((s) => s.name === item.name || s.name === item.skinName)
-    ) {
-      return "OWNED";
-    }
-    if (
-      activableSkins.some(
-        (s) => s.name === item.name || s.name === item.skinName
-      )
-    ) {
-      return "ACTIVABLE";
-    }
-    return "NEEDS_CHAMPION";
-  }
+  const res = await fetch(endpoint, { method: "PUT" });
 
-  if (type === "icon") {
-    return ownedIcons.some(
-      (i) => i.icon === item.name || i.icon === item.iconName
-    )
-      ? "OWNED"
-      : "ACTIVABLE";
-  }
+  if (!res.ok) throw new Error("Error abriendo cofre");
 
-  // ✅ Cofres
-  if (type === "chest" || type === "masterChest") {
-    return materialsInventory.keys > 0 ? "OPENABLE" : "NEEDS_KEY";
-  }
-
-  // ✅ Materiales que no tienen estado (key / orange essence)
-  if (type === "key" || type === "orangeEssence") {
-    return "MATERIAL";
-  }
-
-  // Fallback si alguna vez te llega 'material' genérico
-  if (type === "material") {
-    const itemName = (item.name || item.materialName || "").toLowerCase();
-    if (itemName.includes("chest")) {
-      return materialsInventory.keys > 0 ? "OPENABLE" : "NEEDS_KEY";
-    }
-    return "MATERIAL";
-  }
-
-  return "UNKNOWN";
+  return await res.json(); // devuelve NewItemDTO
 }
+
 
 async function loadLootItems() {
   if (!userId) {

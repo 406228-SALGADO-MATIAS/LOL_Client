@@ -24,11 +24,17 @@ function createChestClickModal(item, type) {
     getItemStatus(item, type) === "NEEDS_KEY" ? "Necesita llave" : "Abrir";
 
   // Acción del botón (acá después conectamos la lógica real)
-  button.addEventListener("click", () => {
+  button.addEventListener("click", async () => {
     if (getItemStatus(item, type) === "NEEDS_KEY") {
       alert("Este cofre necesita una llave 🔑");
     } else {
-      alert("Abriste el cofre 🎁");
+      try {
+        const newItem = await handleOpenChest(type);
+        container.innerHTML = ""; // cierro modal del cofre
+        createNewItemModal(newItem); // abro modal del reward
+      } catch (err) {
+        alert("Error abriendo cofre: " + err.message);
+      }
     }
   });
 
