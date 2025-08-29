@@ -18,6 +18,7 @@ function renderLootGrid(containerId, items, type) {
 
     const card = createLootCard(item, resolvedType);
     attachHoverModal(card, item, resolvedType);
+    attachClickModal(card, item, resolvedType); // <--- esto falta
     grid.appendChild(card);
   });
 

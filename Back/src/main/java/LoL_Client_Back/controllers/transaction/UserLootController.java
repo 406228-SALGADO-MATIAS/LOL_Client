@@ -93,7 +93,7 @@ public class UserLootController {
     public ResponseEntity<NewItemDTO> unlockOrRefundSkinLoot(@PathVariable Long idLootSkin,
                                                                   @RequestParam (defaultValue = "true")boolean enchant)
     {
-        NewItemDTO result = userLootService.unlockOrRefundChampionLoot(idLootSkin, enchant);
+        NewItemDTO result = userLootService.unlockOrRefundSkinLoot(idLootSkin, enchant);
         return ResponseEntity.ok(result);
     }
 

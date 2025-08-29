@@ -1,6 +1,4 @@
-// Crea modal para keys
-
-// Función principal que decide qué modal crear
+// función principal
 function createHoverModal(item, type) {
   switch (type) {
     case "key":
@@ -15,29 +13,36 @@ function createHoverModal(item, type) {
       return createHoverItemModal(item, type);
     default:
       console.warn("Tipo de item desconocido:", type);
-      return createHoverItemModal(item); // así nunca cae en itemModal y no aparece "Desconocido"
+      return createHoverItemModal(item);
   }
 }
 
 function attachHoverModal(card, item, type) {
   const modal = createHoverModal(item, type);
 
+  let scrollHandler = null;
+  // Buscamos el contenedor scrollable más cercano (sidebar o window)
+  const scrollParent = card.closest(".sidebar") || window;
+
   card.addEventListener("mouseenter", () => {
     modal.classList.add("show");
     const rect = card.getBoundingClientRect();
 
-    modal.style.top = `${
-      rect.top +
-      window.scrollY +
-      rect.height / 2 -
-      rect.height / 2 -
-      window.innerHeight * 0.065
-    }px`;
-
+    modal.style.top = `${rect.top + window.scrollY}px`;
     modal.style.left = `${rect.right + 10 + window.scrollX}px`;
+
+    // Listener de scroll en el contenedor correcto
+    scrollHandler = () => modal.classList.remove("show");
+    scrollParent.addEventListener("scroll", scrollHandler, { passive: true });
   });
 
-  card.addEventListener("mouseleave", () => modal.classList.remove("show"));
+  card.addEventListener("mouseleave", () => {
+    modal.classList.remove("show");
+    if (scrollHandler) {
+      scrollParent.removeEventListener("scroll", scrollHandler);
+      scrollHandler = null;
+    }
+  });
 }
 
 function getItemStatus(item, type) {
@@ -73,17 +78,14 @@ function getItemStatus(item, type) {
       : "ACTIVABLE";
   }
 
-  // ✅ Cofres
   if (type === "chest" || type === "masterChest") {
     return materialsInventory.keys > 0 ? "OPENABLE" : "NEEDS_KEY";
   }
 
-  // ✅ Materiales que no tienen estado (key / orange essence)
   if (type === "key" || type === "orangeEssence") {
     return "MATERIAL";
   }
 
-  // Fallback si alguna vez te llega 'material' genérico
   if (type === "material") {
     const itemName = (item.name || item.materialName || "").toLowerCase();
     if (itemName.includes("chest")) {
@@ -98,7 +100,7 @@ function getItemStatus(item, type) {
 function createHoverKeyModal(item) {
   const modal = document.createElement("div");
   modal.classList.add("loot-hover-modal");
-
+  modal.style.maxWidth = "10vw";
   const img = document.createElement("img");
   img.src = item.imageUrl;
   img.alt = "Key";
@@ -112,10 +114,12 @@ function createHoverKeyModal(item) {
   return modal;
 }
 
-// Crea modal para chests y masterChests
+// modal para chests y masterChests
 function createHoverChestModal(item, type) {
   const modal = document.createElement("div");
   modal.classList.add("loot-hover-modal");
+  modal.style.width = "15vw";
+  modal.style.height = "15vw";
 
   const topInfo = document.createElement("div");
   topInfo.classList.add("modal-info");
@@ -125,7 +129,7 @@ function createHoverChestModal(item, type) {
   const topName = document.createElement("div");
   topName.classList.add("name");
   topName.style.fontWeight = "bold";
-  topName.style.fontSize = "0.85rem";
+  topName.style.fontSize = "1.2rem";
 
   const status = getItemStatus(item, type);
   switch (status) {
@@ -150,7 +154,7 @@ function createHoverChestModal(item, type) {
   img.alt = type === "chest" ? "Chest" : "Master Chest";
   img.style.width = "100%";
   img.style.borderRadius = "4px";
-  img.style.maxHeight = "19vh";
+
   img.style.objectFit = "contain";
 
   modal.appendChild(img);
@@ -158,7 +162,7 @@ function createHoverChestModal(item, type) {
   return modal;
 }
 
-// Crea modal para campeones, skins e iconos
+// modal para campeones, skins e iconos
 function createHoverItemModal(item, type) {
   const modal = document.createElement("div");
   modal.classList.add("loot-hover-modal");
@@ -171,7 +175,10 @@ function createHoverItemModal(item, type) {
   const topName = document.createElement("div");
   topName.classList.add("name");
   topName.style.fontWeight = "bold";
-  topName.style.fontSize = "0.85rem";
+
+  if (type === "icon") {
+    modal.width = "5vw";
+  }
 
   const status = getItemStatus(item, type);
   switch (status) {
@@ -200,8 +207,12 @@ function createHoverItemModal(item, type) {
   img.alt = item.championName || item.skinName || item.iconName || "Item";
   img.style.width = "100%";
   img.style.borderRadius = "4px";
-  img.style.maxHeight = "19vh";
   img.style.objectFit = "contain";
+
+  if (type === "icon") {
+    img.style.maxHeight = "22vh";
+  }
+
   modal.appendChild(img);
 
   const info = document.createElement("div");
@@ -210,35 +221,50 @@ function createHoverItemModal(item, type) {
   info.style.flexDirection = "column";
   info.style.padding = "0.3rem 0";
 
-  const name = document.createElement("div");
-  name.classList.add("name");
-  name.style.fontWeight = "bold";
-  if (type === "champion") name.textContent = item.championName;
-  else if (type === "skin") name.textContent = item.skinName;
-  else if (type === "icon") name.textContent = item.iconName;
-  info.appendChild(name);
-
-  if (
-    (type === "champion" || type === "icon") &&
-    item.blueEssenceCost != null
-  ) {
-    const originalCost = document.createElement("div");
-    originalCost.classList.add("name");
-    originalCost.style.fontWeight = "bold";
-    originalCost.textContent = `Coste original: ${item.blueEssenceCost * 2}`;
-    info.appendChild(originalCost);
+  if (type === "champion" && item.blueEssenceCost != null) {
+    // nombre y coste juntos en una línea
+    const nameAndCost = document.createElement("div");
+    nameAndCost.classList.add("name");
+    nameAndCost.style.fontWeight = "bold";
+    nameAndCost.textContent = `${item.championName} - Coste: BE ${
+      item.blueEssenceCost * 2
+    }`;
+    info.appendChild(nameAndCost);
 
     const unlock = document.createElement("div");
     unlock.classList.add("cost");
     unlock.textContent = `Desbloquear:  - BE ${item.blueEssenceCost}`;
     info.appendChild(unlock);
-  } else if (type === "skin" && item.orangeEssenceCost != null) {
-    const unlock = document.createElement("div");
-    unlock.classList.add("cost");
-    unlock.textContent = `Desbloquear:  - OE ${item.orangeEssenceCost}`;
-    info.appendChild(unlock);
+  } else {
+    const name = document.createElement("div");
+    name.classList.add("name");
+    name.style.fontWeight = "bold";
+    if (type === "skin") name.textContent = item.skinName;
+    else if (type === "icon") name.textContent = item.iconName;
+    info.appendChild(name);
+
+    if (type === "skin" && item.orangeEssenceCost != null) {
+      const unlock = document.createElement("div");
+      unlock.classList.add("cost");
+      unlock.textContent = `Desbloquear:  - OE ${item.orangeEssenceCost}`;
+      info.appendChild(unlock);
+    }
+
+    if (type === "icon" && item.blueEssenceCost != null) {
+      const originalCost = document.createElement("div");
+      originalCost.classList.add("name");
+      originalCost.style.fontWeight = "bold";
+      originalCost.textContent = `Coste: BE ${item.blueEssenceCost * 2}`;
+      info.appendChild(originalCost);
+
+      const unlock = document.createElement("div");
+      unlock.classList.add("cost");
+      unlock.textContent = `Desbloquear:  - BE ${item.blueEssenceCost}`;
+      info.appendChild(unlock);
+    }
   }
 
+  // Refund (igual que antes)
   if (item.disenchantRefund != null) {
     const disenchant = document.createElement("div");
     disenchant.classList.add("cost");

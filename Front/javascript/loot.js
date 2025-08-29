@@ -9,7 +9,7 @@ let materialsInventory = {};
 let ownedChampions = [];
 let ownedSkins = [];
 let ownedIcons = [];
-let activableSkins = []; 
+let activableSkins = [];
 
 async function loadOwnedCollections() {
   if (!userId) return;
@@ -56,20 +56,6 @@ async function loadOwnedCollections() {
   }
 }
 
-async function handleOpenChest(type) {
-  const endpoint =
-    type === "chest"
-      ? `http://localhost:8080/userLoot/openChests/normal/${userId}`
-      : `http://localhost:8080/userLoot/openChests/master/${userId}`;
-
-  const res = await fetch(endpoint, { method: "PUT" });
-
-  if (!res.ok) throw new Error("Error abriendo cofre");
-
-  return await res.json(); // devuelve NewItemDTO
-}
-
-
 async function loadLootItems() {
   if (!userId) {
     alert("No se encontró el usuario");
@@ -94,7 +80,6 @@ async function loadLootItems() {
       masterChests: userLoot.masterChests,
       keys: userLoot.keys,
       orangeEssence: userLoot.orangeEssence,
-      
     };
 
     renderMaterials(materialsInventory);
@@ -144,10 +129,73 @@ async function loadUserProfile() {
   }
 }
 
+async function handleOpenChest(type) {
+  const endpoint =
+    type === "chest"
+      ? `http://localhost:8080/userLoot/openChests/normal/${userId}`
+      : `http://localhost:8080/userLoot/openChests/master/${userId}`;
+
+  const res = await fetch(endpoint, { method: "PUT" });
+
+  if (!res.ok) throw new Error("Error abriendo cofre");
+
+  return await res.json(); // devuelve NewItemDTO
+}
+
+async function handleEnchantItem(item, type, enchant = true) {
+  const userId = sessionStorage.getItem("userId");
+  if (!userId) throw new Error("No se encontró el usuario");
+
+  let endpoint = "";
+  let idParam = 0;
+
+  switch (type) {
+    case "champion":
+      idParam = item.id;
+      endpoint = `http://localhost:8080/userLoot/unlockOrRefund/champion/${idParam}?enchant=${enchant}`;
+      break;
+    case "skin":
+      idParam = item.id;
+      endpoint = `http://localhost:8080/userLoot/unlockOrRefund/skin/${idParam}?enchant=${enchant}`;
+      break;
+    case "icon":
+      idParam = item.id;
+      endpoint = `http://localhost:8080/userLoot/unlockOrRefund/icon/${idParam}?enchant=${enchant}`;
+      break;
+    default:
+      throw new Error("Tipo de item desconocido: " + type);
+  }
+
+  try {
+    const res = await fetch(endpoint, { method: "PUT" });
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(errText || "Error desbloqueando item");
+    }
+
+    const data = await res.json();
+
+    // Solo si estamos desbloqueando, mostramos el modal
+    if (enchant) {
+      createNewItemModal(data); 
+      // la recarga de los tres métodos se hace dentro del closeAndReload
+    } else {
+      // Si es desencantar, recargamos todo directamente
+      await loadUserProfile();
+      await loadOwnedCollections();
+      await loadLootItems();
+    }
+
+    return data;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
 // Inicialización
 document.addEventListener("DOMContentLoaded", async () => {
   await loadUserProfile();
-  await loadOwnedCollections(); 
+  await loadOwnedCollections();
   await loadLootItems();
 });
 

@@ -11,9 +11,6 @@ function createNewItemModal(newItem) {
   const img = document.createElement("img");
   img.src = newItem.image;
   img.alt = newItem.name;
-  img.style.maxWidth = "200px";
-  img.style.margin = "0 auto";
-  img.style.display = "block";
 
   const nameEl = document.createElement("div");
   nameEl.textContent = newItem.name;
@@ -26,12 +23,14 @@ function createNewItemModal(newItem) {
   button.classList.add("newitem-btn");
   button.style.marginTop = "15px";
 
-  button.addEventListener("click", async () => {
+  const closeAndReload = async () => {
     container.innerHTML = "";
     await loadUserProfile();
     await loadOwnedCollections();
     await loadLootItems();
-  });
+  };
+
+  button.addEventListener("click", closeAndReload);
 
   modal.appendChild(img);
   modal.appendChild(nameEl);
@@ -40,8 +39,8 @@ function createNewItemModal(newItem) {
   overlay.appendChild(modal);
   container.appendChild(overlay);
 
-  // cerrar clickeando afuera
+  // cerrar clickeando afuera y recargar
   overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) container.innerHTML = "";
+    if (e.target === overlay) closeAndReload();
   });
 }

@@ -36,8 +36,8 @@ function createLootCard(item, type) {
     badge.style.bottom = "5px";
     badge.style.right = "5px";
     badge.style.background = "rgba(0,0,0,0.7)";
-    badge.style.color = "white";
-    badge.style.fontSize = "0.9rem";
+    badge.style.color = "rgba(255, 231, 136, 1)";
+    badge.style.fontSize = "1.4rem";
     badge.style.padding = "2px 6px";
     badge.style.borderRadius = "6px";
     card.appendChild(badge);
