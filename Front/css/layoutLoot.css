@@ -1,4 +1,46 @@
+:root {
+  --header-h: 60px; /* ajustá si tu navbar mide distinto */
+}
+
+html,
 body {
-  background: linear-gradient(90deg, #051220, #0b3846);
+  height: 100%;
+}
+
+#navbar-container nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-h);
+  min-height: var(--header-h);
+  z-index: 1040;
+}
+
+/* Body no scrollea; reservamos espacio del header con padding-top */
+body {
   margin: 0;
+  padding-top: var(--header-h);
+  height: 100dvh; /* usa viewport real en móviles */
+  overflow: hidden; /* elimina el scroll global */
+  background: linear-gradient(90deg, #051220, #0b3846);
+}
+
+
+/* Anula el empuje extra del mt-5 del container que tenés en el HTML */
+.container-fluid.mt-5 {
+  margin-top: 0 !important;
+}
+
+/* El contenedor principal ocupa exactamente lo que queda de pantalla */
+.container-fluid {
+  height: 100%;
+  overflow: visible; /* dejá que los hijos manejen el scroll */
+  position: relative; /* evita que se monte encima */ /* sin scroll aquí */
+}
+
+/* Dentro, el row ocupa todo, y cada zona maneja su propio scroll */
+.container-fluid > .row {
+  height: 100%;
+  
 }

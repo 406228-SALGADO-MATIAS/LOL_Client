@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="/css/lootClickModal.css" />
     <link rel="stylesheet" href="/css/lootNewItemModal.css" />
     <link rel="stylesheet" href="/css/lootClickModalEnchant.css" />
-    
   </head>
 
   <body>
@@ -25,41 +24,98 @@
     <div class="container-fluid mt-5">
       <div class="row">
         <!-- Sidebar -->
-        <div class="col-12 col-md-4 sidebar p-3">
-          <!-- Buscador -->
-          <input
-            type="text"
-            class="form-control mb-3"
-            id="searchLoot"
-            placeholder="Buscar..."
-          />
+        <div class="col-12 col-md-4 sidebar p-3 d-flex flex-column">
+          <!-- Navbar superior dentro del sidebar -->
+          <div
+            class="sidebar-topbar d-flex justify-content-between align-items-center mb-3"
+          >
+            <!-- Buscador a la izquierda -->
+            <input
+              type="text"
+              class="form-control w-50"
+              id="searchLoot"
+              placeholder="Buscar..."
+            />
 
-          <!-- Categorías -->
-          <div class="loot-category">
-            <h5>Materiales</h5>
-            <div id="materialContainer" class="row">
-              <!-- Aquí se cargarán dinámicamente los materiales -->
+            <!-- Dropdown a la derecha -->
+            <div class="sidebar-topbar">
+              <select id="filterSelect" class="form-select custom-select">
+                <option value="all">Todos</option>
+                <option value="availables">Desbloqueables</option>
+                <option value="adquired">En coleccion</option>
+                <option value="resources">Necesita recursos</option>
+                <option value="champion">Necesita campeón</option>
+              </select>
             </div>
           </div>
 
-          <div class="loot-category">
-            <h5>Campeones</h5>
-            <div id="championContainer" class="row">
-              <!-- Aquí se cargarán dinámicamente los campeones -->
+          <!-- Contenido scrollable -->
+          <div class="sidebar-scroll flex-grow-1 overflow-auto">
+            <!-- Categorías -->
+            <div class="loot-category">
+              <h5>Materiales</h5>
+              <div id="materialContainer" class="row"></div>
+            </div>
+
+            <div class="loot-category">
+              <h5>Campeones</h5>
+              <div id="championContainer" class="row"></div>
+            </div>
+
+            <div class="loot-category">
+              <h5>Skins</h5>
+              <div id="skinContainer" class="row"></div>
+            </div>
+
+            <div class="loot-category">
+              <h5>Iconos</h5>
+              <div id="iconContainer" class="row"></div>
             </div>
           </div>
 
-          <div class="loot-category">
-            <h5>Skins</h5>
-            <div id="skinContainer" class="row">
-              <!-- Aquí se cargarán dinámicamente las skins -->
-            </div>
-          </div>
-
-          <div class="loot-category">
-            <h5>Iconos</h5>
-            <div id="iconContainer" class="row">
-              <!-- Aquí se cargarán dinámicamente los iconos -->
+          <!-- Barra inferior fija -->
+          <div class="sidebar-bottombar mt-3">
+            <div class="d-flex justify-content-center text-center">
+              <!-- Chest -->
+              <div class="mx-2">
+                <img
+                  id="chestImg"
+                  src="/img/chest.png"
+                  class="sidebar-icon"
+                  alt="Chest"
+                />
+                <div id="chestCount" class="sidebar-count">0</div>
+              </div>
+              <!-- MasterChest -->
+              <div class="mx-2">
+                <img
+                  id="masterChestImg"
+                  src="/img/masterChest.png"
+                  class="sidebar-icon"
+                  alt="MasterChest"
+                />
+                <div id="masterChestCount" class="sidebar-count">0</div>
+              </div>
+              <!-- Key -->
+              <div class="mx-2">
+                <img
+                  id="keyImg"
+                  src="/img/key.png"
+                  class="sidebar-icon"
+                  alt="Key"
+                />
+                <div id="keyCount" class="sidebar-count">0</div>
+              </div>
+              <!-- Orange Essence -->
+              <div class="mx-2">
+                <img
+                  id="essenceImg"
+                  src="/img/orangeEssence.png"
+                  class="sidebar-icon"
+                  alt="Orange Essence"
+                />
+                <div id="essenceCount" class="sidebar-count">0</div>
+              </div>
             </div>
           </div>
         </div>
@@ -81,7 +137,6 @@
     <script src="/components/loot/modalHooverLoot.js"></script>
     <script src="/components/loot/modalClickLoot.js"></script>
     <script src="/components/loot/modalNewItem.js"></script>
-
 
     <script src="/components/loot/renderLoot.js"></script>
 

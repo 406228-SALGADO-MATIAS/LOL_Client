@@ -2,7 +2,6 @@
   position: absolute;
   display: none;
   flex-direction: column;
-
   max-height: 50h; /* limitar altura */
   background-color: #222;
   border-radius: 8px;

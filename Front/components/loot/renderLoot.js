@@ -35,6 +35,32 @@ function renderMaterials(materials) {
   renderLootGrid("materialContainer", items, "material");
 }
 
+function renderBottomBarMaterials(materials) {
+  // Mapeamos los ids de los elementos en la barra con los tipos
+  const idMap = {
+    chest: { img: "chestImg", count: "chestCount" },
+    masterChest: { img: "masterChestImg", count: "masterChestCount" },
+    key: { img: "keyImg", count: "keyCount" },
+    orangeEssence: { img: "essenceImg", count: "essenceCount" },
+  };
+
+  // Generamos los items desde buildMaterialItems
+  const items = buildMaterialItems(materials);
+
+  items.forEach((item) => {
+    const elem = idMap[item.type];
+    if (!elem) return;
+
+    const imgEl = document.getElementById(elem.img);
+    const countEl = document.getElementById(elem.count);
+
+    // Actualizamos imagen y cantidad
+    if (imgEl) imgEl.src = item.imageUrl;
+    if (countEl) countEl.textContent = item.quantity;
+  });
+}
+
+
 function createGrid() {
   const grid = document.createElement("div");
   grid.style.display = "grid";

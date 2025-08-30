@@ -83,6 +83,7 @@ async function loadLootItems() {
     };
 
     renderMaterials(materialsInventory);
+    renderBottomBarMaterials(materialsInventory); // la barra inferior
     renderLootGrid("championContainer", championsInventory, "champion");
     renderLootGrid("skinContainer", skinsInventory, "skin");
     renderLootGrid("iconContainer", iconsInventory, "icon");

@@ -27,9 +27,9 @@
 /* Contenedor del modal de ítem (flotante, centrado, sin overlay) */
 .item-modal {
   position: absolute; /* flotante sobre la página */
-  top: 42%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.68); /* escala 33% más pequeña y centrado */
+  top: 48%;
+  transform: translate(-50%, -50%) scale(0.68);
   background-color: #1a1a1a;
   padding: 1.5rem; /* reducido proporcionalmente */
   border-radius: 0.67rem;
@@ -46,7 +46,6 @@
   z-index: 999; /* debajo del modal */
 
   animation: modalOpen 0.15s ease forwards; /* animación rápida de apertura */
-  
 }
 
 /* Imagen dentro del modal */
@@ -95,11 +94,11 @@
   right: 0.5rem !important;
   background: rgb(0, 0, 0) !important;
   border: none !important;
-  color: #f890ff8d !important;       /* blanco puro */
-  font-size: 5rem !important;    /* grande y notorio */
+  color: #f890ff !important;
+  font-size: 5rem !important;
   font-weight: bold !important;
   cursor: pointer !important;
-  z-index: 1100 !important;        /* por encima de todo */
+  z-index: 1100 !important;
   padding: 0 !important;
   line-height: 1 !important;
   transition: transform 0.2s ease, color 0.2s ease !important;

@@ -14,7 +14,7 @@ function createNewItemModal(newItem) {
 
   const nameEl = document.createElement("div");
   nameEl.textContent = newItem.name;
-  nameEl.style.fontSize = "1.5rem";
+  nameEl.style.fontSize = "1.6rem";
   nameEl.style.textAlign = "center";
   nameEl.style.marginTop = "10px";
 

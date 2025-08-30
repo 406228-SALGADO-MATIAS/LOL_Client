@@ -3,10 +3,13 @@
 /* Sidebar general */
 .sidebar {
   background-color: #0b121f; /* fondo oscuro */
-  height: 100vh; /* ocupa toda la altura */
+  height: 100%; /* ocupa toda la altura disponible del contenedor */
   overflow-y: auto;
+  overflow-x: hidden; /* 👉 oculta scroll horizontal */
   padding: 1rem;
-  color: #f0f0f0;
+  color: #ffffff;
+
+  min-width: 33vw !important; /* opcional, que no se haga muy chico */
 }
 
 /* Buscador */
@@ -108,4 +111,118 @@
 
 .sidebar::-webkit-scrollbar-track {
   background: #0b121f;
+}
+
+.sidebar-topbar {
+  position: sticky;
+  top: 0;
+  background: linear-gradient(360deg, #081c31, #0c2e50);
+  padding: 0rem 0.5rem; /* 0.25 arriba/abajo, 0.5 izquierda/derecha */
+  margin: 0; /* elimina separación externa */
+  height: 5.5vh; /* altura relativa al viewport */
+  display: flex; /* para alinear items internos */
+  align-items: center; /* centrado vertical */
+  justify-content: space-between; /* asegura separación buscador / dropdown */
+  border-radius: 0.5px;
+  z-index: 10;
+}
+
+/* Buscador */
+.sidebar-topbar #searchLoot {
+  flex: 1; /* ocupa todo el espacio disponible a la izquierda */
+  max-width: 70%; /* opcional para limitar tamaño */
+  margin: 0;
+  padding: 0.5vh 1vw; /* padding relativo */
+  height: 4vh; /* altura proporcional al topbar */
+  box-sizing: border-box;
+  border: 1px solid #006a53;
+  background-color: #1e1e1e;
+}
+
+/* Focus del buscador */
+.sidebar-topbar #searchLoot:focus {
+  outline: none;
+  border-color: #eed600ce; /* glow dorado al seleccionar */
+  box-shadow: 0 0 6px #eed600ce;
+}
+
+/* Sidebar-topbar select */
+.sidebar-topbar .custom-select {
+  width: 11vw; /* mismo tamaño que antes */
+  min-width: 0; /* evita que Bootstrap lo restrinja */
+  padding: 0.25rem 0.5rem; /* padding similar al botón original */
+  font-size: 1rem;
+  height: 4vh; /* altura proporcional al topbar */
+  border-radius: 0.2rem;
+  border: 1px solid #006a53;
+  background-color: #1e1e1e; /* mismo color que el botón anterior */
+  color: #f0f0f0;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  appearance: none; /* quita flecha nativa en algunos navegadores */
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* Opciones del select */
+.sidebar-topbar .custom-select option {
+  background-color: #081c31; /* fondo oscuro para cada opción */
+  color: #f0f0f0; /* texto claro */
+}
+
+/* Focus del select */
+.sidebar-topbar .custom-select:focus {
+  outline: none;
+  border-color: #eed600ce; /* glow dorado al seleccionar */
+  box-shadow: 0 0 6px #eed600ce;
+}
+
+/* Contenido scrollable en el medio */
+.sidebar-scroll {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 4px; /* para que no se coma el scrollbar */
+}
+.sidebar-bottombar {
+  position: sticky;
+  bottom: 0;
+  background: linear-gradient(180deg, #081c31, #0c2e50);
+  padding: 0.75rem; /* un poquito más de espacio */
+  border-radius: 1px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+}
+
+/* Contenedor de cada item */
+.sidebar-bottombar > div > div.mx-2 {
+  margin: 0 1rem; /* más separación lateral */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Iconitos del bottombar */
+.sidebar-icon {
+  width: 8vh; /* tamaño relativo a la altura del viewport */
+  height: 6vh;
+  object-fit: contain;
+}
+
+/* Texto de cantidad */
+.sidebar-count {
+  font-size: 2.3vh; /* más grande */
+  font-weight: bold;
+  color: rgb(209, 173, 31);
+  line-height: 1.1;
+}
+.sidebar-scroll .row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.sidebar,
+.main-content {
+  height: 100%;
+  overflow: auto; /* el scroll vive acá, no en el body */
 }

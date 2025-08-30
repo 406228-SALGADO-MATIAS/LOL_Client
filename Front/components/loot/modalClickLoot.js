@@ -66,7 +66,7 @@ function createItemClickModal(item, type) {
 
   const closeButton = document.createElement("button");
   closeButton.classList.add("item-modal-close");
-  closeButton.textContent = "×"; // cruz
+  closeButton.textContent = "x"; // cruz
   closeButton.style.position = "absolute";
   closeButton.style.top = "0.5rem";
   closeButton.style.right = "0.5rem";
@@ -79,7 +79,6 @@ function createItemClickModal(item, type) {
     closeItemModal();
   });
 
-  
   // Imagen en grande
   const img = document.createElement("img");
   img.src = item.imageUrl;
@@ -201,13 +200,11 @@ function createItemClickModal(item, type) {
 
   overlay.appendChild(modal);
   container.appendChild(overlay);
-
-  
 }
 
 function attachClickModal(card, item, type) {
   card.addEventListener("click", () => {
-    switch(type) {
+    switch (type) {
       case "chest":
       case "masterChest":
         createChestClickModal(item, type);
@@ -227,8 +224,6 @@ function attachClickModal(card, item, type) {
     }
   });
 }
-
-
 
 function closeItemModal() {
   const container = document.getElementById("lootModalContainer");
