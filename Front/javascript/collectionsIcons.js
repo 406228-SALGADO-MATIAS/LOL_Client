@@ -100,7 +100,7 @@ function updateUnlockButtonIcon(icon) {
   } else if (userBE >= icon.blueEssencePrice) {
     // Puede comprar
     unlockButtonIcon.textContent = `DESBLOQUEAR: BE ${icon.blueEssencePrice}`;
-    unlockButtonIcon.style.backgroundColor = "#2600ff"; // naranja
+    unlockButtonIcon.style.backgroundColor = "#4a0077ff"; // morado
     unlockButtonIcon.style.cursor = "pointer";
     unlockButtonIcon.onclick = () => handleUnlockIcon(icon); // función que luego implementes
   } else {

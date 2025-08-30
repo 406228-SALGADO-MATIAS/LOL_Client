@@ -109,7 +109,7 @@ function updateUnlockButtonSkin(skin, championName) {
     unlockButtonSkin.onclick = null;
   } else if (userRP >= skin.rpCost) {
     unlockButtonSkin.textContent = `DESBLOQUEAR: RP ${skin.rpCost}`;
-    unlockButtonSkin.style.backgroundColor = "#2600ff";
+    unlockButtonSkin.style.backgroundColor = "#4a0077ff";
     unlockButtonSkin.style.cursor = "pointer";
     unlockButtonSkin.onclick = () => handleUnlockSkin(skin);
   } else {

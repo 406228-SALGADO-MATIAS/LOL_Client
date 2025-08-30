@@ -87,7 +87,7 @@ function updateUnlockButton(champ) {
     unlockButton.textContent = `DESBLOQUEAR: BE ${
       champ.blueEssencePrice || "N/A"
     }`;
-    unlockButton.style.backgroundColor = "#2600ff";
+    unlockButton.style.backgroundColor = "#4a0077ff";
     unlockButton.style.cursor = "pointer";
     unlockButton.onclick = () => handleUnlock(champ);
   } else {

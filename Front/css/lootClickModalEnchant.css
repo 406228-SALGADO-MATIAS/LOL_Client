@@ -1,0 +1,111 @@
+/* Archivo: lootClickModalEnchant.css */
+
+/* Animación de apertura */
+@keyframes modalOpen {
+  0% {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.68);
+    opacity: 1;
+  }
+}
+
+/* Animación de cierre */
+@keyframes modalClose {
+  0% {
+    transform: translate(-50%, -50%) scale(0.68);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* Contenedor del modal de ítem (flotante, centrado, sin overlay) */
+.item-modal {
+  position: absolute; /* flotante sobre la página */
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.68); /* escala 33% más pequeña y centrado */
+  background-color: #1a1a1a;
+  padding: 1.5rem; /* reducido proporcionalmente */
+  border-radius: 0.67rem;
+  text-align: center;
+  max-width: 62vw; /* reducido */
+  max-height: 92vh; /* reducido */
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  opacity: 1; /* visible desde el inicio */
+  z-index: 999; /* debajo del modal */
+
+  animation: modalOpen 0.15s ease forwards; /* animación rápida de apertura */
+  
+}
+
+/* Imagen dentro del modal */
+.item-modal img {
+  max-width: 60vw;
+  max-height: 75vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.53rem;
+  margin-bottom: 0.1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  filter: brightness(0.95) contrast(1.05);
+}
+
+.item-btn {
+  padding: 0.3rem 0.3em; /* más grandes que antes */
+  font-size: 3.3vh; /* fuente más visible */
+  font-weight: bold;
+  color: #fff;
+  background-color: #222;
+  border: none;
+  border-radius: 0.53rem; /* mantenemos redondeo actual */
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35); /* sombra un poco más marcada */
+  width: 100%;
+}
+
+.item-btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.15);
+}
+
+.item-btn:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+  transform: none;
+  filter: none;
+  box-shadow: none;
+}
+
+.item-modal-close {
+  position: absolute !important;
+  top: 0.5rem !important;
+  right: 0.5rem !important;
+  background: rgb(0, 0, 0) !important;
+  border: none !important;
+  color: #f890ff8d !important;       /* blanco puro */
+  font-size: 5rem !important;    /* grande y notorio */
+  font-weight: bold !important;
+  cursor: pointer !important;
+  z-index: 1100 !important;        /* por encima de todo */
+  padding: 0 !important;
+  line-height: 1 !important;
+  transition: transform 0.2s ease, color 0.2s ease !important;
+}
+
+.item-modal-close:hover {
+  color: #ffffff !important;
+  transform: scale(1.1) !important;
+}
