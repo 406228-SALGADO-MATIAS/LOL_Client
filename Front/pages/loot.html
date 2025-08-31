@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/css/lootClickModal.css" />
     <link rel="stylesheet" href="/css/lootNewItemModal.css" />
     <link rel="stylesheet" href="/css/lootClickModalEnchant.css" />
+    <link rel="stylesheet" href="/css/lootRollModal.css" />
   </head>
 
   <body>
@@ -58,17 +59,28 @@
             </div>
 
             <div class="loot-category">
-              <h5>Campeones</h5>
+              <div class="loot-category-header">
+                <h5>Campeones</h5>
+                <button id="rollChampion" class="btn-roll">ROLL 3 x 1</button>
+              </div>
               <div id="championContainer" class="row"></div>
             </div>
 
             <div class="loot-category">
-              <h5>Skins</h5>
+              <!-- Botón roll -->
+              <div class="loot-category-header">
+                <h5>Skins</h5>
+                <button id="rollSkin" class="btn-roll">ROLL 3 x 1</button>
+              </div>
               <div id="skinContainer" class="row"></div>
             </div>
 
             <div class="loot-category">
-              <h5>Iconos</h5>
+              <div class="loot-category-header">
+                <h5>Iconos</h5>
+                <!-- Botón roll -->
+                <button id="rollIcon" class="btn-roll">ROLL 3 x 1</button>
+              </div>
               <div id="iconContainer" class="row"></div>
             </div>
           </div>
@@ -152,7 +164,8 @@
               </div>
 
               <div class="modal-body">
-                ¿Deseas desencantar los ítems duplicados y los que ya están en tu colección?
+                ¿Deseas desencantar los ítems duplicados y los que ya están en
+                tu colección?
               </div>
 
               <div class="modal-footer">
@@ -185,6 +198,7 @@
     <script src="/components/loot/modalHooverLoot.js"></script>
     <script src="/components/loot/modalClickLoot.js"></script>
     <script src="/components/loot/modalNewItem.js"></script>
+    <script src="/components/loot/modalRoll.js"></script>
     <script src="/components/loot/filterLoot.js"></script>
 
     <script src="/components/loot/renderLoot.js"></script>

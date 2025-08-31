@@ -233,3 +233,19 @@
   height: 100%;
   overflow: auto; /* el scroll vive acá, no en el body */
 }
+
+.loot-category-header {
+  display: flex;
+  align-items: center;     /* centra verticalmente */
+  gap: 1rem;               /* espacio entre h5 y botón */
+  border-bottom: 1px solid #444; /* línea separadora */
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+}
+
+.loot-category-header h5 {
+  font-size: 2.9vh;
+  font-weight: bold;
+  margin: 0; /* elimina márgenes extra */
+  border: none; /* ⬅️ eliminamos el subrayado del texto */
+}

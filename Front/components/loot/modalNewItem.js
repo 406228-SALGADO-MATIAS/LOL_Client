@@ -1,4 +1,4 @@
-function createNewItemModal(newItem, onclose) {
+function createNewItemModal(newItem, onClose) {
   const container = document.getElementById("lootModalContainer");
   container.innerHTML = "";
 
@@ -28,6 +28,7 @@ function createNewItemModal(newItem, onclose) {
     await loadUserProfile();
     await loadOwnedCollections();
     await loadLootItems();
+    if (onClose) onClose(); // reaplicar filtro o callback extra
   };
 
   button.addEventListener("click", closeAndReload);
@@ -42,8 +43,7 @@ function createNewItemModal(newItem, onclose) {
   // cerrar clickeando afuera y recargar
   overlay.addEventListener("click", (e) => {
     if (e.target === overlay) {
-      container.innerHTML = "";
-      if (onClose) onClose(); // reaplicar filtro
+      closeAndReload(); // <--- usamos la misma función que el botón
     }
   });
 }

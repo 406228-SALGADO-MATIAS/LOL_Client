@@ -1,0 +1,160 @@
+/* Animaciones reutilizadas */
+@keyframes modalOpen {
+  0% {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.68);
+    opacity: 1;
+  }
+}
+
+@keyframes modalClose {
+  0% {
+    transform: translate(-50%, -50%) scale(0.68);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* Overlay: fondo transparente para que la página siga siendo interactiva */
+.loot-roll-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* muy importante: NO bloquea clics atrás */
+  z-index: 999;
+}
+
+/* Modal principal */
+.loot-roll-modal {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%) scale(0.68);
+  background-color: #1a1a1a;
+  padding: 1.5rem;
+  border-radius: 0.67rem;
+  text-align: center;
+  width: 87vw;
+  height: 82vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  opacity: 1;
+  z-index: 1000;
+  animation: modalOpen 0.15s ease forwards;
+  pointer-events: auto; /* el modal sí recibe clics */
+}
+
+/* Botón de cerrar */
+.loot-roll-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: black;
+  border: none;
+  color: #f890ff;
+  font-size: 3rem;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1100;
+  padding: 0;
+  line-height: 1;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.loot-roll-close:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* Contenedor de imágenes */
+.loot-roll-img-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Imágenes de loot */
+.loot-roll-img {
+  width: 50vw;
+  height: 70vh;
+  border-radius: 0.53rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  object-fit: cover;
+  filter: brightness(0.95) contrast(1.05);
+}
+
+/* Botón ROLL */
+.loot-roll-btn {
+  padding: 0.7rem 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #4a0077ff;
+  border: none;
+  border-radius: 0.67rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+.loot-roll-btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.15);
+}
+
+/* SLOTS */
+
+.loot-roll-slot {
+  position: relative;
+  width: 26vw;
+  height: 60vh;
+  border: 2px dashed #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.loot-roll-placeholder {
+  font-size: 2rem;
+  color: #aaa;
+}
+
+.loot-roll-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.loot-roll-remove {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+}
+
+
+.loot-roll-title {
+  font-weight: bold;
+  font-size: 4.3vh;
+  color: #c4c100;
+  margin-bottom: 1.6vh;
+}

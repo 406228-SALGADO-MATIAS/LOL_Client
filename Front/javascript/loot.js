@@ -192,6 +192,57 @@ async function handleEnchantItem(item, type, enchant = true) {
   }
 }
 
+async function handleRoll(type, selectedItems) {
+  if (!userId) {
+    alert("No se encontró el usuario");
+    return;
+  }
+
+  if (!selectedItems || selectedItems.length !== 3) {
+    alert("Debes seleccionar 3 items para hacer el roll");
+    return;
+  }
+
+  try {
+    const ids = selectedItems.map((item) => item.id);
+    let endpoint = "";
+
+    switch (type) {
+      case "champion":
+        endpoint = `http://localhost:8080/userLoot/reRoll/champions?idLootChampion1=${ids[0]}&idLootChampion2=${ids[1]}&idLootChampion3=${ids[2]}`;
+        break;
+      case "skin":
+        endpoint = `http://localhost:8080/userLoot/reRoll/skins?idLootSkin1=${ids[0]}&idLootSkin2=${ids[1]}&idLootSkin3=${ids[2]}`;
+        break;
+      case "icon":
+        endpoint = `http://localhost:8080/userLoot/reRoll/icons?idLootIcon1=${ids[0]}&idLootIcon2=${ids[1]}&idLootIcon3=${ids[2]}`;
+        break;
+      default:
+        throw new Error("Tipo desconocido: " + type);
+    }
+
+    const res = await fetch(endpoint, { method: "PUT" });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(errText || "Error haciendo roll");
+    }
+
+    const data = await res.json();
+
+    // Esperar a que se cierre el modal del roll antes de abrir el new item modal
+    await new Promise((resolve) => closeLootRollModal(resolve));
+
+    // Ahora sí abrimos el modal del nuevo item
+    createNewItemModal(data);
+
+  } catch (err) {
+    console.error(err);
+    alert("Error haciendo roll: " + err.message);
+  }
+}
+
+
 function applyCurrentFilter() {
   const filterSelect = document.getElementById("filterSelect");
   const filterValue = filterSelect ? filterSelect.value : "all";
@@ -228,7 +279,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     filterSelect.addEventListener("change", (e) => {
       const filterValue = e.target.value;
 
-      
       renderMaterials(materialsInventory);
       renderBottomBarMaterials(materialsInventory);
 
@@ -317,4 +367,16 @@ confirmDisenchantBtn.addEventListener("click", async () => {
     console.error(err);
     alert("No se pudo desencantar: " + err.message);
   }
+});
+
+document.getElementById("rollChampion").addEventListener("click", () => {
+  createLootRollModal("champion");
+});
+
+document.getElementById("rollSkin").addEventListener("click", () => {
+  createLootRollModal("skin");
+});
+
+document.getElementById("rollIcon").addEventListener("click", () => {
+  createLootRollModal("icon");
 });

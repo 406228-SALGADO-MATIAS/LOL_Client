@@ -1,4 +1,8 @@
 function createChestClickModal(item, type) {
+  if (isLootRollModalOpen) {
+    console.log("No se puede abrir itemClickModal mientras está abierto lootRollModal");
+    return;
+  }
   const container = document.getElementById("lootModalContainer");
   container.innerHTML = ""; // limpio por si ya hay otro modal abierto
 
@@ -53,6 +57,10 @@ function createChestClickModal(item, type) {
 }
 
 function createItemClickModal(item, type) {
+  if (isLootRollModalOpen) {
+    console.log("No se puede abrir itemClickModal mientras está abierto lootRollModal");
+    return;
+  }
   const container = document.getElementById("lootModalContainer");
   container.innerHTML = ""; // limpio por si ya hay otro modal abierto
 
@@ -206,6 +214,13 @@ function createItemClickModal(item, type) {
 
 function attachClickModal(card, item, type) {
   card.addEventListener("click", () => {
+    if (isLootRollModalOpen) {
+      // Si está abierto un roll, añadimos al roll
+      addItemToRoll(normalizeItem(item, type));
+      return;
+    }
+
+    // Si no está abierto el roll, abrimos el modal según el tipo
     switch (type) {
       case "chest":
       case "masterChest":
@@ -219,7 +234,7 @@ function attachClickModal(card, item, type) {
       case "key":
       case "orangeEssence":
       case "userBlueEssence":
-        //createMaterialModal(item, type); // <--- modal simple para mostrar cantidad
+        // Materiales: no hacemos nada al click (igual que antes)
         break;
       default:
         console.warn("Tipo desconocido:", type);
