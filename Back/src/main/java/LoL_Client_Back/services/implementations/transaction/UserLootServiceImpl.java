@@ -36,6 +36,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserLootServiceImpl implements UserLootService {
@@ -790,6 +791,124 @@ public class UserLootServiceImpl implements UserLootService {
         }
 
         return dtoBuilder.buildUserLootDTO(userLoot, showInactives);
+    }
+
+    @Override
+    public UserLootDTO disenchantOwnedItems(Long idUser, boolean showInactives) {
+        Optional<UserEntity> optionalUser = userRepository.findById(idUser);
+        if (optionalUser.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find user with id " + idUser);
+        }
+        UserEntity user = optionalUser.get();
+
+        Optional<UserLootEntity> optionalLoot = userLootRepository.findByUser_Id(idUser);
+        if (optionalLoot.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find loot for user with id " + idUser);
+        }
+        UserLootEntity userLoot = optionalLoot.get();
+
+        disenchantDuplicateLoot(userLoot);
+
+        // Listas para agregar los loot ya adquiridos
+        List<LootInventorySkinsEntity> acquiredSkins = new ArrayList<>();
+        List<LootInventoryChampionsEntity> acquiredChampions = new ArrayList<>();
+        List<LootInventoryIconsEntity> acquiredIcons = new ArrayList<>();
+
+        // --- Champions ---
+        List<LootInventoryChampionsEntity> lootChampions =
+                lootInventoryChampionsRepository.findByLootAndIsActiveTrue(userLoot);
+        for (LootInventoryChampionsEntity lootChampion : lootChampions) {
+            Optional<UserXChampionEntity> ownedChampion =
+                    userXChampionRepository.findByUserAndChampion(user, lootChampion.getChampion());
+            if (ownedChampion.isPresent()) {
+                acquiredChampions.add(lootChampion);
+            }
+        }
+
+        // --- Skins ---
+        List<LootInventorySkinsEntity> lootSkins =
+                lootInventorySkinsRepository.findByLootAndIsActiveTrue(userLoot);
+        for (LootInventorySkinsEntity lootSkin : lootSkins) {
+            Optional<UserXSkinEntity> ownedSkin =
+                    userXSkinRepository.findByUserAndSkin(user, lootSkin.getSkin());
+            if (ownedSkin.isPresent()) {
+                acquiredSkins.add(lootSkin);
+            }
+        }
+
+        // --- Icons ---
+        List<LootInventoryIconsEntity> lootIcons =
+                lootInventoryIconsRepository.findByLootAndIsActiveTrue(userLoot);
+        for (LootInventoryIconsEntity lootIcon : lootIcons) {
+            Optional<UserXIconEntity> ownedIcon =
+                    userXIconRepository.findByUserAndIcon(user, lootIcon.getIcon());
+            if (ownedIcon.isPresent()) {
+                acquiredIcons.add(lootIcon);
+            }
+        }
+
+        // --- Disenchant champions adquiridos ---
+        for (LootInventoryChampionsEntity lootChampion : acquiredChampions) {
+            unlockOrRefundChampionLoot(lootChampion.getId(), false);
+        }
+
+        // --- Disenchant skins adquiridos ---
+        for (LootInventorySkinsEntity lootSkin : acquiredSkins) {
+            unlockOrRefundSkinLoot(lootSkin.getId(), false);
+        }
+
+        // --- Disenchant icons adquiridos ---
+        for (LootInventoryIconsEntity lootIcon : acquiredIcons) {
+            unlockOrRefundIconLoot(lootIcon.getId(), false);
+        }
+
+        Optional<UserLootEntity> optionalLoot2 = userLootRepository.findByUser_Id(idUser);
+        if (optionalLoot2.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find loot for user with id " + idUser);
+        }
+        return dtoBuilder.buildUserLootDTO(optionalLoot2.get(),false);
+    }
+
+    private void disenchantDuplicateLoot(UserLootEntity userLoot) {
+        // --- Champions duplicados ---
+        List<LootInventoryChampionsEntity> lootChampions =
+                lootInventoryChampionsRepository.findByLootAndIsActiveTrue(userLoot);
+        Map<ChampionEntity, List<LootInventoryChampionsEntity>> groupedChampions = lootChampions.stream()
+                .collect(Collectors.groupingBy(LootInventoryChampionsEntity::getChampion));
+        for (List<LootInventoryChampionsEntity> duplicates : groupedChampions.values()) {
+            if (duplicates.size() > 1) {
+                // eliminar todos excepto el primero
+                for (int i = 1; i < duplicates.size(); i++) {
+                    unlockOrRefundChampionLoot(duplicates.get(i).getId(), false);
+                }
+            }
+        }
+
+        // --- Skins duplicados ---
+        List<LootInventorySkinsEntity> lootSkins =
+                lootInventorySkinsRepository.findByLootAndIsActiveTrue(userLoot);
+        Map<SkinEntity, List<LootInventorySkinsEntity>> groupedSkins = lootSkins.stream()
+                .collect(Collectors.groupingBy(LootInventorySkinsEntity::getSkin));
+        for (List<LootInventorySkinsEntity> duplicates : groupedSkins.values()) {
+            if (duplicates.size() > 1) {
+                for (int i = 1; i < duplicates.size(); i++) {
+                    unlockOrRefundSkinLoot(duplicates.get(i).getId(), false);
+                }
+            }
+        }
+
+        // --- Icons duplicados ---
+        List<LootInventoryIconsEntity> lootIcons =
+                lootInventoryIconsRepository.findByLootAndIsActiveTrue(userLoot);
+        Map<ProfileIconEntity, List<LootInventoryIconsEntity>> groupedIcons = lootIcons.stream()
+                .collect(Collectors.groupingBy(LootInventoryIconsEntity::getIcon));
+        for (List<LootInventoryIconsEntity> duplicates : groupedIcons.values()) {
+            if (duplicates.size() > 1) {
+                for (int i = 1; i < duplicates.size(); i++) {
+                    unlockOrRefundIconLoot(duplicates.get(i).getId(), false);
+                }
+            }
+        }
     }
 
     @Override

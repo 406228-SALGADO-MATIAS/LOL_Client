@@ -83,13 +83,14 @@ async function loadLootItems() {
     };
 
     renderMaterials(materialsInventory);
-    renderBottomBarMaterials(materialsInventory); // la barra inferior
+    renderBottomBarMaterials(materialsInventory);
     renderLootGrid("championContainer", championsInventory, "champion");
     renderLootGrid("skinContainer", skinsInventory, "skin");
     renderLootGrid("iconContainer", iconsInventory, "icon");
   } catch (err) {
     alert("Error cargando loot del usuario: " + err.message);
   }
+  applyCurrentFilter();
 }
 
 async function loadUserProfile() {
@@ -140,7 +141,7 @@ async function handleOpenChest(type) {
 
   if (!res.ok) throw new Error("Error abriendo cofre");
 
-  return await res.json(); // devuelve NewItemDTO
+  return await res.json();
 }
 
 async function handleEnchantItem(item, type, enchant = true) {
@@ -176,21 +177,37 @@ async function handleEnchantItem(item, type, enchant = true) {
 
     const data = await res.json();
 
-    // Solo si estamos desbloqueando, mostramos el modal
+    // solo si estamos desbloqueando, mostramos el modal
     if (enchant) {
-      createNewItemModal(data); 
-      // la recarga de los tres métodos se hace dentro del closeAndReload
+      createNewItemModal(data);
     } else {
-      // Si es desencantar, recargamos todo directamente
+      // si es desencantar, recargamos todo directamente
       await loadUserProfile();
       await loadOwnedCollections();
       await loadLootItems();
     }
-
     return data;
   } catch (err) {
     throw new Error(err.message);
   }
+}
+
+function applyCurrentFilter() {
+  const filterSelect = document.getElementById("filterSelect");
+  const filterValue = filterSelect ? filterSelect.value : "all";
+
+  renderMaterials(materialsInventory);
+  renderBottomBarMaterials(materialsInventory);
+
+  // aplicar filtro a campeones, skins e iconos
+  renderLootGrid(
+    "championContainer",
+    championsInventory,
+    "champion",
+    filterValue
+  );
+  renderLootGrid("skinContainer", skinsInventory, "skin", filterValue);
+  renderLootGrid("iconContainer", iconsInventory, "icon", filterValue);
 }
 
 // Inicialización
@@ -200,8 +217,104 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadLootItems();
 });
 
-console.log("championsInventory", championsInventory);
-console.log(
-  "container championContainer",
-  document.getElementById("championContainer")
-);
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadUserProfile();
+  await loadOwnedCollections();
+  await loadLootItems();
+
+  // listener del select de filtros
+  const filterSelect = document.getElementById("filterSelect");
+  if (filterSelect) {
+    filterSelect.addEventListener("change", (e) => {
+      const filterValue = e.target.value;
+
+      
+      renderMaterials(materialsInventory);
+      renderBottomBarMaterials(materialsInventory);
+
+      // renderizamos campeones, skins e iconos
+      renderLootGrid(
+        "championContainer",
+        championsInventory,
+        "champion",
+        filterValue
+      );
+      renderLootGrid("skinContainer", skinsInventory, "skin", filterValue);
+      renderLootGrid("iconContainer", iconsInventory, "icon", filterValue);
+    });
+  }
+});
+
+const disenchantBtn = document.getElementById("disenchantBtn");
+const disenchantModal = document.getElementById("disenchantModal");
+
+// Abrir modal
+disenchantBtn.addEventListener("click", () => {
+  disenchantModal.classList.add("show");
+  disenchantModal.style.display = "block";
+  disenchantModal.removeAttribute("aria-hidden");
+  disenchantModal.setAttribute("aria-modal", "true");
+
+  // crear backdrop
+  const backdrop = document.createElement("div");
+  backdrop.classList.add("modal-backdrop", "fade", "show");
+  backdrop.id = "modalBackdrop";
+  document.body.appendChild(backdrop);
+});
+
+// Cerrar modal con la X o cancelar
+const closeBtns = disenchantModal.querySelectorAll("[data-dismiss='modal']");
+closeBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    disenchantModal.classList.remove("show");
+    disenchantModal.style.display = "none";
+    disenchantModal.setAttribute("aria-hidden", "true");
+    disenchantModal.removeAttribute("aria-modal");
+
+    // quitar backdrop
+    const backdrop = document.getElementById("modalBackdrop");
+    if (backdrop) backdrop.remove();
+  });
+});
+
+const confirmDisenchantBtn = document.getElementById("confirmDisenchant");
+
+confirmDisenchantBtn.addEventListener("click", async () => {
+  if (!userId) {
+    alert("No se encontró el usuario");
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `http://localhost:8080/userLoot/disenchantOwnedItems?idUser=${userId}&showInactives=true`,
+      { method: "PUT" }
+    );
+
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(errText || "Error desencantando ítems");
+    }
+
+    const updatedLoot = await res.json();
+    console.log("Loot actualizado:", updatedLoot);
+
+    // Recargar perfil, colecciones y loot
+    await loadUserProfile();
+    await loadOwnedCollections();
+    await loadLootItems();
+
+    // Cerrar modal
+    disenchantModal.classList.remove("show");
+    disenchantModal.style.display = "none";
+    disenchantModal.setAttribute("aria-hidden", "true");
+    disenchantModal.removeAttribute("aria-modal");
+
+    // Quitar backdrop
+    const backdrop = document.getElementById("modalBackdrop");
+    if (backdrop) backdrop.remove();
+  } catch (err) {
+    console.error(err);
+    alert("No se pudo desencantar: " + err.message);
+  }
+});

@@ -37,6 +37,7 @@ public interface UserLootService {
     NewItemDTO reRollIconsLoot(Long idLootIcon1, Long idLootIcon2, Long idLootIcon3);
 
     UserLootDTO disenchantAll (Long idUser,String lootType, boolean showInactives);
+    UserLootDTO disenchantOwnedItems (Long idUser, boolean showInactives);
 
     void delete(Long userLootId);
 

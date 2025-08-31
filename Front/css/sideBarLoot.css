@@ -8,6 +8,7 @@
   overflow-x: hidden; /* 👉 oculta scroll horizontal */
   padding: 1rem;
   color: #ffffff;
+  user-select: none; /* No se puede seleccionar texto */
 
   min-width: 33vw !important; /* opcional, que no se haga muy chico */
 }
@@ -34,7 +35,7 @@
 
 /* Categorías */
 .loot-category h5 {
-  font-size: 1.2rem;
+  font-size: 2.9vh;
   font-weight: bold;
   margin-bottom: 0.5rem;
   border-bottom: 1px solid #444;
@@ -79,23 +80,29 @@
   color: #e9e9e9;
 }
 
-.btn-filter {
-  width: 90%;
-  max-width: 400px;
-  margin: 0.5rem auto;
-  display: block;
-  padding: 0.5rem 1rem;
-  font-weight: 500;
+/* Botón desencantar con estilo similar al search y select */
+#disenchantBtn.btn-filter {
+  width: auto; /* que no ocupe toda la línea */
+  min-width: 140px; /* tamaño mínimo del botón */
+  min-height: 6vh; /* altura mínima relativa al viewport */
+  text-align: center; /* centra el texto */
+  font-size: 1.8vh; /* tamaño de letra proporcional al viewport */
+  font-weight: 600; /* un poco más negrita */
+  padding: 0.7rem 1.5rem; /* más espacio interno */
   border-radius: 0.25rem;
-  border: 1px solid #444;
-  background-color: #222;
+  border: 1px solid #006a53;
+  background-color: #1e1e1e;
   color: #f0f0f0;
-  transition: transform 0.2s, background-color 0.2s;
+  transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+  margin-top: 1.5vh; /* espacio arriba */
+  margin-right: 1.6vw;
 }
 
-.btn-filter:hover {
+#disenchantBtn.btn-filter:hover {
   transform: scale(1.05);
-  opacity: 0.85;
+  opacity: 0.9;
+  background-color: #222;
+  box-shadow: 0 0 6px #eed600ce;
   cursor: pointer;
 }
 

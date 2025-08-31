@@ -3,6 +3,7 @@ body {
   padding-top: 105px;
   background: linear-gradient(90deg, #051220, #0b3846);
   margin: 0;
+  user-select: none; /* No se puede seleccionar texto */
 }
 /* Placeholder */
 .placeholder {

@@ -1,4 +1,4 @@
-function renderLootGrid(containerId, items, type) {
+function renderLootGrid(containerId, items, type, filterValue = "all") {
   const container = document.getElementById(containerId);
   container.innerHTML = "";
 
@@ -6,27 +6,29 @@ function renderLootGrid(containerId, items, type) {
 
   let groupedItems;
   if (type === "material") {
-    groupedItems = items;
+    groupedItems = items; // NO filtramos materiales
   } else {
     groupedItems = groupItems(items, type);
+
+    // aplicar filtro solo si no son materiales
+    if (filterValue && filterValue !== "all") {
+      groupedItems = filterItemsByStatus(groupedItems, type, filterValue);
+    }
   }
 
   groupedItems.forEach((item) => {
-    // Para materiales, cada item ya trae su type: "chest" | "masterChest" | "key" | "orangeEssence"
-    // Para lo demás, usá el `type` del parámetro ("champion" | "skin" | "icon")
     const resolvedType = type === "material" ? item.type : type;
-
     const card = createLootCard(item, resolvedType);
     attachHoverModal(card, item, resolvedType);
-    attachClickModal(card, item, resolvedType); // <--- esto falta
+    attachClickModal(card, item, resolvedType);
     grid.appendChild(card);
   });
 
-  // 🔥 Este era el missing piece
   container.appendChild(grid);
 }
 
-// 🚀 Render de materiales (chests, keys, esencias, etc.)
+
+// render de materiales (chests, keys, esencias, etc.)
 function renderMaterials(materials) {
   const items = buildMaterialItems(materials).filter(
     (item) => item.quantity > 0

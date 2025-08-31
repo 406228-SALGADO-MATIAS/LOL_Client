@@ -24,6 +24,7 @@ body {
   height: 100dvh; /* usa viewport real en móviles */
   overflow: hidden; /* elimina el scroll global */
   background: linear-gradient(90deg, #051220, #0b3846);
+  user-select: none; /* No se puede seleccionar texto */
 }
 
 
@@ -43,4 +44,39 @@ body {
 .container-fluid > .row {
   height: 100%;
   
+}
+
+#disenchantModal .modal-content {
+  background-color: #1e1e1e;  /* fondo oscuro */
+  color: #f0f0f0;             /* texto claro */
+  border-radius: 0.5rem;       /* bordes redondeados */
+  border: 1px solid #006a53;   /* borde verde como el sidebar */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* sombra extra */
+}
+
+
+#disenchantModal .modal-header .modal-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+#disenchantModal .modal-footer .btn {
+  min-width: 120px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}
+
+#disenchantModal .modal-footer .btn-danger {
+  background-color: #1e1e1e;
+  border: 1px solid #006a53;
+  color: #f0f0f0;
+}
+
+#disenchantModal .modal-footer .btn-danger:hover {
+  background-color: #222;
+  box-shadow: 0 0 6px #eed600ce;
+}
+
+.modal-backdrop.show {
+  background-color: rgba(0, 0, 0, 0.7); /* más opaco */
 }

@@ -31,7 +31,7 @@ function createChestClickModal(item, type) {
       try {
         const newItem = await handleOpenChest(type);
         container.innerHTML = ""; // cierro modal del cofre
-        createNewItemModal(newItem); // abro modal del reward
+        createNewItemModal(newItem); // abro modal del reward;
       } catch (err) {
         alert("Error abriendo cofre: " + err.message);
       }
@@ -79,7 +79,7 @@ function createItemClickModal(item, type) {
     closeItemModal();
   });
 
-  // Imagen en grande
+  // Imagen 
   const img = document.createElement("img");
   img.src = item.imageUrl;
   img.alt = item.championName || item.skinName || item.iconName || "Item";
@@ -93,7 +93,6 @@ function createItemClickModal(item, type) {
 
   const status = getItemStatus(item, type);
 
-  // Botón principal según estado
   // Botón principal según estado
   const mainButton = document.createElement("button");
   mainButton.classList.add("item-btn");
@@ -126,6 +125,7 @@ function createItemClickModal(item, type) {
             try {
               await handleEnchantItem(item, type, true);
               closeItemModal(); // <-- reemplaza container.innerHTML=""
+              applyCurrentFilter(); // reaplicar filtro solo después de cerrar modal
             } catch (err) {
               alert("Error desbloqueando: " + err.message);
             }
@@ -148,6 +148,7 @@ function createItemClickModal(item, type) {
             try {
               await handleEnchantItem(item, type, true);
               closeItemModal(); // <-- reemplaza container.innerHTML=""
+              applyCurrentFilter(); // reaplicar filtro solo después de cerrar modal
             } catch (err) {
               alert("Error desbloqueando: " + err.message);
             }
@@ -187,6 +188,7 @@ function createItemClickModal(item, type) {
     try {
       await handleEnchantItem(item, type, false);
       closeItemModal(); // <-- reemplaza container.innerHTML=""
+      applyCurrentFilter(); // reaplicar filtro solo después de cerrar modal
     } catch (err) {
       alert("Error desencantando: " + err.message);
     }

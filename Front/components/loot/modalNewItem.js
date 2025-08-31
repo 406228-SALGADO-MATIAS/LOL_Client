@@ -1,4 +1,4 @@
-function createNewItemModal(newItem) {
+function createNewItemModal(newItem, onclose) {
   const container = document.getElementById("lootModalContainer");
   container.innerHTML = "";
 
@@ -41,6 +41,9 @@ function createNewItemModal(newItem) {
 
   // cerrar clickeando afuera y recargar
   overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) closeAndReload();
+    if (e.target === overlay) {
+      container.innerHTML = "";
+      if (onClose) onClose(); // reaplicar filtro
+    }
   });
 }

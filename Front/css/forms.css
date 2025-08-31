@@ -9,6 +9,7 @@ body {
   align-items: center;
   background: linear-gradient(135deg, #051220, #081c31);
   font-family: Arial, sans-serif;
+  user-select: none; /* No se puede seleccionar texto */
 }
 
 /* Contenedor general de formularios */

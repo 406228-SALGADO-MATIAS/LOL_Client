@@ -139,6 +139,16 @@ public class UserLootController {
     {
         return ResponseEntity.ok(userLootService.disenchantAll(idUser,lootType,showInactives));
     }
+
+    @PutMapping("/disenchantOwnedItems")
+    public ResponseEntity<UserLootDTO> disenchantOwnedItems(
+            @RequestParam Long idUser,
+            @RequestParam(defaultValue = "true") boolean showInactives) {
+
+        UserLootDTO result = userLootService.disenchantOwnedItems(idUser, showInactives);
+        return ResponseEntity.ok(result);
+    }
+
     @GetMapping("/getById/{id}")
     public ResponseEntity<UserLootDTO> findById (@PathVariable Long id,
                                                  @RequestParam(defaultValue = "true") boolean showInactives)
