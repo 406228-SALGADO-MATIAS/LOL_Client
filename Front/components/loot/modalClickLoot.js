@@ -125,7 +125,7 @@ function createItemClickModal(item, type) {
           mainButton.disabled = true;
           mainButton.style.cursor = "not-allowed";
         } else {
-          mainButton.textContent = `Desbloquear (-${cost} BE)`;
+          mainButton.textContent = `Desbloquear (-BE ${cost})`;
           mainButton.style.backgroundColor = "#4a0077ff";
           mainButton.disabled = false;
           mainButton.style.cursor = "pointer";
@@ -133,7 +133,7 @@ function createItemClickModal(item, type) {
             try {
               await handleEnchantItem(item, type, true);
               closeItemModal(); // <-- reemplaza container.innerHTML=""
-              applyCurrentFilter(); // reaplicar filtro solo después de cerrar modal
+              
             } catch (err) {
               alert("Error desbloqueando: " + err.message);
             }
@@ -148,7 +148,7 @@ function createItemClickModal(item, type) {
           mainButton.disabled = true;
           mainButton.style.cursor = "not-allowed";
         } else {
-          mainButton.textContent = `Desbloquear (-${cost} OE)`;
+          mainButton.textContent = `Desbloquear (-OE ${cost} )`;
           mainButton.style.backgroundColor = "#4a0077ff"; // azul
           mainButton.disabled = false;
           mainButton.style.cursor = "pointer";
@@ -156,7 +156,7 @@ function createItemClickModal(item, type) {
             try {
               await handleEnchantItem(item, type, true);
               closeItemModal(); // <-- reemplaza container.innerHTML=""
-              applyCurrentFilter(); // reaplicar filtro solo después de cerrar modal
+             
             } catch (err) {
               alert("Error desbloqueando: " + err.message);
             }

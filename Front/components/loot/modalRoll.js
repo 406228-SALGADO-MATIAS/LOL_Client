@@ -128,14 +128,12 @@ function addItemToRoll(item) {
   img.src = item.imageUrl || item.icon;
   img.alt = item.name;
   img.classList.add("loot-roll-img");
+  img.style.animation = "appearBlur 0.1s ease-out forwards";
 
-  const removeBtn = document.createElement("button");
-  removeBtn.classList.add("loot-roll-remove");
-  removeBtn.textContent = "x";
-  removeBtn.addEventListener("click", () => removeItemFromRoll(index));
+  // Al hacer click sobre la imagen, removemos el item del slot
+  img.addEventListener("click", () => removeItemFromRoll(index));
 
   slot.appendChild(img);
-  slot.appendChild(removeBtn);
   updateRollButtonState(); // actualizamos el estado del botón
 }
 
@@ -143,13 +141,18 @@ function removeItemFromRoll(index) {
   selectedItemsForRoll[index] = null;
 
   const slot = document.querySelector(`.loot-roll-slot[data-index="${index}"]`);
-  slot.innerHTML = "";
+  const img = slot.querySelector("img");
 
-  const placeholder = document.createElement("span");
-  placeholder.textContent = "+";
-  placeholder.classList.add("loot-roll-placeholder");
-  slot.appendChild(placeholder);
-  updateRollButtonState(); // actualizamos el estado del botón
+  if (img) {
+    img.style.animation = "removeItem 0.08s ease forwards";
+    setTimeout(() => {
+      slot.innerHTML = "";
+      const placeholder = document.createElement("span");
+      placeholder.textContent = "+";
+      placeholder.classList.add("loot-roll-placeholder");
+      slot.appendChild(placeholder);
+    }, 200);
+  }
 }
 
 function closeLootRollModal(onClosed) {
@@ -181,7 +184,7 @@ function updateRollButtonState() {
 
   if (allFilled) {
     rollButton.disabled = false;
-    rollButton.style.backgroundColor = "#4a0077ff";
+    rollButton.style.backgroundColor = "#280041ff";
     rollButton.style.color = "#fff";
     rollButton.style.pointerEvents = "auto";
     rollButton.classList.remove("loot-roll-btn-disabled");

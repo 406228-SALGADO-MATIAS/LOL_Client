@@ -14,17 +14,36 @@
   outline: none; /* Quita el borde/cursor de foco */
 }
 
-.card-loot:hover {
-  transform: scale(1.05);
-  z-index: 5;
-}
-
+/* Wrapper: la card no cambia tamaño, la imagen hace mini zoom */
 .card-loot img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-.card-loot:focus {
-  outline: none !important;
+/* Hover: zoom chiquito y borde iluminado */
+.card-loot:hover img {
+  transform: scale(1.05); /* mini zoom */
+}
+
+/* Hover: borde iluminado de la card */
+.card-loot:hover {
+  border-color: #ffc400; /* color dorado brillante */
+  box-shadow: 0 0 8px #eed60066; /* efecto glow sutil */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Animación de fade-in sigue intacta */
+.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.35s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

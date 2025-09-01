@@ -1,8 +1,9 @@
 // función principal
 function createHoverModal(item, type) {
   switch (type) {
-    case "key":
     case "orangeEssence":
+      return createHoverOrangeEssenceModal(item);
+    case "key":
       return createHoverKeyModal(item);
     case "chest":
     case "masterChest":
@@ -276,6 +277,33 @@ function createHoverItemModal(item, type) {
   }
 
   modal.appendChild(info);
+  document.body.appendChild(modal);
+  return modal;
+}
+
+function createHoverOrangeEssenceModal(item) {
+  const modal = document.createElement("div");
+  modal.classList.add("loot-hover-modal");
+  modal.style.maxWidth = "10vw";
+  modal.style.textAlign = "center";
+
+  // Imagen
+  const img = document.createElement("img");
+  img.src = item.imageUrl;
+  img.alt = "Orange Essence";
+  img.style.width = "100%";
+  img.style.borderRadius = "4px";
+  img.style.maxHeight = "19vh";
+  img.style.objectFit = "contain";
+
+  // Texto naranja
+  const label = document.createElement("div");
+  label.textContent = "Orange Essence (OE)";
+  label.style.color = "orange";
+  label.style.fontWeight = "bold";
+
+  modal.appendChild(img);
+  modal.appendChild(label);
   document.body.appendChild(modal);
   return modal;
 }

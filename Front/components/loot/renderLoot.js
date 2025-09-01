@@ -16,9 +16,14 @@ function renderLootGrid(containerId, items, type, filterValue = "all") {
     }
   }
 
-  groupedItems.forEach((item) => {
+  groupedItems.forEach((item, index) => {
     const resolvedType = type === "material" ? item.type : type;
     const card = createLootCard(item, resolvedType);
+
+    // Animación de aparición
+    card.classList.add("fade-in");
+    card.style.animationDelay = `${index * 0.02}s`; // escalonado, 50ms entre items
+
     attachHoverModal(card, item, resolvedType);
     attachClickModal(card, item, resolvedType);
     grid.appendChild(card);
@@ -26,7 +31,6 @@ function renderLootGrid(containerId, items, type, filterValue = "all") {
 
   container.appendChild(grid);
 }
-
 
 // render de materiales (chests, keys, esencias, etc.)
 function renderMaterials(materials) {
@@ -62,7 +66,6 @@ function renderBottomBarMaterials(materials) {
   });
 }
 
-
 function createGrid() {
   const grid = document.createElement("div");
   grid.style.display = "grid";
@@ -80,7 +83,7 @@ function normalizeItem(item, type) {
   else if (type === "material") name = item.materialName;
   else name = "Loot";
 
-  return { ...item, name , type};
+  return { ...item, name, type };
 }
 
 // Agrupa por nombre y suma cantidad

@@ -50,11 +50,11 @@
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
-  background: #2f035e57;
+  background: #89050580;
   color: white;
   font-size: 1.6rem;
 }
 
 .chest-btn:hover {
-  background: #444;
+  background: #c509099a;
 }

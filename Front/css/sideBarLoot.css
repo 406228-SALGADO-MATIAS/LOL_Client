@@ -2,7 +2,7 @@
 
 /* Sidebar general */
 .sidebar {
-  background-color: #0b121f; /* fondo oscuro */
+  background-color: #041d1f; /* fondo oscuro */
   height: 100%; /* ocupa toda la altura disponible del contenedor */
   overflow-y: auto;
   overflow-x: hidden; /* 👉 oculta scroll horizontal */
@@ -82,24 +82,33 @@
 
 /* Botón desencantar con estilo similar al search y select */
 #disenchantBtn.btn-filter {
-  width: auto; /* que no ocupe toda la línea */
-  min-width: 140px; /* tamaño mínimo del botón */
-  min-height: 6vh; /* altura mínima relativa al viewport */
-  text-align: center; /* centra el texto */
-  font-size: 1.8vh; /* tamaño de letra proporcional al viewport */
-  font-weight: 600; /* un poco más negrita */
-  padding: 0.7rem 1.5rem; /* más espacio interno */
-  border-radius: 0.25rem;
+  width: 7vw; /* ancho fijo relativo al viewport */
+  height: 6vh; /* alto fijo relativo al viewport */
+
+  display: flex; /* usamos flexbox */
+  align-items: center; /* centrado vertical */
+  justify-content: center; /* centrado horizontal */
+
+  font-size: 1.8vh; /* tamaño relativo a viewport */
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap; /* evita saltos de línea raros */
+
+  border-radius: 0.5vh;
   border: 1px solid #006a53;
   background-color: #1e1e1e;
   color: #f0f0f0;
+
   transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
-  margin-top: 1.5vh; /* espacio arriba */
+  margin-top: 1.5vh;
   margin-right: 1.6vw;
+
+  /* quitamos paddings en rem que desajustan */
+  padding: 0;
 }
 
 #disenchantBtn.btn-filter:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
   opacity: 0.9;
   background-color: #222;
   box-shadow: 0 0 6px #eed600ce;
@@ -123,7 +132,7 @@
 .sidebar-topbar {
   position: sticky;
   top: 0;
-  background: linear-gradient(360deg, #081c31, #0c2e50);
+  background: transparent;
   padding: 0rem 0.5rem; /* 0.25 arriba/abajo, 0.5 izquierda/derecha */
   margin: 0; /* elimina separación externa */
   height: 5.5vh; /* altura relativa al viewport */
@@ -193,9 +202,8 @@
 .sidebar-bottombar {
   position: sticky;
   bottom: 0;
-  background: linear-gradient(180deg, #081c31, #0c2e50);
-  padding: 0.75rem; /* un poquito más de espacio */
-  border-radius: 1px;
+  background: transparent;
+
   z-index: 10;
   display: flex;
   justify-content: center;
@@ -236,16 +244,68 @@
 
 .loot-category-header {
   display: flex;
-  align-items: center;     /* centra verticalmente */
-  gap: 1rem;               /* espacio entre h5 y botón */
-  border-bottom: 1px solid #444; /* línea separadora */
-  margin-bottom: 0.5rem;
+  align-items: center; /* centra verticalmente */
+  gap: 1rem; /* espacio entre h5 y botón */
+  border-bottom: 0.3vh solid #007e63; /* línea con color verde esmeralda */
+  margin-bottom: 2vh; /* más separación con lo que sigue */
+  margin-top: 2vh;
   padding-bottom: 0.25rem;
 }
 
 .loot-category-header h5 {
-  font-size: 2.9vh;
+  font-size: 3.4vh;
   font-weight: bold;
   margin: 0; /* elimina márgenes extra */
   border: none; /* ⬅️ eliminamos el subrayado del texto */
+}
+
+/* Botón principal para "roll" */
+.btn-roll {
+  width: 7vw; /* ancho fijo relativo al viewport */
+  height: 4vh; /* alto fijo relativo al viewport */
+  font-size: 2vh; /* tamaño de letra relativo al viewport */
+  font-weight: 600;
+  text-align: center;
+
+  border-radius: 0.4vh; /* esquinas redondeadas suaves */
+  border: 1px solid #006a53;
+  background: linear-gradient(180deg, #1a1a1a, #0d0d0d);
+  color: #f0f0f0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: transform 0.2s ease, background-color 0.2s ease,
+    box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+/* Hover: efecto dorado + un pelín de zoom */
+.btn-roll:hover {
+  transform: scale(1.02);
+  background: #222;
+  box-shadow: 0 0 8px #eed600ce;
+}
+
+/* Versión deshabilitada */
+.btn-roll:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Animación de aparición para cada item */
+.fade-in {
+  opacity: 0;
+  transform: translateY(10px); /* ligero desplazamiento hacia abajo */
+  animation: fadeInUp 0.35s forwards; /* duración y dirección */
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

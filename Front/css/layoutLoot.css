@@ -23,10 +23,11 @@ body {
   padding-top: var(--header-h);
   height: 100dvh; /* usa viewport real en móviles */
   overflow: hidden; /* elimina el scroll global */
-  background: linear-gradient(90deg, #051220, #0b3846);
+
+  
+  background: linear-gradient(180deg, #041d1f, #062328);
   user-select: none; /* No se puede seleccionar texto */
 }
-
 
 /* Anula el empuje extra del mt-5 del container que tenés en el HTML */
 .container-fluid.mt-5 {
@@ -43,17 +44,15 @@ body {
 /* Dentro, el row ocupa todo, y cada zona maneja su propio scroll */
 .container-fluid > .row {
   height: 100%;
-  
 }
 
 #disenchantModal .modal-content {
-  background-color: #1e1e1e;  /* fondo oscuro */
-  color: #f0f0f0;             /* texto claro */
-  border-radius: 0.5rem;       /* bordes redondeados */
-  border: 1px solid #006a53;   /* borde verde como el sidebar */
+  background-color: #1e1e1e; /* fondo oscuro */
+  color: #f0f0f0; /* texto claro */
+  border-radius: 0.5rem; /* bordes redondeados */
+  border: 1px solid #006a53; /* borde verde como el sidebar */
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* sombra extra */
 }
-
 
 #disenchantModal .modal-header .modal-title {
   font-size: 1.2rem;
