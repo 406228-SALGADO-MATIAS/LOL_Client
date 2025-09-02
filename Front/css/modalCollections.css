@@ -1,7 +1,7 @@
 /* archivo: collectionsIcons.css */
 .modal-content-small {
   position: relative;
-  background-color: #1a1a1a;
+  background-color: transparent;
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
@@ -12,6 +12,7 @@
   flex-direction: column;
   align-items: center;
   overflow: hidden; /* evita scroll feo si la imagen es gigante */
+  
 }
 
 .modal-content-small img {
@@ -59,7 +60,7 @@
 
 .modal-content {
   position: relative;
-  background-color: #1a1a1a;
+  background-color: transparent;
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
@@ -108,7 +109,7 @@
   cursor: not-allowed;
   box-shadow: none;
   transform: none;
-  filter : none;
+  filter: none;
   border-radius: 0.35rem;
 }
 
@@ -220,4 +221,21 @@
 #itemModal.show .modal-content-small {
   transform: scale(1);
   opacity: 1;
+}
+
+/* Modal Campeón y Skin */
+#championModal .modal-content,
+#skinModal .modal-content {
+  min-width: 63vw;   /* mínimo ancho grande */
+  min-height: 65vh;  /* mínimo alto grande */
+  width: 70vw;       /* ocupa bastante del viewport */
+  height: auto;      /* respeta el contenido */
+  max-width: 1000px; /* ya estaba */
+  max-height: 90vh;  /* más cercano al límite de pantalla */
+}
+
+#championModal .modal-content img,
+#skinModal .modal-content img {
+  max-width: 95%;    /* más grande dentro del modal */
+  max-height: 85vh;  /* casi toda la pantalla */
 }

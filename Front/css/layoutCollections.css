@@ -1,8 +1,27 @@
 /* layout.css */
+.navbar-custom .navbar-nav {
+  display: flex !important;
+  gap: 2rem;
+  align-items: center !important; /* esto fuerza verticalidad absoluta */
+}
+
+.navbar-custom .nav-item {
+  display: flex !important; /* que el li también sea flex */
+  align-items: center !important; /* vertical centrado */
+}
+.navbar-custom .nav-link {
+  display: flex !important;
+  align-items: center !important; /* vertical centrado */
+  justify-content: center;
+  padding: 0 1rem !important; /* evita padding desigual */
+  height: 100%;
+  line-height: 1.2rem; /* opcional, ajustar si hace falta */
+}
 
 /* Navbar */
 .navbar-custom {
-  background: linear-gradient(360deg, #081c31, #0c2e50);
+  background-color: #071a2d;
+  
   height: 45px;
   display: flex;
   align-items: center;
@@ -64,4 +83,22 @@
 
 .navbar-custom .navbar-brand:hover {
   color: #ff9800 !important;
+}
+
+
+body::-webkit-scrollbar {
+  width: 6px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #ffd500cc;
+  border-radius: 3px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #ffe96a;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #071a2d;
 }

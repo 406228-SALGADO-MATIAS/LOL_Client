@@ -27,7 +27,7 @@
 
 /* Contenedor del modal */
 .newitem-modal {
-  background-color: #1a1a1a;
+  background-color: transparent;
   padding: 3vh 3vw;
   border-radius: 1.2rem;
   text-align: center;
@@ -70,10 +70,11 @@
 
 /* Nombre del ítem */
 .newitem-modal-name {
-  font-size: 3vh;
-  font-weight: 700;
+  font-size: 3.3vh;             /* más grande */
+  font-weight: 750;               /* bold máximo soportado por CSS */
+  
   color: #fff;
-  margin-bottom: 3vh;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6); /* opcional para destacarlo */
 }
 
 /* Botón "Añadir" */

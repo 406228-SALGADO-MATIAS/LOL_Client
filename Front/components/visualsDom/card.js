@@ -51,7 +51,7 @@ function createSkinCard(skin) {
 
   // Click para abrir modal
   card.addEventListener("click", () => openModalSkin(skin));
-
+  card.classList.add("card-appear");
   return col;
 }
 
@@ -110,7 +110,7 @@ function createChampionCard(champ) {
   card.addEventListener("click", () => {
     openModal(champ);
   });
-
+  card.classList.add("card-appear");
   return col;
 }
 

@@ -26,16 +26,30 @@ function attachHoverModal(card, item, type) {
   const scrollParent = card.closest(".sidebar") || window;
 
   card.addEventListener("mouseenter", () => {
-    modal.classList.add("show");
-    const rect = card.getBoundingClientRect();
+  modal.classList.add("show");
+  const rect = card.getBoundingClientRect();
 
-    modal.style.top = `${rect.top + window.scrollY}px`;
-    modal.style.left = `${rect.right + 10 + window.scrollX}px`;
+  // --- ajustar top según el tipo usando proporciones vh ---
+  let offsetTop;
+  switch (type) {
+    case "champion":
+    case "skin":
+      offsetTop = 7; // 7vh desde la parte superior
+      break;
+    case "icon":
+      offsetTop = 17; // 17vh desde la parte superior
+      break;
+    default:
+      offsetTop = 10; // fallback
+  }
 
-    // Listener de scroll en el contenedor correcto
-    scrollHandler = () => modal.classList.remove("show");
-    scrollParent.addEventListener("scroll", scrollHandler, { passive: true });
-  });
+  modal.style.top = `${window.scrollY + rect.top - (offsetTop * window.innerHeight / 100)}px`;
+  modal.style.left = `${rect.right + 10 + window.scrollX}px`;
+
+  scrollHandler = () => modal.classList.remove("show");
+  scrollParent.addEventListener("scroll", scrollHandler, { passive: true });
+});
+
 
   card.addEventListener("mouseleave", () => {
     modal.classList.remove("show");
@@ -307,5 +321,13 @@ function createHoverOrangeEssenceModal(item) {
   document.body.appendChild(modal);
   return modal;
 }
+
+function closeAllHoverModals() {
+  document.querySelectorAll(".loot-hover-modal.show").forEach(modal => {
+    modal.classList.remove("show");
+  });
+}
+
+window.closeAllHoverModals = closeAllHoverModals;
 
 window.attachHoverModal = attachHoverModal;

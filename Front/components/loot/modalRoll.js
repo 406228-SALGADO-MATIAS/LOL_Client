@@ -130,6 +130,14 @@ function addItemToRoll(item) {
   img.classList.add("loot-roll-img");
   img.style.animation = "appearBlur 0.1s ease-out forwards";
 
+  if (selectedRollType === "skin") {
+    img.style.objectPosition = getSkinObjectPosition(item.name);
+    img.style.transform = `scale(${getSkinZoom(item.name)})`;
+  } else if (selectedRollType === "champion") {
+    img.style.objectPosition = getChampionObjectPosition(item.name);
+    img.style.transform = `scale(${getChampionZoom(item.name)})`;
+  }
+
   // Al hacer click sobre la imagen, removemos el item del slot
   img.addEventListener("click", () => removeItemFromRoll(index));
 
@@ -151,9 +159,16 @@ function removeItemFromRoll(index) {
       placeholder.textContent = "+";
       placeholder.classList.add("loot-roll-placeholder");
       slot.appendChild(placeholder);
+
+      // actualizar el estado del botón después de remover el item
+      updateRollButtonState();
     }, 200);
+  } else {
+    // por si no hay img, igual actualizar el botón
+    updateRollButtonState();
   }
 }
+
 
 function closeLootRollModal(onClosed) {
   const container = document.getElementById("lootModalContainer");

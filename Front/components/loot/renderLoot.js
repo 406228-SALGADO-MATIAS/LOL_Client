@@ -1,28 +1,40 @@
-function renderLootGrid(containerId, items, type, filterValue = "all") {
+function renderLootGrid(
+  containerId,
+  items,
+  type,
+  filterValue = "all",
+  searchValue = ""
+) {
+  closeAllHoverModals();
   const container = document.getElementById(containerId);
   container.innerHTML = "";
 
   const grid = createGrid();
 
+  // 1️⃣ Agrupar items
   let groupedItems;
   if (type === "material") {
-    groupedItems = items; // NO filtramos materiales
+    groupedItems = items; // materiales no se agrupan ni filtran
   } else {
     groupedItems = groupItems(items, type);
 
-    // aplicar filtro solo si no son materiales
+    // 2️⃣ Filtro de estado (select)
     if (filterValue && filterValue !== "all") {
       groupedItems = filterItemsByStatus(groupedItems, type, filterValue);
     }
   }
 
+  // 3️⃣ Filtro de búsqueda al final
+  if (searchValue.trim()) {
+    groupedItems = filterItemsByName(groupedItems, type, searchValue.trim());
+  }
+
+  // 4️⃣ Render
   groupedItems.forEach((item, index) => {
     const resolvedType = type === "material" ? item.type : type;
     const card = createLootCard(item, resolvedType);
-
-    // Animación de aparición
     card.classList.add("fade-in");
-    card.style.animationDelay = `${index * 0.02}s`; // escalonado, 50ms entre items
+    card.style.animationDelay = `${index * 0.02}s`;
 
     attachHoverModal(card, item, resolvedType);
     attachClickModal(card, item, resolvedType);

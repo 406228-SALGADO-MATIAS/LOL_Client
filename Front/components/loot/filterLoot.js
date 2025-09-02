@@ -40,3 +40,27 @@ function filterItemsByStatus(items, type, filterValue) {
     }
   });
 }
+function normalizeString(str) {
+  return str
+    .normalize("NFD")                     // descompone acentos
+    .replace(/[\u0300-\u036f]/g, "")     // elimina diacríticos
+    .replace(/[´’‘]/g, "'")              // unifica comillas
+    .toLowerCase();
+}
+
+function filterItemsByName(items, type, searchValue) {
+  if (!searchValue) return items; 
+  const lowerSearch = normalizeString(searchValue);
+
+  return items.filter((item) => {
+    let itemName = "";
+
+    if (type === "champion") itemName = item.championName || "";
+    else if (type === "skin") itemName = item.skinName || "";
+    else if (type === "icon") itemName = item.iconName || "";
+    else return false;
+
+    const normalizedItemName = normalizeString(itemName);
+    return normalizedItemName.includes(lowerSearch);
+  });
+}

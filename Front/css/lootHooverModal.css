@@ -3,7 +3,7 @@
   display: none;
   flex-direction: column;
   max-height: 50h; /* limitar altura */
-  background-color: #222;
+  background-color: #1a1a1a;
   border-radius: 8px;
   padding: 0.5rem;
   z-index: 1000;

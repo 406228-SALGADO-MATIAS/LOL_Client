@@ -1,14 +1,21 @@
 function createIconCard(icon) {
   const card = document.createElement("div");
   card.classList.add("card");
-  card.style.height = "23.2vh"; // 🔥 antes 165px → relativo al viewport
+  card.style.height = "23.2vh"; //  antes 165px → relativo al viewport
   card.style.overflow = "hidden";
   card.style.display = "flex";
   card.style.flexDirection = "column";
-  card.style.textAlign = "center"; // 🔥 ya lo tenías
+  card.style.textAlign = "center";
+
+  // contenedor interno para animación
+  const inner = document.createElement("div");
+  inner.classList.add("card-inner");
+  inner.style.height = "100%";
+  inner.style.display = "flex";
+  inner.style.flexDirection = "column";
 
   const imgContainer = document.createElement("div");
-  imgContainer.style.height = "100%"; // 🔥 antes 140px → % de card
+  imgContainer.style.height = "100%"; //  antes 140px → % de card
   imgContainer.style.display = "flex";
   imgContainer.style.alignItems = "center";
   imgContainer.style.justifyContent = "center";
@@ -16,7 +23,7 @@ function createIconCard(icon) {
   const img = document.createElement("img");
   img.src = icon.image;
   img.alt = icon.icon;
-  img.style.width = "95%"; // 🔥 antes 90px o px → % del contenedor
+  img.style.width = "95%"; //  antes 90px o px → % del contenedor
   img.style.height = "95%";
   img.style.objectFit = "cover";
 
@@ -29,14 +36,15 @@ function createIconCard(icon) {
 
   const name = document.createElement("div");
   name.classList.add("card-body", "p-1");
-  name.style.flex = "0 0 15%"; // 🔥 antes 20px → % de card
-  name.style.fontSize = "0.9rem"; // 🔥 antes 0.75rem, ya relativo
+  name.style.flex = "0 0 15%"; //  antes 20px → % de card
+  name.style.fontSize = "0.9rem"; //  antes 0.75rem, ya relativo
   name.innerHTML = `<strong>${icon.icon}</strong>`;
 
   card.appendChild(imgContainer);
   card.appendChild(name);
 
   card.addEventListener("click", () => openModalIcon(icon));
+  card.classList.add("card-appear");
   return card;
 }
 
@@ -76,7 +84,7 @@ function createItemCard(item) {
 
   // click para detalle (si querés abrir un modal luego)
   card.addEventListener("click", () => openModalItem(item));
-
+  card.classList.add("card-appear");
   return card;
 }
 
@@ -100,7 +108,7 @@ function appendIconRows(container, icons) {
   grid.style.gridTemplateColumns = "repeat(7, minmax(0, 1fr))"; // 🔥 sin px fijos
   grid.style.justifyContent = "center";
   grid.style.gap = "1.5vw"; // 🔥 antes 16px → vw relativo al ancho de pantalla
-  grid.style.marginBottom = "2vh"; // 🔥 antes 1rem → vh relativo al alto de pantalla
+  grid.style.marginBottom = "2vh"; //  antes 1rem → vh relativo al alto de pantalla
 
   icons.forEach((icon) => {
     grid.appendChild(createIconCard(icon));

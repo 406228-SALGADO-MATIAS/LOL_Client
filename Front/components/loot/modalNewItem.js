@@ -13,10 +13,11 @@ function createNewItemModal(newItem, onClose) {
   img.alt = newItem.name;
 
   const nameEl = document.createElement("div");
+  nameEl.classList.add("newitem-modal-name")
   nameEl.textContent = newItem.name;
-  nameEl.style.fontSize = "1.6rem";
+  
   nameEl.style.textAlign = "center";
-  nameEl.style.marginTop = "10px";
+  
 
   const button = document.createElement("button");
   button.textContent = "Añadir";

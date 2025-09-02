@@ -235,38 +235,47 @@ async function handleRoll(type, selectedItems) {
 
     // Ahora sí abrimos el modal del nuevo item
     createNewItemModal(data);
-
   } catch (err) {
     console.error(err);
     alert("Error haciendo roll: " + err.message);
   }
 }
 
+function applySearchFilter() {
+  const searchInput = document.getElementById("searchLoot");
+  const searchValue = searchInput ? searchInput.value.trim() : "";
+
+  const filteredChampions = filterItemsByName(
+    championsInventory,
+    "champion",
+    searchValue
+  );
+  const filteredSkins = filterItemsByName(skinsInventory, "skin", searchValue);
+  const filteredIcons = filterItemsByName(iconsInventory, "icon", searchValue);
+
+  // Renderizar con los items filtrados
+  renderLootGrid("championContainer", filteredChampions, "champion");
+  renderLootGrid("skinContainer", filteredSkins, "skin");
+  renderLootGrid("iconContainer", filteredIcons, "icon");
+}
 
 function applyCurrentFilter() {
   const filterSelect = document.getElementById("filterSelect");
   const filterValue = filterSelect ? filterSelect.value : "all";
 
+  const searchInput = document.getElementById("searchLoot");
+  const searchValue = searchInput ? searchInput.value.trim() : "";
+
   renderMaterials(materialsInventory);
   renderBottomBarMaterials(materialsInventory);
 
-  // aplicar filtro a campeones, skins e iconos
-  renderLootGrid(
-    "championContainer",
-    championsInventory,
-    "champion",
-    filterValue
-  );
-  renderLootGrid("skinContainer", skinsInventory, "skin", filterValue);
-  renderLootGrid("iconContainer", iconsInventory, "icon", filterValue);
+  renderLootGrid("championContainer", championsInventory, "champion", filterValue, searchValue);
+  renderLootGrid("skinContainer", skinsInventory, "skin", filterValue, searchValue);
+  renderLootGrid("iconContainer", iconsInventory, "icon", filterValue, searchValue);
 }
 
+
 // Inicialización
-document.addEventListener("DOMContentLoaded", async () => {
-  await loadUserProfile();
-  await loadOwnedCollections();
-  await loadLootItems();
-});
 
 document.addEventListener("DOMContentLoaded", async () => {
   await loadUserProfile();
@@ -276,24 +285,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   // listener del select de filtros
   const filterSelect = document.getElementById("filterSelect");
   if (filterSelect) {
-    filterSelect.addEventListener("change", (e) => {
-      const filterValue = e.target.value;
+    filterSelect.addEventListener("change", () => {
+      applyCurrentFilter();
+    });
+  }
 
-      renderMaterials(materialsInventory);
-      renderBottomBarMaterials(materialsInventory);
-
-      // renderizamos campeones, skins e iconos
-      renderLootGrid(
-        "championContainer",
-        championsInventory,
-        "champion",
-        filterValue
-      );
-      renderLootGrid("skinContainer", skinsInventory, "skin", filterValue);
-      renderLootGrid("iconContainer", iconsInventory, "icon", filterValue);
+  // listener del input de búsqueda
+  const searchInput = document.getElementById("searchLoot");
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      applyCurrentFilter();
     });
   }
 });
+
 
 const disenchantBtn = document.getElementById("disenchantBtn");
 const disenchantModal = document.getElementById("disenchantModal");
@@ -380,3 +385,11 @@ document.getElementById("rollSkin").addEventListener("click", () => {
 document.getElementById("rollIcon").addEventListener("click", () => {
   createLootRollModal("icon");
 });
+
+// Listener del input de búsqueda
+const searchInput = document.getElementById("searchLoot");
+if (searchInput) {
+  searchInput.addEventListener("input", () => {
+    applyCurrentFilter();
+  });
+}
