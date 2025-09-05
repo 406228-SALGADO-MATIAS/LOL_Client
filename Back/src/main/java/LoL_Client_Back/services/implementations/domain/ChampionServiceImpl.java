@@ -74,6 +74,8 @@ public class ChampionServiceImpl implements ChampionService {
     PlayerMatchDetailRepository matchDetailRepository;
     @Autowired
     DTOBuilder dtoBuilder;
+    @Autowired
+    PlayerMatchDetailRepository playerMatchDetailRepository;
 
 
     @Override
@@ -400,6 +402,8 @@ public class ChampionServiceImpl implements ChampionService {
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find difficulty "+difficulty);
     }
+
+
 
 
 }

@@ -15,4 +15,26 @@ public interface PlayerMatchDetailRepository extends JpaRepository<PlayerMatchDe
     List<MatchEntity> findMatchesByChampionId(@Param("championId") Long championId);
     @Query("SELECT p.match FROM PlayerMatchDetailEntity p WHERE p.user.id = :userId")
     List<MatchEntity> findMatchesByUserId(@Param("userId") Long userId);
+    @Query("""
+    SELECT p.champion.id,
+           SUM(CASE WHEN p.team = m.winnerTeam THEN 1 ELSE 0 END) as wins,
+           COUNT(p) as total
+    FROM PlayerMatchDetailEntity p
+    JOIN p.match m
+    GROUP BY p.champion.id
+""")
+    List<Object[]> calculateChampionWinrates();
+    @Query("""
+    SELECT SUM(CASE WHEN p.team = m.winnerTeam THEN 1 ELSE 0 END),
+           COUNT(p)
+    FROM PlayerMatchDetailEntity p
+    JOIN p.match m
+    WHERE p.champion.id = :championId
+""")
+    List<Object[]> calculateChampionStats(@Param("championId") Long championId);
+
+
+
+
+
 }

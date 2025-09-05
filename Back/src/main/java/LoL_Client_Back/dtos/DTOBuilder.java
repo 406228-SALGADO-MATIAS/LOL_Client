@@ -187,6 +187,7 @@ public class DTOBuilder
             dto.setStyle2(c.getStyle2().getStyle());
         }
 
+
         return dto;
     }
 

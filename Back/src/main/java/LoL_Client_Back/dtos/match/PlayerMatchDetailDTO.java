@@ -28,5 +28,6 @@ public class PlayerMatchDetailDTO {
     private String imageUrlChampion;
     private Integer creaturesKilled;
     private Integer totalGold;
+    private Integer totalDamage;
     private List<PlayerMatchItemDTO> items;
 }

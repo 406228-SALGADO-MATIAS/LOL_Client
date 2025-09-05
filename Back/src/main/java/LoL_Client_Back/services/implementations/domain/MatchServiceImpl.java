@@ -13,6 +13,8 @@ import LoL_Client_Back.repositories.domain.ItemRepository;
 import LoL_Client_Back.repositories.domain.MatchRepository;
 import LoL_Client_Back.repositories.domain.UserRepository;
 import LoL_Client_Back.repositories.reference.*;
+import LoL_Client_Back.services.implementations.domain.matchLogic.ChampionWinrateService;
+import LoL_Client_Back.services.implementations.domain.matchLogic.DamageEstimatorService;
 import LoL_Client_Back.services.interfaces.domain.MatchService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,10 @@ public class MatchServiceImpl implements MatchService {
     UserRepository userRepository;
     @Autowired
     DTOBuilder dtoBuilder;
+    @Autowired
+    DamageEstimatorService damageEstimatorService;
+    @Autowired
+    ChampionWinrateService championWinrateService;
 
     @Override
     public MatchDTO getMatchById(Long matchId, boolean showChampionImg, boolean showItemImg) {
@@ -226,6 +232,7 @@ public class MatchServiceImpl implements MatchService {
                 "4 matches per tier on each server = 40 per server = 160 matches in total";
     }
 
+    // Returns the match completed through calling other methods to assist it
     private MatchEntity buildMatchEntity(MatchEntity matchToUpdate,ServerOption serverOption, String gameMode, String map, UserRankTier elo,
                                          Long optionalUserId, String optionalRole)
     {
@@ -288,8 +295,13 @@ public class MatchServiceImpl implements MatchService {
         } else
             throw new IllegalArgumentException("Invalid map: only ARAM or SUMMONERS RIFT.");
 
+        /*
+        //todo: winnerteam
         matchEntity.setWinnerTeam(getRandomTeam());
-        estimateTeamKillsByMatch(matchEntity);
+        estimateTeamKillsByMatch(matchEntity); //todo: aca se asgina kills a cada equipo, con plus si ganó
+         */
+
+
         matchEntity.setServerRegion(getServerByName(serverOption.getFullName()));
 
 
@@ -324,13 +336,15 @@ public class MatchServiceImpl implements MatchService {
             matchEntity.setPlayerDetails(
                     buildPlayerMatchDetailEntityList(matchEntity, serverOption, elo, mirrorChampions, userId, role));
         }
-
+        damageEstimatorService.distributeDamage(matchEntity);
+        championWinrateService.updateChampionWinrate(matchEntity);
         return matchEntity;
     }
 
-    //LIST OF DETAILS
+    //DELIVERS THE FULL LIST OF DETAILS WITH TEAMS, CHAMPS AND STATS
     private List<PlayerMatchDetailEntity> buildPlayerMatchDetailEntityList(MatchEntity match, ServerOption serverOption,
-                                                                           UserRankTier elo, boolean mirrorChampions, Long optionalUserId, RoleEntity optionalRole) {
+                                                                           UserRankTier elo, boolean mirrorChampions, Long optionalUserId, RoleEntity optionalRole)
+    {
         List<UserMatchesDTO> usersFromServer;
 
         // if is ranked -> bring players with specific elo from the server
@@ -390,7 +404,7 @@ public class MatchServiceImpl implements MatchService {
             details = championSelectionTeams(match, blueTeamIds, redTeamIds, mirrorChampions);
         }
 
-        calculateMatchStats(details);
+        calculateMatchStats(details); //todo: stats
 
         //SAFE FOR HIBERNATE, WE KEEP THE SAME COLLECTION, AND ADD TO IT THE NEW ITEMS ONE BY ONE
         for (PlayerMatchDetailEntity detail : details)
@@ -435,6 +449,11 @@ public class MatchServiceImpl implements MatchService {
             roleIndex++;
             pickedChampions = getUniqueChampionsFromMatchDetails(detailList);
         }
+
+        //todo: winnerteam
+        match.setWinnerTeam(championWinrateService.simulateMatchWinner(detailList));
+        estimateTeamKillsByMatch(match); //todo: aca se asgina kills a cada equipo, con plus si ganó
+
         return detailList;
     }
 
@@ -489,6 +508,9 @@ public class MatchServiceImpl implements MatchService {
             detailList.add(detail);
             pickedChampions = getUniqueChampionsFromMatchDetails(detailList);
         }
+        //todo: winnerteam
+        match.setWinnerTeam(championWinrateService.simulateMatchWinner(detailList));
+        estimateTeamKillsByMatch(match); //todo: aca se asgina kills a cada equipo, con plus si ganó
 
         return detailList;
     }
