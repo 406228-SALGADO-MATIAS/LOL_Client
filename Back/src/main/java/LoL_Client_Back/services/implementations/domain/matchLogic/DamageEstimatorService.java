@@ -41,7 +41,7 @@ public class DamageEstimatorService {
         return baseDamage + killsBonus + assistsBonus;
     }
 
-    private int parseDurationToMinutes(String duration) {
+    public int parseDurationToMinutes(String duration) {
         if (duration == null || duration.isBlank()) {
             throw new IllegalArgumentException("Duration is null or empty");
         }
@@ -65,6 +65,28 @@ public class DamageEstimatorService {
 
         throw new IllegalArgumentException("Duration format not recognized: " + duration);
     }
+
+    public int parseDurationToSeconds(String duration) {
+        if (duration == null || duration.isBlank()) return 0;
+        String[] parts = duration.split(":");
+        try {
+            if (parts.length == 2) { // mm:ss
+                int minutes = Integer.parseInt(parts[0]);
+                int seconds = Integer.parseInt(parts[1]);
+                return minutes * 60 + seconds;
+            } else if (parts.length == 3) { // hh:mm:ss
+                int hours = Integer.parseInt(parts[0]);
+                int minutes = Integer.parseInt(parts[1]);
+                int seconds = Integer.parseInt(parts[2]);
+                return hours * 3600 + minutes * 60 + seconds;
+            }
+        } catch (NumberFormatException e) {
+            return 0; // fallback
+        }
+        return 0;
+    }
+
+
 
     private ChampionStyleEntity detectStyleFromItems(PlayerMatchDetailEntity detail) {
 
