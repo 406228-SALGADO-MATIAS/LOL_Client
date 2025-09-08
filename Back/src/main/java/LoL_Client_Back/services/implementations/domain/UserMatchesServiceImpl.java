@@ -118,41 +118,50 @@ public class UserMatchesServiceImpl implements UserMatchesService {
     }
 
     @Override
-    public UserGeneralStatsDTO getGeneralStats(Long userId) {
+    public UserGeneralStatsDTO getGeneralStats(Long userId, String gameType) {
         checkUserExistence(userId);
-        List<PlayerMatchDetailEntity> details = playerMatchDetailRepository.findByUserId(userId);
+        List<PlayerMatchDetailEntity> details = playerMatchDetailRepository.findByUserId(userId, gameType);
         return UserGeneralStatsDTO.createFromDetails(details);
     }
 
     @Override
-    public UserGeneralStatsDTO getStatsByChampion(Long userId, Long championId) {
+    public UserGeneralStatsDTO getStatsByChampion(Long userId, Long championId, String gameType) {
         checkUserExistence(userId);
         checkChampionExistence(championId);
-        List<PlayerMatchDetailEntity> details = playerMatchDetailRepository.findByUserAndChampion(userId, championId);
+        List<PlayerMatchDetailEntity> details = playerMatchDetailRepository.findByUserAndChampion(userId, championId, gameType);
         return UserGeneralStatsDTO.createFromDetails(details);
     }
 
     @Override
-    public UserGeneralStatsDTO getStatsByRole(Long userId, String championRole) {
+    public UserGeneralStatsDTO getStatsByRole(Long userId, String championRole, String gameType) {
         checkUserExistence(userId);
         RoleEntity role = getChampionRole(championRole);
-        List<PlayerMatchDetailEntity> details = playerMatchDetailRepository.findByUserAndRoleExcludeAram(userId, role.getId());
+        if ("ARAM".equalsIgnoreCase(gameType)) {
+            throw new IllegalArgumentException("ARAM not supported for role stats");
+        }
+        List<PlayerMatchDetailEntity> details = playerMatchDetailRepository.findByUserAndRole(userId, role.getId(), gameType);
         return UserGeneralStatsDTO.createFromDetails(details);
     }
 
     @Override
-    public UserGeneralStatsDTO getStatsByChampionAndRole(Long userId, Long championId, String championRole) {
+    public UserGeneralStatsDTO getStatsByChampionAndRole(Long userId, Long championId, String championRole, String gameType) {
         checkUserExistence(userId);
         checkChampionExistence(championId);
         RoleEntity role = getChampionRole(championRole);
-        List<PlayerMatchDetailEntity> details = playerMatchDetailRepository.findByUserChampionAndRoleExcludeAram(userId, championId, role.getId());
+        if ("ARAM".equalsIgnoreCase(gameType)) {
+            throw new IllegalArgumentException("ARAM not supported for role stats");
+        }
+        List<PlayerMatchDetailEntity> details = playerMatchDetailRepository.findByUserChampionAndRole(userId, championId, role.getId(), gameType);
         return UserGeneralStatsDTO.createFromDetails(details);
     }
+
 
     private RoleEntity getChampionRole(String role) {
         return roleRepository.findByRoleIgnoreCase(role)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find role " + role));
     }
+
+
     private void checkUserExistence (Long idUser)
     {
         Optional<UserEntity> optional = userRepository.findById(idUser);

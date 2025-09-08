@@ -33,45 +33,70 @@ public interface PlayerMatchDetailRepository extends JpaRepository<PlayerMatchDe
 """)
     List<Object[]> calculateChampionStats(@Param("championId") Long championId);
 
-    // Todos los detalles del usuario
-    @Query("SELECT p FROM PlayerMatchDetailEntity p WHERE p.user.id = :userId")
-    List<PlayerMatchDetailEntity> findByUserId(@Param("userId") Long userId);
+    // Todos los detalles del usuario (con filtro opcional de gameType)
+    @Query("""
+    SELECT p FROM PlayerMatchDetailEntity p
+    WHERE p.user.id = :userId
+    AND (
+        :gameType IS NULL
+        OR (:gameType = 'NORMAL' AND p.match.ranked = false AND p.match.map.map = 'Summoners Rift')
+        OR (:gameType = 'RANKED' AND p.match.ranked = true AND p.match.map.map = 'Summoners Rift')
+        OR (:gameType = 'ARAM' AND p.match.map.map = 'ARAM - Howling Abyss')
+    )
+""")
+    List<PlayerMatchDetailEntity> findByUserId(@Param("userId") Long userId,
+                                               @Param("gameType") String gameType);
 
-    // Por tipo de partida (NORMAL, RANKED, ARAM)
-    @Query("SELECT p FROM PlayerMatchDetailEntity p " +
-            "WHERE p.user.id = :userId " +
-            "AND ((:gameType = 'NORMAL' AND p.match.ranked = false AND p.match.map.map = 'SUMMONERS RIFT') " +
-            "     OR (:gameType = 'RANKED' AND p.match.ranked = true AND p.match.map.map = 'SUMMONERS RIFT') " +
-            "     OR (:gameType = 'ARAM' AND p.match.map.map = 'ARAM'))")
-    List<PlayerMatchDetailEntity> findByUserAndGameType(@Param("userId") Long userId,
+
+    // Por campeón (con filtro opcional de gameType)
+    @Query("""
+    SELECT p FROM PlayerMatchDetailEntity p
+    WHERE p.user.id = :userId
+    AND p.champion.id = :championId
+    AND (
+        :gameType IS NULL
+        OR (:gameType = 'NORMAL' AND p.match.ranked = false AND p.match.map.map = 'Summoners Rift')
+        OR (:gameType = 'RANKED' AND p.match.ranked = true AND p.match.map.map = 'Summoners Rift')
+        OR (:gameType = 'ARAM' AND p.match.map.map = 'ARAM - Howling Abyss')
+    )
+""")
+    List<PlayerMatchDetailEntity> findByUserAndChampion(@Param("userId") Long userId,
+                                                        @Param("championId") Long championId,
                                                         @Param("gameType") String gameType);
 
-    // Por campeón
-    @Query("SELECT p FROM PlayerMatchDetailEntity p " +
-            "WHERE p.user.id = :userId AND p.champion.id = :championId")
-    List<PlayerMatchDetailEntity> findByUserAndChampion(@Param("userId") Long userId,
-                                                        @Param("championId") Long championId);
 
-    // Por rol (excluyendo ARAM)
-    @Query("SELECT p FROM PlayerMatchDetailEntity p " +
-            "WHERE p.user.id = :userId " +
-            "AND p.role.id = :roleId " +
-            "AND NOT (p.match.ranked = false AND p.match.map.map = 'ARAM')")
-    List<PlayerMatchDetailEntity> findByUserAndRoleExcludeAram(
-            @Param("userId") Long userId,
-            @Param("roleId") Long roleId);
+    // Por rol (sin ARAM, pero con filtro opcional normal/ranked)
+    @Query("""
+    SELECT p FROM PlayerMatchDetailEntity p
+    WHERE p.user.id = :userId
+    AND p.role.id = :roleId
+    AND (
+        :gameType IS NULL
+        OR (:gameType = 'NORMAL' AND p.match.ranked = false AND p.match.map.map = 'Summoners Rift')
+        OR (:gameType = 'RANKED' AND p.match.ranked = true AND p.match.map.map = 'Summoners Rift')
+    )
+""")
+    List<PlayerMatchDetailEntity> findByUserAndRole(@Param("userId") Long userId,
+                                                    @Param("roleId") Long roleId,
+                                                    @Param("gameType") String gameType);
 
 
-    // Por campeón + rol (excluyendo ARAM)
-    @Query("SELECT p FROM PlayerMatchDetailEntity p " +
-            "WHERE p.user.id = :userId " +
-            "AND p.champion.id = :championId " +
-            "AND p.role.id = :roleId " +
-            "AND NOT (p.match.ranked = false AND p.match.map.map = 'ARAM')")
-    List<PlayerMatchDetailEntity> findByUserChampionAndRoleExcludeAram(
-            @Param("userId") Long userId,
-            @Param("championId") Long championId,
-            @Param("roleId") Long roleId);
+    // Por campeón + rol (sin ARAM, pero con filtro opcional normal/ranked)
+    @Query("""
+    SELECT p FROM PlayerMatchDetailEntity p
+    WHERE p.user.id = :userId
+    AND p.champion.id = :championId
+    AND p.role.id = :roleId
+    AND (
+        :gameType IS NULL
+        OR (:gameType = 'NORMAL' AND p.match.ranked = false AND p.match.map.map = 'Summoners Rift')
+        OR (:gameType = 'RANKED' AND p.match.ranked = true AND p.match.map.map = 'Summoners Rift')
+    )
+""")
+    List<PlayerMatchDetailEntity> findByUserChampionAndRole(@Param("userId") Long userId,
+                                                            @Param("championId") Long championId,
+                                                            @Param("roleId") Long roleId,
+                                                            @Param("gameType") String gameType);
 
 
 

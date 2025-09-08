@@ -14,8 +14,8 @@ public interface UserMatchesService {
     UserMatches findByUser (UserEntity userEntity);
     void updateUsers(List<PlayerMatchDetailEntity> players);
 
-    UserGeneralStatsDTO getGeneralStats(Long userId);
-    UserGeneralStatsDTO getStatsByChampion(Long userId, Long championId);
-    UserGeneralStatsDTO getStatsByRole(Long userId,String championRole);
-    UserGeneralStatsDTO getStatsByChampionAndRole(Long userId, Long championId, String championRole);
+    UserGeneralStatsDTO getGeneralStats(Long userId,String gameType);
+    UserGeneralStatsDTO getStatsByChampion(Long userId, Long championId,String gameType);
+    UserGeneralStatsDTO getStatsByRole(Long userId,String championRole,String gameType);
+    UserGeneralStatsDTO getStatsByChampionAndRole(Long userId, Long championId, String championRole,String gameType);
 }
