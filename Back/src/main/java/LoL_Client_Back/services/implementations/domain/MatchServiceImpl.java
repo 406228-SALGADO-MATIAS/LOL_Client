@@ -9,12 +9,14 @@ import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.domain.*;
 import LoL_Client_Back.entities.reference.*;
 import LoL_Client_Back.repositories.association.UserXChampionRepository;
+import LoL_Client_Back.repositories.domain.ChampionRepository;
 import LoL_Client_Back.repositories.domain.ItemRepository;
 import LoL_Client_Back.repositories.domain.MatchRepository;
 import LoL_Client_Back.repositories.domain.UserRepository;
 import LoL_Client_Back.repositories.reference.*;
 import LoL_Client_Back.services.implementations.domain.matchLogic.ChampionWinrateService;
 import LoL_Client_Back.services.implementations.domain.matchLogic.DamageEstimatorService;
+import LoL_Client_Back.services.implementations.transaction.UserLootServiceImpl;
 import LoL_Client_Back.services.interfaces.domain.MatchService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +62,10 @@ public class MatchServiceImpl implements MatchService {
     DamageEstimatorService damageEstimatorService;
     @Autowired
     ChampionWinrateService championWinrateService;
+    @Autowired
+    ChampionRepository championRepository;
+    @Autowired
+    UserLootServiceImpl userLootService;
 
     @Override
     public MatchDTO getMatchById(Long matchId, boolean showChampionImg, boolean showItemImg) {
@@ -98,10 +104,11 @@ public class MatchServiceImpl implements MatchService {
     public MatchDTO createMatch(ServerOption serverOption, String gameMode, String map, UserRankTier elo,
                                 boolean showChampion, boolean showItem)
     {
-        MatchEntity match = buildMatchEntity(null,serverOption, gameMode, map, elo, null, null);
+        MatchEntity match = buildMatchEntity(null,serverOption, gameMode, map, elo, null, null,null);
         MatchEntity matchSaved = matchRepository.save(match);
         //UPDATING USER MATCHES
         userMatchesService.updateUsers(matchSaved.getPlayerDetails());
+        userLootService.giveRewardsToPlayersFromMatch(matchSaved);
         return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
     }
 
@@ -121,11 +128,12 @@ public class MatchServiceImpl implements MatchService {
 
         MatchEntity match =
                 buildMatchEntity
-                        (null,serverOption, gameMode, map, rankTier, userId, null);
+                        (null,serverOption, gameMode, map, rankTier, userId, null,null);
 
         MatchEntity matchSaved = matchRepository.save(match);
         //UPDATING USER MATCHES
         userMatchesService.updateUsers(matchSaved.getPlayerDetails());
+        userLootService.giveRewardsToPlayersFromMatch(matchSaved);
         return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
     }
 
@@ -143,11 +151,91 @@ public class MatchServiceImpl implements MatchService {
 
         MatchEntity match =
                 buildMatchEntity
-                        (null,serverOption, gameMode, "SUMMONERS RIFT", rankTier, userId, role);
+                        (null,serverOption, gameMode, "SUMMONERS RIFT", rankTier, userId, role,null);
 
         MatchEntity matchSaved = matchRepository.save(match);
         //UPDATING USER MATCHES
         userMatchesService.updateUsers(matchSaved.getPlayerDetails());
+        userLootService.giveRewardsToPlayersFromMatch(matchSaved);
+        return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
+    }
+
+
+    @Override
+    public MatchDTO createMatchForUserRoleAndChampion(Long userId, String role, Long championId, String gameMode, boolean showChampion, boolean showItem) {
+
+        Optional<UserEntity> optionalUser = userRepository.findById(userId);
+        UserEntity user;
+        if (optionalUser.isPresent()) {
+            user = optionalUser.get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find user with id " + userId);
+        }
+
+        Optional<ChampionEntity> optionalChampion = championRepository.findById(championId);
+        if (optionalChampion.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find champion with id " + championId);
+        }
+
+        ServerOption serverOption = getServerOptionFromEntity(user.getServer());
+        UserRankTier rankTier = getUserRankTierFromEntity(user.getRank());
+
+        MatchEntity match = buildMatchEntity(
+                null,
+                serverOption,
+                gameMode,
+                "SUMMONERS RIFT",
+                rankTier,
+                userId,
+                role,
+                championId // AQUÍ PASAMOS EL CHAMPION OPCIONAL
+        );
+
+        MatchEntity matchSaved = matchRepository.save(match);
+
+
+        userMatchesService.updateUsers(matchSaved.getPlayerDetails());
+        userLootService.giveRewardsToPlayersFromMatch(matchSaved);
+
+        return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
+    }
+
+
+    @Override
+    public MatchDTO createMatchARAMForUserAndChampion(Long userId, Long championId,boolean showChampion, boolean showItem) {
+
+        Optional<UserEntity> optionalUser = userRepository.findById(userId);
+        UserEntity user;
+        if (optionalUser.isPresent()) {
+            user = optionalUser.get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find user with id " + userId);
+        }
+
+        Optional<ChampionEntity> optionalChampion = championRepository.findById(championId);
+        if (optionalChampion.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find champion with id " + championId);
+        }
+
+        ServerOption serverOption = getServerOptionFromEntity(user.getServer());
+        UserRankTier rankTier = getUserRankTierFromEntity(user.getRank());
+
+        MatchEntity match = buildMatchEntity(
+                null,
+                serverOption,
+                "NORMAL",
+                "ARAM",
+                rankTier,
+                userId,
+                null,
+                championId
+        );
+
+        MatchEntity matchSaved = matchRepository.save(match);
+
+        userMatchesService.updateUsers(matchSaved.getPlayerDetails());
+        userLootService.giveRewardsToPlayersFromMatch(matchSaved);
+
         return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
     }
 
@@ -176,7 +264,7 @@ public class MatchServiceImpl implements MatchService {
                     if (optionalRole == null || optionalRole.isBlank() || optionalRole.isEmpty())
                     {
                         matchUpdated = matchRepository.save
-                                (buildMatchEntity(matchToUpdate,userServer,gameMode,map,userElo,optionalUserId,null));
+                                (buildMatchEntity(matchToUpdate,userServer,gameMode,map,userElo,optionalUserId,null,null));
 
                         userMatchesService.updateUsers(matchUpdated.getPlayerDetails()); //UPDATE USER MATCHES (wins & loses)
                         return dtoBuilder.buildMatchDTO(matchUpdated, showChampion,showItem);
@@ -185,7 +273,7 @@ public class MatchServiceImpl implements MatchService {
                     else // WITH SPECIFIC ROLE (IGNORE parameter "map" && add "optionalRole")
                     {
                         matchUpdated = matchRepository.save
-                                (buildMatchEntity(matchToUpdate,userServer,gameMode,"SUMMONERS RIFT",userElo,optionalUserId,optionalRole));
+                                (buildMatchEntity(matchToUpdate,userServer,gameMode,"SUMMONERS RIFT",userElo,optionalUserId,optionalRole,null));
 
                         userMatchesService.updateUsers(matchUpdated.getPlayerDetails()); //UPDATE USER MATCHES (wins & loses)
                         return dtoBuilder.buildMatchDTO(matchUpdated, showChampion,showItem);
@@ -197,7 +285,7 @@ public class MatchServiceImpl implements MatchService {
 
             // NOT USER, THEN NO ROLE EITHER
             matchUpdated = matchRepository.save
-                    (buildMatchEntity(matchToUpdate,serverOption,gameMode,map,elo,null,null));
+                    (buildMatchEntity(matchToUpdate,serverOption,gameMode,map,elo,null,null,null));
 
             userMatchesService.updateUsers(matchUpdated.getPlayerDetails()); //UPDATE USER MATCHES (wins & loses)
             return dtoBuilder.buildMatchDTO(matchUpdated, showChampion,showItem);
@@ -234,7 +322,7 @@ public class MatchServiceImpl implements MatchService {
 
     // Returns the match completed through calling other methods to assist it
     private MatchEntity buildMatchEntity(MatchEntity matchToUpdate,ServerOption serverOption, String gameMode, String map, UserRankTier elo,
-                                         Long optionalUserId, String optionalRole)
+                                         Long optionalUserId, String optionalRole, Long optionalChampionId)
     {
         MatchEntity matchEntity;
         boolean update = false;
@@ -295,13 +383,6 @@ public class MatchServiceImpl implements MatchService {
         } else
             throw new IllegalArgumentException("Invalid map: only ARAM or SUMMONERS RIFT.");
 
-        /*
-        //todo: winnerteam
-        matchEntity.setWinnerTeam(getRandomTeam());
-        estimateTeamKillsByMatch(matchEntity); //todo: aca se asgina kills a cada equipo, con plus si ganó
-         */
-
-
         matchEntity.setServerRegion(getServerByName(serverOption.getFullName()));
 
 
@@ -324,7 +405,7 @@ public class MatchServiceImpl implements MatchService {
             // AND CAN PROCEED WITH THE OPERATION
 
             List<PlayerMatchDetailEntity> newDetails =
-                    buildPlayerMatchDetailEntityList(matchEntity, serverOption, elo, mirrorChampions, userId, role);
+                    buildPlayerMatchDetailEntityList(matchEntity, serverOption, elo, mirrorChampions, userId, role,optionalChampionId);
 
             for (PlayerMatchDetailEntity detail : newDetails) {
                 matchEntity.getPlayerDetails().add(detail);
@@ -334,7 +415,7 @@ public class MatchServiceImpl implements MatchService {
         else //Is a new MatchEntity
         {
             matchEntity.setPlayerDetails(
-                    buildPlayerMatchDetailEntityList(matchEntity, serverOption, elo, mirrorChampions, userId, role));
+                    buildPlayerMatchDetailEntityList(matchEntity, serverOption, elo, mirrorChampions, userId, role,optionalChampionId));
         }
         damageEstimatorService.distributeDamage(matchEntity);
         championWinrateService.updateChampionWinrate(matchEntity);
@@ -342,8 +423,8 @@ public class MatchServiceImpl implements MatchService {
     }
 
     //DELIVERS THE FULL LIST OF DETAILS WITH TEAMS, CHAMPS AND STATS
-    private List<PlayerMatchDetailEntity> buildPlayerMatchDetailEntityList(MatchEntity match, ServerOption serverOption,
-                                                                           UserRankTier elo, boolean mirrorChampions, Long optionalUserId, RoleEntity optionalRole)
+    private List<PlayerMatchDetailEntity> buildPlayerMatchDetailEntityList(MatchEntity match, ServerOption serverOption, UserRankTier elo, boolean mirrorChampions,
+                                                                           Long optionalUserId, RoleEntity optionalRole, Long optionalChampionId)
     {
         List<UserMatchesDTO> usersFromServer;
 
@@ -393,18 +474,51 @@ public class MatchServiceImpl implements MatchService {
 
         List<PlayerMatchDetailEntity> details;
 
-        if (optionalUserId != null && optionalRole != null){
-            details = championSelectionTeamsWithUserAndRole(match,blueTeamIds,redTeamIds,mirrorChampions,optionalUserId,optionalRole);
+        // Case: user provided with a role
+        if (optionalUserId != null && optionalRole != null) {
+            if (optionalChampionId != null) {
+                // Fetch the champion entity from the repository
+                Optional<ChampionEntity> optionalChampion = championRepository.findById(optionalChampionId);
+                if (optionalChampion.isEmpty()) {
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                            "Did not find champion with id " + optionalChampionId);
+                }
+
+                // If champion is provided, assign it to the user with role
+                details = championSelectionTeamsWithUserRoleAndChampion(
+                        match, blueTeamIds, redTeamIds, mirrorChampions,
+                        optionalUserId, optionalRole, optionalChampion.get());
+            } else {
+                // No champion provided, select automatically for user with role
+                details = championSelectionTeamsWithUserAndRole(
+                        match, blueTeamIds, redTeamIds, mirrorChampions,
+                        optionalUserId, optionalRole);
+            }
             sortByTeamAndRoles(details);
         }
+        // Case: ARAM map and user + champion provided (no role)
+        else if (optionalUserId != null && optionalChampionId != null && match.getMap().getId().equals(2L)) {
+            Optional<ChampionEntity> optionalChampion = championRepository.findById(optionalChampionId);
+            if (optionalChampion.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Did not find champion with id " + optionalChampionId);
+            }
+
+            // ARAM selection
+            details = championSelectionTeamsWithUserAndChampion(
+                    match, blueTeamIds, redTeamIds, mirrorChampions,
+                    optionalUserId, optionalChampion.get());
+        }
+        // Default case: no user/champion info, random selection
         else {
-            //Shuffle in case of user provided, he may play different roles
             Collections.shuffle(blueTeamIds);
             Collections.shuffle(redTeamIds);
             details = championSelectionTeams(match, blueTeamIds, redTeamIds, mirrorChampions);
         }
 
-        calculateMatchStats(details); //todo: stats
+        // Calculate additional match statistics
+        calculateMatchStats(details);
+
 
         //SAFE FOR HIBERNATE, WE KEEP THE SAME COLLECTION, AND ADD TO IT THE NEW ITEMS ONE BY ONE
         for (PlayerMatchDetailEntity detail : details)
@@ -431,7 +545,7 @@ public class MatchServiceImpl implements MatchService {
         for (Long playerId : blueTeam) {
 
             PlayerMatchDetailEntity detail = buildPlayerMatchDetailEntity
-                    (match, blueTeamEntity, playerId, roles.get(roleIndex), pickedChampions);
+                    (match, blueTeamEntity, playerId, roles.get(roleIndex), pickedChampions,null);
 
             detailList.add(detail);
             roleIndex++;
@@ -443,16 +557,15 @@ public class MatchServiceImpl implements MatchService {
         for (Long playerId : redTeam) {
 
             PlayerMatchDetailEntity detail = buildPlayerMatchDetailEntity
-                    (match, redTeamEntity, playerId, roles.get(roleIndex), pickedChampions);
+                    (match, redTeamEntity, playerId, roles.get(roleIndex), pickedChampions,null);
 
             detailList.add(detail);
             roleIndex++;
             pickedChampions = getUniqueChampionsFromMatchDetails(detailList);
         }
 
-        //todo: winnerteam
         match.setWinnerTeam(championWinrateService.simulateMatchWinner(detailList));
-        estimateTeamKillsByMatch(match); //todo: aca se asgina kills a cada equipo, con plus si ganó
+        estimateTeamKillsByMatch(match);
 
         return detailList;
     }
@@ -481,7 +594,7 @@ public class MatchServiceImpl implements MatchService {
             }
 
             PlayerMatchDetailEntity detail =
-                    buildPlayerMatchDetailEntity(match, blueTeamEntity, playerId, assignedRole, pickedChampions);
+                    buildPlayerMatchDetailEntity(match, blueTeamEntity, playerId, assignedRole, pickedChampions,null);
 
             detailList.add(detail);
             pickedChampions = getUniqueChampionsFromMatchDetails(detailList);
@@ -503,23 +616,131 @@ public class MatchServiceImpl implements MatchService {
             }
 
             PlayerMatchDetailEntity detail =
-                    buildPlayerMatchDetailEntity(match, redTeamEntity, playerId, assignedRole, pickedChampions);
+                    buildPlayerMatchDetailEntity(match, redTeamEntity, playerId, assignedRole, pickedChampions,null);
 
             detailList.add(detail);
             pickedChampions = getUniqueChampionsFromMatchDetails(detailList);
         }
-        //todo: winnerteam
+
         match.setWinnerTeam(championWinrateService.simulateMatchWinner(detailList));
-        estimateTeamKillsByMatch(match); //todo: aca se asgina kills a cada equipo, con plus si ganó
+        estimateTeamKillsByMatch(match);
+
+        return detailList;
+    }
+
+    private List<PlayerMatchDetailEntity> championSelectionTeamsWithUserRoleAndChampion(
+            MatchEntity match,
+            List<Long> blueTeam,
+            List<Long> redTeam,
+            boolean mirrorChampions,
+            Long userId,
+            RoleEntity fixedRole,
+            ChampionEntity optionalChampion // NUEVO
+    ) {
+        List<PlayerMatchDetailEntity> detailList = new ArrayList<>();
+        List<ChampionEntity> pickedChampions = new ArrayList<>();
+        TeamEntity blueTeamEntity = getTeam(1L);
+        TeamEntity redTeamEntity = getTeam(2L);
+        List<RoleEntity> roles = roleRepository.findAll();
+
+        // BLUE TEAM
+        List<RoleEntity> blueRoles = new ArrayList<>(roles);
+        for (Long playerId : blueTeam) {
+            RoleEntity assignedRole = playerId.equals(userId) ? fixedRole : blueRoles.remove(0);
+            if (playerId.equals(userId)) blueRoles.remove(fixedRole);
+
+            PlayerMatchDetailEntity detail = buildPlayerMatchDetailEntity(
+                    match, blueTeamEntity, playerId, assignedRole, pickedChampions,
+                    playerId.equals(userId) ? optionalChampion : null
+            );
+
+            detailList.add(detail);
+            pickedChampions = getUniqueChampionsFromMatchDetails(detailList);
+        }
+
+        if (mirrorChampions) pickedChampions.clear();
+
+        // RED TEAM
+        List<RoleEntity> redRoles = new ArrayList<>(roles);
+        for (Long playerId : redTeam) {
+            RoleEntity assignedRole = playerId.equals(userId) ? fixedRole : redRoles.remove(0);
+            if (playerId.equals(userId)) redRoles.remove(fixedRole);
+
+            PlayerMatchDetailEntity detail = buildPlayerMatchDetailEntity(
+                    match, redTeamEntity, playerId, assignedRole, pickedChampions,
+                    playerId.equals(userId) ? optionalChampion : null
+            );
+
+            detailList.add(detail);
+            pickedChampions = getUniqueChampionsFromMatchDetails(detailList);
+        }
+
+        match.setWinnerTeam(championWinrateService.simulateMatchWinner(detailList));
+        estimateTeamKillsByMatch(match);
+
+        return detailList;
+    }
+
+    private List<PlayerMatchDetailEntity> championSelectionTeamsWithUserAndChampion(
+            MatchEntity match,
+            List<Long> blueTeam,
+            List<Long> redTeam,
+            boolean mirrorChampions,
+            Long userId,
+            ChampionEntity optionalChampion
+    ) {
+        List<PlayerMatchDetailEntity> detailList = new ArrayList<>();
+        List<ChampionEntity> pickedChampions = new ArrayList<>();
+        TeamEntity blueTeamEntity = getTeam(1L);
+        TeamEntity redTeamEntity = getTeam(2L);
+
+        // BLUE TEAM
+        for (Long playerId : blueTeam) {
+            PlayerMatchDetailEntity detail = buildPlayerMatchDetailEntity(
+                    match,
+                    blueTeamEntity,
+                    playerId,
+                    null, // sin rol
+                    pickedChampions,
+                    playerId.equals(userId) ? optionalChampion : null
+            );
+            detailList.add(detail);
+            pickedChampions = getUniqueChampionsFromMatchDetails(detailList);
+        }
+
+        if (mirrorChampions) pickedChampions.clear();
+
+        // RED TEAM
+        for (Long playerId : redTeam) {
+            PlayerMatchDetailEntity detail = buildPlayerMatchDetailEntity(
+                    match,
+                    redTeamEntity,
+                    playerId,
+                    null, // sin rol
+                    pickedChampions,
+                    playerId.equals(userId) ? optionalChampion : null
+            );
+            detailList.add(detail);
+            pickedChampions = getUniqueChampionsFromMatchDetails(detailList);
+        }
+
+        match.setWinnerTeam(championWinrateService.simulateMatchWinner(detailList));
+        estimateTeamKillsByMatch(match);
 
         return detailList;
     }
 
 
+
     // BUILDS A SINGLE DETAIL
-    private PlayerMatchDetailEntity buildPlayerMatchDetailEntity(MatchEntity match, TeamEntity team ,Long userId,
-                                                                RoleEntity role, List<ChampionEntity> alreadySelectedChampions)
-    {
+    private PlayerMatchDetailEntity buildPlayerMatchDetailEntity(
+            MatchEntity match,
+            TeamEntity team,
+            Long userId,
+            RoleEntity role,
+            List<ChampionEntity> alreadySelectedChampions,
+            ChampionEntity optionalChampion // NUEVO
+    ) {
         List<UserXChampionEntity> userChampionsBelonging =
                 userXChampionRepository.findByUser_Id(userId);
 
@@ -533,61 +754,60 @@ public class MatchServiceImpl implements MatchService {
                 userChampions.add(u.getChampion()); //add to all the champions the user has
 
                 // looking for champions with the role or role2
-                if (u.getChampion().getRole().equals(role) ||
-                        //OR [role2 distinct null AND role2 = role wanted
-                        (u.getChampion().getRole2() != null && u.getChampion().getRole2().equals(role)))
+                if (role != null && (u.getChampion().getRole().equals(role) ||
+                        (u.getChampion().getRole2() != null && u.getChampion().getRole2().equals(role))))
                 {
                     userChampionsForRole.add(u.getChampion());
                 }
             }
         } else throw new RuntimeException
                 ("The user with id " + userId +
-                        "does not have ANY champions in posesion in order to build the match");
+                        " does not have ANY champions in posesion in order to build the match");
 
         PlayerMatchDetailEntity playerMatchDetail = new PlayerMatchDetailEntity();
         Collections.shuffle(userChampionsForRole);
         Collections.shuffle(userChampions);
 
-        //if is aram
-        ChampionEntity champion;
-        if (match.getMap().getId().equals(2L))
-        {
-            //pick random
-             champion = getChampionNotSelected(userChampions,alreadySelectedChampions);
-        }
-        //if is not aram, and the user has champions for the role
-        else if (!userChampionsForRole.isEmpty() && match.getMap().getId().equals(1L)) {
-             champion = getChampionNotSelected
-                    (userChampionsForRole,alreadySelectedChampions);
-        }
-        // if not aram and no champion for role,
-        else
-        {
-            // then pick any champion that the user has, but that is not selected already
-            champion = getChampionNotSelected(userChampions,alreadySelectedChampions);
-        }
-        if (champion != null){
-            playerMatchDetail.setChampion(champion);
-        }
-        // no champion from rol nor from general pool could be picked
-        else{
-            //try again with random
-            champion = getChampionNotSelected(userChampions,alreadySelectedChampions);
-            if (champion != null){
-                playerMatchDetail.setChampion(champion);
+        ChampionEntity champion = null;
+
+        // optional champion:
+        if (optionalChampion != null) {
+            if (!userChampions.contains(optionalChampion)) {
+                throw new RuntimeException("The user does not have the champion selected: "+optionalChampion.getName());
             }
-            else //still null?
-                throw new RuntimeException("The user only has champions that are already selected");
+            if (alreadySelectedChampions.contains(optionalChampion)) {
+                throw new RuntimeException("The champion :"+optionalChampion.getName()+" has been already selected");
+            }
+            champion = optionalChampion;
+        } else {
+            // not optional champion
+            if (match.getMap().getId().equals(2L)) {
+                champion = getChampionNotSelected(userChampions, alreadySelectedChampions);
+            } else if (!userChampionsForRole.isEmpty() && match.getMap().getId().equals(1L)) {
+                champion = getChampionNotSelected(userChampionsForRole, alreadySelectedChampions);
+            } else {
+                champion = getChampionNotSelected(userChampions, alreadySelectedChampions);
+            }
+
+            if (champion == null) {
+                //try again with random
+                champion = getChampionNotSelected(userChampions, alreadySelectedChampions);
+                if (champion == null) {
+                    throw new RuntimeException("The user only has champions that are already selected");
+                }
+            }
         }
+
+        playerMatchDetail.setChampion(champion);
         playerMatchDetail.setUser(userChampionsBelonging.get(0).getUser());
-        if (match.getMap().getId().equals(1L))
-        {
+        if (match.getMap().getId().equals(1L) && role != null) {
             playerMatchDetail.setRole(role); //Roles are only for map 1, not ARAM
         }
         playerMatchDetail.setTeam(team);
         playerMatchDetail.setMatch(match);
         return playerMatchDetail;
     }
+
 
     private List<PlayerMatchItemEntity> buildPlayerMatchItemsEntity (PlayerMatchDetailEntity detail)
     {

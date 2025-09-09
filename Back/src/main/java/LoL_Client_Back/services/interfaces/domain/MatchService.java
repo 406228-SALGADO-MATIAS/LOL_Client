@@ -18,6 +18,8 @@ public interface MatchService {
     MatchDTO createMatchForUserAndRole(Long userId,String role,String gameMode, boolean showChampion, boolean showItem);
     MatchDTO updateMatchById(Long matchId, ServerOption serverOption, String gameMode, String map, UserRankTier elo,
                              Long optionalUserId, String optionalRole, boolean showChampion, boolean showItem);
+    MatchDTO createMatchForUserRoleAndChampion(Long userId, String role, Long championId, String gameMode, boolean showChampion, boolean showItem);
+    MatchDTO createMatchARAMForUserAndChampion(Long userId, Long championId, boolean showChampion, boolean showItem);
     void delete (Long id);
     String generateRankedGames();
 

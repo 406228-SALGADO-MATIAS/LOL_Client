@@ -5,10 +5,9 @@ import LoL_Client_Back.dtos.loot.*;
 import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.association.UserXIconEntity;
 import LoL_Client_Back.entities.association.UserXSkinEntity;
-import LoL_Client_Back.entities.domain.ChampionEntity;
-import LoL_Client_Back.entities.domain.SkinEntity;
-import LoL_Client_Back.entities.domain.UserEntity;
+import LoL_Client_Back.entities.domain.*;
 import LoL_Client_Back.entities.reference.ProfileIconEntity;
+import LoL_Client_Back.entities.reference.TeamEntity;
 import LoL_Client_Back.entities.transaction.LootInventoryChampionsEntity;
 import LoL_Client_Back.entities.transaction.LootInventoryIconsEntity;
 import LoL_Client_Back.entities.transaction.LootInventorySkinsEntity;
@@ -1146,35 +1145,103 @@ public class UserLootServiceImpl implements UserLootService {
         Random random = new Random();
 
         if (isMasterChest) {
-            // Solo skins de RP >= 1350
-            List<SkinEntity> highTierSkins = skinRepository
-                    .findByTier_RpCostGreaterThanEqualOrderByTier_RpCostAsc(1820);
-            if (highTierSkins.isEmpty()) return null;
-            return getRandomElement(highTierSkins, random);
+            // Generate a number between 1 and 10
+            int randNum = random.nextInt(10) + 1;
+
+            List<SkinEntity> selectedList;
+
+            if (randNum <= 6) {
+                // 1-6 → pick from 975 RP+ skins
+                selectedList = skinRepository.findByTier_RpCostGreaterThanEqualOrderByTier_RpCostAsc(975);
+            } else if (randNum <= 9) {
+                // 7-9 → pick from 1350 RP+ skins
+                selectedList = skinRepository.findByTier_RpCostGreaterThanEqualOrderByTier_RpCostAsc(1350);
+            } else {
+                // 10 → pick from 1820 RP+ skins
+                selectedList = skinRepository.findByTier_RpCostGreaterThanEqualOrderByTier_RpCostAsc(1820);
+            }
+
+            if (selectedList.isEmpty()) return null;
+            Collections.shuffle(selectedList);
+
+            return getRandomElement(selectedList, random);
         }
+
 
         int roll = random.nextInt(100); // [0,99]
 
-        if (roll < 40) {
-            // 40% Champion
+        if (roll < 50) {
+            // 50% Champion
             List<ChampionEntity> champions = championRepository.findAll();
             if (champions.isEmpty()) return null;
 
             return getRandomElement(champions, random);
-        } else if (roll < 70) {
-            // 30% Skin
+        } else if (roll < 85) {
+            // 35% Skin
             List<SkinEntity> skins = skinRepository.findAll();
             if (skins.isEmpty()) return null;
 
             return getRandomElement(skins, random);
         } else {
-            // 30% Icon
+            // 15% Icon
             List<ProfileIconEntity> icons = iconRepository.findAll();
             if (icons.isEmpty()) return null;
 
             return getRandomElement(icons, random);
         }
     }
+
+    public void giveRewardsToPlayersFromMatch(MatchEntity match) {
+        TeamEntity winnerTeam = match.getWinnerTeam();
+        Random random = new Random();
+
+        for (PlayerMatchDetailEntity playerDetail : match.getPlayerDetails()) {
+
+            Optional<UserLootEntity> optional =
+                    userLootRepository.findByUser_Id(playerDetail.getUser().getId());
+
+            if (optional.isEmpty())
+                throw new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Did not find user loot for the user with id " + playerDetail.getUser().getId()
+                );
+
+            UserLootEntity updatedLoot = optional.get();
+
+            boolean isWinner = playerDetail.getTeam().equals(winnerTeam);
+            boolean isRanked = match.getRanked() != null && match.getRanked();
+
+            int numRolls = 0;
+
+            if (isRanked) {
+                numRolls = isWinner ? 4 : 2; // ranked win = 5, ranked loss = 3
+            } else {
+                numRolls = isWinner ? 2 : 0; // normal win = 2, normal loss = 0
+            }
+
+            for (int i = 0; i < numRolls; i++) {
+                int roll = random.nextInt(100) + 1; // 1-100
+
+                if (roll <= 35) {
+                    // 35% chance → chest
+                    updatedLoot.setChests(updatedLoot.getChests() + 1);
+                } else if (roll <= 80) {
+                    // next 45% → key
+                    updatedLoot.setKeys(updatedLoot.getKeys() + 1);
+                } else if (roll <= 95) {
+                    // next 15% → master chest
+                    updatedLoot.setMasterChests(updatedLoot.getMasterChests() + 1);
+                } else {
+                    // remaining 5% → orange essence
+                    updatedLoot.setOrangeEssence(updatedLoot.getOrangeEssence() + 150);
+                }
+            }
+
+            // Save the updated loot
+            userLootRepository.save(updatedLoot);
+        }
+    }
+
 
     private <T> T getRandomElement(List<T> list, Random random) {
         return list.get(random.nextInt(list.size()));

@@ -87,6 +87,34 @@ public class MatchController
         return ResponseEntity.ok(match);
     }
 
+    @PostMapping("/createMatch/userRoleAndChampion/{userId}")
+    public ResponseEntity<MatchDTO> createMatchForUserRoleAndChampion(
+            @PathVariable Long userId,
+            @RequestParam @Parameter(schema = @Schema(allowableValues = {"TOP", "JUNGLE", "MID", "ADC", "SUPPORT"}))
+            String role,
+            @RequestParam Long championId, // NUEVO: id del campeón elegido
+            @RequestParam @Parameter(schema = @Schema(allowableValues = {"RANKED", "NORMAL"}))
+            String gameMode,
+            @RequestParam(defaultValue = "false") boolean showChampion,
+            @RequestParam(defaultValue = "false") boolean showItem
+    ) {
+        MatchDTO match = matchService.createMatchForUserRoleAndChampion(userId, role, championId, gameMode, showChampion, showItem);
+        return ResponseEntity.ok(match);
+    }
+
+    @PostMapping("/createMatch/ARAM/userAndChampion/{userId}")
+    public ResponseEntity<MatchDTO> createMatchARAMForUserAndChampion(
+            @PathVariable Long userId,
+            @RequestParam Long championId,
+            @RequestParam(defaultValue = "false") boolean showChampion,
+            @RequestParam(defaultValue = "false") boolean showItem
+    ) {
+        MatchDTO match = matchService.createMatchARAMForUserAndChampion(userId, championId, showChampion, showItem);
+        return ResponseEntity.ok(match);
+    }
+
+
+
     @PutMapping("/{matchId}")
     public ResponseEntity<MatchDTO> updateMatch(@PathVariable Long matchId,
                                                 @RequestParam ServerOption serverOption,
