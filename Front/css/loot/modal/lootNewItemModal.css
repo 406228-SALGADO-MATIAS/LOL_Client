@@ -38,7 +38,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  
   color: #fff;
   /* animación con delay */
   animation: scaleUpModal 0.15s ease 0.55s forwards; /* <--- delay de 0.75s */
@@ -80,7 +80,7 @@
 /* Botón "Añadir" */
 .newitem-btn {
   padding: 2vh 4vw;
-  font-size: 2.2vh;
+  font-size: 2.8vh;
   font-weight: bold;
   color: #fff;
   background-color: #130081;
@@ -89,7 +89,16 @@
   cursor: pointer;
   transition: transform 0.15s ease, filter 0.25s ease, opacity 0.25s ease;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  max-width: 8vw;
+  max-height: 8vh;
+  min-width: 8vw;
+  min-height: 4vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+
 
 .newitem-btn:hover {
   transform: scale(1.02);

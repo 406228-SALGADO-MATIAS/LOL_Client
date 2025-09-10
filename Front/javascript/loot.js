@@ -127,7 +127,7 @@ async function loadUserProfile() {
     userIcon.style.height = "100%";
     userIcon.style.objectFit = "cover";
   } catch (err) {
-    console.error(err);
+    //console.error(err);
   }
 }
 

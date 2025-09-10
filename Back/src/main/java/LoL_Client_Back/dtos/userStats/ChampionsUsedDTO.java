@@ -25,7 +25,7 @@ public class ChampionsUsedDTO {
                     ChampionsUsedDTO dto = new ChampionsUsedDTO();
                     dto.setChampion(entry.getKey());
                     dto.setId(entry.getValue().get(0).getChampion().getId());
-                    dto.setImage(entry.getValue().get(0).getChampion().getImage());
+                    dto.setImage(entry.getValue().get(0).getChampion().getImageSquare());
                     dto.setNormalGames((int) entry.getValue().stream()
                             .filter(d -> !d.getMatch().getRanked() &&
                                     "SUMMONERS RIFT".equalsIgnoreCase(d.getMatch().getMap().getMap()))

@@ -14,7 +14,7 @@ function createNewItemModal(newItem, onClose) {
 
   const nameEl = document.createElement("div");
   nameEl.classList.add("newitem-modal-name")
-  nameEl.textContent = newItem.name;
+  nameEl.textContent = newItem.name.replace(/´/g, "'");
   
   nameEl.style.textAlign = "center";
   

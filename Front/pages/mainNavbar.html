@@ -29,8 +29,26 @@
           <div id="userNickname" style="font-size: 1.6rem; font-weight: bold">
             NICK<span id="userServer" style="font-weight: normal">#LAS</span>
           </div>
-          <div style="font-size: 1rem">
-            BE: <span id="userBE">0</span> | RP: <span id="userRP">0</span>
+          <div class="user-stats">
+            <div class="stat-be">
+              <img
+                src="https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/lootMaterials/blueEssence.png?raw=true"
+                alt="BE"
+                class="stat-icon-be"
+                title="Blue Essence (BE)"
+              />
+              <span id="userBE">0</span>
+            </div>
+            <span class="separator">|</span>
+            <div class="stat-rp">
+              <img
+                src="https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/rp.png?raw=true"
+                alt="RP"
+                class="stat-icon-rp"
+                title="Riot Point (RP)"
+              />
+              <span id="userRP">0</span>
+            </div>
           </div>
         </div>
       </div>
@@ -43,7 +61,9 @@
           <a class="nav-link" href="/pages/loot.html">Loot</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/pages/collections/collectionsChampions.html"
+          <a
+            class="nav-link"
+            href="/pages/collections/collectionsChampions.html"
             >Collections</a
           >
         </li>
@@ -65,7 +85,6 @@
   <!-- Estilos específicos del navbar -->
   <style>
     #navbar-container nav {
-      
       background: linear-gradient(365deg, #0c2e5000, #010406c6);
     }
 
@@ -108,7 +127,63 @@
     #logoutBtn:hover {
       background-color: #61000a !important; /* más oscuro en hover */
       border-color: #464646 !important;
-      transform: scale(1.05);     /* efecto de hover igual que btn-play */
+      transform: scale(1.05); /* efecto de hover igual que btn-play */
+    }
+    .user-stats {
+      display: flex;
+      align-items: center;
+      font-size: 1.2rem;
+      gap: 0.3rem; /* separa los bloques BE | RP */
+    }
+
+    .separator {
+      font-weight: bold;
+    }
+
+    /* BE */
+    .stat-be {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem; /* separa número e imagen */
+    }
+
+    .stat-icon-be {
+      height: 1.05rem; /* tamaño grande para el icono */
+      width: auto;
+      margin-left: 0; /* pegado al borde izquierdo del contenedor */
+
+      vertical-align: middle;
+    }
+
+    .stat-be span {
+      display: inline-block;
+      /* opcional, si quieres más espacio extra */
+      margin-left: 0;
+    }
+
+    /* RP */
+    .stat-rp {
+      display: flex;
+      align-items: center;
+      gap: 0.1rem; /* mismo gap reducido */
+    }
+
+    .stat-icon-rp {
+      height: 1rem; /* misma altura base */
+      width: auto;
+      vertical-align: middle;
+      transform: scale(1.2); /* zoom menor para RP */
+      transform-origin: left center;
+      margin-right: 0.3rem; /* separa número de la imagen */
+    }
+
+    #userNickname {
+      margin-bottom: 0.3; /* quita espacio abajo */
+      line-height: 1.2; /* opcional, ajusta el interlineado si quieres */
+    }
+
+    .user-stats {
+      margin-top: 0; /* quita espacio arriba */
     }
   </style>
 </nav>

@@ -44,7 +44,7 @@
 }
 
 .chest-btn {
-  margin-top: 2rem;
+  margin-top: 1rem;
   padding: 1.5rem 3vh 1vw; /* botón grande */
   border: none;
   border-radius: 6px;
@@ -53,6 +53,7 @@
   background: #89050580;
   color: white;
   font-size: 1.6rem;
+  
 }
 
 .chest-btn:hover {
