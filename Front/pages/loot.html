@@ -96,11 +96,7 @@
             <div class="d-flex justify-content-center text-center">
               <!-- Chest -->
               <div class="mx-2">
-                <img
-                  id="chestImg"
-                  class="sidebar-icon"
-                  alt="Chest"
-                />
+                <img id="chestImg" class="sidebar-icon" alt="Chest" />
                 <div id="chestCount" class="sidebar-count">0</div>
               </div>
               <!-- MasterChest -->
@@ -114,11 +110,7 @@
               </div>
               <!-- Key -->
               <div class="mx-2">
-                <img
-                  id="keyImg"
-                  class="sidebar-icon"
-                  alt="Key"
-                />
+                <img id="keyImg" class="sidebar-icon" alt="Key" />
                 <div id="keyCount" class="sidebar-count">0</div>
               </div>
               <!-- Orange Essence -->
@@ -189,20 +181,18 @@
     </div>
 
     <!-- Primero definiciones -->
-    <script src="/components/collectionsChampions/imageRepositionChampions.js"></script>
-    <script src="/components/collectionsSkins/imageRepositionSkins.js"></script>
-
-    <script src="/components/visualsDom/cardLoot.js"></script>
-    <script src="/components/loot/modalHooverLoot.js"></script>
-    <script src="/components/loot/modalClickLoot.js"></script>
-    <script src="/components/loot/modalNewItem.js"></script>
-    <script src="/components/loot/modalRoll.js"></script>
-    <script src="/components/loot/filterLoot.js"></script>
-
-    <script src="/components/loot/renderLoot.js"></script>
+    <script src="/javascript/support/collectionsChampions/imageRepositionChampions.js"></script>
+    <script src="/javascript/support/collectionsSkins/imageRepositionSkins.js"></script>
+    <script src="/javascript/support/visualsDom/cardLoot.js"></script>
+    <script src="/javascript/support/loot/modalHooverLoot.js"></script>
+    <script src="/javascript/support/loot/modalClickLoot.js"></script>
+    <script src="/javascript/support/loot/modalNewItem.js"></script>
+    <script src="/javascript/support/loot/modalRoll.js"></script>
+    <script src="/javascript/support/loot/filterLoot.js"></script>
+    <script src="/javascript/support/loot/renderLoot.js"></script>
 
     <!-- Después, el que llama a esas funciones -->
-    <script src="/javascript/loot.js"></script>
+    <script src="/javascript/core/loot.js"></script>
 
     <script>
       // Navbar dinámico
@@ -220,7 +210,7 @@
           mainNav.style.zIndex = "1040";
 
           const script = document.createElement("script");
-          script.src = "/javascript/mainNavbar.js";
+          script.src = "/javascript/core/mainNavbar.js";
           document.body.appendChild(script);
         })
         .catch((err) => console.error(err));

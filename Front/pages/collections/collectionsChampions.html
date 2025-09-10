@@ -95,13 +95,15 @@
       </div>
     </div>
 
-    <script src="/javascript/collections/collectionsChampions.js"></script>
-    <script src="/components/collectionsChampions/filterChampions.js"></script>
-    <script src="/components/collectionsChampions/imageRepositionChampions.js"></script>
-    <script src="/components/visualsDom/modal.js"></script>
-    <script src="/components/visualsDom/card.js"></script>
-    <script src="/components/collectionsChampions/renderChampions.js"></script>
+    <script src="/javascript/core/collections/collectionsChampions.js"></script>
+    <script src="/javascript/support/collectionsChampions/filterChampions.js"></script>
+    <script src="/javascript/support/collectionsChampions/imageRepositionChampions.js"></script>
+    <script src="/javascript/support/visualsDom/modal.js"></script>
+    <script src="/javascript/support/visualsDom/card.js"></script>
+    <script src="/javascript/support/collectionsChampions/renderChampions.js"></script>
 
+
+    
     <script>
       fetch("/pages/mainNavbar.html")
         .then((res) => res.text())
@@ -117,7 +119,7 @@
           mainNav.style.zIndex = "1040";
 
           const script = document.createElement("script");
-          script.src = "/javascript/mainNavbar.js";
+          script.src = "/javascript/core/mainNavbar.js";
           document.body.appendChild(script);
         })
         .catch((err) => console.error(err));

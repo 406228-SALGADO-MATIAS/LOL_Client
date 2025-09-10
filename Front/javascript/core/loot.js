@@ -372,6 +372,10 @@ confirmDisenchantBtn.addEventListener("click", async () => {
     console.error(err);
     alert("No se pudo desencantar: " + err.message);
   }
+
+  closeLootRollModal();
+  closeItemModal();
+
 });
 
 document.getElementById("rollChampion").addEventListener("click", () => {

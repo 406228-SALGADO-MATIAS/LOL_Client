@@ -114,11 +114,11 @@
       </div>
     </div>
 
-    <script src="/javascript/collections/collectionsItems.js"></script>
-    <script src="/components/collectionsItems/filterItems.js"></script>
-    <script src="/components/visualsDom/itemModal.js"></script>
-    <script src="/components/visualsDom/cardSmall.js"></script>
-    <script src="/components/collectionsItems/renderItems.js"></script>
+    <script src="/javascript/core/collections/collectionsItems.js"></script>
+    <script src="/javascript/support/collectionsItems/filterItems.js"></script>
+    <script src="/javascript/support/visualsDom/itemModal.js"></script>
+    <script src="/javascript/support/visualsDom/cardSmall.js"></script>
+    <script src="/javascript/support/collectionsItems/renderItems.js"></script>
 
     <script>
       fetch("/pages/mainNavbar.html")
@@ -135,7 +135,7 @@
           mainNav.style.zIndex = "1040";
 
           const script = document.createElement("script");
-          script.src = "/javascript/mainNavbar.js";
+          script.src = "/javascript/core/mainNavbar.js";
           document.body.appendChild(script);
         })
         .catch((err) => console.error(err));

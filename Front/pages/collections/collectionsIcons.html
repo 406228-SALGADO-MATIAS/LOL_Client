@@ -90,11 +90,11 @@
       </div>
     </div>
 
-    <script src="/javascript/collections/collectionsIcons.js"></script>
-    <script src="/components/collectionsIcons/filterIcons.js"></script>
-    <script src="/components/visualsDom/modal.js"></script>
-    <script src="/components/visualsDom/cardSmall.js"></script>
-    <script src="/components/collectionsIcons/renderIcons.js"></script>
+    <script src="/javascript/core/collections/collectionsIcons.js"></script>
+    <script src="/javascript/support/collectionsIcons/filterIcons.js"></script>
+    <script src="/javascript/support/visualsDom/modal.js"></script>
+    <script src="/javascript/support/visualsDom/cardSmall.js"></script>
+    <script src="/javascript/support/collectionsIcons/renderIcons.js"></script>
 
     <script>
       fetch("/pages/mainNavbar.html")
@@ -111,7 +111,7 @@
           mainNav.style.zIndex = "1040";
 
           const script = document.createElement("script");
-          script.src = "/javascript/mainNavbar.js";
+          script.src = "/javascript/core/mainNavbar.js";
           document.body.appendChild(script);
         })
         .catch((err) => console.error(err));
