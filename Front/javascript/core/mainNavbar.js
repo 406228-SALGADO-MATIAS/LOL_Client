@@ -2,7 +2,7 @@ function checkSession() {
   const userId = sessionStorage.getItem("userId");
   if (!userId) {
     alert("Error: No hay sesión activa. Serás redirigido al login.");
-    window.location.href = "/pages/intro.html";
+    window.location.href = "/pages/out/intro.html";
   }
 }
 
