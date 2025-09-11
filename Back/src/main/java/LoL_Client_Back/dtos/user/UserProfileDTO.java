@@ -13,6 +13,9 @@ public class UserProfileDTO {
     private String server;
     @Lob
     private String iconImage = "";
+    @Lob
+    private String userBackground ="";
     private Integer riotPoints;
     private Integer blueEssence;
+    private String rank = "Unranked";
 }

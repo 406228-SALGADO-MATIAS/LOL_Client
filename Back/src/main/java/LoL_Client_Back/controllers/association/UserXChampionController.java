@@ -1,10 +1,13 @@
 package LoL_Client_Back.controllers.association;
 
+import LoL_Client_Back.dtos.UpdateStatementDTO;
 import LoL_Client_Back.dtos.association.UserXChampionDTO;
 import LoL_Client_Back.services.interfaces.assocation.UserXChampionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -41,6 +44,26 @@ public class UserXChampionController {
     {
         return ResponseEntity.ok(service.findByUserAndChampion(championId,userId));
     }
+
+    @GetMapping(value = "/generateIconUpdates", produces = "text/plain")
+    public ResponseEntity<String> generateIconUpdates() {
+        try {
+            List<UpdateStatementDTO> updates = service.updateUserProfiles(); // llamamos al servicio
+            StringBuilder sb = new StringBuilder();
+
+            for (UpdateStatementDTO dto : updates) {
+                // NO hacemos replace aquí, ya viene correcto
+                sb.append(dto.getStatement()).append(";\n"); // agregamos ; para cada UPDATE
+            }
+
+            return ResponseEntity.ok(sb.toString());
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         service.deleteById(id);

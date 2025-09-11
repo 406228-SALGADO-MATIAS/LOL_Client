@@ -300,6 +300,14 @@ body {
   margin-top: 0.3rem;
 }
 
+/* Texto pequeño para números (en rojo) */
+.small-text-number {
+  font-size: 1rem;
+  color: red;
+  margin-top: 0.2rem;
+}
+
+
 .rank-slide .large {
   width: 150px;
 }
@@ -309,11 +317,11 @@ body {
 }
 
 
-.rank-img:empty {
+.rank-img[src=""] {
   display: none;
 }
 
-.rank-img-small:empty{
+.rank-img-small[src=""] {
   display: none;
 }
 

@@ -1,0 +1,318 @@
+async function loadTopProfile() {
+  const userId = sessionStorage.getItem("userId");
+  if (!userId) {
+    console.warn("No se encontró userId en sessionStorage");
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `http://localhost:8080/users/getProfileById/${userId}`
+    );
+    if (!res.ok) throw new Error("Error al traer perfil de usuario");
+
+    const profile = await res.json();
+
+    // User Icon
+    const userIcon = document.getElementById("userIcon");
+    if (profile.iconImage && profile.iconImage !== "") {
+      userIcon.src = profile.iconImage;
+    }
+
+    // Nickname
+    const userNickname = document.getElementById("userNickname");
+    if (profile.nickname) userNickname.textContent = profile.nickname;
+
+    // Server
+    const userServer = document.getElementById("userServer");
+    if (profile.server) userServer.textContent = `#${profile.server}`;
+
+    // Background Image
+    const imageContainer = document.querySelector(".image-container");
+    if (profile.userBackground && profile.userBackground !== "") {
+      imageContainer.style.backgroundImage = `url(${profile.userBackground})`;
+      imageContainer.style.backgroundSize = "cover";
+      imageContainer.style.backgroundPosition = "center";
+    }
+  } catch (err) {
+    console.error("Error cargando perfil:", err);
+  }
+}
+
+async function loadTopChampions() {
+  const userId = sessionStorage.getItem("userId");
+  if (!userId) {
+    console.warn("No se encontró userId en sessionStorage");
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `http://localhost:8080/usersMatches/${userId}/stats`
+    );
+    if (!res.ok) throw new Error("Error al traer stats de usuario");
+
+    const data = await res.json();
+    const champions = data.championsUsed || [];
+
+    // Calcular total de partidas y ordenar
+    champions.forEach((champ) => {
+      champ.totalGames =
+        (champ.normalGames || 0) +
+        (champ.aramGames || 0) +
+        (champ.rankedGames || 0);
+    });
+
+    champions.sort((a, b) => {
+      if (b.totalGames !== a.totalGames) return b.totalGames - a.totalGames; // mayor primero
+      return a.champion.localeCompare(b.champion); // desempate por nombre
+    });
+
+    // --- TOP 3 ---
+    const top3 = champions.slice(0, 3);
+    const topContainer = document.querySelector(
+      "#championsCarousel .carousel-item.active"
+    );
+    topContainer.innerHTML = ""; // limpiar antes de rellenar
+
+    // Orden top: 2do más alto → 1er más alto → 3er más alto
+    const topOrder = [1, 0, 2];
+    topOrder.forEach((index) => {
+      if (!top3[index]) return;
+      const champ = top3[index];
+      const div = document.createElement("div");
+      div.className = "d-inline-block mx-3";
+      div.innerHTML = `
+        <img src="${champ.image}" class="mx-2" width="100" />
+        <div class="champion-name">${champ.champion}</div>
+      `;
+      topContainer.appendChild(div);
+    });
+
+    // --- OTHERS ---
+    const others = champions.slice(3); // los que quedaron
+    const othersContainer = document.querySelector(
+      "#championsCarousel .carousel-item:not(.active)"
+    );
+    othersContainer.innerHTML = ""; // limpiar antes de rellenar
+
+    if (others.length > 0) {
+      // Crear filas de hasta 4 campeones
+      let rowDiv = null;
+      others.forEach((champ, idx) => {
+        if (idx % 4 === 0) {
+          // nueva fila
+          rowDiv = document.createElement("div");
+          rowDiv.className = "row text-center mb-2";
+          othersContainer.appendChild(rowDiv);
+        }
+
+        const colDiv = document.createElement("div");
+        colDiv.className = "col-3";
+        colDiv.innerHTML = `
+          <img src="${champ.image}" class="img-fluid" />
+          <div class="champion-name-small">${champ.champion}</div>
+        `;
+        rowDiv.appendChild(colDiv);
+      });
+    }
+  } catch (err) {
+    console.error("Error cargando Top Champions:", err);
+  }
+}
+
+// Tabla ORIGINAL → para NORMAL
+const RANKS_NORMAL = [
+  { name: "Unranked", wins: [0, 4], takedowns: [0, 79], farm: [0, 599] },
+  { name: "Bronze", wins: [5, 9], takedowns: [80, 100], farm: [600, 900] },
+  { name: "Silver", wins: [10, 14], takedowns: [101, 140], farm: [901, 1350] },
+  { name: "Gold", wins: [15, 19], takedowns: [141, 200], farm: [1351, 1800] },
+  {
+    name: "Platinum",
+    wins: [20, 24],
+    takedowns: [201, 260],
+    farm: [1801, 2250],
+  },
+  {
+    name: "Emerald",
+    wins: [25, 29],
+    takedowns: [261, 320],
+    farm: [2251, 2700],
+  },
+  {
+    name: "Diamond",
+    wins: [30, 34],
+    takedowns: [321, 380],
+    farm: [2701, 3150],
+  },
+  { name: "Master", wins: [35, 39], takedowns: [381, 420], farm: [3151, 3600] },
+  {
+    name: "Grandmaster",
+    wins: [40, 44],
+    takedowns: [421, 460],
+    farm: [3601, 4050],
+  },
+  {
+    name: "Challenger",
+    wins: [45, 50],
+    takedowns: [461, Infinity],
+    farm: [4051, Infinity],
+  },
+];
+
+// Tabla AJUSTADA → para ARAM
+const RANKS_ARAM = [
+  { name: "Unranked", wins: [0, 4], takedowns: [0, 100], farm: [0, 120] },
+  { name: "Bronze", wins: [5, 9], takedowns: [101, 125], farm: [120, 180] },
+  { name: "Silver", wins: [10, 14], takedowns: [126, 175], farm: [180, 270] },
+  { name: "Gold", wins: [15, 19], takedowns: [176, 250], farm: [270, 360] },
+  { name: "Platinum", wins: [20, 24], takedowns: [251, 325], farm: [360, 450] },
+  { name: "Emerald", wins: [25, 29], takedowns: [326, 400], farm: [450, 540] },
+  { name: "Diamond", wins: [30, 34], takedowns: [401, 475], farm: [540, 630] },
+  { name: "Master", wins: [35, 39], takedowns: [476, 525], farm: [630, 720] },
+  {
+    name: "Grandmaster",
+    wins: [40, 44],
+    takedowns: [526, 575],
+    farm: [720, 810],
+  },
+  {
+    name: "Challenger",
+    wins: [45, 50],
+    takedowns: [576, Infinity],
+    farm: [810, Infinity],
+  },
+];
+
+// Función para obtener rango según stats y tipo de juego
+function getRankByStats(wins, takedowns, farm, gameType) {
+  const table = gameType === "ARAM" ? RANKS_ARAM : RANKS_NORMAL;
+  return (
+    table.find(
+      (r) =>
+        wins >= r.wins[0] &&
+        wins <= r.wins[1] &&
+        takedowns >= r.takedowns[0] &&
+        takedowns <= r.takedowns[1] &&
+        farm >= r.farm[0] &&
+        farm <= r.farm[1]
+    ) || { name: "Unranked" }
+  );
+}
+
+// Función modular para setear cualquier slide de stats
+function setSlideMetrics(slideEl, stats, gameType) {
+  let takedowns = 0,
+    wins = 0,
+    farm = 0;
+
+  if (
+    stats &&
+    ((gameType === "NORMAL" && stats.normalGames > 0) ||
+      (gameType === "ARAM" && stats.aramGames > 0)) &&
+    stats.totalStats
+  ) {
+    const [k, , a] = stats.totalStats.kdaSum || [0, 0, 0];
+    takedowns = k + a;
+    wins = gameType === "NORMAL" ? stats.normalWins || 0 : stats.aramWins || 0;
+    farm = stats.totalStats.totalFarm || 0;
+  }
+
+  // Obtener rango correspondiente
+  const rankObj = getRankByStats(wins, takedowns, farm, gameType);
+
+  const els = slideEl.querySelectorAll(".small-text-number, .large-text, img");
+  if (!els || els.length < 3) return;
+
+  // Asignar valores
+  slideEl.querySelectorAll(".small-text-number")[0].textContent = takedowns;
+  slideEl.querySelectorAll(".small-text-number")[1].textContent = wins;
+  slideEl.querySelectorAll(".small-text-number")[2].textContent = farm;
+
+  // Asignar imagen del rango (solo la del medio grande)
+  const rankImgEl = slideEl.querySelector(".rank-img");
+  if (rankImgEl)
+    rankImgEl.src = `https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/${rankObj.name}.png?raw=true`;
+  const rankTextEl = slideEl.querySelector(".large-text");
+  if (rankTextEl) rankTextEl.textContent = rankObj.name;
+}
+
+async function loadRanks() {
+  const userId = sessionStorage.getItem("userId");
+  if (!userId) {
+    console.warn("No se encontró userId en sessionStorage");
+    return;
+  }
+
+  try {
+    // Traer profile del usuario
+    const profileRes = await fetch(`http://localhost:8080/users/getProfileById/${userId}`);
+    const profile = await profileRes.json();
+
+    // Traer todos los ranks disponibles
+    const ranksRes = await fetch("http://localhost:8080/ranks/all");
+    const ranks = await ranksRes.json();
+
+    let userRank = ranks.find(r => r.rank.toLowerCase() === profile.rank.toLowerCase()) || {
+      image: "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true",
+      rank: "Unranked"
+    };
+
+    // Slide 1 → Rank actual
+    const rankImg = document.querySelector("#ranksCarousel .rank-slide-single img");
+    const rankText = document.querySelector("#ranksCarousel .rank-slide-single .large-text");
+    if (rankImg) rankImg.src = userRank.image;
+    if (rankText) rankText.textContent = userRank.rank;
+
+    // Traer stats NORMAL y ARAM
+    const [normalStats, aramStats] = await Promise.all([
+      fetch(`http://localhost:8080/usersMatches/${userId}/stats?gameType=NORMAL`).then(r => r.json()),
+      fetch(`http://localhost:8080/usersMatches/${userId}/stats?gameType=ARAM`).then(r => r.json())
+    ]);
+
+    // Slide 2 → NORMAL
+    const normalSlide = document.querySelector("#ranksCarousel .carousel-item:nth-child(2)");
+    if (normalSlide) setSlideMetrics(normalSlide, normalStats, "NORMAL");
+
+    // Slide 3 → ARAM
+    const aramSlide = document.querySelector("#ranksCarousel .carousel-item:nth-child(3)");
+    if (aramSlide) setSlideMetrics(aramSlide, aramStats, "ARAM");
+
+  } catch (err) {
+    console.error("Error cargando ranks:", err);
+  }
+}
+
+function setupChampionCarouselTitle() {
+  const carousel = document.getElementById("championsCarousel");
+  const title = document.getElementById("championsTitle");
+
+  if (!carousel || !title) return;
+
+  // Al cambiar de slide
+  $(carousel).on("slid.bs.carousel", function () {
+    const activeIndex = $(carousel).find(".carousel-item.active").index();
+    if (activeIndex === 0) {
+      title.textContent = "Top Champions";
+    } else {
+      title.textContent = "Others";
+    }
+  });
+
+  // Inicialmente fijamos el título según el slide activo
+  const initialIndex = $(carousel).find(".carousel-item.active").index();
+  title.textContent = initialIndex === 0 ? "Top Champions" : "Others";
+}
+
+// Función principal de carga de la página
+async function loadResume() {
+  await loadTopProfile();
+  await loadTopChampions();
+  await loadRanks();
+}
+
+// Ejecutar al cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+  loadResume();
+  setupChampionCarouselTitle();
+});

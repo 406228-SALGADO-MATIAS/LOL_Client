@@ -1,6 +1,7 @@
 package LoL_Client_Back.services.implementations.association;
 
 import LoL_Client_Back.dtos.DTOBuilder;
+import LoL_Client_Back.dtos.UpdateStatementDTO;
 import LoL_Client_Back.dtos.association.UserXChampionDTO;
 import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.association.UserXSkinEntity;
@@ -21,10 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class UserXChampionServiceImpl implements UserXChampionService {
@@ -260,6 +258,34 @@ public class UserXChampionServiceImpl implements UserXChampionService {
 
         return dtoBuilder.buildUserXChampionDTO(userXChampionRepository.save(userXChampion));
     }
+
+    @Override
+    public List<UpdateStatementDTO> updateUserProfiles() {
+        List<UserEntity> userEntities = userRepository.findAll();
+        if (userEntities.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"There are no users in the db");
+        }
+        List<UpdateStatementDTO> dtos = new ArrayList<>();
+        for (UserEntity user : userEntities)
+        {
+            List<UserXChampionEntity> userXChampionEntities =
+                    userXChampionRepository.findByUser_Id(user.getId());
+
+            Collections.shuffle(userXChampionEntities);
+            ChampionEntity champion = userXChampionEntities.get(0).getChampion();
+
+            // Aquí ponemos la URL entre comillas simples y escapamos comillas internas
+            String imageUrl = champion.getImage().replace("'", "''");
+            String sql = "UPDATE users SET background_image = '" + imageUrl + "' WHERE id = " + user.getId();
+
+            UpdateStatementDTO dto = new UpdateStatementDTO();
+            dto.setStatement(sql);
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+
 
     private ChampionEntity randomFrom(List<ChampionEntity> list, Random random) {
         return list.get(random.nextInt(list.size()));
