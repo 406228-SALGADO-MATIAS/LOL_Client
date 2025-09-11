@@ -184,7 +184,7 @@ const RANKS_ARAM = [
   },
 ];
 
-// Función para obtener rango según stats y tipo de juego
+// Obtener rango según stats
 function getRankByStats(wins, takedowns, farm, gameType) {
   const table = gameType === "ARAM" ? RANKS_ARAM : RANKS_NORMAL;
   return (
@@ -200,8 +200,8 @@ function getRankByStats(wins, takedowns, farm, gameType) {
   );
 }
 
-// Función modular para setear cualquier slide de stats
-function setSlideMetrics(slideEl, stats, gameType) {
+// Setear métricas y asignar imágenes correctas
+function setSlideMetrics(slideEl, stats, gameType, ranksJson) {
   let takedowns = 0,
     wins = 0,
     farm = 0;
@@ -218,66 +218,90 @@ function setSlideMetrics(slideEl, stats, gameType) {
     farm = stats.totalStats.totalFarm || 0;
   }
 
-  // Obtener rango correspondiente
   const rankObj = getRankByStats(wins, takedowns, farm, gameType);
+  const rankData = ranksJson.find(
+    (r) => r.rank.toLowerCase() === rankObj.name.toLowerCase()
+  ) || {
+    image:
+      "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true",
+    rank: "Unranked",
+  };
 
-  const els = slideEl.querySelectorAll(".small-text-number, .large-text, img");
-  if (!els || els.length < 3) return;
+  // Asignar valores de stats
+  const smallTextEls = slideEl.querySelectorAll(".small-text-number");
+  if (smallTextEls.length >= 3) {
+    smallTextEls[0].textContent = takedowns;
+    smallTextEls[1].textContent = wins;
+    smallTextEls[2].textContent = farm;
+  }
 
-  // Asignar valores
-  slideEl.querySelectorAll(".small-text-number")[0].textContent = takedowns;
-  slideEl.querySelectorAll(".small-text-number")[1].textContent = wins;
-  slideEl.querySelectorAll(".small-text-number")[2].textContent = farm;
+  // Asignar texto grande
+  const largeTextEl = slideEl.querySelector(".large-text");
+  if (largeTextEl) largeTextEl.textContent = rankObj.name;
 
-  // Asignar imagen del rango (solo la del medio grande)
+  // Asignar imagen grande
   const rankImgEl = slideEl.querySelector(".rank-img");
-  if (rankImgEl)
-    rankImgEl.src = `https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/${rankObj.name}.png?raw=true`;
-  const rankTextEl = slideEl.querySelector(".large-text");
-  if (rankTextEl) rankTextEl.textContent = rankObj.name;
+  if (rankImgEl) rankImgEl.src = rankData.image;
+
+  // Asignar todas las imágenes small
+  const smallImgs = slideEl.querySelectorAll(".rank-img-small");
+  smallImgs.forEach((img) => (img.src = rankData.image));
 }
 
 async function loadRanks() {
   const userId = sessionStorage.getItem("userId");
-  if (!userId) {
-    console.warn("No se encontró userId en sessionStorage");
-    return;
-  }
+  if (!userId) return console.warn("No se encontró userId en sessionStorage");
 
   try {
-    // Traer profile del usuario
-    const profileRes = await fetch(`http://localhost:8080/users/getProfileById/${userId}`);
+    const [profileRes, ranksRes, normalStatsRes, aramStatsRes] =
+      await Promise.all([
+        fetch(`http://localhost:8080/users/getProfileById/${userId}`),
+        fetch("http://localhost:8080/ranks/all"),
+        fetch(
+          `http://localhost:8080/usersMatches/${userId}/stats?gameType=NORMAL`
+        ),
+        fetch(
+          `http://localhost:8080/usersMatches/${userId}/stats?gameType=ARAM`
+        ),
+      ]);
+
     const profile = await profileRes.json();
-
-    // Traer todos los ranks disponibles
-    const ranksRes = await fetch("http://localhost:8080/ranks/all");
-    const ranks = await ranksRes.json();
-
-    let userRank = ranks.find(r => r.rank.toLowerCase() === profile.rank.toLowerCase()) || {
-      image: "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true",
-      rank: "Unranked"
-    };
+    const ranksJson = await ranksRes.json();
+    const normalStats = await normalStatsRes.json();
+    const aramStats = await aramStatsRes.json();
 
     // Slide 1 → Rank actual
-    const rankImg = document.querySelector("#ranksCarousel .rank-slide-single img");
-    const rankText = document.querySelector("#ranksCarousel .rank-slide-single .large-text");
-    if (rankImg) rankImg.src = userRank.image;
-    if (rankText) rankText.textContent = userRank.rank;
-
-    // Traer stats NORMAL y ARAM
-    const [normalStats, aramStats] = await Promise.all([
-      fetch(`http://localhost:8080/usersMatches/${userId}/stats?gameType=NORMAL`).then(r => r.json()),
-      fetch(`http://localhost:8080/usersMatches/${userId}/stats?gameType=ARAM`).then(r => r.json())
-    ]);
+    const rankSlideSingle = document.querySelector(
+      "#ranksCarousel .rank-slide-single"
+    );
+    if (rankSlideSingle) {
+      const userRank = ranksJson.find(
+        (r) => r.rank.toLowerCase() === profile.rank.toLowerCase()
+      ) || {
+        image:
+          "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true",
+        rank: "Unranked",
+      };
+      const rankImg = rankSlideSingle.querySelector(".rank-img");
+      const smallImgs = rankSlideSingle.querySelectorAll(".rank-img-small");
+      if (rankImg) rankImg.src = userRank.image;
+      smallImgs.forEach((img) => (img.src = userRank.image));
+      const rankText = rankSlideSingle.querySelector(".large-text");
+      if (rankText) rankText.textContent = userRank.rank;
+    }
 
     // Slide 2 → NORMAL
-    const normalSlide = document.querySelector("#ranksCarousel .carousel-item:nth-child(2)");
-    if (normalSlide) setSlideMetrics(normalSlide, normalStats, "NORMAL");
+    const normalSlide = document.querySelector(
+      "#ranksCarousel .carousel-item:nth-child(2)"
+    );
+    if (normalSlide)
+      setSlideMetrics(normalSlide, normalStats, "NORMAL", ranksJson);
 
     // Slide 3 → ARAM
-    const aramSlide = document.querySelector("#ranksCarousel .carousel-item:nth-child(3)");
-    if (aramSlide) setSlideMetrics(aramSlide, aramStats, "ARAM");
-
+    const aramSlide = document.querySelector(
+      "#ranksCarousel .carousel-item:nth-child(3)"
+    );
+    if (aramSlide) setSlideMetrics(aramSlide, aramStats, "ARAM", ranksJson);
   } catch (err) {
     console.error("Error cargando ranks:", err);
   }

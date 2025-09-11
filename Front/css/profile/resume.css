@@ -150,10 +150,10 @@ body {
 }
 
 .image-container img.large-image {
-  width: 100%;            /* ocupa todo el contenedor horizontalmente */
-  height: auto;           /* mantiene proporción */
-  object-fit: cover;      /* recorta si es necesario */
-  border-radius: 12px;    /* coincide con el contenedor */
+  width: 100%; /* ocupa todo el contenedor horizontalmente */
+  height: auto; /* mantiene proporción */
+  object-fit: cover; /* recorta si es necesario */
+  border-radius: 12px; /* coincide con el contenedor */
   transition: all 0.3s ease; /* opcional, animaciones suaves si se cambia la imagen */
 }
 
@@ -182,20 +182,6 @@ body {
   overflow: hidden;
 }
 
-.carousel-content {
-  display: flex;
-  transition: transform 0.4s ease;
-}
-
-.carousel-slide {
-  min-width: 100%;
-  display: none;
-}
-
-.carousel-slide.active {
-  display: block;
-}
-
 .carousel-prev,
 .carousel-next {
   position: absolute;
@@ -219,6 +205,14 @@ body {
 .carousel-dots {
   text-align: center;
   margin-top: 0.5rem;
+}
+
+.carousel-item .rank-slide-single,
+.carousel-item .rank-slide-three {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
 /* Champions */
@@ -259,7 +253,9 @@ body {
 /* Rank slides */
 
 /* Rank slides generales */
-.rank-slide, .rank-slide-three, .rank-slide-single {
+.rank-slide,
+.rank-slide-three,
+.rank-slide-single {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -307,7 +303,6 @@ body {
   margin-top: 0.2rem;
 }
 
-
 .rank-slide .large {
   width: 150px;
 }
@@ -315,13 +310,3 @@ body {
 .rank-slide .small {
   width: 80px;
 }
-
-
-.rank-img[src=""] {
-  display: none;
-}
-
-.rank-img-small[src=""] {
-  display: none;
-}
-
