@@ -31,6 +31,9 @@ public class UserEntity {
     private Integer blueEssence;
     @Column(name = "riot_points")
     private Integer riotPoints;
+    @Lob
+    @Column(name = "background_image")
+    private String backgroundImage;
     @JoinColumn
     @ManyToOne
     private RankTierEntity rank;
@@ -40,6 +43,7 @@ public class UserEntity {
     @JoinColumn(nullable = true)
     @ManyToOne
     private ProfileIconEntity icon;
+
 
 
 }

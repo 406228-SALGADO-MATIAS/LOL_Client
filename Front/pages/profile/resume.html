@@ -67,55 +67,79 @@
             <div id="userServer" class="user-server">#Servidor</div>
           </div>
         </aside>
+        <div
+          class="col-md-9 image-container d-flex justify-content-center align-items-center"
+        >
+          <!-- La imagen se agregará dinámicamente vía JS -->
+        </div>
       </div>
 
       <!-- Parte inferior -->
       <div class="row bottom-section">
         <!-- Columna izquierda: Top Champions -->
         <div class="col-md-6 bottom-column">
-          <h2 class="section-title">Top Champions</h2>
+          <h2 id="championsTitle" class="section-title">Top Champions</h2>
           <div
             id="championsCarousel"
             class="carousel slide"
             data-interval="false"
           >
             <div class="carousel-inner">
-              <!-- Sección 1 -->
+              <!-- Slide 1: Top Champions -->
               <div class="carousel-item active text-center">
-                <img src="/images/champion1.png" class="mx-2" width="100" />
-                <img src="/images/champion2.png" class="mx-2" width="100" />
-                <img src="/images/champion3.png" class="mx-2" width="100" />
+                <div class="d-inline-block mx-3">
+                  <img src="/images/champion1.png" class="mx-2" width="100" />
+                  <div class="champion-name">Ahri</div>
+                </div>
+                <div class="d-inline-block mx-3">
+                  <img src="/images/champion2.png" class="mx-2" width="100" />
+                  <div class="champion-name">Yasuo</div>
+                </div>
+                <div class="d-inline-block mx-3">
+                  <img src="/images/champion3.png" class="mx-2" width="100" />
+                  <div class="champion-name">Lux</div>
+                </div>
               </div>
-              <!-- Sección 2 -->
+
+              <!-- Slide 2: Others -->
               <div class="carousel-item">
-                <div class="row">
+                <div class="row text-center">
                   <div class="col-3">
                     <img src="/images/champion4.png" class="img-fluid" />
+                    <div class="champion-name-small">Zed</div>
                   </div>
                   <div class="col-3">
                     <img src="/images/champion5.png" class="img-fluid" />
+                    <div class="champion-name-small">Ezreal</div>
                   </div>
                   <div class="col-3">
                     <img src="/images/champion6.png" class="img-fluid" />
+                    <div class="champion-name-small">Morgana</div>
                   </div>
                   <div class="col-3">
                     <img src="/images/champion7.png" class="img-fluid" />
+                    <div class="champion-name-small">Katarina</div>
                   </div>
                   <div class="col-3">
                     <img src="/images/champion8.png" class="img-fluid" />
+                    <div class="champion-name-small">Lee Sin</div>
                   </div>
                   <div class="col-3">
                     <img src="/images/champion9.png" class="img-fluid" />
+                    <div class="champion-name-small">Jinx</div>
                   </div>
                   <div class="col-3">
                     <img src="/images/champion10.png" class="img-fluid" />
+                    <div class="champion-name-small">Garen</div>
                   </div>
                   <div class="col-3">
                     <img src="/images/champion11.png" class="img-fluid" />
+                    <div class="champion-name-small">Ashe</div>
                   </div>
                 </div>
               </div>
             </div>
+
             <!-- Controles -->
             <a
               class="carousel-control-prev"
@@ -133,6 +157,8 @@
             >
               <span class="carousel-control-next-icon"></span>
             </a>
+
+            <!-- Indicadores -->
             <ol class="carousel-indicators">
               <li
                 data-target="#championsCarousel"
@@ -146,25 +172,50 @@
 
         <!-- Columna derecha: Rank Tiers -->
         <div class="col-md-6 bottom-column">
-          <h2 class="section-title">Rank Tiers</h2>
+          <h2 id="ranksTitle" class="section-title">Ranked</h2>
           <div id="ranksCarousel" class="carousel slide" data-interval="false">
             <div class="carousel-inner text-center">
-              <div class="carousel-item active">
-                <img src="/images/rank1.png" class="large mx-2" />
-                <img src="/images/rank2.png" class="small mx-2" />
-                <img src="/images/rank3.png" class="small mx-2" />
+              <!-- Slide 1: RANKED - solo imagen grande -->
+              <div class="carousel-item active rank-slide-single text-center">
+                <div class="d-inline-block">
+                  <img src="" class="large mx-2 rank-img" />
+                  <div class="rank-text large-text">TIER</div>
+                </div>
               </div>
-              <div class="carousel-item">
-                <img src="/images/rank4.png" class="large mx-2" />
-                <img src="/images/rank5.png" class="small mx-2" />
-                <img src="/images/rank6.png" class="small mx-2" />
+
+              <!-- Slide 2: NORMAL - tres elementos -->
+              <div class="carousel-item rank-slide-three text-center">
+                <div class="d-inline-block mx-2">
+                  <img src="" class="small mx-2 rank-img-small" />
+                  <div class="rank-text small-text">TAKEDOWNS</div>
+                </div>
+                <div class="d-inline-block mx-2">
+                  <img src="" class="large mx-2 rank-img" />
+                  <div class="rank-text large-text">WINS</div>
+                </div>
+                <div class="d-inline-block mx-2">
+                  <img src="" class="small mx-2 rank-img-small" />
+                  <div class="rank-text small-text">CREEP SCORE</div>
+                </div>
               </div>
-              <div class="carousel-item">
-                <img src="/images/rank7.png" class="large mx-2" />
-                <img src="/images/rank8.png" class="small mx-2" />
-                <img src="/images/rank9.png" class="small mx-2" />
+
+              <!-- Slide 3: ARAM - mismo que NORMAL -->
+              <div class="carousel-item rank-slide-three text-center">
+                <div class="d-inline-block mx-2">
+                  <img src="" class="small mx-2 rank-img-small" />
+                  <div class="rank-text small-text">TAKEDOWNS</div>
+                </div>
+                <div class="d-inline-block mx-2">
+                  <img src="" class="large mx-2 rank-img" />
+                  <div class="rank-text large-text">WINS</div>
+                </div>
+                <div class="d-inline-block mx-2">
+                  <img src="" class="small mx-2 rank-img-small" />
+                  <div class="rank-text small-text">CREEP SCORE</div>
+                </div>
               </div>
             </div>
+
             <!-- Controles -->
             <a
               class="carousel-control-prev"
@@ -182,6 +233,8 @@
             >
               <span class="carousel-control-next-icon"></span>
             </a>
+
+            <!-- Indicadores -->
             <ol class="carousel-indicators">
               <li
                 data-target="#ranksCarousel"

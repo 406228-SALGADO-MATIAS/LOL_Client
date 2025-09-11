@@ -23,8 +23,8 @@ body {
   align-items: center !important; /* centra verticalmente */
   gap: 2rem;
   height: 100%; /* ocupa todo el alto del navbar */
-  margin-left: 31vw!important; /* empuja todo el grupo hacia la derecha */
-  margin-right: 26vw!important; /* empuja todo el grupo hacia la derecha */
+  margin-left: 31vw !important; /* empuja todo el grupo hacia la derecha */
+  margin-right: 26vw !important; /* empuja todo el grupo hacia la derecha */
 }
 
 .sub-navbar .nav-item {
@@ -76,7 +76,6 @@ body {
   max-width: 200px;
 }
 
-
 .sub-navbar .container-fluid {
   padding-top: 14px; /* ajusta este valor hasta que se vea centrado */
   padding-bottom: 0; /* opcional, si quieres mantener la altura total */
@@ -93,24 +92,21 @@ body {
   padding: 1rem 3rem; /* ahora 2rem lateral, 1rem arriba/abajo */
 }
 
-
-
 /* Parte superior */
 .top-section {
   display: flex;
   gap: 1rem;
-  height: 50%; /* mitad vertical de la ventana */
+  height: 65%; /* mitad vertical de la ventana */
 }
 
 /* Sidebar */
 .sidebar {
-  flex: 1;
+  flex: 0 0 30vw; /* ancho fijo del sidebar */
+  max-width: 30vw;
   background: #1a1a1a;
   padding: 1rem;
   border-radius: 8px;
-  max-width: 40vw; /* ancho fijo */
 }
-
 .sidebar-content {
   display: flex;
   flex-direction: column;
@@ -140,6 +136,25 @@ body {
   flex: 1;
   background: #222;
   border-radius: 8px;
+}
+
+.image-container {
+  flex: 1; /* ocupa todo el resto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 0.5rem;
+}
+
+.image-container img.large-image {
+  width: 100%;            /* ocupa todo el contenedor horizontalmente */
+  height: auto;           /* mantiene proporción */
+  object-fit: cover;      /* recorta si es necesario */
+  border-radius: 12px;    /* coincide con el contenedor */
+  transition: all 0.3s ease; /* opcional, animaciones suaves si se cambia la imagen */
 }
 
 /* Parte inferior */
@@ -229,12 +244,60 @@ body {
   border-radius: 6px;
 }
 
+.champion-name {
+  margin-top: 0.5rem;
+  font-size: 1.7rem;
+  color: #ccc;
+}
+
+.champion-name-small {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
 /* Rank slides */
-.rank-slide {
+
+/* Rank slides generales */
+.rank-slide, .rank-slide-three, .rank-slide-single {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  text-align: center;
+}
+
+/* Imágenes grandes */
+.rank-img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain; /* mantiene proporción sin recortar */
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+/* Imágenes pequeñas */
+.rank-img-small {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+/* Textos grandes */
+.large-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 0.5rem;
+}
+
+/* Textos pequeños */
+.small-text {
+  font-size: 1rem;
+  color: #ccc;
+  margin-top: 0.3rem;
 }
 
 .rank-slide .large {
@@ -244,3 +307,13 @@ body {
 .rank-slide .small {
   width: 80px;
 }
+
+
+.rank-img:empty {
+  display: none;
+}
+
+.rank-img-small:empty{
+  display: none;
+}
+
