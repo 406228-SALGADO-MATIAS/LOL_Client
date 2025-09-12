@@ -1,54 +1,63 @@
-/* Ajustes generales */
+/* ============================= */
+/* 1. Ajustes generales del body */
+/* ============================= */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #0a0a0a;
-  color: #fff;
+  background-color: #0a0a0a; /* color de fondo general */
+  color: #fff; /* color de texto por defecto */
 }
 
-/* Sub-navbar */
+/* ============================= */
+/* 2. Sub-navbar (barra debajo de la principal) */
+/* ============================= */
 .sub-navbar {
-  margin-top: 56px;
-  background-color: #111;
-  height: 50px; /* fuerza altura consistente */
+  margin-top: 56px; /* espacio desde la navbar principal */
+  background-color: #111; /* color de fondo del sub-navbar */
+  height: 50px; /* altura fija */
   padding: 0 1rem;
   display: flex;
-  align-items: center; /* centra verticalmente TODO */
+  align-items: center; /* centra verticalmente todo el contenido */
 }
 
+/* Contenedor de links dentro del navbar */
 .sub-navbar .navbar-nav {
   display: flex !important;
   flex-direction: row;
-  justify-content: center; /* centra horizontalmente */
+  justify-content: center; /* centra horizontalmente los links */
   align-items: center !important; /* centra verticalmente */
-  gap: 2rem;
-  height: 100%; /* ocupa todo el alto del navbar */
-  margin-left: 31vw !important; /* empuja todo el grupo hacia la derecha */
-  margin-right: 26vw !important; /* empuja todo el grupo hacia la derecha */
+  gap: 2rem; /* separación entre links */
+  height: 100%; /* ocupa toda la altura del navbar */
+  margin-left: 31vw !important; /* margen izquierdo para ajustar posición */
+  margin-right: 26vw !important; /* margen derecho para ajustar posición */
 }
 
+/* Cada item dentro de la navbar */
 .sub-navbar .nav-item {
   display: flex !important;
-  align-items: center !important; /* centra vertical */
+  align-items: center !important; /* centra verticalmente */
   height: 100%;
 }
 
+/* Links del navbar */
 .sub-navbar .nav-link {
   display: flex !important;
-  align-items: center !important;
-  justify-content: center;
-  padding: 0 1rem !important;
+  align-items: center !important; /* centra vertical */
+  justify-content: center; /* centra horizontal */
+  padding: 0 1rem !important; /* padding lateral */
   height: 100%; /* ocupa todo el alto del navbar */
-  color: #ccc;
+  color: #ccc; /* color de link normal */
   font-weight: bold;
   font-size: 1.1rem;
-  line-height: normal; /* evita que quede pegado arriba */
+  line-height: normal; /* evita que el texto quede pegado arriba */
 }
 
+/* Link activo */
 .sub-navbar .nav-link.active {
-  color: #fff;
+  color: #fff; /* se resalta */
 }
 
+/* Marca o logo del navbar */
 .sub-navbar .navbar-brand {
   display: flex;
   align-items: center; /* centra vertical */
@@ -58,55 +67,61 @@ body {
   height: 100%;
 }
 
+/* Formulario de búsqueda */
 .sub-navbar form {
   display: flex;
   align-items: center; /* centra vertical */
-  height: 100%; /* ocupa todo el alto */
+  height: 100%; /* ocupa toda la altura del navbar */
   margin: 0;
 }
 
 .sub-navbar form input {
   max-width: 200px;
-  height: calc(
-    100% - 10px
-  ); /* opcional, ajusta un poco para el padding interno */
+  height: calc(100% - 10px); /* ajuste de altura para padding interno */
 }
 
 .search-input {
   max-width: 200px;
 }
 
+/* Ajustes internos del container del navbar */
 .sub-navbar .container-fluid {
-  padding-top: 14px; /* ajusta este valor hasta que se vea centrado */
-  padding-bottom: 0; /* opcional, si quieres mantener la altura total */
+  padding-top: 14px; /* centrar verticalmente contenido */
+  padding-bottom: 0;
 }
 
-/* Layout principal */
+/* ============================= */
+/* 3. Layout principal (resume-container) */
+/* ============================= */
 .resume-container {
-  margin-top: 120px; /* espacio para los 2 navbars */
-  padding: 1rem;
+  margin-top: 120px; /* espacio para navbars */
+  padding: 1rem 3rem; /* padding lateral y superior/inferior */
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  height: calc(100vh - 120px); /* toda la altura remanente */
-  padding: 1rem 3rem; /* ahora 2rem lateral, 1rem arriba/abajo */
+  height: calc(100vh - 120px); /* ocupar altura restante */
 }
 
-/* Parte superior */
+/* ============================= */
+/* 4. Parte superior (top-section) */
+/* ============================= */
 .top-section {
   display: flex;
   gap: 1rem;
-  height: 65%; /* mitad vertical de la ventana */
+  height: 47%; /* altura relativa */
 }
 
-/* Sidebar */
+/* ============================= */
+/* 4a. Sidebar (columna izquierda) */
+/* ============================= */
 .sidebar {
-  flex: 0 0 30vw; /* ancho fijo del sidebar */
+  flex: 0 0 30vw; /* ancho fijo */
   max-width: 30vw;
   background: #1a1a1a;
   padding: 1rem;
   border-radius: 8px;
 }
+
 .sidebar-content {
   display: flex;
   flex-direction: column;
@@ -115,23 +130,26 @@ body {
 }
 
 .user-icon {
-  width: 100px; /* tamaño cuadrado */
+  width: 100px;
   height: 100px;
   border-radius: 12px;
-  object-fit: cover;
+  object-fit: cover; /* mantiene proporción de la imagen */
 }
 
 .user-nickname {
-  font-size: 1.6rem; /* más grande */
+  font-size: 1.6rem;
   font-weight: bold;
   color: #fff;
 }
 
 .user-server {
-  font-size: 1.2rem; /* más pequeño */
+  font-size: 1.2rem;
   color: #ccc;
 }
 
+/* ============================= */
+/* 4b. Main top / imagen central */
+/* ============================= */
 .main-top {
   flex: 1;
   background: #222;
@@ -139,7 +157,7 @@ body {
 }
 
 .image-container {
-  flex: 1; /* ocupa todo el resto */
+  flex: 1; /* ocupa el resto del espacio */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -150,14 +168,16 @@ body {
 }
 
 .image-container img.large-image {
-  width: 100%; /* ocupa todo el contenedor horizontalmente */
+  width: 100%; /* ocupa todo horizontalmente */
   height: auto; /* mantiene proporción */
   object-fit: cover; /* recorta si es necesario */
-  border-radius: 12px; /* coincide con el contenedor */
-  transition: all 0.3s ease; /* opcional, animaciones suaves si se cambia la imagen */
+  border-radius: 12px;
+  transition: all 0.3s ease;
 }
 
-/* Parte inferior */
+/* ============================= */
+/* 5. Parte inferior (bottom-section) */
+/* ============================= */
 .bottom-section {
   display: flex;
   gap: 1rem;
@@ -175,150 +195,3 @@ body {
   text-align: center;
   margin-bottom: 1rem;
 }
-
-/* Carrusel */
-.carousel {
-  position: relative;
-  overflow: hidden;
-}
-
-.carousel-prev,
-.carousel-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #333;
-  border: none;
-  color: white;
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 0.5rem;
-}
-
-.carousel-prev {
-  left: 10px;
-}
-.carousel-next {
-  right: 10px;
-}
-
-.carousel-dots {
-  text-align: center;
-  margin-top: 0.5rem;
-}
-
-.carousel-item .rank-slide-single,
-.carousel-item .rank-slide-three {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-}
-
-/* Champions */
-.champions-3 {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.champions-3 img {
-  width: 100px;
-  border-radius: 8px;
-}
-
-.champions-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.5rem;
-}
-
-.champions-grid img {
-  width: 100%;
-  border-radius: 6px;
-}
-
-.champion-name {
-  margin-top: 0.5rem;
-  font-size: 1.7rem;
-  color: #ccc;
-}
-
-.champion-name-small {
-  margin-top: 0.5rem;
-  font-size: 1.2rem;
-  color: #ccc;
-}
-
-/* Rank slides */
-
-/* Rank slides generales */
-.rank-slide,
-.rank-slide-three,
-.rank-slide-single {
-  /* NO forzar display */
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  text-align: center;
-}
-
-.carousel-item.rank-slide-single,
-.carousel-item.rank-slide-three {
-  display: none; /* por defecto ocultos */
-}
-
-.carousel-item.active.rank-slide-single,
-.carousel-item.active.rank-slide-three {
-  display: flex; /* solo el activo visible */
-}
-
-/* Imágenes grandes */
-.rank-img {
-  width: 150px;
-  height: 150px;
-  object-fit: contain; /* mantiene proporción sin recortar */
-  border-radius: 12px;
-  transition: all 0.3s ease;
-}
-
-/* Imágenes pequeñas */
-.rank-img-small {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-}
-
-/* Textos grandes */
-.large-text {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #fff;
-  margin-top: 0.5rem;
-}
-
-/* Textos pequeños */
-.small-text {
-  font-size: 1rem;
-  color: #ccc;
-  margin-top: 0.3rem;
-}
-
-/* Texto pequeño para números (en rojo) */
-.small-text-number {
-  font-size: 1rem;
-  color: red;
-  margin-top: 0.2rem;
-}
-
-.rank-slide .large {
-  width: 150px;
-}
-
-.rank-slide .small {
-  width: 80px;
-}
-
-

@@ -1,0 +1,206 @@
+/* ============================= */
+/* 6. Carrusel (carousel) */
+/* ============================= */
+.carousel {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-prev,
+.carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #333;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.carousel-prev {
+  left: 10px;
+}
+.carousel-next {
+  right: 10px;
+}
+
+.carousel-dots {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* Slides individuales dentro del carrusel */
+.carousel-item .rank-slide-single,
+.carousel-item .rank-slide-three {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ============================= */
+/* 7. Champions (grid e imágenes) */
+/* ============================= */
+.champions-3 {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.champions-3 img {
+  width: 100px;
+  border-radius: 8px;
+}
+
+.champions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.champions-grid img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.champion-name {
+  margin-top: 0.5rem;
+  font-size: 1.7rem;
+  color: #ccc;
+}
+
+.champion-name-small {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+/* ============================= */
+/* 8. Rank slides (Ranked section) */
+/* ============================= */
+.rank-slide,
+.rank-slide-three,
+.rank-slide-single {
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+/* Por defecto, ocultos */
+.carousel-item.rank-slide-single,
+.carousel-item.rank-slide-three {
+  display: none;
+}
+
+/* Solo el activo visible */
+.carousel-item.active.rank-slide-single,
+.carousel-item.active.rank-slide-three {
+  display: flex;
+}
+
+.carousel-item .stat-block {
+  margin-top: -38px; /* ajusta según necesites */
+}
+
+/* Tamaño de imágenes */
+.ranks-container {
+  position: relative;
+  text-align: center;
+
+  /* bloquea el tamaño máximo */
+
+  max-height: 100%; /* nunca más que el contenedor padre */
+  overflow: hidden; /* oculta lo que se pase */
+}
+
+.ranks-container .carousel {
+  min-height: 320px;
+}
+
+.rank-img {
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+  
+  transition: all 0.3s ease;
+  margin-bottom: -20px;
+}
+.rank-img-small {
+  width: 160px;
+  height: 130px;
+  object-fit: contain;
+  
+  transition: all 0.3s ease;
+}
+
+.rank-img,
+.rank-img-small {
+  margin-left: -8px;
+}
+
+/* Textos grandes y pequeños */
+.large-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+.small-text {
+  font-size: 1rem;
+  color: #ccc;
+  font-weight: bold;
+}
+.small-text-number {
+  font-size: 1rem;
+  color: red;
+  font-weight: bold;
+}
+
+/* Ajustes por tamaño de rank */
+.rank-slide .large {
+  width: 150px;
+}
+.rank-slide .small {
+  width: 80px;
+}
+
+/* ============================= */
+/* 9. Contenedores de ranks e indicadores fijos */
+/* ============================= */
+.ranks-container {
+  position: relative; /* referencia para posicionamiento interno */
+  text-align: center;
+}
+
+/* Indicadores fijos debajo del título */
+.fixed-indicators {
+  position: static; /* no absolute */
+  display: flex;
+  justify-content: center;
+  margin: 10px auto 20px auto;
+  padding-left: 0;
+  list-style: none;
+  z-index: 10;
+}
+
+/* Circulitos indicadores */
+.fixed-indicators li {
+  width: 12px;
+  height: 12px;
+  background-color: #ccc;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Indicador activo */
+.fixed-indicators li.active {
+  background-color: #ffa600; /* azul */
+}
+
+.section-title {
+  margin-bottom: 0rem; /* antes era 1rem, ahora menos */
+}

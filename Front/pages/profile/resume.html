@@ -10,6 +10,7 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
     <link rel="stylesheet" href="/css/profile/resume.css" />
+    <link rel="stylesheet" href="/css/profile/resumeCarrousels.css" />
   </head>
   <body>
     <!-- Main Navbar -->
@@ -171,9 +172,23 @@
         </div>
 
         <!-- Columna derecha: Rank Tiers -->
-        <div class="col-md-6 bottom-column">
+
+        <!-- Columna derecha: Rank Tiers -->
+        <div class="col-md-6 bottom-column ranks-container">
           <h2 id="ranksTitle" class="section-title">Ranked</h2>
+
           <div id="ranksCarousel" class="carousel slide" data-interval="false">
+            <!-- Indicadores dentro del carousel, separados con margin -->
+            <ol class="carousel-indicators fixed-indicators">
+              <li
+                data-target="#ranksCarousel"
+                data-slide-to="0"
+                class="active"
+              ></li>
+              <li data-target="#ranksCarousel" data-slide-to="1"></li>
+              <li data-target="#ranksCarousel" data-slide-to="2"></li>
+            </ol>
+
             <div class="carousel-inner text-center">
               <!-- Slide 1: RANKED - solo imagen grande -->
               <div class="carousel-item active rank-slide-single text-center">
@@ -243,17 +258,6 @@
             >
               <span class="carousel-control-next-icon"></span>
             </a>
-
-            <!-- Indicadores -->
-            <ol class="carousel-indicators">
-              <li
-                data-target="#ranksCarousel"
-                data-slide-to="0"
-                class="active"
-              ></li>
-              <li data-target="#ranksCarousel" data-slide-to="1"></li>
-              <li data-target="#ranksCarousel" data-slide-to="2"></li>
-            </ol>
           </div>
         </div>
       </div>

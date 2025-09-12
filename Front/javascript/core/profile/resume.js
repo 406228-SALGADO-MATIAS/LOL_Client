@@ -212,7 +212,6 @@ function getRankByStats(wins, takedowns, farm, gameType) {
   return rankTable[0];
 }
 
-
 // Setear métricas y asignar imágenes correctas
 function setSlideMetrics(slideEl, stats, gameType, ranksJson) {
   let takedowns = 0,
@@ -245,7 +244,15 @@ function setSlideMetrics(slideEl, stats, gameType, ranksJson) {
 
   // texto grande
   const largeTextEl = slideEl.querySelector(".large-text");
-  if (largeTextEl) largeTextEl.textContent = rankObj.name;
+  if (largeTextEl) {
+    if (slideEl.classList.contains("rank-slide-single")) {
+      // Solo en el primer slide se muestra el nombre del rango
+      largeTextEl.textContent = rankObj.name;
+    } else {
+      // En los demás slides (NORMAL, ARAM) mantenemos el texto fijo (ej: "WINS")
+      // no tocamos el contenido del HTML
+    }
+  }
 
   // imagen principal
   const rankImgEl = slideEl.querySelector(".rank-img");
@@ -340,6 +347,30 @@ function setupChampionCarouselTitle() {
   title.textContent = initialIndex === 0 ? "Top Champions" : "Others";
 }
 
+function setupRanksCarouselTitle() {
+  const carousel = document.getElementById("ranksCarousel");
+  const title = document.getElementById("ranksTitle");
+
+  if (!carousel || !title) return;
+
+  // Diccionario de títulos según índice
+  const titlesByIndex = {
+    0: "Ranked",
+    1: "Normal",
+    2: "Aram",
+  };
+
+  // Al cambiar de slide
+  $(carousel).on("slid.bs.carousel", function () {
+    const activeIndex = $(carousel).find(".carousel-item.active").index();
+    title.textContent = titlesByIndex[activeIndex] || "Ranked";
+  });
+
+  // Inicialmente fijamos el título según el slide activo
+  const initialIndex = $(carousel).find(".carousel-item.active").index();
+  title.textContent = titlesByIndex[initialIndex] || "Ranked";
+}
+
 // Función principal de carga de la página
 async function loadResume() {
   await loadTopProfile();
@@ -351,4 +382,5 @@ async function loadResume() {
 document.addEventListener("DOMContentLoaded", () => {
   loadResume();
   setupChampionCarouselTitle();
+  setupRanksCarouselTitle();
 });
