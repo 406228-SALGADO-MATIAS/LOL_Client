@@ -186,19 +186,32 @@ const RANKS_ARAM = [
 
 // Obtener rango según stats
 function getRankByStats(wins, takedowns, farm, gameType) {
-  const table = gameType === "ARAM" ? RANKS_ARAM : RANKS_NORMAL;
-  return (
-    table.find(
-      (r) =>
-        wins >= r.wins[0] &&
-        wins <= r.wins[1] &&
-        takedowns >= r.takedowns[0] &&
-        takedowns <= r.takedowns[1] &&
-        farm >= r.farm[0] &&
-        farm <= r.farm[1]
-    ) || { name: "Unranked" }
+  const rankTable = gameType === "ARAM" ? RANKS_ARAM : RANKS_NORMAL;
+
+  console.log(
+    `[DEBUG] Calculando rank para ${gameType} → Wins: ${wins}, Takedowns: ${takedowns}, Farm: ${farm}`
   );
+
+  for (const r of rankTable) {
+    const inWins = wins >= r.wins[0] && wins <= r.wins[1];
+    const inTakedowns =
+      takedowns >= r.takedowns[0] && takedowns <= r.takedowns[1];
+    const inFarm = farm >= r.farm[0] && farm <= r.farm[1];
+
+    console.log(
+      ` → Rank ${r.name} | Wins(${r.wins})=${inWins}, Tak(${r.takedowns})=${inTakedowns}, Farm(${r.farm})=${inFarm}`
+    );
+
+    if (inWins || inTakedowns || inFarm) {
+      console.log(`[DEBUG] → Match con rank: ${r.name}`);
+      return r;
+    }
+  }
+
+  console.log("[DEBUG] Ningún match → devolviendo Unranked");
+  return rankTable[0];
 }
+
 
 // Setear métricas y asignar imágenes correctas
 function setSlideMetrics(slideEl, stats, gameType, ranksJson) {
@@ -206,13 +219,8 @@ function setSlideMetrics(slideEl, stats, gameType, ranksJson) {
     wins = 0,
     farm = 0;
 
-  if (
-    stats &&
-    ((gameType === "NORMAL" && stats.normalGames > 0) ||
-      (gameType === "ARAM" && stats.aramGames > 0)) &&
-    stats.totalStats
-  ) {
-    const [k, , a] = stats.totalStats.kdaSum || [0, 0, 0];
+  if (stats && stats.totalStats) {
+    const [k = 0, , a = 0] = stats.totalStats.kdaSum || [0, 0, 0];
     takedowns = k + a;
     wins = gameType === "NORMAL" ? stats.normalWins || 0 : stats.aramWins || 0;
     farm = stats.totalStats.totalFarm || 0;
@@ -227,7 +235,7 @@ function setSlideMetrics(slideEl, stats, gameType, ranksJson) {
     rank: "Unranked",
   };
 
-  // Asignar valores de stats
+  // stats
   const smallTextEls = slideEl.querySelectorAll(".small-text-number");
   if (smallTextEls.length >= 3) {
     smallTextEls[0].textContent = takedowns;
@@ -235,15 +243,15 @@ function setSlideMetrics(slideEl, stats, gameType, ranksJson) {
     smallTextEls[2].textContent = farm;
   }
 
-  // Asignar texto grande
+  // texto grande
   const largeTextEl = slideEl.querySelector(".large-text");
   if (largeTextEl) largeTextEl.textContent = rankObj.name;
 
-  // Asignar imagen grande
+  // imagen principal
   const rankImgEl = slideEl.querySelector(".rank-img");
   if (rankImgEl) rankImgEl.src = rankData.image;
 
-  // Asignar todas las imágenes small
+  // imágenes pequeñas
   const smallImgs = slideEl.querySelectorAll(".rank-img-small");
   smallImgs.forEach((img) => (img.src = rankData.image));
 }
@@ -270,7 +278,7 @@ async function loadRanks() {
     const normalStats = await normalStatsRes.json();
     const aramStats = await aramStatsRes.json();
 
-    // Slide 1 → Rank actual
+    // Slide 1 → Rank actual (perfil)
     const rankSlideSingle = document.querySelector(
       "#ranksCarousel .rank-slide-single"
     );
@@ -282,26 +290,30 @@ async function loadRanks() {
           "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true",
         rank: "Unranked",
       };
+
       const rankImg = rankSlideSingle.querySelector(".rank-img");
-      const smallImgs = rankSlideSingle.querySelectorAll(".rank-img-small");
       if (rankImg) rankImg.src = userRank.image;
+
+      const smallImgs = rankSlideSingle.querySelectorAll(".rank-img-small");
       smallImgs.forEach((img) => (img.src = userRank.image));
+
       const rankText = rankSlideSingle.querySelector(".large-text");
       if (rankText) rankText.textContent = userRank.rank;
     }
 
-    // Slide 2 → NORMAL
-    const normalSlide = document.querySelector(
-      "#ranksCarousel .carousel-item:nth-child(2)"
+    // Slides 2 y 3 → NORMAL y ARAM
+    const slides = document.querySelectorAll(
+      "#ranksCarousel .carousel-item.rank-slide-three"
     );
-    if (normalSlide)
-      setSlideMetrics(normalSlide, normalStats, "NORMAL", ranksJson);
+    const normalSlide = slides[0];
+    const aramSlide = slides[1];
 
-    // Slide 3 → ARAM
-    const aramSlide = document.querySelector(
-      "#ranksCarousel .carousel-item:nth-child(3)"
-    );
-    if (aramSlide) setSlideMetrics(aramSlide, aramStats, "ARAM", ranksJson);
+    if (normalSlide) {
+      setSlideMetrics(normalSlide, normalStats, "NORMAL", ranksJson);
+    }
+    if (aramSlide) {
+      setSlideMetrics(aramSlide, aramStats, "ARAM", ranksJson);
+    }
   } catch (err) {
     console.error("Error cargando ranks:", err);
   }

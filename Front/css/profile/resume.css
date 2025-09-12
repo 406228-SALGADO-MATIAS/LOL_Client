@@ -256,11 +256,21 @@ body {
 .rank-slide,
 .rank-slide-three,
 .rank-slide-single {
-  display: flex;
+  /* NO forzar display */
   justify-content: center;
   align-items: center;
   gap: 1rem;
   text-align: center;
+}
+
+.carousel-item.rank-slide-single,
+.carousel-item.rank-slide-three {
+  display: none; /* por defecto ocultos */
+}
+
+.carousel-item.active.rank-slide-single,
+.carousel-item.active.rank-slide-three {
+  display: flex; /* solo el activo visible */
 }
 
 /* Imágenes grandes */
@@ -310,3 +320,5 @@ body {
 .rank-slide .small {
   width: 80px;
 }
+
+
