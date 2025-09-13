@@ -44,9 +44,9 @@
 /* 7. Champions (grid e imágenes) */
 /* ============================= */
 .champions-3 {
-  display: flex;
   justify-content: center;
   gap: 1rem;
+  margin-top: 3rem; /* empuja hacia abajo */
 }
 
 .champions-3 img {
@@ -60,13 +60,8 @@
   gap: 0.5rem;
 }
 
-.champions-grid img {
-  width: 100%;
-  border-radius: 6px;
-}
-
 .champion-name {
-  margin-top: 0.5rem;
+  margin-top: 2.5rem;
   font-size: 1.7rem;
   color: #ccc;
 }
@@ -75,6 +70,52 @@
   margin-top: 0.5rem;
   font-size: 1.2rem;
   color: #ccc;
+}
+
+.champion-big {
+  transform: scale(1.8); /* 170% */
+  margin-left: 6.5rem; /* empuja hacia abajo */
+  margin-right: 6.5rem; /* empuja hacia abajo */
+  margin-bottom: 1rem;
+}
+
+.champion-medium {
+  transform: scale(1.6); /* 170% */
+}
+
+.champion-small {
+  width: 175px;
+  height: 100px;
+}
+
+/* Wrapper para centrar mejor */
+.champion-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+}
+/* Ajusta el margen horizontal entre las columnas de champions */
+.carousel-item .row > .col-2 {
+  padding-left: 2rem; /* margen izquierdo extra */
+  padding-right: 2rem; /* margen derecho extra */
+}
+
+/* Contenedor para champions: altura mínima igual que ranks */
+.champions-container {
+  position: relative; /* referencia para las flechas */
+  min-height: 330px; /* igual que ranks */
+}
+
+/* Asegura que las flechas se centren verticalmente */
+.champions-container .carousel-control-prev,
+.champions-container .carousel-control-next {
+  top: 50%;
+  transform: translateY(-50%);
+}
+#championsCarousel .carousel-inner {
+  min-height: 290px; /* ajustá según lo que necesites */
+  overflow: hidden;
 }
 
 /* ============================= */
@@ -117,22 +158,30 @@
 }
 
 .ranks-container .carousel {
-  min-height: 320px;
+  min-height: 350px;
+}
+
+.rank-img.rank-img-big {
+  width: 380px !important;
+  height: 380px !important;
+  margin-top: -50px;
+  margin-bottom: -60px;
 }
 
 .rank-img {
-  width: 250px;
-  height: 250px;
+  width: 280px;
+  height: 280px;
   object-fit: contain;
-  
+
   transition: all 0.3s ease;
-  margin-bottom: -20px;
+  margin-bottom: -30px;
+  margin-top: -5px;
 }
 .rank-img-small {
   width: 160px;
   height: 130px;
   object-fit: contain;
-  
+  margin-top: -5px;
   transition: all 0.3s ease;
 }
 

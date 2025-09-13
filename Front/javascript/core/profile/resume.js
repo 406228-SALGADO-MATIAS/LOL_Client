@@ -46,6 +46,10 @@ async function loadTopChampions() {
     return;
   }
 
+  const placeholderImage =
+    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true";
+  const placeholderText = "-";
+
   try {
     const res = await fetch(
       `http://localhost:8080/usersMatches/${userId}/stats`
@@ -64,8 +68,8 @@ async function loadTopChampions() {
     });
 
     champions.sort((a, b) => {
-      if (b.totalGames !== a.totalGames) return b.totalGames - a.totalGames; // mayor primero
-      return a.champion.localeCompare(b.champion); // desempate por nombre
+      if (b.totalGames !== a.totalGames) return b.totalGames - a.totalGames;
+      return a.champion.localeCompare(b.champion);
     });
 
     // --- TOP 3 ---
@@ -75,46 +79,61 @@ async function loadTopChampions() {
     );
     topContainer.innerHTML = ""; // limpiar antes de rellenar
 
-    // Orden top: 2do más alto → 1er más alto → 3er más alto
-    const topOrder = [1, 0, 2];
-    topOrder.forEach((index) => {
-      if (!top3[index]) return;
-      const champ = top3[index];
+    // Asegurar 3 elementos
+    // --- TOP 3 ---
+    for (let i = 0; i < 3; i++) {
+      const champ = top3[i] || {
+        image: placeholderImage,
+        champion: placeholderText,
+      };
       const div = document.createElement("div");
       div.className = "d-inline-block mx-3";
+
+      // asignamos clase según la posición
+      let imgClass = i === 1 ? "champion-big" : "champion-medium";
+
       div.innerHTML = `
-        <img src="${champ.image}" class="mx-2" width="100" />
-        <div class="champion-name">${champ.champion}</div>
-      `;
+    <img src="${champ.image}" class="${imgClass}" />
+    <div class="champion-name">${champ.champion}</div>
+  `;
       topContainer.appendChild(div);
-    });
+    }
 
     // --- OTHERS ---
-    const others = champions.slice(3); // los que quedaron
+    const others = champions.slice(3);
     const othersContainer = document.querySelector(
       "#championsCarousel .carousel-item:not(.active)"
     );
-    othersContainer.innerHTML = ""; // limpiar antes de rellenar
+    othersContainer.innerHTML = ""; // limpiar
 
-    if (others.length > 0) {
-      // Crear filas de hasta 4 campeones
-      let rowDiv = null;
-      others.forEach((champ, idx) => {
-        if (idx % 4 === 0) {
-          // nueva fila
-          rowDiv = document.createElement("div");
-          rowDiv.className = "row text-center mb-2";
-          othersContainer.appendChild(rowDiv);
-        }
+    const totalOthers = 8; // siempre 8 elementos visibles
+    const championsPerRow = 4;
+
+    // Contenedor central para todas las filas
+    const wrapperDiv = document.createElement("div");
+    wrapperDiv.style.display = "inline-block"; // ancho según contenido
+    wrapperDiv.style.textAlign = "center"; // centrado general
+    othersContainer.appendChild(wrapperDiv);
+
+    for (let row = 0; row < 2; row++) {
+      const rowDiv = document.createElement("div");
+      rowDiv.className = "row justify-content-center text-center mb-2"; // centramos columnas
+      wrapperDiv.appendChild(rowDiv);
+
+      for (let col = 0; col < championsPerRow; col++) {
+        const idx = row * championsPerRow + col;
+        const champ = others[idx] || {
+          image: placeholderImage,
+          champion: placeholderText,
+        };
 
         const colDiv = document.createElement("div");
-        colDiv.className = "col-3";
+        colDiv.className = "col-2 text-center"; // ancho fijo, centrado interno
         colDiv.innerHTML = `
-          <img src="${champ.image}" class="img-fluid" />
-          <div class="champion-name-small">${champ.champion}</div>
-        `;
+      <img src="${champ.image}" class="champion-small img-fluid" />
+      <div class="champion-name-small">${champ.champion}</div>`;
         rowDiv.appendChild(colDiv);
-      });
+      }
     }
   } catch (err) {
     console.error("Error cargando Top Champions:", err);
