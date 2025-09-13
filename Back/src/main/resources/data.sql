@@ -30,16 +30,16 @@ INSERT INTO champions_tier_prices VALUES
 (5, 6300, 1260, 3150, 880),
 (6, 7800, 1560, 3900, 975);
 
-INSERT INTO rank_tiers VALUES
-(1, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Bronze.png?raw=true', 'Bronze'),
-(2, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Silver.png?raw=true', 'Silver'),
-(3, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Gold.png?raw=true', 'Gold'),
-(4, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Platinum.png?raw=true', 'Platinum'),
-(5, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Emerald.png?raw=true', 'Emerald'),
-(6, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Diamond.png?raw=true', 'Diamond'),
-(7, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Master.png?raw=true', 'Master'),
-(8, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Grandmaster.png?raw=true', 'Grandmaster'),
-(9, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Challenger.png?raw=true', 'Challenger');
+INSERT INTO rank_tiers (id, image, rank, lp) VALUES
+(1, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Bronze.png?raw=true', 'Bronze', 0),
+(2, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Silver.png?raw=true', 'Silver', 100),
+(3, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Gold.png?raw=true', 'Gold', 225),
+(4, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Platinum.png?raw=true', 'Platinum', 365),
+(5, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Emerald.png?raw=true', 'Emerald', 520),
+(6, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Diamond.png?raw=true', 'Diamond', 690),
+(7, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Master.png?raw=true', 'Master', 875),
+(8, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Grandmaster.png?raw=true', 'Grandmaster', 1075),
+(9, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Challenger.png?raw=true', 'Challenger', 1290);
 
 INSERT INTO roles VALUES
 (1, 'TOP'),

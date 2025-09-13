@@ -43,6 +43,8 @@ public class UserEntity {
     @JoinColumn(nullable = true)
     @ManyToOne
     private ProfileIconEntity icon;
+    @Column (nullable = true, name = "rank_lp")
+    private Integer rankLp = 0;
 
 
 

@@ -18,4 +18,5 @@ public class UserProfileDTO {
     private Integer riotPoints;
     private Integer blueEssence;
     private String rank = "Unranked";
+    private int lp = 0;
 }

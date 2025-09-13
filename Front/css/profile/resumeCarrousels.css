@@ -64,6 +64,7 @@
   margin-top: 2.5rem;
   font-size: 1.7rem;
   color: #ccc;
+
 }
 
 .champion-name-small {
@@ -73,19 +74,20 @@
 }
 
 .champion-big {
-  transform: scale(1.8); /* 170% */
+  transform: scale(1.8); 
   margin-left: 6.5rem; /* empuja hacia abajo */
   margin-right: 6.5rem; /* empuja hacia abajo */
   margin-bottom: 1rem;
 }
 
 .champion-medium {
-  transform: scale(1.6); /* 170% */
+  transform: scale(1.6); 
 }
 
 .champion-small {
-  width: 175px;
-  height: 100px;
+  margin-top: 5px;
+  transform: scale(1.2);
+  border-radius: 8px;
 }
 
 /* Wrapper para centrar mejor */
@@ -104,7 +106,7 @@
 /* Contenedor para champions: altura mínima igual que ranks */
 .champions-container {
   position: relative; /* referencia para las flechas */
-  min-height: 330px; /* igual que ranks */
+  height: 345px; /* igual que ranks */
 }
 
 /* Asegura que las flechas se centren verticalmente */
@@ -153,7 +155,7 @@
 
   /* bloquea el tamaño máximo */
 
-  max-height: 100%; /* nunca más que el contenedor padre */
+  
   overflow: hidden; /* oculta lo que se pase */
 }
 
@@ -164,7 +166,7 @@
 .rank-img.rank-img-big {
   width: 380px !important;
   height: 380px !important;
-  margin-top: -50px;
+  margin-top: -57px;
   margin-bottom: -60px;
 }
 
@@ -174,7 +176,7 @@
   object-fit: contain;
 
   transition: all 0.3s ease;
-  margin-bottom: -30px;
+  margin-bottom: -45px;
   margin-top: -5px;
 }
 .rank-img-small {
@@ -183,6 +185,7 @@
   object-fit: contain;
   margin-top: -5px;
   transition: all 0.3s ease;
+  margin-bottom: -20px;
 }
 
 .rank-img,
@@ -236,13 +239,14 @@
 
 /* Circulitos indicadores */
 .fixed-indicators li {
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   background-color: #ccc;
   border-radius: 50%;
   margin: 0 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+  
 }
 
 /* Indicador activo */

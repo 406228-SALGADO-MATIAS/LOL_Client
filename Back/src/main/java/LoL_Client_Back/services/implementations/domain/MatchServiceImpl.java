@@ -16,6 +16,7 @@ import LoL_Client_Back.repositories.domain.UserRepository;
 import LoL_Client_Back.repositories.reference.*;
 import LoL_Client_Back.services.implementations.domain.matchLogic.ChampionWinrateService;
 import LoL_Client_Back.services.implementations.domain.matchLogic.DamageEstimatorService;
+import LoL_Client_Back.services.implementations.domain.matchLogic.UserLpService;
 import LoL_Client_Back.services.implementations.transaction.UserLootServiceImpl;
 import LoL_Client_Back.services.interfaces.domain.MatchService;
 
@@ -66,6 +67,8 @@ public class MatchServiceImpl implements MatchService {
     ChampionRepository championRepository;
     @Autowired
     UserLootServiceImpl userLootService;
+    @Autowired
+    UserLpService userLpService;
 
     @Override
     public MatchDTO getMatchById(Long matchId, boolean showChampionImg, boolean showItemImg) {
@@ -109,6 +112,8 @@ public class MatchServiceImpl implements MatchService {
         //UPDATING USER MATCHES
         userMatchesService.updateUsers(matchSaved.getPlayerDetails());
         userLootService.giveRewardsToPlayersFromMatch(matchSaved);
+        if (matchSaved.getRanked())
+            userLpService.calculateUserRanks(matchSaved);
         return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
     }
 
@@ -134,6 +139,8 @@ public class MatchServiceImpl implements MatchService {
         //UPDATING USER MATCHES
         userMatchesService.updateUsers(matchSaved.getPlayerDetails());
         userLootService.giveRewardsToPlayersFromMatch(matchSaved);
+        if (matchSaved.getRanked())
+            userLpService.calculateUserRanks(matchSaved);
         return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
     }
 
@@ -157,6 +164,8 @@ public class MatchServiceImpl implements MatchService {
         //UPDATING USER MATCHES
         userMatchesService.updateUsers(matchSaved.getPlayerDetails());
         userLootService.giveRewardsToPlayersFromMatch(matchSaved);
+        if (matchSaved.getRanked())
+            userLpService.calculateUserRanks(matchSaved);
         return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
     }
 
@@ -196,6 +205,8 @@ public class MatchServiceImpl implements MatchService {
 
         userMatchesService.updateUsers(matchSaved.getPlayerDetails());
         userLootService.giveRewardsToPlayersFromMatch(matchSaved);
+        if (matchSaved.getRanked())
+            userLpService.calculateUserRanks(matchSaved);
 
         return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
     }
@@ -429,8 +440,10 @@ public class MatchServiceImpl implements MatchService {
         List<UserMatchesDTO> usersFromServer;
 
         // if is ranked -> bring players with specific elo from the server
+        //todo: si users from server < 10 -> incorporar los rangos aledaños
         if (match.getRanked()) {
-            usersFromServer = userService.findUsersByRankAndServer(elo, serverOption);
+            List<UserMatchesDTO> baseUsers = userService.findUsersByRankAndServer(elo, serverOption);
+            usersFromServer = findUsersForRanked(baseUsers, elo, serverOption, 10);
         } else {
             //all users from the server
             usersFromServer = userService.findUsersByServer(serverOption);
@@ -531,6 +544,40 @@ public class MatchServiceImpl implements MatchService {
             }
         }
         return details;
+    }
+
+    public List<UserMatchesDTO> findUsersForRanked(List<UserMatchesDTO> baseList, UserRankTier rank, ServerOption serverOption, int minPlayers) {
+        List<UserMatchesDTO> result = new ArrayList<>(baseList);
+        Random random = new Random();
+
+        if (result.size() >= minPlayers) return result;
+
+        UserRankTier[] ranks = UserRankTier.values();
+        int currentIndex = rank.ordinal();
+
+        List<UserRankTier> neighbors = new ArrayList<>();
+
+        // Estrategia de búsqueda:
+        // 1. Primero rangos superiores
+        for (int i = currentIndex + 1; i < ranks.length; i++) neighbors.add(ranks[i]);
+        // 2. Luego rangos inferiores
+        for (int i = currentIndex - 1; i >= 0; i--) neighbors.add(ranks[i]);
+
+        // Vamos agregando jugadores de rangos aledaños
+        for (UserRankTier neighborRank : neighbors) {
+            List<UserMatchesDTO> additionalUsers = userService.findUsersByRankAndServer(neighborRank, serverOption);
+            additionalUsers.removeAll(result); // evitar duplicados
+            Collections.shuffle(additionalUsers, random);
+
+            for (UserMatchesDTO u : additionalUsers) {
+                if (result.size() >= minPlayers) break;
+                result.add(u);
+            }
+
+            if (result.size() >= minPlayers) break;
+        }
+
+        return result;
     }
 
     private List<PlayerMatchDetailEntity> championSelectionTeams(MatchEntity match, List<Long> blueTeam, List<Long> redTeam,

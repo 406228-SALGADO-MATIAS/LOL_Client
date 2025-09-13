@@ -1214,33 +1214,37 @@ public class UserLootServiceImpl implements UserLootService {
             int numRolls = 0;
 
             if (isRanked) {
-                numRolls = isWinner ? 4 : 2; // ranked win = 5, ranked loss = 3
+                numRolls = isWinner ? 4 : 2; // ranked win = 4, ranked loss = 2
             } else {
                 numRolls = isWinner ? 2 : 0; // normal win = 2, normal loss = 0
             }
 
-            for (int i = 0; i < numRolls; i++) {
-                int roll = random.nextInt(100) + 1; // 1-100
+            int totalChests = updatedLoot.getChests() + updatedLoot.getMasterChests();
+            int totalKeys = updatedLoot.getKeys();
 
-                if (roll <= 35) {
-                    // 35% chance → chest
-                    updatedLoot.setChests(updatedLoot.getChests() + 1);
-                } else if (roll <= 80) {
-                    // next 45% → key
-                    updatedLoot.setKeys(updatedLoot.getKeys() + 1);
-                } else if (roll <= 95) {
-                    // next 15% → master chest
-                    updatedLoot.setMasterChests(updatedLoot.getMasterChests() + 1);
-                } else {
-                    // remaining 5% → orange essence
-                    updatedLoot.setOrangeEssence(updatedLoot.getOrangeEssence() + 150);
+            boolean hasChestOverflow = (totalChests - totalKeys) >= 4;
+
+            if (hasChestOverflow) {
+                updatedLoot.setKeys(updatedLoot.getKeys() + 1);
+            } else {
+                for (int i = 0; i < numRolls; i++) {
+                    int roll = random.nextInt(100) + 1; // 1-100
+
+                    if (roll <= 35) {
+                        updatedLoot.setChests(updatedLoot.getChests() + 1);
+                    } else if (roll <= 80) {
+                        updatedLoot.setKeys(updatedLoot.getKeys() + 1);
+                    } else if (roll <= 95) {
+                        updatedLoot.setMasterChests(updatedLoot.getMasterChests() + 1);
+                    } else {
+                        updatedLoot.setOrangeEssence(updatedLoot.getOrangeEssence() + 150);
+                    }
                 }
             }
-
-            // Save the updated loot
             userLootRepository.save(updatedLoot);
         }
     }
+
 
 
     private <T> T getRandomElement(List<T> list, Random random) {

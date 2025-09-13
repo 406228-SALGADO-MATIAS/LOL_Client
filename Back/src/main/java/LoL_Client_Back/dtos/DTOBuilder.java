@@ -561,6 +561,8 @@ public class DTOBuilder
         dto.setUserBackground(userEntity.getBackgroundImage());
         if (userEntity.getRank() != null)
             dto.setRank(userEntity.getRank().getRank());
+        if (userEntity.getRankLp() != null)
+            dto.setLp(userEntity.getRankLp());
         return  dto;
     }
 

@@ -17,4 +17,5 @@ public class RankTierEntity {
     private String rank;
     @Lob
     private String image;
+    private int lp;
 }

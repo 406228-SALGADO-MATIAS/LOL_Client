@@ -66,29 +66,33 @@ public class ChampionWinrateService {
 
     @Transactional
     public void updateChampionWinrate(MatchEntity match) {
-        // usamos un set para no recalcular dos veces el mismo campeón si aparece varias veces
-        Set<Long> championIds = match.getPlayerDetails().stream()
-                .map(pd -> pd.getChampion().getId())
-                .collect(Collectors.toSet());
 
-        for (Long championId : championIds) {
-            List<Object[]> stats = playerMatchDetailRepository.calculateChampionStats(championId);
+        if (match.getMap().getMap().equals("Summoners Rift")) // winrates not for aram
+        {
+            // usamos un set para no recalcular dos veces el mismo campeón si aparece varias veces
+            Set<Long> championIds = match.getPlayerDetails().stream()
+                    .map(pd -> pd.getChampion().getId())
+                    .collect(Collectors.toSet());
 
-            if (!stats.isEmpty()) {
-                Object[] row = stats.get(0);
-                Long wins = (Long) row[0];
-                Long total = (Long) row[1];
+            for (Long championId : championIds) {
+                List<Object[]> stats = playerMatchDetailRepository.calculateChampionStats(championId);
 
-                double winrate = total > 0 ? (wins.doubleValue() / total.doubleValue()) * 100.0 : 0.0;
+                if (!stats.isEmpty()) {
+                    Object[] row = stats.get(0);
+                    Long wins = (Long) row[0];
+                    Long total = (Long) row[1];
 
-                ChampionEntity champ = championRepository.findById(championId).orElseThrow();
-                Double previous = champ.getWinrate();
+                    double winrate = total > 0 ? (wins.doubleValue() / total.doubleValue()) * 100.0 : 0.0;
 
-                champ.setWinrate(clampWinrate(winrate, previous));
-                championRepository.save(champ);
+                    ChampionEntity champ = championRepository.findById(championId).orElseThrow();
+                    Double previous = champ.getWinrate();
 
+                    champ.setWinrate(clampWinrate(winrate, previous));
+                    championRepository.save(champ);
+                }
             }
         }
+
     }
 
     public TeamEntity simulateMatchWinner(List<PlayerMatchDetailEntity> details) {
@@ -127,13 +131,10 @@ public class ChampionWinrateService {
         double min = 44.0;
         double max = 54.0;
 
-       //initialization
+        // initial
         if (previous == null) {
-            if (raw < min) {
-                return ThreadLocalRandom.current().nextDouble(min, min + 1.0); // entre 44 y 45
-            } else if (raw > max) {
-                return ThreadLocalRandom.current().nextDouble(max - 1.0, max); // entre 53 y 54
-            }
+            if (raw < min) return ThreadLocalRandom.current().nextDouble(min, min + 1.0);
+            if (raw > max) return ThreadLocalRandom.current().nextDouble(max - 1.0, max);
             return raw;
         }
 
@@ -141,15 +142,18 @@ public class ChampionWinrateService {
         if (raw > previous) { // up
             double from = Math.min(previous, max);
             double to = max;
+            if (from >= to) return previous; // ya no se puede sumar
             return ThreadLocalRandom.current().nextDouble(from, to);
         } else if (raw < previous) { // down
             double from = min;
             double to = Math.max(previous, min);
+            if (from >= to) return previous; // ya no se puede restar
             return ThreadLocalRandom.current().nextDouble(from, to);
         } else {
             return raw; // no cambió
         }
     }
+
 
 
 
