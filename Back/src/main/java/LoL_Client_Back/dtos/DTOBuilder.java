@@ -381,14 +381,13 @@ public class DTOBuilder
     }
 
     public List<UserXIconDTO> buildListUserXIconDTO(List<UserXIconEntity> list, String errorMsg) {
+        List<UserXIconDTO> dtoList = new ArrayList<>();
         if (!list.isEmpty()) {
-            List<UserXIconDTO> dtoList = new ArrayList<>();
             for (UserXIconEntity u : list) {
                 dtoList.add(buildUserXIconDTO(u));
             }
-            return dtoList;
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, errorMsg);
+        return dtoList;
     }
 
     public UserXSkinDTO buildUserXSkinDTO(UserXSkinEntity entity) {
@@ -550,6 +549,7 @@ public class DTOBuilder
     public UserProfileDTO buildUserProfileDTO (UserEntity userEntity)
     {
         UserProfileDTO dto = new UserProfileDTO();
+        dto.setId(userEntity.getId());
         dto.setServer(userEntity.getServer().getServer());
         dto.setBlueEssence(userEntity.getBlueEssence());
 

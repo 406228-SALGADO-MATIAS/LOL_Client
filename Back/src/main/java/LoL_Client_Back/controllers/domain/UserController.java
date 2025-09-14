@@ -74,7 +74,7 @@ public class UserController {
     }
 
     @GetMapping("/findUsers/nickname/{nickname}")
-    public ResponseEntity<List<UserMatchesDTO>> findUsersByNickname(@PathVariable String nickname)
+    public ResponseEntity<List<UserProfileDTO>> findUsersByNickname(@PathVariable String nickname)
     {
         return ResponseEntity.ok(userService.findUsersByNickname(nickname));
     }

@@ -106,15 +106,15 @@ public class ProfileIconServiceImpl implements ProfileIconService {
     public List<ProfileIconDTO> getUserIcons(Long idUser) {
         List<UserXIconEntity> ownership =
                 userXIconRepository.findByUser_Id(idUser);
+        List<ProfileIconDTO> iconsList = new ArrayList<>();
         if (!ownership.isEmpty()) {
-            List<ProfileIconDTO> iconsList = new ArrayList<>();
+
             for (UserXIconEntity u : ownership) {
                 iconsList.add(dtoBuilder.buildIconDTO
                         (u.getIcon(),Optional.empty(),""));
             }
-            return iconsList;
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"The user has not any icons in possession");
+        return iconsList;
     }
 
     @Override

@@ -52,7 +52,7 @@ public class UserLpService {
             }
 
             // Aplicar la ganancia/pérdida de LP
-            int lpChange = isWinner ? 24 : -20;
+            int lpChange = isWinner ? 24 : -16;
             int tempLp = user.getRankLp() + lpChange;
             int newLp = Math.max(tempLp, 0); // ya nunca cambia después
             user.setRankLp(newLp);

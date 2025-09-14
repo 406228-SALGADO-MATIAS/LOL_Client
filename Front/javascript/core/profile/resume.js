@@ -1,7 +1,6 @@
-async function loadTopProfile() {
-  const userId = sessionStorage.getItem("userId");
+async function loadTopProfile(userId) {
   if (!userId) {
-    console.warn("No se encontró userId en sessionStorage");
+    console.warn("No se encontró userId");
     return;
   }
 
@@ -53,10 +52,9 @@ async function loadTopProfile() {
   }
 }
 
-async function loadTopChampions() {
-  const userId = sessionStorage.getItem("userId");
+async function loadTopChampions(userId) {
   if (!userId) {
-    console.warn("No se encontró userId en sessionStorage");
+    console.warn("No se encontró userId");
     return;
   }
 
@@ -160,9 +158,12 @@ async function loadTopChampions() {
   }
 }
 
-async function loadRanks() {
-  const userId = sessionStorage.getItem("userId");
-  if (!userId) return console.warn("No se encontró userId en sessionStorage");
+async function loadRanks(userId) {
+  
+  if (!userId) {
+    console.warn("No se encontró userId");
+    return;
+  }
 
   try {
     const [profileRes, ranksRes, normalStatsRes, aramStatsRes] =
@@ -273,15 +274,16 @@ function setupRanksCarouselTitle() {
 }
 
 // Función principal de carga de la página
-async function loadResume() {
-  await loadTopProfile();
-  await loadTopChampions();
-  await loadRanks();
+async function loadResume(userId) {
+  await loadTopProfile(userId);
+  await loadTopChampions(userId);
+  await loadRanks(userId);
 }
 
 // Ejecutar al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
-  loadResume();
+  const userId = sessionStorage.getItem("userId");
+  loadResume(userId);
   setupChampionCarouselTitle();
   setupRanksCarouselTitle();
 });

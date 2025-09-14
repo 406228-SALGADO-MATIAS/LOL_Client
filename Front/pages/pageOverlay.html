@@ -1,0 +1,42 @@
+<!-- pageOverlay.html -->
+<div id="pageOverlay"></div>
+
+<style>
+  #pageOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #010406; /* oscuro */
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+  }
+
+  #pageOverlay.hide {
+    opacity: 0;
+  }
+
+  body {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  body.loaded {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  window.addEventListener("load", () => {
+    const overlay = document.getElementById("pageOverlay");
+    overlay.classList.add("hide");
+    document.body.classList.add("loaded");
+
+    setTimeout(() => {
+      overlay.style.display = "none";
+    }, 600); // coincide con la transición
+  });
+</script>

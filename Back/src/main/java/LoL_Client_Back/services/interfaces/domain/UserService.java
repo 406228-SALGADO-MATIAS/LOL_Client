@@ -18,7 +18,7 @@ public interface UserService {
     UserLootMatchesDTO createUser(UserDTO userDTO, ServerOption serverOption);
     UserMatchesDTO findByEmail (String email);
     List<UserMatchesDTO> findUsersByEmail(String email);
-    List<UserMatchesDTO> findUsersByNickname(String nickname);
+    List<UserProfileDTO> findUsersByNickname(String nickname);
     List<UserMatchesDTO> findUsersByNicknameAndServer(String nickname, ServerOption serverOptions);
     List<UserMatchesDTO> findUsersByUsername(String username);
     UserMatchesDTO updateUser (Long id, UserDTO userDTO, ServerOption serverOption, UserRankTier rankTier);

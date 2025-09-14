@@ -174,12 +174,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserMatchesDTO> findUsersByNickname(String nickname) {
+    public List<UserProfileDTO> findUsersByNickname(String nickname) {
 
         List<UserEntity> usersEntity = userRepository.findByNicknameIgnoreCaseContaining(nickname);
+        List<UserProfileDTO> dtos = new ArrayList<>();
+        for (UserEntity user : usersEntity)
+        {
+            dtos.add(dtoBuilder.buildUserProfileDTO(user));
+        }
+        return  dtos;
 
-        return dtoBuilder.buildUserMatchesDTOList
-                (usersEntity, "Did not find users with nickname: "+nickname);
     }
 
     @Override
