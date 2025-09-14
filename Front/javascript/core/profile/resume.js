@@ -1,51 +1,68 @@
-async function loadTopProfile(userId) {
-  if (!userId) {
-    console.warn("No se encontró userId");
-    return;
-  }
+async function loadTopProfile(
+  userId,
+  options = { resume: true, topSection: true }
+) {
+  if (!userId) return;
 
   try {
     const res = await fetch(
       `http://localhost:8080/users/getProfileById/${userId}`
     );
-    if (!res.ok) throw new Error("Error al traer perfil de usuario");
+    if (!res.ok) throw new Error("Error al traer perfil");
 
     const profile = await res.json();
 
-    // User Icon
-    const userIcon = document.getElementById("userIcon");
-    if (profile.iconImage && profile.iconImage !== "") {
-      userIcon.src = profile.iconImage;
-    } else {
-      userIcon.src =
-        "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true";
-    }
+    // === Resume ===
+    if (options.resume) {
+      const profileName = document.getElementById("resumeUserNickname");
+      const profileIcon = document.getElementById("resumeUserIcon");
+      const profileBE = document.getElementById("resumeUserBE");
+      const profileRP = document.getElementById("resumeUserRP");
 
-    // Nickname
-    const userNickname = document.getElementById("userNickname");
-    if (profile.nickname) userNickname.textContent = profile.nickname;
+      if (profileName) profileName.textContent = profile.nickname || "Sin nick";
+      if (profileBE) profileBE.textContent = profile.blueEssence ?? 0;
+      if (profileRP) profileRP.textContent = profile.riotPoints ?? 0;
 
-    // Server
-    const userServer = document.getElementById("userServer");
-    if (profile.server) {
-      // busca lo que está dentro de los paréntesis
-      const match = profile.server.match(/\(([^)]+)\)/);
-      if (match) {
-        // reemplaza lo que está dentro de los paréntesis con # + el contenido
-        userServer.textContent = profile.server.replace(
-          /\(([^)]+)\)/,
-          `(#${match[1]})`
-        );
-      } else {
-        userServer.textContent = profile.server; // fallback si no hay paréntesis
+      if (profileIcon) {
+        profileIcon.src =
+          profile.iconImage && profile.iconImage.trim() !== ""
+            ? profile.iconImage
+            : "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true";
+        profileIcon.style.width = "auto";
+        profileIcon.style.height = "100%";
+        profileIcon.style.objectFit = "cover";
       }
     }
 
-    // Background Image
-    const imageContainer = document.querySelector(".image-container");
-    if (profile.userBackground && profile.userBackground !== "") {
-      imageContainer.style.backgroundImage = `url(${profile.userBackground})`;
-      imageContainer.style.backgroundSize = "cover";
+    // === Top Section ===
+    if (options.topSection) {
+      const userIcon = document.getElementById("topUserIcon");
+      const userNickname = document.getElementById("topUserNickname");
+      const userServer = document.getElementById("topUserServer");
+      const imageContainer = document.querySelector(".image-container");
+
+      if (userIcon) {
+        userIcon.src =
+          profile.iconImage && profile.iconImage.trim() !== ""
+            ? profile.iconImage
+            : "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true";
+      }
+
+      if (userNickname) userNickname.textContent = profile.nickname || "";
+
+      if (userServer) {
+        if (profile.server) {
+          const match = profile.server.match(/\(([^)]+)\)/);
+          userServer.textContent = match
+            ? profile.server.replace(/\(([^)]+)\)/, `(#${match[1]})`)
+            : profile.server;
+        }
+      }
+
+      if (imageContainer && profile.userBackground) {
+        imageContainer.style.backgroundImage = `url(${profile.userBackground})`;
+        imageContainer.style.backgroundSize = "cover";
+      }
     }
   } catch (err) {
     console.error("Error cargando perfil:", err);
@@ -159,7 +176,6 @@ async function loadTopChampions(userId) {
 }
 
 async function loadRanks(userId) {
-  
   if (!userId) {
     console.warn("No se encontró userId");
     return;
@@ -274,8 +290,17 @@ function setupRanksCarouselTitle() {
 }
 
 // Función principal de carga de la página
-async function loadResume(userId) {
-  await loadTopProfile(userId);
+async function loadResume(userId, isTempUser = false) {
+  if (!userId) return;
+
+  // Si es usuario temporal, actualizamos solo Resume
+  if (isTempUser) {
+    await loadTopProfile(userId, { resume: true, topSection: true });
+  } else {
+    // Usuario de sesión → actualizamos todo
+    await loadTopProfile(userId, { resume: true, topSection: true });
+  }
+
   await loadTopChampions(userId);
   await loadRanks(userId);
 }
@@ -283,7 +308,7 @@ async function loadResume(userId) {
 // Ejecutar al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
   const userId = sessionStorage.getItem("userId");
-  loadResume(userId);
+  loadResume(userId, false); // no es temp
   setupChampionCarouselTitle();
   setupRanksCarouselTitle();
 });

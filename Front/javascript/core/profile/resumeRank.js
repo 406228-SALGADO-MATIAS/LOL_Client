@@ -65,27 +65,17 @@ const RANKS_ARAM = [
 function getRankByStats(wins, takedowns, farm, gameType) {
   const rankTable = gameType === "ARAM" ? RANKS_ARAM : RANKS_NORMAL;
 
-  console.log(
-    `[DEBUG] Calculando rank para ${gameType} → Wins: ${wins}, Takedowns: ${takedowns}, Farm: ${farm}`
-  );
-
   for (const r of rankTable) {
     const inWins = wins >= r.wins[0] && wins <= r.wins[1];
     const inTakedowns =
       takedowns >= r.takedowns[0] && takedowns <= r.takedowns[1];
     const inFarm = farm >= r.farm[0] && farm <= r.farm[1];
 
-    console.log(
-      ` → Rank ${r.name} | Wins(${r.wins})=${inWins}, Tak(${r.takedowns})=${inTakedowns}, Farm(${r.farm})=${inFarm}`
-    );
-
     if (inWins || inTakedowns || inFarm) {
-      console.log(`[DEBUG] → Match con rank: ${r.name}`);
       return r;
     }
   }
 
-  console.log("[DEBUG] Ningún match → devolviendo Unranked");
   return rankTable[0];
 }
 

@@ -101,7 +101,12 @@ input.addEventListener("input", () => {
       );
 
       if (!res.ok) throw new Error("Error al buscar usuarios");
-      const usuarios = await res.json();
+      let usuarios = await res.json();
+
+      // filtrar usuario original de la busqueda
+      usuarios = usuarios.filter(
+        (u) => String(u.id) !== String(originalUserId)
+      );
 
       if (usuarios.length > 0) {
         usuarios
@@ -159,13 +164,18 @@ function updateReturnButton() {
 btnReturnProfile.addEventListener("click", () => {
   searchedUserId = null;
   updateReturnButton();
-  const originalUserId = sessionStorage.getItem("userId");
-  loadResume(originalUserId);
+
+  const originalId = sessionStorage.getItem("userId");
+  loadTopProfile(originalId);
+  loadTopChampions(originalId);
+  loadRanks(originalId);
 });
 
 // Al elegir un usuario del dropdown
 function selectSearchedUser(user) {
   searchedUserId = user.id;
   updateReturnButton();
-  loadResume(searchedUserId);
+
+  // Cargar Resume con el usuario temporal
+  loadResume(searchedUserId, true); // solo resume, no pisa topSection ni navbar
 }

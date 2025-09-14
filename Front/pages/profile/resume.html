@@ -20,49 +20,50 @@
     <nav
       class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top sub-navbar"
     >
-      <div
-        class="container-fluid d-flex justify-content-between align-items-center"
-      >
+      <div class="container-fluid position-relative d-flex align-items-center">
+        <!-- Logo a la izquierda -->
         <a class="navbar-brand" href="/pages/menu.html">Menú</a>
 
-        <ul
-          class="navbar-nav mx-auto d-flex flex-row justify-content-center align-items-center"
-        >
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Resume</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Matches</a>
-          </li>
-          <li class="nav-item"><a class="nav-link" href="#">Stats</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Ranked</a></li>
-        </ul>
+        <!-- Links centrados -->
+        <div class="navbar-links-center">
+          <ul
+            class="navbar-nav d-flex flex-row justify-content-center align-items-center"
+          >
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Resume</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="#">Matches</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Stats</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Ranked</a></li>
+          </ul>
+        </div>
 
-        <!-- Botón temporal: Regresar al perfil -->
-        <button
-          id="btnReturnProfile"
-          class="btn btn-sm btn-warning me-2"
-          style="display: none"
-        >
-          Regresar al perfil
-        </button>
-
-        <!-- Contenedor para el buscador -->
-        <div class="position-relative" style="max-width: 300px">
-          <input
-            id="searchInput"
-            class="form-control"
-            type="search"
-            placeholder="Buscar usuario..."
-            autocomplete="off"
-          />
-
-          <!-- Dropdown de resultados -->
+        <!-- Botón + buscador a la derecha -->
+        <div class="d-flex align-items-center ms-auto navbar-search-container">
+          <button
+            id="btnReturnProfile"
+            class="btn btn-sm btn-warning"
+            style="display: none"
+          >
+            Perfil original
+          </button>
           <div
-            id="results"
-            class="list-group position-absolute w-100 shadow"
-            style="z-index: 1000; display: none"
-          ></div>
+            class="position-relative"
+            style="min-width: 250px; flex: 1; margin-left: 0.5rem"
+          >
+            <input
+              id="searchInput"
+              class="form-control"
+              type="search"
+              placeholder="Buscar usuario..."
+              autocomplete="off"
+            />
+            <div
+              id="results"
+              class="list-group position-absolute w-100 shadow"
+              style="z-index: 1000; display: none"
+            ></div>
+          </div>
         </div>
       </div>
     </nav>
@@ -75,11 +76,16 @@
           class="col-md-6 sidebar d-flex justify-content-center align-items-center"
         >
           <div class="sidebar-content text-center">
-            <img id="userIcon" src="" alt="User Icon" class="user-icon mb-3" />
-            <div id="userNickname" class="user-nickname mb-1">
+            <img
+              id="topUserIcon"
+              src=""
+              alt="User Icon"
+              class="user-icon mb-3"
+            />
+            <div id="topUserNickname" class="user-nickname mb-1">
               NicknameUsuario
             </div>
-            <div id="userServer" class="user-server">#Servidor</div>
+            <div id="topUserServer" class="user-server">#Servidor</div>
           </div>
         </aside>
         <div
