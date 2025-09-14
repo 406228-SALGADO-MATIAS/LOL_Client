@@ -19,7 +19,7 @@ public interface UserService {
     UserMatchesDTO findByEmail (String email);
     List<UserMatchesDTO> findUsersByEmail(String email);
     List<UserProfileDTO> findUsersByNickname(String nickname);
-    List<UserMatchesDTO> findUsersByNicknameAndServer(String nickname, ServerOption serverOptions);
+    List<UserProfileDTO> findUsersByNicknameAndServer(String nickname, ServerOption serverOptions);
     List<UserMatchesDTO> findUsersByUsername(String username);
     UserMatchesDTO updateUser (Long id, UserDTO userDTO, ServerOption serverOption, UserRankTier rankTier);
     List<UserMatchesDTO> findUsersByRanktier(UserRankTier rankTier);

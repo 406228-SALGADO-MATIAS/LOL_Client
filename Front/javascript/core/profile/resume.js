@@ -59,9 +59,14 @@ async function loadTopProfile(
         }
       }
 
-      if (imageContainer && profile.userBackground) {
-        imageContainer.style.backgroundImage = `url(${profile.userBackground})`;
-        imageContainer.style.backgroundSize = "cover";
+      if (imageContainer) {
+        if (profile.userBackground && profile.userBackground.trim() !== "") {
+          imageContainer.style.backgroundImage = `url(${profile.userBackground})`;
+          imageContainer.style.backgroundSize = "cover";
+        } else {
+          // ✅ limpia el fondo si el usuario no tiene background
+          imageContainer.style.backgroundImage = "none";
+        }
       }
     }
   } catch (err) {
@@ -278,16 +283,32 @@ function setupRanksCarouselTitle() {
     2: "Aram",
   };
 
+  // Diccionario de fondos según índice
+  const backgroundsByIndex = {
+    0: 'url("https://external-preview.redd.it/2De7Zdl-bfLL1I4l6f2QqLWvDO4T42l8e2JK88MIxZQ.jpg?auto=webp&s=7e073fb6571f4b808b029c7355dce683c53cc5f2")',
+    1: 'url("https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700896217.jpg")',
+    2: 'url("https://automaton-media.com/wp-content/uploads/2017/04/bg-howling-abyss.jpg")',
+  };
+
   // Al cambiar de slide
   $(carousel).on("slid.bs.carousel", function () {
     const activeIndex = $(carousel).find(".carousel-item.active").index();
     title.textContent = titlesByIndex[activeIndex] || "Ranked";
+
+    // Cambiar background del body dinámicamente
+    document.body.style.backgroundImage = backgroundsByIndex[activeIndex] || backgroundsByIndex[0];
+    document.body.style.backgroundSize = "cover"; // opcional
+    document.body.style.backgroundPosition = "center"; // opcional
   });
 
-  // Inicialmente fijamos el título según el slide activo
+  // Inicialmente fijamos el título y fondo según el slide activo
   const initialIndex = $(carousel).find(".carousel-item.active").index();
   title.textContent = titlesByIndex[initialIndex] || "Ranked";
+  document.body.style.backgroundImage = backgroundsByIndex[initialIndex] || backgroundsByIndex[0];
+  document.body.style.backgroundSize = "cover";
+  document.body.style.backgroundPosition = "center";
 }
+
 
 // Función principal de carga de la página
 async function loadResume(userId, isTempUser = false) {

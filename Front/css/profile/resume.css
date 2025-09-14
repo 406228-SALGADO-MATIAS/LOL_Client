@@ -96,7 +96,7 @@ body {
 .navbar-search-container {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.02rem;
   max-width: none; /* que el contenedor no limite demasiado */
   margin-top: -0.2rem;
 }
@@ -136,9 +136,34 @@ body {
 #btnReturnProfile:hover {
   background-color: #d1a630;
   color: #fff;
-  transform: translateY(-2px);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
 }
+
+#serverSelect {
+  height: 30px;
+  padding: 0 0.6rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #c4c4c4;
+  background-color: #1a1a1a;
+  border: 2px solid #555;
+  border-radius: 3px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+ 
+}
+
+#serverSelect:hover {
+  border-color: #f0c040;
+  background-color: #222;
+}
+
+#serverSelect:focus {
+  border-color: #f0c040;
+  box-shadow: 0 0 5px #f0c040;
+}
+
 
 #searchInput {
   min-width: 140px; /* ancho mínimo */

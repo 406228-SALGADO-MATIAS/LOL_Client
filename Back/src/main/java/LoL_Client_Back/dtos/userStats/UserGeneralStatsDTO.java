@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Data
@@ -85,6 +86,18 @@ public class UserGeneralStatsDTO {
 
 
         return dto;
+    }
+
+    public ChampionsUsedDTO getMostUsedChampion() {
+        if (championsUsed == null || championsUsed.isEmpty()) return null;
+
+        return championsUsed.stream()
+                .max(Comparator.comparingInt(c ->
+                        (c.getNormalGames() != null ? c.getNormalGames() : 0) +
+                                (c.getAramGames() != null ? c.getAramGames() : 0) +
+                                (c.getRankedGames() != null ? c.getRankedGames() : 0)
+                ))
+                .orElse(null);
     }
 
     private static double roundTwoDecimals(double value) {

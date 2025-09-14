@@ -40,6 +40,7 @@
 
         <!-- Botón + buscador a la derecha -->
         <div class="d-flex align-items-center ms-auto navbar-search-container">
+          <!-- Boton regresar -->
           <button
             id="btnReturnProfile"
             class="btn btn-sm btn-warning"
@@ -47,10 +48,23 @@
           >
             Perfil original
           </button>
+          <!-- Dropdown servidor -->
+          <select
+            id="serverSelect"
+            class="form-select form-select-sm"
+            style="width: 90px; margin-left: 0.5rem"
+          >
+            <option value="">Server</option>
+            <option value="LAS">#LAS</option>
+            <option value="LAN">#LAN</option>
+            <option value="NA">#NA</option>
+            <option value="BR">#BR</option>
+          </select>
           <div
             class="position-relative"
             style="min-width: 250px; flex: 1; margin-left: 0.5rem"
           >
+            <!-- Buscador -->
             <input
               id="searchInput"
               class="form-control"

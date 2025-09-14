@@ -80,7 +80,7 @@ public class UserController {
     }
 
     @GetMapping("/findUsers/nicknameAndserver")
-    public ResponseEntity<List<UserMatchesDTO>> findUsersByNicknameAndServer
+    public ResponseEntity<List<UserProfileDTO>> findUsersByNicknameAndServer
             (@RequestParam String nickname,
              @RequestParam ServerOption serverOption)
     {

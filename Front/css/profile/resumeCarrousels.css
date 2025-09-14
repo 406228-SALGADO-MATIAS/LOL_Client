@@ -75,8 +75,8 @@
 
 .champion-big {
   transform: scale(1.8); 
-  margin-left: 6.5rem; /* empuja hacia abajo */
-  margin-right: 6.5rem; /* empuja hacia abajo */
+  margin-left: 5rem; /* empuja hacia abajo */
+  margin-right: 5rem; /* empuja hacia abajo */
   margin-bottom: 1rem;
 }
 

@@ -2,6 +2,7 @@ package LoL_Client_Back.services.implementations.domain;
 
 import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.enums.ChampionRole;
+import LoL_Client_Back.dtos.userStats.ChampionsUsedDTO;
 import LoL_Client_Back.dtos.userStats.UserGeneralStatsDTO;
 import LoL_Client_Back.entities.domain.ChampionEntity;
 import LoL_Client_Back.entities.domain.PlayerMatchDetailEntity;
@@ -115,6 +116,21 @@ public class UserMatchesServiceImpl implements UserMatchesService {
             matches.setAramsPlayed(aramsPlayed);
         }
         userMatchesRepository.save(matches);
+        updateUserBackground(matches.getUser());
+    }
+
+    private void updateUserBackground(UserEntity user)
+    {
+        UserGeneralStatsDTO userStats = getGeneralStats(user.getId(),null);
+        ChampionsUsedDTO mostUsed = userStats.getMostUsedChampion();
+        Optional<ChampionEntity> optionalChampion = championRepository.findById(mostUsed.getId());
+        if (optionalChampion.isPresent())
+        {
+            user.setBackgroundImage(optionalChampion.get().getImage());
+            userRepository.save(user);
+        }
+        else throw new ResponseStatusException
+                (HttpStatus.NOT_FOUND,"Did not find champion with id "+mostUsed.getId());
     }
 
     @Override

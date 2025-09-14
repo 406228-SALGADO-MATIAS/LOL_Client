@@ -4,10 +4,6 @@ const userId = sessionStorage.getItem("userId");
 let ownedIcons = [];
 let notOwnedIcons = [];
 
-console.log("filterSelect:", document.getElementById("filterSelect"));
-console.log("searchIcon:", document.getElementById("searchIcon"));
-console.log("showNotOwned:", document.getElementById("showNotOwned"));
-
 // Cargar íconos desde backend
 async function loadIcons(activeFilter = null) {
   collectionsContainer.innerHTML = "";

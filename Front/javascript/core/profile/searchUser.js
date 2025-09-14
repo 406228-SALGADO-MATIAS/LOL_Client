@@ -1,4 +1,5 @@
 const input = document.getElementById("searchInput");
+const serverSelect = document.getElementById("serverSelect");
 const results = document.getElementById("results");
 
 let timer;
@@ -80,49 +81,78 @@ async function initRanks() {
 // 3️⃣ Llamamos a initRanks cuando se carga el DOM
 document.addEventListener("DOMContentLoaded", initRanks);
 
-// escuchar input con debounce (0.1 seg)
+// 👉 función para ejecutar la búsqueda (así la reusamos desde input y select)
+async function doSearch() {
+  const query = input.value.trim();
+  results.innerHTML = "";
+
+  if (query.length < 1) {
+    results.style.display = "none";
+    return;
+  }
+
+  try {
+    // Ver qué server está seleccionado
+    const selectedServer = serverSelect.value;
+
+    let url;
+    if (selectedServer) {
+      // 👉 Con server elegido
+      url = `http://localhost:8080/users/findUsers/nicknameAndserver?nickname=${encodeURIComponent(
+        query
+      )}&serverOption=${selectedServer}`;
+    } else {
+      // 👉 Sin server (búsqueda general)
+      url = `http://localhost:8080/users/findUsers/nickname/${encodeURIComponent(
+        query
+      )}`;
+    }
+
+    const res = await fetch(url);
+
+    if (!res.ok) throw new Error("Error al buscar usuarios");
+    let usuarios = await res.json();
+
+    // filtrar usuario original
+    usuarios = usuarios.filter((u) => String(u.id) !== String(originalUserId));
+
+    if (usuarios.length > 0) {
+      usuarios
+        .slice(0, MAX_RESULTS)
+        .forEach((u) => results.appendChild(renderUserResult(u, ranksCache)));
+    } else {
+      results.appendChild(renderNoResults());
+    }
+
+    results.style.display = "block";
+  } catch (err) {
+    console.error("Error en búsqueda:", err);
+    results.style.display = "none";
+  }
+}
+
+// 👉 escuchar input con debounce
 input.addEventListener("input", () => {
   clearTimeout(timer);
-
-  timer = setTimeout(async () => {
-    const query = input.value.trim();
-    results.innerHTML = "";
-
-    if (query.length < 1) {
-      results.style.display = "none";
-      return;
-    }
-
-    try {
-      const res = await fetch(
-        `http://localhost:8080/users/findUsers/nickname/${encodeURIComponent(
-          query
-        )}`
-      );
-
-      if (!res.ok) throw new Error("Error al buscar usuarios");
-      let usuarios = await res.json();
-
-      // filtrar usuario original de la busqueda
-      usuarios = usuarios.filter(
-        (u) => String(u.id) !== String(originalUserId)
-      );
-
-      if (usuarios.length > 0) {
-        usuarios
-          .slice(0, MAX_RESULTS)
-          .forEach((u) => results.appendChild(renderUserResult(u, ranksCache)));
-      } else {
-        results.appendChild(renderNoResults());
-      }
-
-      results.style.display = "block";
-    } catch (err) {
-      console.error("Error en búsqueda:", err);
-      results.style.display = "none";
-    }
-  }, 100); // 0.1 seg
+  timer = setTimeout(doSearch, 100);
 });
+
+// 👉 escuchar cambio en el serverSelect
+serverSelect.addEventListener("change", () => {
+  // si hay algo escrito, relanzamos búsqueda con el nuevo filtro
+  if (input.value.trim().length > 0) {
+    doSearch();
+  }
+});
+
+
+// escuchar input con debounce (0.1 seg)
+// 👉 escuchar input con debounce
+input.addEventListener("input", () => {
+  clearTimeout(timer);
+  timer = setTimeout(doSearch, 100);
+});
+
 
 // SEARCH USER TEMPORAL SESSION
 
