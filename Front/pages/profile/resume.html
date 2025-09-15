@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/css/profile/resumeCarrousels.css" />
   </head>
   <body>
+    <div class="page-transition"></div>
     <!-- Main Navbar -->
     <div id="navbar-container"></div>
 
@@ -333,6 +334,35 @@
           document.body.appendChild(script);
         })
         .catch((err) => console.error(err));
+    </script>
+    <script>
+      function setupPageTransitions() {
+        const transition = document.querySelector(".page-transition");
+
+        // Entrada → al cargar la página
+        window.addEventListener("load", () => {
+          setTimeout(() => transition.classList.add("hidden"), 100);
+        });
+
+        // Salida → al hacer clic en links internos
+        document.querySelectorAll("a").forEach((link) => {
+          if (
+            link.hostname === window.location.hostname &&
+            !link.closest(".carousel") && // Ignorar carousels
+            !link.closest(".sub-navbar") // Ignorar sub-navbar
+          ) {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              const url = link.href;
+
+              transition.classList.remove("hidden");
+              setTimeout(() => (window.location.href = url), 400);
+            });
+          }
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", setupPageTransitions);
     </script>
   </body>
 </html>

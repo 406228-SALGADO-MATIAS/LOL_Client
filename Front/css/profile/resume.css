@@ -12,6 +12,24 @@ body {
   color: #fff; /* color de texto por defecto */
 }
 
+.page-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 1; /* empieza visible */
+  pointer-events: auto;
+  transition: opacity 0.12s ease;
+  z-index: 9999;
+}
+
+.page-transition.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* ============================= */
 /* 2. Sub-navbar (barra debajo de la principal) */
 /* ============================= */
@@ -32,7 +50,6 @@ body {
   align-items: center !important; /* centra verticalmente */
   gap: 2rem; /* separación entre links */
   height: 100%; /* ocupa toda la altura del navbar */
-  
 }
 
 /* Cada item dentro de la navbar */
@@ -50,7 +67,7 @@ body {
   padding: 0 1rem !important; /* padding lateral */
   height: 100%; /* ocupa todo el alto del navbar */
   color: #ccc; /* color de link normal */
-  font-weight: bold!important;
+  font-weight: bold !important;
   font-size: 1.1rem;
   line-height: normal; /* evita que el texto quede pegado arriba */
 }
@@ -113,7 +130,6 @@ body {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  
 }
 
 #btnReturnProfile {
@@ -130,7 +146,6 @@ body {
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   flex-shrink: 0; /* no se encoge */
-
 }
 
 #btnReturnProfile:hover {
@@ -151,7 +166,6 @@ body {
   outline: none;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
- 
 }
 
 #serverSelect:hover {
@@ -163,7 +177,6 @@ body {
   border-color: #f0c040;
   box-shadow: 0 0 5px #f0c040;
 }
-
 
 #searchInput {
   min-width: 140px; /* ancho mínimo */
@@ -242,7 +255,6 @@ body {
   font-size: 1.4rem;
   color: #ccc;
 }
-
 /* ============================= */
 /* 4b. Main top / imagen central */
 /* ============================= */
