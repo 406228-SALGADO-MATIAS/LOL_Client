@@ -12,6 +12,16 @@ body {
   color: #fff; /* color de texto por defecto */
 }
 
+#bg-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  z-index: 9999; /* por debajo del page-transition si la usás */
+}
+
 .page-transition {
   position: fixed;
   top: 0;

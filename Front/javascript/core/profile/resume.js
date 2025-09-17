@@ -273,42 +273,49 @@ function setupChampionCarouselTitle() {
 function setupRanksCarouselTitle() {
   const carousel = document.getElementById("ranksCarousel");
   const title = document.getElementById("ranksTitle");
+  const bgOverlay = document.getElementById("bg-overlay");
 
-  if (!carousel || !title) return;
+  if (!carousel || !title || !bgOverlay) return;
 
-  // Diccionario de títulos según índice
   const titlesByIndex = {
     0: "Ranked",
     1: "Normal",
     2: "Aram",
   };
 
-  // Diccionario de fondos según índice
   const backgroundsByIndex = {
     0: 'url("https://external-preview.redd.it/2De7Zdl-bfLL1I4l6f2QqLWvDO4T42l8e2JK88MIxZQ.jpg?auto=webp&s=7e073fb6571f4b808b029c7355dce683c53cc5f2")',
     1: 'url("https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700896217.jpg")',
     2: 'url("https://automaton-media.com/wp-content/uploads/2017/04/bg-howling-abyss.jpg")',
   };
 
-  // Al cambiar de slide
+  function changeBackground(index) {
+    // 1. oscurecer
+    bgOverlay.style.opacity = "1";
+
+    // 2. después de la animación, cambiar imagen y desvanecer
+    setTimeout(() => {
+      document.body.style.backgroundImage =
+        backgroundsByIndex[index] || backgroundsByIndex[0];
+      bgOverlay.style.opacity = "0";
+    }, 80); 
+  }
+
+  // Evento de cambio de slide
   $(carousel).on("slid.bs.carousel", function () {
     const activeIndex = $(carousel).find(".carousel-item.active").index();
     title.textContent = titlesByIndex[activeIndex] || "Ranked";
-
-    // Cambiar background del body dinámicamente
-    document.body.style.backgroundImage = backgroundsByIndex[activeIndex] || backgroundsByIndex[0];
-    document.body.style.backgroundSize = "cover"; // opcional
-    document.body.style.backgroundPosition = "center"; // opcional
+    changeBackground(activeIndex);
   });
 
-  // Inicialmente fijamos el título y fondo según el slide activo
+  // Inicial
   const initialIndex = $(carousel).find(".carousel-item.active").index();
   title.textContent = titlesByIndex[initialIndex] || "Ranked";
-  document.body.style.backgroundImage = backgroundsByIndex[initialIndex] || backgroundsByIndex[0];
+  document.body.style.backgroundImage =
+    backgroundsByIndex[initialIndex] || backgroundsByIndex[0];
   document.body.style.backgroundSize = "cover";
   document.body.style.backgroundPosition = "center";
 }
-
 
 // Función principal de carga de la página
 async function loadResume(userId, isTempUser = false) {

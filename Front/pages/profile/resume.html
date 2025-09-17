@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/css/profile/resumeCarrousels.css" />
   </head>
   <body>
+    <div id="bg-overlay"></div>
     <div class="page-transition"></div>
     <!-- Main Navbar -->
     <div id="navbar-container"></div>
@@ -335,7 +336,7 @@
         })
         .catch((err) => console.error(err));
     </script>
-    <script>
+    <script> //Transicion
       function setupPageTransitions() {
         const transition = document.querySelector(".page-transition");
 

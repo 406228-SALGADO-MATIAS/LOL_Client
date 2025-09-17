@@ -192,20 +192,33 @@ function updateReturnButton() {
 
 // Al hacer click en el botón “Regresar al perfil”
 btnReturnProfile.addEventListener("click", () => {
+  const transition = document.querySelector(".page-transition");
+  transition.classList.remove("hidden");
+
   searchedUserId = null;
   updateReturnButton();
 
   const originalId = sessionStorage.getItem("userId");
-  loadTopProfile(originalId);
-  loadTopChampions(originalId);
-  loadRanks(originalId);
+
+  setTimeout(() => {
+    loadTopProfile(originalId);
+    loadTopChampions(originalId);
+    loadRanks(originalId);
+    transition.classList.add("hidden");
+  }, 200);
 });
 
 // Al elegir un usuario del dropdown
 function selectSearchedUser(user) {
+  const transition = document.querySelector(".page-transition");
+  transition.classList.remove("hidden"); // ✅ mostrar overlay
+
   searchedUserId = user.id;
   updateReturnButton();
 
   // Cargar Resume con el usuario temporal
-  loadResume(searchedUserId, true); // solo resume, no pisa topSection ni navbar
+  setTimeout(() => {
+    loadResume(searchedUserId, true); // carga el usuario buscado
+    transition.classList.add("hidden"); // ✅ ocultar luego de la carga
+  }, 200); // pequeña pausa para que se vea la animación
 }
