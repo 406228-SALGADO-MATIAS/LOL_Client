@@ -12,10 +12,11 @@
     <link rel="stylesheet" href="/css/collections/layoutCollections.css" />
     <link rel="stylesheet" href="/css/collections/modalCollections.css" />
     <link rel="stylesheet" href="/css/collections/sidebarCollections.css" />
-    <link rel="stylesheet" href = "/css/collections/cards.css"/>
+    <link rel="stylesheet" href="/css/collections/cards.css" />
   </head>
 
   <body>
+    <div class="page-transition"></div>
     <!-- Main Navbar -->
     <div id="navbar-container"></div>
 
@@ -33,7 +34,9 @@
           <li class="nav-item">
             <a class="nav-link" href="collectionsIcons.html">Icons</a>
           </li>
-          <li class="nav-item"><a class="nav-link" href="collectionsItems.html">Items</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="collectionsItems.html">Items</a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -102,8 +105,6 @@
     <script src="/javascript/support/visualsDom/card.js"></script>
     <script src="/javascript/support/collectionsChampions/renderChampions.js"></script>
 
-
-    
     <script>
       fetch("/pages/mainNavbar.html")
         .then((res) => res.text())
@@ -123,6 +124,19 @@
           document.body.appendChild(script);
         })
         .catch((err) => console.error(err));
+    </script>
+    <script>
+      //Transicion
+      function setupPageTransitions() {
+        const transition = document.querySelector(".page-transition");
+
+        // Entrada → al cargar la página
+        window.addEventListener("load", () => {
+          setTimeout(() => transition.classList.add("hidden"), 10);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", setupPageTransitions);
     </script>
   </body>
 </html>

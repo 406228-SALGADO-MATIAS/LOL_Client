@@ -145,14 +145,12 @@ serverSelect.addEventListener("change", () => {
   }
 });
 
-
 // escuchar input con debounce (0.1 seg)
 // 👉 escuchar input con debounce
 input.addEventListener("input", () => {
   clearTimeout(timer);
   timer = setTimeout(doSearch, 100);
 });
-
 
 // SEARCH USER TEMPORAL SESSION
 

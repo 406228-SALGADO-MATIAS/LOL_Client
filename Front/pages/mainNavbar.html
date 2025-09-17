@@ -6,48 +6,58 @@
 
     <!-- Perfil en el centro -->
     <div
-      id="userProfileBox"
-      class="d-flex align-items-center text-white position-absolute"
-      style="left: 50%; transform: translateX(-50%); height: 60px"
+      id="userProfileBox-wrapper"
+      style="
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 60px;
+      "
     >
-      <div style="height: 100%; display: flex; align-items: center">
-        <img
-          id="userIcon"
-          src=""
-          alt="Icon"
-          class="rounded"
-          style="
-            height: 80%;
-            min-height: 48px;
-            max-height: 60px;
-            aspect-ratio: 1 / 1;
-            object-fit: contain;
-            margin-right: 0.5rem;
-          "
-        />
-        <div>
-          <div id="userNickname" style="font-size: 1.6rem; font-weight: bold">
-            NICK<span id="userServer" style="font-weight: normal">#LAS</span>
-          </div>
-          <div class="user-stats">
-            <div class="stat-be">
-              <img
-                src="https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/lootMaterials/blueEssence.png?raw=true"
-                alt="BE"
-                class="stat-icon-be"
-                title="Blue Essence (BE)"
-              />
-              <span id="userBE">0</span>
+      <div
+        id="userProfileBox"
+        class="d-flex align-items-center text-white fade-in"
+        style="height: 100%"
+      >
+        <div style="height: 100%; display: flex; align-items: center">
+          <img
+            id="userIcon"
+            src=""
+            alt="Icon"
+            class="rounded"
+            style="
+              height: 80%;
+              min-height: 48px;
+              max-height: 60px;
+              aspect-ratio: 1 / 1;
+              object-fit: contain;
+              margin-right: 0.5rem;
+            "
+          />
+          <div>
+            <div id="userNickname" style="font-size: 1.6rem; font-weight: bold">
+              NICK<span id="userServer" style="font-weight: normal">#LAS</span>
             </div>
-            <span class="separator">|</span>
-            <div class="stat-rp">
-              <img
-                src="https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/rp.png?raw=true"
-                alt="RP"
-                class="stat-icon-rp"
-                title="Riot Point (RP)"
-              />
-              <span id="userRP">0</span>
+            <div class="user-stats">
+              <div class="stat-be">
+                <img
+                  src="https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/lootMaterials/blueEssence.png?raw=true"
+                  alt="BE"
+                  class="stat-icon-be"
+                  title="Blue Essence (BE)"
+                />
+                <span id="userBE">0</span>
+              </div>
+              <span class="separator">|</span>
+              <div class="stat-rp">
+                <img
+                  src="https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/rp.png?raw=true"
+                  alt="RP"
+                  class="stat-icon-rp"
+                  title="Riot Point (RP)"
+                />
+                <span id="userRP">0</span>
+              </div>
             </div>
           </div>
         </div>
@@ -84,6 +94,34 @@
 
   <!-- Estilos específicos del navbar -->
   <style>
+    /* Por defecto, invisible y ligeramente desplazado */
+    .fade-in {
+      opacity: 0;
+      transition: opacity 1s ease; /* solo opacidad */
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+    }
+    /* contenedor que mantiene el centrado horizontal */
+    #userProfileBox-wrapper {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 60px;
+    }
+
+    /* animación del contenido */
+    #userProfileBox {
+      opacity: 0;
+      
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+    #userProfileBox.visible {
+      opacity: 1;
+      
+    }
+
     #navbar-container nav {
       background: linear-gradient(365deg, #0c2e5000, #010406c6);
     }

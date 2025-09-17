@@ -298,7 +298,7 @@ function setupRanksCarouselTitle() {
       document.body.style.backgroundImage =
         backgroundsByIndex[index] || backgroundsByIndex[0];
       bgOverlay.style.opacity = "0";
-    }, 80); 
+    }, 100); 
   }
 
   // Evento de cambio de slide

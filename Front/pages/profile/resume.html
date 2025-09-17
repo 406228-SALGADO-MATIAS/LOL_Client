@@ -18,71 +18,8 @@
     <!-- Main Navbar -->
     <div id="navbar-container"></div>
 
-    <!-- Sub Navbar -->
-    <nav
-      class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top sub-navbar"
-    >
-      <div class="container-fluid position-relative d-flex align-items-center">
-        <!-- Logo a la izquierda -->
-        <a class="navbar-brand" href="/pages/menu.html">Menú</a>
-
-        <!-- Links centrados -->
-        <div class="navbar-links-center">
-          <ul
-            class="navbar-nav d-flex flex-row justify-content-center align-items-center"
-          >
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Resume</a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="#">Matches</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Stats</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Ranked</a></li>
-          </ul>
-        </div>
-
-        <!-- Botón + buscador a la derecha -->
-        <div class="d-flex align-items-center ms-auto navbar-search-container">
-          <!-- Boton regresar -->
-          <button
-            id="btnReturnProfile"
-            class="btn btn-sm btn-warning"
-            style="display: none"
-          >
-            Perfil original
-          </button>
-          <!-- Dropdown servidor -->
-          <select
-            id="serverSelect"
-            class="form-select form-select-sm"
-            style="width: 90px; margin-left: 0.5rem"
-          >
-            <option value="">Server</option>
-            <option value="LAS">#LAS</option>
-            <option value="LAN">#LAN</option>
-            <option value="NA">#NA</option>
-            <option value="BR">#BR</option>
-          </select>
-          <div
-            class="position-relative"
-            style="min-width: 250px; flex: 1; margin-left: 0.5rem"
-          >
-            <!-- Buscador -->
-            <input
-              id="searchInput"
-              class="form-control"
-              type="search"
-              placeholder="Buscar usuario..."
-              autocomplete="off"
-            />
-            <div
-              id="results"
-              class="list-group position-absolute w-100 shadow"
-              style="z-index: 1000; display: none"
-            ></div>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <!-- Contenedor para el sub-navbar -->
+    <div id="sub-navbar-container"></div>
 
     <!-- Main Content -->
     <main class="container-fluid resume-container">
@@ -313,7 +250,6 @@
 
     <script src="/javascript/core/profile/resumeRank.js"></script>
     <script src="/javascript/core/profile/resume.js"></script>
-    <script src="/javascript/core/profile/searchUser.js"></script>
 
     <script>
       // Navbar dinámico
@@ -336,7 +272,23 @@
         })
         .catch((err) => console.error(err));
     </script>
-    <script> //Transicion
+    <script>
+      // Subnavbar
+      fetch("/pages/profile/subNavbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          const container = document.getElementById("sub-navbar-container");
+          container.innerHTML = html;
+
+          // Una vez que el HTML está en el DOM, cargamos el JS del sub-navbar
+          const script = document.createElement("script");
+          script.src = "/javascript/core/profile/searchUser.js";
+          document.body.appendChild(script);
+        })
+        .catch((err) => console.error("Error cargando sub-navbar:", err));
+    </script>
+    <script>
+      //Transicion
       function setupPageTransitions() {
         const transition = document.querySelector(".page-transition");
 

@@ -48,6 +48,11 @@ async function loadUserProfile() {
     userIcon.style.width = "auto";
     userIcon.style.height = "100%";
     userIcon.style.objectFit = "cover";
+
+    // ==== ANIMACIÓN DE APARICIÓN ====
+    const profileBox = document.getElementById("userProfileBox");
+    // agregamos clase 'visible' después de un pequeño timeout
+    setTimeout(() => profileBox.classList.add("visible"), 100);
   } catch (err) {
     console.error("Error cargando perfil:", err);
   }

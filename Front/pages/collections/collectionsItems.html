@@ -17,6 +17,7 @@
   </head>
 
   <body>
+    <div class="page-transition"></div>
     <!-- Main Navbar -->
     <div id="navbar-container"></div>
 
@@ -139,6 +140,19 @@
           document.body.appendChild(script);
         })
         .catch((err) => console.error(err));
+    </script>
+    <script>
+      //Transicion
+      function setupPageTransitions() {
+        const transition = document.querySelector(".page-transition");
+
+        // Entrada → al cargar la página
+        window.addEventListener("load", () => {
+          setTimeout(() => transition.classList.add("hidden"), 15);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", setupPageTransitions);
     </script>
   </body>
 </html>
