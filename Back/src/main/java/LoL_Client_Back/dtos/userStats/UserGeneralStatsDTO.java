@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -28,6 +27,7 @@ public class UserGeneralStatsDTO {
     private Double rankedWinRate = 0.0;
 
     private UserInGameTotalStatsDTO totalStats;
+    private UserMaxStatsDTO maxStats;
     private UserInGameAvgStatsDTO averageStats;
 
     private List<ChampionsUsedDTO> championsUsed;
@@ -79,9 +79,10 @@ public class UserGeneralStatsDTO {
         dto.setRankedWins(rankedWins);
         dto.setRankedWinRate(rankedGames > 0 ? roundTwoDecimals(rankedWins * 100.0 / rankedGames) : 0.0);
 
-        // Totales y promedios
+        // Totales, promedios y máximos
         dto.setTotalStats(UserInGameTotalStatsDTO.createFromDetails(details));
         dto.setAverageStats(UserInGameAvgStatsDTO.createFromDetails(details));
+        dto.setMaxStats(UserMaxStatsDTO.createFromDetails(details));
         dto.setChampionsUsed(ChampionsUsedDTO.createFromDetails(details));
 
 

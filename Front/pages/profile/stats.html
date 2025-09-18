@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stats</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/profile/stats.css" />
+  </head>
+  <body class="bg-dark text-light">
+    <div id="bg-overlay"></div>
+    <div class="page-transition"></div>
+
+    <!-- Main Navbar -->
+    <div id="navbar-container"></div>
+
+    <!-- Sub Navbar -->
+    <div id="sub-navbar-container"></div>
+
+    <!-- Main Content -->
+    <main class="container-fluid main-layout-vertical">
+      <!-- Contenedor grande (70%) -->
+      <div class="card stats-card shadow-lg rounded-3">
+        <!-- Won / Lost / Win Ratio + Filtros -->
+        <div
+          class="d-flex align-items-center mb-4 flex-wrap win-filter-container"
+        >
+          <!-- Centrado absoluto del pill -->
+          <div class="flex-grow-1 text-center my-2">
+            <div class="stats-pill" id="win-stats">
+              <span class="mx-3 stat-label">
+                Won: <strong id="won-count" class="stat-value">0</strong>
+              </span>
+              <span class="mx-3 stat-label">
+                Lost: <strong id="lost-count" class="stat-value">0</strong>
+              </span>
+              <span class="mx-3 stat-label">
+                Win Ratio: <strong id="win-ratio" class="stat-value">0%</strong>
+              </span>
+            </div>
+          </div>
+
+          <!-- Dropdown a la derecha, mantiene flujo normal -->
+          <div class="my-2">
+            <select
+              class="form-select bg-dark text-light border-secondary"
+              id="game-filter"
+            >
+              <option value="all">All Games</option>
+              <option value="ranked">Ranked</option>
+              <option value="normal">Normal</option>
+              <option value="aram">ARAM</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- CONTENEDORES -->
+        <div class="row text-center mb-4 g-3">
+          <!-- Contenedor 1: Totals -->
+          <div class="col-md-4">
+            <div class="stats-container shadow-sm">
+              <h5 class="stats-title">Total Stats</h5>
+              <hr class="stats-separator" />
+              <div class="kda-row" id="total-kda">
+                <img
+                  src="https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/stats%20kills.png?raw=true"
+                  class="kda-img"
+                />
+                <span id="total-kills" class="kda-value">0</span>
+                <img
+                  src="https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/stats%20deaths.png?raw=true"
+                  class="kda-img"
+                />
+                <span id="total-deaths" class="kda-value">0</span>
+                <img
+                  src="https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/stats%20assists.png?raw=true"
+                  class="kda-img"
+                />
+                <span id="total-assists" class="kda-value">0</span>
+              </div>
+              <hr class="stats-separator" />
+              <p class="stat-label">
+                Total Farm: <span id="total-farm" class="stat-value">0</span>
+              </p>
+              <p class="stat-label">
+                Total Gold: <span id="total-gold" class="stat-value">0</span>
+              </p>
+              <p class="stat-label">
+                Total Damage:
+                <span id="total-damage" class="stat-value">0</span>
+              </p>
+              <p class="stat-label">
+                Total Time Played:
+                <span id="total-time" class="stat-value">0</span>
+              </p>
+            </div>
+          </div>
+
+          <!-- Contenedor 2: Max -->
+          <div class="col-md-4">
+            <div class="stats-container shadow-sm">
+              <h5 class="stats-title">Max Stats</h5>
+              <hr class="stats-separator" />
+              <div class="kda-row" id="max-kda">
+                <img
+                  src="https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/stats%20kills.png?raw=true"
+                  class="kda-img"
+                />
+                <span id="max-kills" class="kda-value">0</span>
+                <img
+                  src="https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/stats%20deaths.png?raw=true"
+                  class="kda-img"
+                />
+                <span id="max-deaths" class="kda-value">0</span>
+                <img
+                  src="https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/stats%20assists.png?raw=true"
+                  class="kda-img"
+                />
+                <span id="max-assists" class="kda-value">0</span>
+              </div>
+              <hr class="stats-separator" />
+              <p class="stat-label">
+                Max Farm: <span id="max-farm" class="stat-value">0</span>
+              </p>
+              <p class="stat-label">
+                Max Gold Earned: <span id="max-gold" class="stat-value">0</span>
+              </p>
+              <p class="stat-label">
+                Max Damage: <span id="max-damage" class="stat-value">0</span>
+              </p>
+              <p class="stat-label">
+                Longest Game: <span id="max-time" class="stat-value">0</span>
+              </p>
+            </div>
+          </div>
+
+          <!-- Contenedor 3: Avg -->
+          <div class="col-md-4">
+            <div class="stats-container shadow-sm">
+              <h5 class="stats-title">Average Stats</h5>
+              <hr class="stats-separator" />
+              <div class="kda-row" id="avg-kda">
+                <img
+                  src="https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/stats%20kills.png?raw=true"
+                  class="kda-img"
+                />
+                <span id="avg-kills" class="kda-value">0</span>
+                <img
+                  src="https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/stats%20deaths.png?raw=true"
+                  class="kda-img"
+                />
+                <span id="avg-deaths" class="kda-value">0</span>
+                <img
+                  src="https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/stats%20assists.png?raw=true"
+                  class="kda-img"
+                />
+                <span id="avg-assists" class="kda-value">0</span>
+              </div>
+              <hr class="stats-separator" />
+              <p class="stat-label">
+                Average Farm: <span id="avg-farm" class="stat-value">0</span>
+              </p>
+              <p class="stat-label">
+                Average Gold Earned:
+                <span id="avg-gold" class="stat-value">0</span>
+              </p>
+              <p class="stat-label">
+                Average Damage:
+                <span id="avg-damage" class="stat-value">0</span>
+              </p>
+              <p class="stat-label">
+                Average Game Duration:
+                <span id="avg-time" class="stat-value">0</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Most Used Champions (30%) -->
+      <div class="champions-card bg-dark rounded shadow-lg">
+        <h5 class="stats-title">Most Used Champions</h5>
+        <hr class="stats-separator" />
+        <div class="d-flex overflow-auto pb-2" id="champion-list">
+          <!-- JS mete los <img> -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Scripts -->
+    <script>
+      fetch("/pages/mainNavbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("navbar-container").innerHTML = html;
+          const nav = document.querySelector("#navbar-container nav");
+          nav.style.position = "fixed";
+          nav.style.top = "0";
+          nav.style.width = "100%";
+          nav.style.zIndex = "1040";
+          const script = document.createElement("script");
+          script.src = "/javascript/core/mainNavbar.js";
+          document.body.appendChild(script);
+        });
+
+      fetch("/pages/profile/subNavbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("sub-navbar-container").innerHTML = html;
+          const script = document.createElement("script");
+          script.src = "/javascript/core/profile/searchUser.js";
+          document.body.appendChild(script);
+        });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const transition = document.querySelector(".page-transition");
+        window.addEventListener("load", () => {
+          setTimeout(() => transition.classList.add("hidden"), 15);
+        });
+      });
+    </script>
+  </body>
+</html>

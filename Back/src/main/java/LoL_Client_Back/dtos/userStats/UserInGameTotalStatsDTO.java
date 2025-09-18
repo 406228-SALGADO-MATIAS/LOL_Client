@@ -15,57 +15,36 @@ import java.util.Objects;
 @NoArgsConstructor
 public class UserInGameTotalStatsDTO {
     private int[] kdaSum = new int[3];
-    private int maxKills;
-    private int maxDeaths;
-    private int maxAssists;
     private int totalFarm;
     private int totalGoldEarned;
-    private int maxGoldEarned;
-    private int maxDamageDealt;
     private int totalDamageDealt;
-    private String longestGame;
     private String totalTimePlayed;
 
     public static UserInGameTotalStatsDTO createFromDetails(List<PlayerMatchDetailEntity> details) {
         UserInGameTotalStatsDTO dto = new UserInGameTotalStatsDTO();
-
-        dto.getKdaSum()[0] = details.stream().mapToInt(PlayerMatchDetailEntity::getKills).sum();
-        dto.getKdaSum()[1] = details.stream().mapToInt(PlayerMatchDetailEntity::getDeaths).sum();
-        dto.getKdaSum()[2] = details.stream().mapToInt(PlayerMatchDetailEntity::getAssists).sum();
-        dto.setMaxKills(details.stream().mapToInt(PlayerMatchDetailEntity::getKills).max().orElse(0));
-        dto.setMaxDeaths(details.stream().mapToInt(PlayerMatchDetailEntity::getDeaths).max().orElse(0));
-        dto.setMaxAssists(details.stream().mapToInt(PlayerMatchDetailEntity::getAssists).max().orElse(0));
-        dto.setTotalGoldEarned(details.stream().mapToInt(PlayerMatchDetailEntity::getTotalGold).sum());
-        dto.setMaxGoldEarned(details.stream().mapToInt(PlayerMatchDetailEntity::getTotalGold).max().orElse(0));
-        dto.setTotalDamageDealt(details.stream().mapToInt(PlayerMatchDetailEntity::getTotalDamage).sum());
-        dto.setMaxDamageDealt(details.stream().mapToInt(PlayerMatchDetailEntity::getTotalDamage).max().orElse(0));
-        dto.setTotalFarm(details.stream().mapToInt(PlayerMatchDetailEntity::getCreaturesKilled).sum());
-
         DamageEstimatorService damageEstimatorService = new DamageEstimatorService();
 
-        // max and total durations:
+        dto.kdaSum[0] = details.stream().mapToInt(PlayerMatchDetailEntity::getKills).sum();
+        dto.kdaSum[1] = details.stream().mapToInt(PlayerMatchDetailEntity::getDeaths).sum();
+        dto.kdaSum[2] = details.stream().mapToInt(PlayerMatchDetailEntity::getAssists).sum();
 
-        int totalMinutes = details.stream()
+        dto.totalFarm = details.stream().mapToInt(PlayerMatchDetailEntity::getCreaturesKilled).sum();
+        dto.totalGoldEarned = details.stream().mapToInt(PlayerMatchDetailEntity::getTotalGold).sum();
+        dto.totalDamageDealt = details.stream().mapToInt(PlayerMatchDetailEntity::getTotalDamage).sum();
+
+        int totalSeconds = details.stream()
                 .map(PlayerMatchDetailEntity::getMatch)
                 .map(MatchEntity::getDuration)
                 .filter(Objects::nonNull)
                 .mapToInt(damageEstimatorService::parseDurationToSeconds)
                 .sum();
-        dto.setTotalTimePlayed(formatMinutesToDurationWithSeconds(totalMinutes));
 
-        int maxMinutes = details.stream()
-                .map(PlayerMatchDetailEntity::getMatch)
-                .map(MatchEntity::getDuration)
-                .filter(Objects::nonNull)
-                .mapToInt(damageEstimatorService::parseDurationToSeconds)
-                .max()
-                .orElse(0);
-        dto.setLongestGame(formatMinutesToDurationWithSeconds(maxMinutes));
+        dto.totalTimePlayed = formatSecondsToDuration(totalSeconds);
 
         return dto;
     }
 
-    private static String formatMinutesToDurationWithSeconds(int totalSeconds) {
+    protected static String formatSecondsToDuration(int totalSeconds) {
         int h = totalSeconds / 3600;
         int m = (totalSeconds % 3600) / 60;
         int s = totalSeconds % 60;
