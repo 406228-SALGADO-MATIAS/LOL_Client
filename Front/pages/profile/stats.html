@@ -32,11 +32,12 @@
     <main class="container-fluid main-layout-vertical">
       <!-- Contenedor grande (70%) -->
       <div class="card stats-card shadow-lg rounded-3">
-        <!-- Won / Lost / Win Ratio + Filtros -->
+        <!-- Centrado absoluto del pill -->
+
         <div
           class="d-flex align-items-center mb-4 flex-wrap win-filter-container"
         >
-          <!-- Centrado absoluto del pill -->
+          <!-- Won / Lost / Win Ratio + Filtros -->
           <div class="flex-grow-1 text-center my-2">
             <div class="stats-pill" id="win-stats">
               <span class="mx-3 stat-label">
@@ -55,12 +56,27 @@
           <div class="my-2">
             <select
               class="form-select bg-dark text-light border-secondary"
+              id="role-filter"
+            >
+              <option value="all">All Roles</option>
+              <option value="TOP">TOP</option>
+              <option value="JUNGLE">JUNGLE</option>
+              <option value="MID">MID</option>
+              <option value="ADC">ADC</option>
+              <option value="SUPPORT">SUPPORT</option>
+            </select>
+          </div>
+
+          <!-- Dropdown a la derecha, mantiene flujo normal -->
+          <div class="my-2">
+            <select
+              class="form-select bg-dark text-light border-secondary"
               id="game-filter"
             >
               <option value="all">All Games</option>
               <option value="ranked">Ranked</option>
               <option value="normal">Normal</option>
-              <option value="aram">ARAM</option>
+              <option value="aram">Aram</option>
             </select>
           </div>
         </div>
@@ -197,6 +213,8 @@
         </div>
       </div>
     </main>
+
+    <script src="/javascript/core/profile/stats.js"></script>
 
     <!-- Scripts -->
     <script>

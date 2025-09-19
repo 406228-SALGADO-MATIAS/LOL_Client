@@ -26,6 +26,10 @@ public class UserGeneralStatsDTO {
     @JsonFormat(shape = JsonFormat.Shape.NUMBER, pattern = "0.00")
     private Double rankedWinRate = 0.0;
 
+    private Integer totalWins = 0;
+    private Integer totalLoses = 0;
+    private Double totalWinRate = 0.0;
+
     private UserInGameTotalStatsDTO totalStats;
     private UserMaxStatsDTO maxStats;
     private UserInGameAvgStatsDTO averageStats;
@@ -79,11 +83,21 @@ public class UserGeneralStatsDTO {
         dto.setRankedWins(rankedWins);
         dto.setRankedWinRate(rankedGames > 0 ? roundTwoDecimals(rankedWins * 100.0 / rankedGames) : 0.0);
 
+        // Totales generales
+        int totalGames = normalGames + aramGames + rankedGames;
+        int totalWins = normalWins + aramWins + rankedWins;
+
+        dto.setTotalWins(totalWins);
+        dto.setTotalLoses(totalGames - totalWins);
+        dto.setTotalWinRate(totalGames > 0 ? roundTwoDecimals(totalWins * 100.0 / totalGames) : 0.0);
+
         // Totales, promedios y máximos
         dto.setTotalStats(UserInGameTotalStatsDTO.createFromDetails(details));
         dto.setAverageStats(UserInGameAvgStatsDTO.createFromDetails(details));
         dto.setMaxStats(UserMaxStatsDTO.createFromDetails(details));
         dto.setChampionsUsed(ChampionsUsedDTO.createFromDetails(details));
+
+
 
 
         return dto;

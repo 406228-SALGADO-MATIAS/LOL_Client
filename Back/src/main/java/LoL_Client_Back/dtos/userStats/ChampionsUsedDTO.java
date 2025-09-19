@@ -4,6 +4,7 @@ import LoL_Client_Back.entities.domain.PlayerMatchDetailEntity;
 import jakarta.persistence.Lob;
 import lombok.Data;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +40,13 @@ public class ChampionsUsedDTO {
                             .count());
                     return dto;
                 })
+
+                //SORT 
+                .sorted(Comparator.comparingInt((ChampionsUsedDTO c) ->
+                        (c.getNormalGames() != null ? c.getNormalGames() : 0) +
+                                (c.getAramGames() != null ? c.getAramGames() : 0) +
+                                (c.getRankedGames() != null ? c.getRankedGames() : 0)
+                ).reversed())
                 .collect(Collectors.toList());
     }
-
 }

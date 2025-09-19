@@ -122,7 +122,8 @@ body {
 /* =============================
    Game Filter mejorado
 ============================= */
-#game-filter {
+#game-filter, 
+#role-filter{
   position: relative;       /* mantener en flujo normal, pero poder ajustar */
   top: -11px;               /* lo eleva un poco */
   left: -50px;              /* lo mueve un poco hacia la izquierda */
