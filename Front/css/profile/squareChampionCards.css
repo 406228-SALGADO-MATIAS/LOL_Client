@@ -10,16 +10,33 @@
 }
 
 .champion-card {
-  width: 120px; 
-  height: 135px; 
+  width: 120px;
+  height: 135px;
   margin: 0 5px;
   display: flex;
   flex-direction: column;
   text-align: center;
   background: rgb(0, 0, 0);
-  border-radius: 8px;
+  border: 2px solid black;
+  border-radius: 10px;
+  border-color: black;
   overflow: hidden;
   flex: 0 0 auto; /* clave: no crecer/encogerse, usar ancho propio */
+  filter: brightness(0.8); /* un toque más brillante */
+}
+
+/* Hover de la card */
+.champion-card:hover {
+  filter: brightness(1.05); /* un toque más brillante */
+  border: 2px solid #ccc; /* gris claro */
+  transition: all 0.1s ease; /* suaviza animación */
+}
+
+/* Card seleccionada */
+.champion-card.selected {
+  filter: brightness(1.05); /* un toque más brillante */
+  border: 2px solid #ccc; /* gris claro */
+  transition: all 0.1s ease; /* suaviza animación */
 }
 
 /* Contenedor de la imagen (se lleva casi todo) */
@@ -37,6 +54,7 @@
   height: 100%;
   object-fit: contain; /* mantiene proporción */
   border-radius: 0; /* opcional: sin redondear para ocupar todo */
+  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease; /* <-- animaciones suaves */
 }
 
 /* Nombre: una franja fina abajo */
@@ -51,11 +69,10 @@
   padding: 2px;
 }
 
-
 /* Animación de aparición vertical */
 .card-appear {
   opacity: 0;
-  
+
   animation: fadeInUp 0.7s ease forwards;
 }
 

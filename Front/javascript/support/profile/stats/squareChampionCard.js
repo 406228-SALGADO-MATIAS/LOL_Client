@@ -1,8 +1,10 @@
+let selectedChampion = null; // para este render
+let lastSelectedChampion = null; // persistente entre renders
+
 function createChampionCard(champion) {
   const card = document.createElement("div");
   card.classList.add("card", "champion-card", "card-appear");
 
-  // Contenedor de la imagen
   const imgContainer = document.createElement("div");
   imgContainer.classList.add("champion-img-container");
 
@@ -13,7 +15,6 @@ function createChampionCard(champion) {
 
   imgContainer.appendChild(img);
 
-  // Footer con el nombre
   const name = document.createElement("div");
   name.classList.add("card-body", "p-1", "champion-name");
   name.innerHTML = `<strong>${champion.champion}</strong>`;
@@ -21,11 +22,45 @@ function createChampionCard(champion) {
   card.appendChild(imgContainer);
   card.appendChild(name);
 
-  // Evento futuro (ej: abrir modal de campeón)
+  card.dataset.champion = champion.champion;
+
+  // Click en una card
   card.addEventListener("click", () => {
-    console.log("Champion clicked:", champion.champion);
-    // openModalChampion(champion) si querés agregarlo después
+    if (selectedChampion === champion.champion) {
+      // Deseleccionamos
+      selectedChampion = null;
+      lastSelectedChampion = null;
+    } else {
+      selectedChampion = champion.champion;
+      lastSelectedChampion = champion.champion; // persistimos el último
+    }
+
+    applySelectionStyles();
+    console.log("Champion clicked:", selectedChampion);
+    console.log("Champion last:", lastSelectedChampion);
   });
 
   return card;
+}
+
+// Función global que aplica el estado actual
+function applySelectionStyles() {
+  const allCards = document.querySelectorAll(".champion-card");
+  allCards.forEach((c) => {
+    const cImg = c.querySelector("img");
+
+    if (selectedChampion && c.dataset.champion !== selectedChampion) {
+      cImg.style.filter = "grayscale(95%)";
+      cImg.style.opacity = "0.7";
+      c.classList.remove("selected");
+    } else if (selectedChampion && c.dataset.champion === selectedChampion) {
+      cImg.style.filter = "none";
+      cImg.style.opacity = "1";
+      c.classList.add("selected");
+    } else {
+      cImg.style.filter = "none";
+      cImg.style.opacity = "1";
+      c.classList.remove("selected");
+    }
+  });
 }

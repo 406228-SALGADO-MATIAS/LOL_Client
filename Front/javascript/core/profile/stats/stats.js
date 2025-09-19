@@ -97,30 +97,30 @@ async function loadStats(userId, gameType = "all", role = "all") {
     winRatio.textContent = winrate + "%";
 
     // === Totals ===
-    const totals = data.totalStats;
-    totalKills.textContent = formatNumber(totals.kdaSum[0] || 0);
-    totalDeaths.textContent = formatNumber(totals.kdaSum[1] || 0);
-    totalAssists.textContent = formatNumber(totals.kdaSum[2] || 0);
+    const totals = data.totalStats ?? {};
+    totalKills.textContent = formatNumber(totals.kdaSum?.[0] || 0);
+    totalDeaths.textContent = formatNumber(totals.kdaSum?.[1] || 0);
+    totalAssists.textContent = formatNumber(totals.kdaSum?.[2] || 0);
     totalFarm.textContent = formatNumber(totals.totalFarm ?? 0);
     totalGold.textContent = formatNumber(totals.totalGoldEarned ?? 0);
     totalDamage.textContent = formatNumber(totals.totalDamageDealt ?? 0);
     totalTime.textContent = totals.totalTimePlayed ?? "0";
 
     // === Max ===
-    const maxs = data.maxStats;
-    maxKills.textContent = formatNumber(maxs.kdaMax[0] || 0);
-    maxDeaths.textContent = formatNumber(maxs.kdaMax[1] || 0);
-    maxAssists.textContent = formatNumber(maxs.kdaMax[2] || 0);
+    const maxs = data.maxStats ?? {};
+    maxKills.textContent = formatNumber(maxs.kdaMax?.[0] || 0);
+    maxDeaths.textContent = formatNumber(maxs.kdaMax?.[1] || 0);
+    maxAssists.textContent = formatNumber(maxs.kdaMax?.[2] || 0);
     maxFarm.textContent = formatNumber(maxs.maxFarm ?? 0);
     maxGold.textContent = formatNumber(maxs.maxGoldEarned ?? 0);
     maxDamage.textContent = formatNumber(maxs.maxDamageDealt ?? 0);
     maxTime.textContent = maxs.longestGame ?? "0";
 
     // === Averages ===
-    const avgs = data.averageStats;
-    avgKills.textContent = formatNumber(avgs.avgKda[0] || 0);
-    avgDeaths.textContent = formatNumber(avgs.avgKda[1] || 0);
-    avgAssists.textContent = formatNumber(avgs.avgKda[2] || 0);
+    const avgs = data.averageStats ?? {};
+    avgKills.textContent = formatNumber(avgs.avgKda?.[0] || 0);
+    avgDeaths.textContent = formatNumber(avgs.avgKda?.[1] || 0);
+    avgAssists.textContent = formatNumber(avgs.avgKda?.[2] || 0);
     avgFarm.textContent = formatNumber(avgs.avgFarm ?? 0);
     avgGold.textContent = formatNumber(avgs.avgGoldEarned ?? 0);
     avgDamage.textContent = formatNumber(avgs.avgDamageDealt ?? 0);
@@ -132,6 +132,25 @@ async function loadStats(userId, gameType = "all", role = "all") {
       const card = createChampionCard(c);
       championList.appendChild(card);
     });
+
+    // Reiniciamos la selección visual al cargar
+    selectedChampion = null;
+
+    // Si el último seleccionado sigue existiendo en este load, lo re-seleccionamos
+    if (lastSelectedChampion) {
+      const found = Array.from(
+        document.querySelectorAll(".champion-card")
+      ).find((c) => c.dataset.champion === lastSelectedChampion);
+
+      if (found) {
+        selectedChampion = lastSelectedChampion;
+      }
+    }
+
+    // Aplicamos estilos globalmente
+    applySelectionStyles();
+    console.log("Champion clicked:", selectedChampion);
+    console.log("Champion last:", lastSelectedChampion);
   } catch (err) {
     console.error("Error cargando stats:", err);
   }

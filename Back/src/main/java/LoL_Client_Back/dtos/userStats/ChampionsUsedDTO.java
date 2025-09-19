@@ -41,7 +41,7 @@ public class ChampionsUsedDTO {
                     return dto;
                 })
 
-                //SORT 
+                //SORT
                 .sorted(Comparator.comparingInt((ChampionsUsedDTO c) ->
                         (c.getNormalGames() != null ? c.getNormalGames() : 0) +
                                 (c.getAramGames() != null ? c.getAramGames() : 0) +
