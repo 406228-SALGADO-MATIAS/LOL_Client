@@ -51,109 +51,117 @@ function updateReturnButton() {
   }
 }
 
-// Carga stats por userId y filtros
+// Principal
 async function loadStats(userId, gameType = "all", role = "all") {
   if (!userId) return;
 
   try {
-    let url = `http://localhost:8080/usersMatches/${userId}/stats`;
-    if (role !== "all") url += `/role/${role}`;
-    if (gameType !== "all") url += `?gameType=${gameType.toUpperCase()}`;
-
-    const res = await fetch(url);
-    if (!res.ok) throw new Error("Error al traer stats del usuario");
-
-    const data = await res.json();
+    const data = await fetchStats(userId, gameType, role);
 
     // === Win Stats ===
-    let games = 0,
-      wins = 0,
-      winrate = 0;
-    switch (gameType) {
-      case "ranked":
-        games = data.rankedGames;
-        wins = data.rankedWins;
-        winrate = data.rankedWinRate;
-        break;
-      case "normal":
-        games = data.normalGames;
-        wins = data.normalWins;
-        winrate = data.normalWinRate;
-        break;
-      case "aram":
-        games = data.aramGames;
-        wins = data.aramWins;
-        winrate = data.aramWinRate;
-        break;
-      default:
-        // Sumatoria general
-        games = data.rankedGames + data.normalGames + data.aramGames;
-        wins = data.rankedWins + data.normalWins + data.aramWins;
-        winrate = games > 0 ? Math.round((wins / games) * 100) : 0;
-    }
-
+    const { games, wins, winrate } = getWinStats(data, gameType);
     wonCount.textContent = wins;
     lostCount.textContent = games - wins;
     winRatio.textContent = winrate + "%";
 
-    // === Totals ===
-    const totals = data.totalStats ?? {};
-    totalKills.textContent = formatNumber(totals.kdaSum?.[0] || 0);
-    totalDeaths.textContent = formatNumber(totals.kdaSum?.[1] || 0);
-    totalAssists.textContent = formatNumber(totals.kdaSum?.[2] || 0);
-    totalFarm.textContent = formatNumber(totals.totalFarm ?? 0);
-    totalGold.textContent = formatNumber(totals.totalGoldEarned ?? 0);
-    totalDamage.textContent = formatNumber(totals.totalDamageDealt ?? 0);
-    totalTime.textContent = totals.totalTimePlayed ?? "0";
+    // Render stats generales
+    renderStats(data);
 
-    // === Max ===
-    const maxs = data.maxStats ?? {};
-    maxKills.textContent = formatNumber(maxs.kdaMax?.[0] || 0);
-    maxDeaths.textContent = formatNumber(maxs.kdaMax?.[1] || 0);
-    maxAssists.textContent = formatNumber(maxs.kdaMax?.[2] || 0);
-    maxFarm.textContent = formatNumber(maxs.maxFarm ?? 0);
-    maxGold.textContent = formatNumber(maxs.maxGoldEarned ?? 0);
-    maxDamage.textContent = formatNumber(maxs.maxDamageDealt ?? 0);
-    maxTime.textContent = maxs.longestGame ?? "0";
-
-    // === Averages ===
-    const avgs = data.averageStats ?? {};
-    avgKills.textContent = formatNumber(avgs.avgKda?.[0] || 0);
-    avgDeaths.textContent = formatNumber(avgs.avgKda?.[1] || 0);
-    avgAssists.textContent = formatNumber(avgs.avgKda?.[2] || 0);
-    avgFarm.textContent = formatNumber(avgs.avgFarm ?? 0);
-    avgGold.textContent = formatNumber(avgs.avgGoldEarned ?? 0);
-    avgDamage.textContent = formatNumber(avgs.avgDamageDealt ?? 0);
-    avgTime.textContent = avgs.avgDurationGame ?? "0";
-
-    // === Champions usados ===
+    // Champions usados
     championList.innerHTML = "";
     (data.championsUsed || []).forEach((c) => {
       const card = createChampionCard(c);
       championList.appendChild(card);
     });
 
-    // Reiniciamos la selección visual al cargar
+    // Selección de campeón
     selectedChampion = null;
-
-    // Si el último seleccionado sigue existiendo en este load, lo re-seleccionamos
     if (lastSelectedChampion) {
       const found = Array.from(
         document.querySelectorAll(".champion-card")
       ).find((c) => c.dataset.champion === lastSelectedChampion);
-
-      if (found) {
-        selectedChampion = lastSelectedChampion;
-      }
+      if (found) selectedChampion = lastSelectedChampion;
     }
 
-    // Aplicamos estilos globalmente
     applySelectionStyles();
     console.log("Champion clicked:", selectedChampion);
     console.log("Champion last:", lastSelectedChampion);
   } catch (err) {
     console.error("Error cargando stats:", err);
   }
+}
+
+// --- Fetch ---
+async function fetchStats(userId, gameType, role) {
+  let url = `http://localhost:8080/usersMatches/${userId}/stats`;
+  if (role !== "all") url += `/role/${role}`;
+  if (gameType !== "all") url += `?gameType=${gameType.toUpperCase()}`;
+
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Error al traer stats del usuario");
+
+  return await res.json();
+}
+
+// --- Win Stats ---
+function getWinStats(data, gameType) {
+  let games = 0,
+    wins = 0,
+    winrate = 0;
+
+  switch (gameType) {
+    case "ranked":
+      games = data.rankedGames;
+      wins = data.rankedWins;
+      winrate = data.rankedWinRate;
+      break;
+    case "normal":
+      games = data.normalGames;
+      wins = data.normalWins;
+      winrate = data.normalWinRate;
+      break;
+    case "aram":
+      games = data.aramGames;
+      wins = data.aramWins;
+      winrate = data.aramWinRate;
+      break;
+    default:
+      games = data.rankedGames + data.normalGames + data.aramGames;
+      wins = data.rankedWins + data.normalWins + data.aramWins;
+      winrate = games > 0 ? Math.round((wins / games) * 100) : 0;
+  }
+
+  return { games, wins, winrate };
+}
+
+// --- Render de stats ---
+function renderStats(data) {
+  const totals = data.totalStats ?? {};
+  totalKills.textContent = formatNumber(totals.kdaSum?.[0] || 0);
+  totalDeaths.textContent = formatNumber(totals.kdaSum?.[1] || 0);
+  totalAssists.textContent = formatNumber(totals.kdaSum?.[2] || 0);
+  totalFarm.textContent = formatNumber(totals.totalFarm ?? 0);
+  totalGold.textContent = formatNumber(totals.totalGoldEarned ?? 0);
+  totalDamage.textContent = formatNumber(totals.totalDamageDealt ?? 0);
+  totalTime.textContent = totals.totalTimePlayed ?? "0";
+
+  const maxs = data.maxStats ?? {};
+  maxKills.textContent = formatNumber(maxs.kdaMax?.[0] || 0);
+  maxDeaths.textContent = formatNumber(maxs.kdaMax?.[1] || 0);
+  maxAssists.textContent = formatNumber(maxs.kdaMax?.[2] || 0);
+  maxFarm.textContent = formatNumber(maxs.maxFarm ?? 0);
+  maxGold.textContent = formatNumber(maxs.maxGoldEarned ?? 0);
+  maxDamage.textContent = formatNumber(maxs.maxDamageDealt ?? 0);
+  maxTime.textContent = maxs.longestGame ?? "0";
+
+  const avgs = data.averageStats ?? {};
+  avgKills.textContent = formatNumber(avgs.avgKda?.[0] || 0);
+  avgDeaths.textContent = formatNumber(avgs.avgKda?.[1] || 0);
+  avgAssists.textContent = formatNumber(avgs.avgKda?.[2] || 0);
+  avgFarm.textContent = formatNumber(avgs.avgFarm ?? 0);
+  avgGold.textContent = formatNumber(avgs.avgGoldEarned ?? 0);
+  avgDamage.textContent = formatNumber(avgs.avgDamageDealt ?? 0);
+  avgTime.textContent = avgs.avgDurationGame ?? "0";
 }
 
 // Función para ajustar selects según reglas
