@@ -25,8 +25,7 @@ function createChampionCard(champion) {
   card.dataset.champion = champion.champion;
   card.dataset.championId = champion.id; // <-- así lo tenés disponible
 
-  // Click en una card
-  card.addEventListener("click", () => {
+  card.addEventListener("click", async () => {
     const uid =
       sessionStorage.getItem("tempUserId") || sessionStorage.getItem("userId");
 
@@ -34,22 +33,32 @@ function createChampionCard(champion) {
       // Deseleccionamos
       selectedChampion = null;
       lastSelectedChampion = null;
-      // Opcional: recargar stats generales al deseleccionar
-      loadStats(uid, gameFilter.value, roleFilter.value);
+      await loadStats(uid, gameFilter.value, roleFilter.value);
     } else {
       selectedChampion = champion.champion;
-      lastSelectedChampion = champion.champion; // persistimos el último
+      lastSelectedChampion = champion.champion;
 
-      // --- Listener automático: cargamos stats del campeón seleccionado ---
-      loadSelectedChampionStats(
+      // renderizamos el contenedor con "all/all" ---
+      // Usamos snapshot inicial de la carga completa
+      if (window.defaultChampionsData) {
+        championList.innerHTML = "";
+        (window.defaultChampionsData.championsUsed || []).forEach((c) => {
+          const cardElem = createChampionCard(c);
+          championList.appendChild(cardElem);
+        });
+      }
+
+      //  load específico del champion seleccionado ---
+      await loadSelectedChampionStats(
         uid,
         selectedChampion,
         gameFilter.value,
         roleFilter.value
       );
+
+      applySelectionStyles();
     }
 
-    applySelectionStyles();
     console.log("Champion clicked:", selectedChampion);
     console.log("Champion last:", lastSelectedChampion);
   });

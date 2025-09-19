@@ -268,11 +268,17 @@ roleFilter.addEventListener("change", () => {
   loadStats(uid, gameFilter.value, roleFilter.value);
 });
 
-// Cargar stats inicial
-document.addEventListener("DOMContentLoaded", () => {
-  adjustFilters(); // <--- Ajusta los selects según estado inicial
+//Stats iniciales
+document.addEventListener("DOMContentLoaded", async () => {
+  adjustFilters();
   const uid = searchedUserId || originalUserId;
-  loadStats(uid, gameFilter.value, roleFilter.value);
+  const initialData = await fetchStats(uid, "all", "all");
+
+  // Guardamos snapshot inicial
+  window.defaultChampionsData = initialData;
+
+  // Cargamos stats inicial con filtros actuales
+  loadStats(uid, "all", "all");
 
   updateReturnButton();
 });
