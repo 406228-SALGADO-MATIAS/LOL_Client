@@ -56,6 +56,13 @@ async function loadStats(userId, gameType = "all", role = "all") {
   if (!userId) return;
 
   try {
+    // --- Si hay campeón seleccionado, usamos endpoints especiales ---
+    if (selectedChampion) {
+      await loadSelectedChampionStats(userId, selectedChampion, gameType, role);
+      return;
+    }
+
+    // --- Si no hay seleccionado, hacemos el load general ---
     const data = await fetchStats(userId, gameType, role);
 
     // === Win Stats ===
@@ -74,12 +81,13 @@ async function loadStats(userId, gameType = "all", role = "all") {
       championList.appendChild(card);
     });
 
-    // Selección de campeón
+    // Selección de campeón: si el último sigue en la lista, lo seleccionamos
     selectedChampion = null;
     if (lastSelectedChampion) {
       const found = Array.from(
         document.querySelectorAll(".champion-card")
       ).find((c) => c.dataset.champion === lastSelectedChampion);
+
       if (found) selectedChampion = lastSelectedChampion;
     }
 
@@ -91,7 +99,59 @@ async function loadStats(userId, gameType = "all", role = "all") {
   }
 }
 
-// --- Fetch ---
+// --- Load específico para un campeón seleccionado ---
+async function loadSelectedChampionStats(
+  userId,
+  champion,
+  gameType = "all",
+  role = "all"
+) {
+  try {
+    // Primero encontramos el id del campeón
+    const champCard = Array.from(
+      document.querySelectorAll(".champion-card")
+    ).find((c) => c.dataset.champion === champion);
+
+    if (!champCard) return; // si no está visible, no hacemos nada
+
+    const championId = champCard.dataset.championId; // id numérico
+
+    // URL según si hay rol o no
+    let url;
+    if (role !== "all") {
+      // Endpoint con rol
+      url = `http://localhost:8080/usersMatches/${userId}/stats/champion/${championId}/role/${role}`;
+      if (gameType !== "all") url += `?gameType=${gameType.toUpperCase()}`;
+    } else {
+      // Endpoint sin rol
+      url = `http://localhost:8080/usersMatches/${userId}/stats/champion/${championId}`;
+      if (gameType !== "all") url += `?gameType=${gameType.toUpperCase()}`;
+    }
+
+    const res = await fetch(url);
+    if (!res.ok)
+      throw new Error("Error cargando stats del campeón seleccionado");
+    const data = await res.json();
+
+    // === Win Stats ===
+    const { games, wins, winrate } = getWinStats(data, gameType);
+    wonCount.textContent = wins;
+    lostCount.textContent = games - wins;
+    winRatio.textContent = winrate + "%";
+
+    // Stats del campeón
+    renderStats(data);
+
+    // No actualizamos champions usados
+    // Pero mantenemos selección visual
+    applySelectionStyles();
+    console.log("Load stats del campeón seleccionado:", champion);
+  } catch (err) {
+    console.error("Error cargando stats del campeón seleccionado:", err);
+  }
+}
+
+// --- Fetch general ---
 async function fetchStats(userId, gameType, role) {
   let url = `http://localhost:8080/usersMatches/${userId}/stats`;
   if (role !== "all") url += `/role/${role}`;
@@ -99,7 +159,6 @@ async function fetchStats(userId, gameType, role) {
 
   const res = await fetch(url);
   if (!res.ok) throw new Error("Error al traer stats del usuario");
-
   return await res.json();
 }
 

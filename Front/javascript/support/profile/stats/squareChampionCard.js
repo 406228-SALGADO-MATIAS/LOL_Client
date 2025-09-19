@@ -23,6 +23,7 @@ function createChampionCard(champion) {
   card.appendChild(name);
 
   card.dataset.champion = champion.champion;
+  card.dataset.championId = champion.id; // <-- así lo tenés disponible
 
   // Click en una card
   card.addEventListener("click", () => {
