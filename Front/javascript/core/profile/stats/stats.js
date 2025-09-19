@@ -129,11 +129,8 @@ async function loadStats(userId, gameType = "all", role = "all") {
     // === Champions usados ===
     championList.innerHTML = "";
     (data.championsUsed || []).forEach((c) => {
-      const img = document.createElement("img");
-      img.src = c.image;
-      img.title = c.champion;
-      img.className = "champion-thumb mx-1";
-      championList.appendChild(img);
+      const card = createChampionCard(c);
+      championList.appendChild(card);
     });
   } catch (err) {
     console.error("Error cargando stats:", err);

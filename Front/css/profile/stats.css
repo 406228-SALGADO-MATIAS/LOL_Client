@@ -60,7 +60,7 @@ body {
    TARJETAS PRINCIPALES
 ================================================ */
 .stats-card {
-  flex: 7; /* 70% */
+  flex: 6.8; /* 70% */
   background: #1e1e1ed2;
   padding: 1.5rem;
   border-radius: 8px;
@@ -96,7 +96,7 @@ body {
 }
 
 .champions-card {
-  flex: 3; /* 30% */
+  flex: 3.2; /* 30% */
   background: #1e1e1ed2 !important;
   padding: 1.5rem;
   border-radius: 8px;
@@ -172,6 +172,26 @@ body {
   border: none;
   border-top: 2px solid rgba(255, 255, 255, 0.3);
   margin: 0.5rem 0 1rem;
+}
+
+/* Compactar títulos y separadores dentro de champions-card */
+.champions-card .stats-title {
+  font-size: 1.25rem;          /* más chico que 1.25rem */
+  margin-bottom: 0.1rem;    /* menos espacio debajo */
+}
+
+.champions-card .stats-separator {
+  margin: 0.25rem 0 0.5rem; /* menos alto arriba y abajo */
+  border-top: 1px solid rgba(255, 255, 255, 0.2); /* línea más fina */
+}
+
+/* Contenedor que centra verticalmente la fila de champions */
+.champion-list-wrapper {
+  flex: 1 1 auto;            /* ocupa el espacio restante */
+  display: flex;
+  align-items: center;       /* centra verticalmente */
+  justify-content: flex-start; /* opcional: inicia al principio */
+  overflow: hidden;          /* evita scroll vertical innecesario */
 }
 
 /* ================================================

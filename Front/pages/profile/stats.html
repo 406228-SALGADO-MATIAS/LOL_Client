@@ -17,6 +17,7 @@
     />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/profile/stats.css" />
+    <link rel="stylesheet" href="/css/profile/squareChampionCards.css" />
   </head>
   <body class="bg-dark text-light">
     <div id="bg-overlay"></div>
@@ -206,15 +207,19 @@
 
       <!-- Most Used Champions (30%) -->
       <div class="champions-card bg-dark rounded shadow-lg">
-        <h5 class="stats-title">Most Used Champions</h5>
+        <h5 class="stats-title">Champions Used</h5>
         <hr class="stats-separator" />
-        <div class="d-flex overflow-auto pb-2" id="champion-list">
-          <!-- JS mete los <img> -->
+        <!-- Contenedor flexible para centrar la fila -->
+        <div class="champion-list-wrapper d-flex align-items-center">
+          <div class="d-flex overflow-auto pb-2" id="champion-list">
+            <!-- JS mete los <img> o las champion-card -->
+          </div>
         </div>
       </div>
     </main>
 
-    <script src="/javascript/core/profile/stats.js"></script>
+    <script src="/javascript/core/profile/stats/stats.js"></script>
+    <script src="/javascript/support/profile/stats/squareChampionCard.js"></script>
 
     <!-- Scripts -->
     <script>
