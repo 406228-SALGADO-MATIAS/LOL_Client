@@ -27,13 +27,26 @@ function createChampionCard(champion) {
 
   // Click en una card
   card.addEventListener("click", () => {
+    const uid =
+      sessionStorage.getItem("tempUserId") || sessionStorage.getItem("userId");
+
     if (selectedChampion === champion.champion) {
       // Deseleccionamos
       selectedChampion = null;
       lastSelectedChampion = null;
+      // Opcional: recargar stats generales al deseleccionar
+      loadStats(uid, gameFilter.value, roleFilter.value);
     } else {
       selectedChampion = champion.champion;
       lastSelectedChampion = champion.champion; // persistimos el último
+
+      // --- Listener automático: cargamos stats del campeón seleccionado ---
+      loadSelectedChampionStats(
+        uid,
+        selectedChampion,
+        gameFilter.value,
+        roleFilter.value
+      );
     }
 
     applySelectionStyles();
