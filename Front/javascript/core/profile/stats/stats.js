@@ -1,4 +1,8 @@
-// searchStats.js
+// stats.js
+
+// IDs de sesión → pasamos a global
+window.originalUserId = sessionStorage.getItem("userId") || null;
+window.searchedUserId = sessionStorage.getItem("tempUserId") || null; // persiste si existe
 
 window.onUserSelected = async function (userId) {
   // cuando se selecciona un usuario, recargamos stats
@@ -45,21 +49,6 @@ const avgTime = document.getElementById("avg-time");
 
 // Champions container
 const championList = document.getElementById("champion-list");
-
-// Actualiza botón "Regresar" si es usuario temporal
-function updateReturnButton() {
-  const btnReturnProfile = document.getElementById("btnReturnProfile");
-  if (!btnReturnProfile) return; // evita errores si no está en el DOM
-
-  if (
-    window.searchedUserId &&
-    window.searchedUserId !== window.originalUserId
-  ) {
-    btnReturnProfile.style.display = "inline-block";
-  } else {
-    btnReturnProfile.style.display = "none";
-  }
-}
 
 // Principal
 async function loadStats(userId, gameType = "all", role = "all") {
@@ -250,6 +239,7 @@ gameFilter.addEventListener("change", () => {
   const uid = window.searchedUserId || window.originalUserId;
   loadStats(uid, gameFilter.value, roleFilter.value);
 });
+
 roleFilter.addEventListener("change", () => {
   adjustFilters();
   const uid = window.searchedUserId || window.originalUserId;
@@ -262,6 +252,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const uid = window.searchedUserId || window.originalUserId;
 
   window.onUserSelected = async function (userId) {
+    window.searchedUserId = userId; // persistir temporalmente
+    sessionStorage.setItem("tempUserId", userId);
     await loadStats(userId, gameFilter.value, roleFilter.value);
     updateReturnButton();
   };
@@ -277,15 +269,25 @@ const btnReturnProfile = document.getElementById("btnReturnProfile");
 if (btnReturnProfile) {
   btnReturnProfile.addEventListener("click", () => {
     window.searchedUserId = null;
+    sessionStorage.removeItem("tempUserId"); // limpiar persistencia
     updateReturnButton();
-    const uid = window.originalUserId;
-    loadStats(uid, gameFilter.value, roleFilter.value);
+    loadStats(window.originalUserId, gameFilter.value, roleFilter.value);
   });
 }
 
 // Función auxiliar para setear un usuario temporal desde searchUser.js
 function selectSearchedUser(user) {
   window.searchedUserId = user.id;
+  sessionStorage.setItem("tempUserId", user.id); // persistir
   updateReturnButton();
-  loadStats(window.searchedUserId, gameFilter.value, roleFilter.value);
+  loadStats(user.id, gameFilter.value, roleFilter.value);
 }
+
+document.addEventListener("click", (e) => {
+  if (e.target && e.target.id === "btnReturnProfile") {
+    window.searchedUserId = null;
+    sessionStorage.removeItem("tempUserId");
+    updateReturnButton();
+    loadStats(window.originalUserId, gameFilter.value, roleFilter.value);
+  }
+});

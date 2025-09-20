@@ -242,9 +242,7 @@
         .then((html) => {
           document.getElementById("sub-navbar-container").innerHTML = html;
 
-          // luego de insertar subNavbar, llamamos a updateReturnButton
-          updateReturnButton();
-
+          // Insertar script **después** de que el botón exista
           if (!document.getElementById("searchUserScript")) {
             const script = document.createElement("script");
             script.id = "searchUserScript";

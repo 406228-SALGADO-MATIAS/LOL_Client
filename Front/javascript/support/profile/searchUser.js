@@ -181,32 +181,39 @@ async function loadProfileById(userId) {
 
 // Mostrar botón solo si estamos en sesión temporal
 function updateReturnButton() {
-  const btn = document.getElementById("btnReturnProfile");
-  if (!btn) return; // ✅ si no existe, salimos
-  if (searchedUserId && searchedUserId !== originalUserId) {
-    btn.style.display = "inline-block";
-  } else {
-    btn.style.display = "none";
-  }
+  const btns = document.querySelectorAll("#btnReturnProfile");
+  if (!btns.length) return;
+
+  btns.forEach((btn) => {
+    if (window.searchedUserId && window.searchedUserId !== window.originalUserId) {
+      btn.style.display = "inline-block";
+    } else {
+      btn.style.display = "none";
+    }
+  });
 }
 
 // Al hacer click en el botón “Regresar al perfil”
-btnReturnProfile.addEventListener("click", () => {
-  const transition = document.querySelector(".page-transition");
-  transition.classList.remove("hidden");
+if (btnReturnProfile) {
+  btnReturnProfile.addEventListener("click", () => {
+    searchedUserId = null;
+    sessionStorage.removeItem("tempUserId"); // borrar persistencia
+    updateReturnButton();
 
-  searchedUserId = null;
-  updateReturnButton();
+    // Si estás en resume
+    if (typeof loadTopProfile === "function") {
+      const originalId = sessionStorage.getItem("userId");
+      loadTopProfile(originalId);
+      loadTopChampions(originalId);
+      loadRanks(originalId);
+    }
 
-  const originalId = sessionStorage.getItem("userId");
-
-  setTimeout(() => {
-    loadTopProfile(originalId);
-    loadTopChampions(originalId);
-    loadRanks(originalId);
-    transition.classList.add("hidden");
-  }, 200);
-});
+    // Si estás en stats
+    if (typeof loadStats === "function") {
+      loadStats(window.originalUserId, gameFilter.value, roleFilter.value);
+    }
+  });
+}
 
 window.onUserSelected =
   window.onUserSelected ||
@@ -220,12 +227,13 @@ function selectSearchedUser(user) {
   const transition = document.querySelector(".page-transition");
   transition.classList.remove("hidden");
 
-  window.searchedUserId = user.id;
+  searchedUserId = user.id; // ✅ actualizar la variable que updateReturnButton usa
+  sessionStorage.setItem("tempUserId", user.id); // opcional, persistir temporal
   updateReturnButton();
 
-  // ejecuta callback
   setTimeout(() => {
     window.onUserSelected(user.id);
     transition.classList.add("hidden");
   }, 200);
 }
+
