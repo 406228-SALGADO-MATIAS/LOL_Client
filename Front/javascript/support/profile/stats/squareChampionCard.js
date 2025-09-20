@@ -33,13 +33,14 @@ function createChampionCard(champion) {
       // Deseleccionamos
       selectedChampion = null;
       lastSelectedChampion = null;
+
+      // --- desbloqueamos render del contenedor ---
       await loadStats(uid, gameFilter.value, roleFilter.value);
     } else {
       selectedChampion = champion.champion;
       lastSelectedChampion = champion.champion;
 
-      // renderizamos el contenedor con "all/all" ---
-      // Usamos snapshot inicial de la carga completa
+      // Renderizamos snapshot de **este usuario actual**
       if (window.defaultChampionsData) {
         championList.innerHTML = "";
         (window.defaultChampionsData.championsUsed || []).forEach((c) => {
@@ -48,7 +49,7 @@ function createChampionCard(champion) {
         });
       }
 
-      //  load específico del champion seleccionado ---
+      // Carga específica del champion seleccionado
       await loadSelectedChampionStats(
         uid,
         selectedChampion,

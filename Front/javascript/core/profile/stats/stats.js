@@ -5,8 +5,10 @@ window.originalUserId = sessionStorage.getItem("userId") || null;
 window.searchedUserId = sessionStorage.getItem("tempUserId") || null; // persiste si existe
 
 window.onUserSelected = async function (userId) {
-  // cuando se selecciona un usuario, recargamos stats
-  await loadStats(userId, gameFilter.value, roleFilter.value);
+  const uid = userId;
+  const data = await fetchStats(uid, gameFilter.value, roleFilter.value);
+  window.defaultChampionsData = data; // <-- nuevo usuario
+  await loadStats(uid, gameFilter.value, roleFilter.value);
 };
 
 // IDs de sesión → pasamos a global para que searchUser.js pueda acceder
@@ -55,7 +57,7 @@ async function loadStats(userId, gameType = "all", role = "all") {
   if (!userId) return;
 
   try {
-    // --- Si hay campeón seleccionado, usamos endpoints especiales ---
+    // --- Si hay campeón seleccionado, bloqueamos render del contenedor ---
     if (window.selectedChampion) {
       await loadSelectedChampionStats(
         userId,
@@ -63,29 +65,31 @@ async function loadStats(userId, gameType = "all", role = "all") {
         gameType,
         role
       );
-      return;
+      return; // no tocamos el contenedor general
     }
 
-    // --- Si no hay seleccionado, hacemos el load general ---
+    // --- Fetch stats del usuario actual ---
     const data = await fetchStats(userId, gameType, role);
 
-    // === Win Stats ===
+    // Actualizamos el contenedor de champions **solo si no hay seleccionado**
+    if (!window.selectedChampion) {
+      window.defaultChampionsData = data; // <-- guardamos el snapshot del usuario actual
+      championList.innerHTML = "";
+      (data.championsUsed || []).forEach((c) => {
+        const card = createChampionCard(c);
+        championList.appendChild(card);
+      });
+    }
+
+    // Win stats
     const { games, wins, winrate } = getWinStats(data, gameType);
     wonCount.textContent = wins;
     lostCount.textContent = games - wins;
     winRatio.textContent = winrate + "%";
 
-    // Render stats generales
     renderStats(data);
 
-    // Champions usados
-    championList.innerHTML = "";
-    (data.championsUsed || []).forEach((c) => {
-      const card = createChampionCard(c);
-      championList.appendChild(card);
-    });
-
-    // Selección de campeón: si el último sigue en la lista, lo seleccionamos
+    // Selección de campeón persistente
     window.selectedChampion = null;
     if (window.lastSelectedChampion) {
       const found = Array.from(
