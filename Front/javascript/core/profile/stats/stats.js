@@ -264,17 +264,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   updateReturnButton();
 });
 
-// Manejo botón regresar perfil temporal
-const btnReturnProfile = document.getElementById("btnReturnProfile");
-if (btnReturnProfile) {
-  btnReturnProfile.addEventListener("click", () => {
-    window.searchedUserId = null;
-    sessionStorage.removeItem("tempUserId"); // limpiar persistencia
-    updateReturnButton();
-    loadStats(window.originalUserId, gameFilter.value, roleFilter.value);
-  });
-}
-
 // Función auxiliar para setear un usuario temporal desde searchUser.js
 function selectSearchedUser(user) {
   window.searchedUserId = user.id;

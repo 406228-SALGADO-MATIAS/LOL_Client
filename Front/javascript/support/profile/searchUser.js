@@ -155,10 +155,8 @@ input.addEventListener("input", () => {
 // SEARCH USER TEMPORAL SESSION
 
 window.btnReturnProfile = document.getElementById("btnReturnProfile");
-const originalUserId = sessionStorage.getItem("userId") || null;
-
-// ✅ Declaramos searchedUserId con let
-let searchedUserId = sessionStorage.getItem("tempUserId") || null;
+window.originalUserId = sessionStorage.getItem("userId") || null;
+window.searchedUserId = sessionStorage.getItem("tempUserId") || null;
 
 updateReturnButton();
 if (searchedUserId) loadProfileById(searchedUserId);
@@ -185,7 +183,10 @@ function updateReturnButton() {
   if (!btns.length) return;
 
   btns.forEach((btn) => {
-    if (window.searchedUserId && window.searchedUserId !== window.originalUserId) {
+    if (
+      window.searchedUserId &&
+      window.searchedUserId !== window.originalUserId
+    ) {
       btn.style.display = "inline-block";
     } else {
       btn.style.display = "none";
@@ -196,22 +197,29 @@ function updateReturnButton() {
 // Al hacer click en el botón “Regresar al perfil”
 if (btnReturnProfile) {
   btnReturnProfile.addEventListener("click", () => {
-    searchedUserId = null;
+    const transition = document.querySelector(".page-transition");
+    transition.classList.remove("hidden");
+
+    window.searchedUserId = null;
     sessionStorage.removeItem("tempUserId"); // borrar persistencia
     updateReturnButton();
 
-    // Si estás en resume
-    if (typeof loadTopProfile === "function") {
-      const originalId = sessionStorage.getItem("userId");
-      loadTopProfile(originalId);
-      loadTopChampions(originalId);
-      loadRanks(originalId);
-    }
+    setTimeout(() => {
+      // Si estás en resume
+      if (typeof loadTopProfile === "function") {
+        const originalId = sessionStorage.getItem("userId");
+        loadTopProfile(originalId);
+        loadTopChampions(originalId);
+        loadRanks(originalId);
+      }
 
-    // Si estás en stats
-    if (typeof loadStats === "function") {
-      loadStats(window.originalUserId, gameFilter.value, roleFilter.value);
-    }
+      // Si estás en stats
+      if (typeof loadStats === "function") {
+        loadStats(window.originalUserId, gameFilter.value, roleFilter.value);
+      }
+
+      transition.classList.add("hidden");
+    }, 200);
   });
 }
 
@@ -222,13 +230,12 @@ window.onUserSelected =
   });
 
 // Al elegir un usuario del dropdown
-// al elegir un usuario del dropdown
 function selectSearchedUser(user) {
   const transition = document.querySelector(".page-transition");
   transition.classList.remove("hidden");
 
-  searchedUserId = user.id; // ✅ actualizar la variable que updateReturnButton usa
-  sessionStorage.setItem("tempUserId", user.id); // opcional, persistir temporal
+  window.searchedUserId = user.id;
+  sessionStorage.setItem("tempUserId", user.id);
   updateReturnButton();
 
   setTimeout(() => {
@@ -236,4 +243,3 @@ function selectSearchedUser(user) {
     transition.classList.add("hidden");
   }, 200);
 }
-

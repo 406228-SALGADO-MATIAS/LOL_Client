@@ -298,7 +298,7 @@ function setupRanksCarouselTitle() {
       document.body.style.backgroundImage =
         backgroundsByIndex[index] || backgroundsByIndex[0];
       bgOverlay.style.opacity = "0";
-    }, 100); 
+    }, 100);
   }
 
   // Evento de cambio de slide
@@ -336,7 +336,9 @@ async function loadResume(userId, isTempUser = false) {
 // Ejecutar al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
   const userId = sessionStorage.getItem("userId");
-  loadResume(userId, false); // no es temp
+  loadResume(userId, false).then(() => {
+    updateReturnButton(); // <--- asegura que se refresque el botón
+  });
   setupChampionCarouselTitle();
   setupRanksCarouselTitle();
 });
