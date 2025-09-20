@@ -1,5 +1,10 @@
 // searchStats.js
 
+window.onUserSelected = async function (userId) {
+  // cuando se selecciona un usuario, recargamos stats
+  await loadStats(userId, gameFilter.value, roleFilter.value);
+};
+
 // IDs de sesión → pasamos a global para que searchUser.js pueda acceder
 window.originalUserId = sessionStorage.getItem("userId") || null;
 window.searchedUserId = sessionStorage.getItem("tempUserId") || null;
@@ -255,6 +260,12 @@ roleFilter.addEventListener("change", () => {
 document.addEventListener("DOMContentLoaded", async () => {
   adjustFilters();
   const uid = window.searchedUserId || window.originalUserId;
+
+  window.onUserSelected = async function (userId) {
+    await loadStats(userId, gameFilter.value, roleFilter.value);
+    updateReturnButton();
+  };
+
   const initialData = await fetchStats(uid, "all", "all");
   window.defaultChampionsData = initialData;
   loadStats(uid, "all", "all");

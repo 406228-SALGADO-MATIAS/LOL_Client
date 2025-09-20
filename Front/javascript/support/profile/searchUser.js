@@ -190,7 +190,6 @@ function updateReturnButton() {
   }
 }
 
-
 // Al hacer click en el botón “Regresar al perfil”
 btnReturnProfile.addEventListener("click", () => {
   const transition = document.querySelector(".page-transition");
@@ -209,17 +208,24 @@ btnReturnProfile.addEventListener("click", () => {
   }, 200);
 });
 
+window.onUserSelected =
+  window.onUserSelected ||
+  ((userId) => {
+    loadResume(userId, true);
+  });
+
 // Al elegir un usuario del dropdown
+// al elegir un usuario del dropdown
 function selectSearchedUser(user) {
   const transition = document.querySelector(".page-transition");
-  transition.classList.remove("hidden"); // ✅ mostrar overlay
+  transition.classList.remove("hidden");
 
-  searchedUserId = user.id;
+  window.searchedUserId = user.id;
   updateReturnButton();
 
-  // Cargar Resume con el usuario temporal
+  // ejecuta callback
   setTimeout(() => {
-    loadResume(searchedUserId, true); // carga el usuario buscado
-    transition.classList.add("hidden"); // ✅ ocultar luego de la carga
-  }, 200); // pequeña pausa para que se vea la animación
+    window.onUserSelected(user.id);
+    transition.classList.add("hidden");
+  }, 200);
 }
