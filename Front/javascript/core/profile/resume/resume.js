@@ -336,9 +336,7 @@ async function loadResume(userId, isTempUser = false) {
 // Ejecutar al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
   const userId = sessionStorage.getItem("userId");
-  loadResume(userId, false).then(() => {
-    updateReturnButton(); // <--- asegura que se refresque el botón
-  });
+  loadResume(userId, false);
   setupChampionCarouselTitle();
   setupRanksCarouselTitle();
 });

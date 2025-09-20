@@ -251,32 +251,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   adjustFilters();
   const uid = window.searchedUserId || window.originalUserId;
 
-  window.onUserSelected = async function (userId) {
-    window.searchedUserId = userId; // persistir temporalmente
-    sessionStorage.setItem("tempUserId", userId);
-    await loadStats(userId, gameFilter.value, roleFilter.value);
-    updateReturnButton();
-  };
-
   const initialData = await fetchStats(uid, "all", "all");
   window.defaultChampionsData = initialData;
   loadStats(uid, "all", "all");
   updateReturnButton();
-});
-
-// Función auxiliar para setear un usuario temporal desde searchUser.js
-function selectSearchedUser(user) {
-  window.searchedUserId = user.id;
-  sessionStorage.setItem("tempUserId", user.id); // persistir
-  updateReturnButton();
-  loadStats(user.id, gameFilter.value, roleFilter.value);
-}
-
-document.addEventListener("click", (e) => {
-  if (e.target && e.target.id === "btnReturnProfile") {
-    window.searchedUserId = null;
-    sessionStorage.removeItem("tempUserId");
-    updateReturnButton();
-    loadStats(window.originalUserId, gameFilter.value, roleFilter.value);
-  }
 });
