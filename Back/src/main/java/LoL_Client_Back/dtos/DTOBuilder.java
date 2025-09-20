@@ -560,7 +560,10 @@ public class DTOBuilder
         dto.setNickname(userEntity.getNickname());
         dto.setUserBackground(userEntity.getBackgroundImage());
         if (userEntity.getRank() != null)
+        {
             dto.setRank(userEntity.getRank().getRank());
+            dto.setRankImage(userEntity.getRank().getImage());
+        }
         if (userEntity.getRankLp() != null)
             dto.setLp(userEntity.getRankLp());
         return  dto;

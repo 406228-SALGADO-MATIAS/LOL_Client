@@ -241,9 +241,16 @@
         .then((res) => res.text())
         .then((html) => {
           document.getElementById("sub-navbar-container").innerHTML = html;
-          const script = document.createElement("script");
-          script.src = "/javascript/support/profile/searchUser.js";
-          document.body.appendChild(script);
+
+          // luego de insertar subNavbar, llamamos a updateReturnButton
+          updateReturnButton();
+
+          if (!document.getElementById("searchUserScript")) {
+            const script = document.createElement("script");
+            script.id = "searchUserScript";
+            script.src = "/javascript/support/profile/searchUser.js";
+            document.body.appendChild(script);
+          }
         });
 
       document.addEventListener("DOMContentLoaded", () => {

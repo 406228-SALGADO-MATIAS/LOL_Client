@@ -154,7 +154,7 @@ input.addEventListener("input", () => {
 
 // SEARCH USER TEMPORAL SESSION
 
-const btnReturnProfile = document.getElementById("btnReturnProfile");
+window.btnReturnProfile = document.getElementById("btnReturnProfile");
 const originalUserId = sessionStorage.getItem("userId") || null;
 
 // ✅ Declaramos searchedUserId con let
@@ -181,12 +181,15 @@ async function loadProfileById(userId) {
 
 // Mostrar botón solo si estamos en sesión temporal
 function updateReturnButton() {
+  const btn = document.getElementById("btnReturnProfile");
+  if (!btn) return; // ✅ si no existe, salimos
   if (searchedUserId && searchedUserId !== originalUserId) {
-    btnReturnProfile.style.display = "inline-block";
+    btn.style.display = "inline-block";
   } else {
-    btnReturnProfile.style.display = "none";
+    btn.style.display = "none";
   }
 }
+
 
 // Al hacer click en el botón “Regresar al perfil”
 btnReturnProfile.addEventListener("click", () => {

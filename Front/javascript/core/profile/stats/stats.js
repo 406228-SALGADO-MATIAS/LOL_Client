@@ -1,8 +1,8 @@
 // searchStats.js
 
-// IDs de sesión
-const originalUserId = sessionStorage.getItem("userId") || null;
-let searchedUserId = sessionStorage.getItem("tempUserId") || null;
+// IDs de sesión → pasamos a global para que searchUser.js pueda acceder
+window.originalUserId = sessionStorage.getItem("userId") || null;
+window.searchedUserId = sessionStorage.getItem("tempUserId") || null;
 
 // Selects
 const gameFilter = document.getElementById("game-filter");
@@ -44,7 +44,12 @@ const championList = document.getElementById("champion-list");
 // Actualiza botón "Regresar" si es usuario temporal
 function updateReturnButton() {
   const btnReturnProfile = document.getElementById("btnReturnProfile");
-  if (searchedUserId && searchedUserId !== originalUserId) {
+  if (!btnReturnProfile) return; // evita errores si no está en el DOM
+
+  if (
+    window.searchedUserId &&
+    window.searchedUserId !== window.originalUserId
+  ) {
     btnReturnProfile.style.display = "inline-block";
   } else {
     btnReturnProfile.style.display = "none";
@@ -57,8 +62,13 @@ async function loadStats(userId, gameType = "all", role = "all") {
 
   try {
     // --- Si hay campeón seleccionado, usamos endpoints especiales ---
-    if (selectedChampion) {
-      await loadSelectedChampionStats(userId, selectedChampion, gameType, role);
+    if (window.selectedChampion) {
+      await loadSelectedChampionStats(
+        userId,
+        window.selectedChampion,
+        gameType,
+        role
+      );
       return;
     }
 
@@ -82,18 +92,16 @@ async function loadStats(userId, gameType = "all", role = "all") {
     });
 
     // Selección de campeón: si el último sigue en la lista, lo seleccionamos
-    selectedChampion = null;
-    if (lastSelectedChampion) {
+    window.selectedChampion = null;
+    if (window.lastSelectedChampion) {
       const found = Array.from(
         document.querySelectorAll(".champion-card")
-      ).find((c) => c.dataset.champion === lastSelectedChampion);
+      ).find((c) => c.dataset.champion === window.lastSelectedChampion);
 
-      if (found) selectedChampion = lastSelectedChampion;
+      if (found) window.selectedChampion = window.lastSelectedChampion;
     }
 
     applySelectionStyles();
-    console.log("Champion clicked:", selectedChampion);
-    console.log("Champion last:", lastSelectedChampion);
   } catch (err) {
     console.error("Error cargando stats:", err);
   }
@@ -107,23 +115,17 @@ async function loadSelectedChampionStats(
   role = "all"
 ) {
   try {
-    // Primero encontramos el id del campeón
     const champCard = Array.from(
       document.querySelectorAll(".champion-card")
     ).find((c) => c.dataset.champion === champion);
+    if (!champCard) return;
 
-    if (!champCard) return; // si no está visible, no hacemos nada
-
-    const championId = champCard.dataset.championId; // id numérico
-
-    // URL según si hay rol o no
+    const championId = champCard.dataset.championId;
     let url;
     if (role !== "all") {
-      // Endpoint con rol
       url = `http://localhost:8080/usersMatches/${userId}/stats/champion/${championId}/role/${role}`;
       if (gameType !== "all") url += `?gameType=${gameType.toUpperCase()}`;
     } else {
-      // Endpoint sin rol
       url = `http://localhost:8080/usersMatches/${userId}/stats/champion/${championId}`;
       if (gameType !== "all") url += `?gameType=${gameType.toUpperCase()}`;
     }
@@ -133,19 +135,13 @@ async function loadSelectedChampionStats(
       throw new Error("Error cargando stats del campeón seleccionado");
     const data = await res.json();
 
-    // === Win Stats ===
     const { games, wins, winrate } = getWinStats(data, gameType);
     wonCount.textContent = wins;
     lostCount.textContent = games - wins;
     winRatio.textContent = winrate + "%";
 
-    // Stats del campeón
     renderStats(data);
-
-    // No actualizamos champions usados
-    // Pero mantenemos selección visual
     applySelectionStyles();
-    console.log("Load stats del campeón seleccionado:", champion);
   } catch (err) {
     console.error("Error cargando stats del campeón seleccionado:", err);
   }
@@ -223,13 +219,9 @@ function renderStats(data) {
   avgTime.textContent = avgs.avgDurationGame ?? "0";
 }
 
-// Función para ajustar selects según reglas
+// --- Funciones auxiliares ---
 function adjustFilters() {
-  const selectedGame = gameFilter.value;
-  const selectedRole = roleFilter.value;
-
-  // Si el juego es ARAM, forzamos el rol a "all" y lo desactivamos
-  if (selectedGame === "aram") {
+  if (gameFilter.value === "aram") {
     roleFilter.value = "all";
     roleFilter.disabled = true;
   } else {
@@ -237,18 +229,10 @@ function adjustFilters() {
   }
 }
 
-// Función para formatear números con separador de miles y hasta 2 decimales
 function formatNumber(value) {
   if (value == null) return "0";
-  if (typeof value === "number") {
-    return value.toLocaleString(undefined, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    });
-  }
-  // Si viene como string, intentamos parsear
-  const num = parseFloat(value);
-  if (isNaN(num)) return value;
+  const num = typeof value === "number" ? value : parseFloat(value);
+  if (isNaN(num)) return "0";
   return num.toLocaleString(undefined, {
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
@@ -258,28 +242,22 @@ function formatNumber(value) {
 // Cambios de filtro
 gameFilter.addEventListener("change", () => {
   adjustFilters();
-  const uid = searchedUserId || originalUserId;
+  const uid = window.searchedUserId || window.originalUserId;
   loadStats(uid, gameFilter.value, roleFilter.value);
 });
-
 roleFilter.addEventListener("change", () => {
   adjustFilters();
-  const uid = searchedUserId || originalUserId;
+  const uid = window.searchedUserId || window.originalUserId;
   loadStats(uid, gameFilter.value, roleFilter.value);
 });
 
-//Stats iniciales
+// Stats iniciales
 document.addEventListener("DOMContentLoaded", async () => {
   adjustFilters();
-  const uid = searchedUserId || originalUserId;
+  const uid = window.searchedUserId || window.originalUserId;
   const initialData = await fetchStats(uid, "all", "all");
-
-  // Guardamos snapshot inicial
   window.defaultChampionsData = initialData;
-
-  // Cargamos stats inicial con filtros actuales
   loadStats(uid, "all", "all");
-
   updateReturnButton();
 });
 
@@ -287,16 +265,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 const btnReturnProfile = document.getElementById("btnReturnProfile");
 if (btnReturnProfile) {
   btnReturnProfile.addEventListener("click", () => {
-    searchedUserId = null;
+    window.searchedUserId = null;
     updateReturnButton();
-    const uid = originalUserId;
+    const uid = window.originalUserId;
     loadStats(uid, gameFilter.value, roleFilter.value);
   });
 }
 
 // Función auxiliar para setear un usuario temporal desde searchUser.js
 function selectSearchedUser(user) {
-  searchedUserId = user.id;
+  window.searchedUserId = user.id;
   updateReturnButton();
-  loadStats(searchedUserId, gameFilter.value, roleFilter.value);
+  loadStats(window.searchedUserId, gameFilter.value, roleFilter.value);
 }
