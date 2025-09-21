@@ -5,9 +5,11 @@ window.originalUserId = sessionStorage.getItem("userId") || null;
 window.searchedUserId = sessionStorage.getItem("tempUserId") || null; // persiste si existe
 
 window.onUserSelected = async function (userId) {
+  // Actualizamos el snapshot del usuario activo
   const uid = userId;
   const data = await fetchStats(uid, gameFilter.value, roleFilter.value);
-  window.defaultChampionsData = data; // <-- nuevo usuario
+  window.defaultChampionsData = data; // snapshot actualizado
+  window.searchedUserId = uid; // aseguramos que sea el user activo
   await loadStats(uid, gameFilter.value, roleFilter.value);
 };
 
@@ -57,7 +59,7 @@ async function loadStats(userId, gameType = "all", role = "all") {
   if (!userId) return;
 
   try {
-    // --- Si hay campeón seleccionado, bloqueamos render del contenedor ---
+    // --- Si hay campeón seleccionado
     if (window.selectedChampion) {
       await loadSelectedChampionStats(
         userId,
@@ -65,7 +67,7 @@ async function loadStats(userId, gameType = "all", role = "all") {
         gameType,
         role
       );
-      return; // no tocamos el contenedor general
+      return;
     }
 
     // --- Fetch stats del usuario actual ---
@@ -238,15 +240,26 @@ function formatNumber(value) {
 }
 
 // Cambios de filtro
+
 gameFilter.addEventListener("change", () => {
   adjustFilters();
   const uid = window.searchedUserId || window.originalUserId;
+  // Reset selección
+  selectedChampion = null;
+  lastSelectedChampion = null;
+  applySelectionStyles();
+
   loadStats(uid, gameFilter.value, roleFilter.value);
 });
 
 roleFilter.addEventListener("change", () => {
   adjustFilters();
   const uid = window.searchedUserId || window.originalUserId;
+  // Reset selección
+  selectedChampion = null;
+  lastSelectedChampion = null;
+  applySelectionStyles();
+
   loadStats(uid, gameFilter.value, roleFilter.value);
 });
 
@@ -258,5 +271,47 @@ document.addEventListener("DOMContentLoaded", async () => {
   const initialData = await fetchStats(uid, "all", "all");
   window.defaultChampionsData = initialData;
   loadStats(uid, "all", "all");
-  updateReturnButton();
+
+  //listener champions card click
+  championList.addEventListener("click", async (e) => {
+    const card = e.target.closest(".champion-card");
+    if (!card) return;
+
+    const champion = card.dataset.champion;
+    const uid = window.searchedUserId || window.originalUserId; // actualizar UID activo
+    const currentData = window.defaultChampionsData; // snapshot del usuario activo
+
+    if (selectedChampion === champion) {
+      selectedChampion = null;
+      lastSelectedChampion = null;
+
+      // Render con snapshot correcto
+      championList.innerHTML = "";
+      (currentData.championsUsed || []).forEach((c) => {
+        const cardElem = createChampionCard(c);
+        championList.appendChild(cardElem);
+      });
+
+      await loadStats(uid, gameFilter.value, roleFilter.value);
+    } else {
+      selectedChampion = champion;
+      lastSelectedChampion = champion;
+
+      // Render snapshot del usuario activo antes de fetch del champion
+      championList.innerHTML = "";
+      (currentData.championsUsed || []).forEach((c) => {
+        const cardElem = createChampionCard(c);
+        championList.appendChild(cardElem);
+      });
+
+      await loadSelectedChampionStats(
+        uid,
+        selectedChampion,
+        gameFilter.value,
+        roleFilter.value
+      );
+    }
+
+    applySelectionStyles();
+  });
 });

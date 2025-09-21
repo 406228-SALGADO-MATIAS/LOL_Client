@@ -23,51 +23,12 @@ function createChampionCard(champion) {
   card.appendChild(name);
 
   card.dataset.champion = champion.champion;
-  card.dataset.championId = champion.id; // <-- así lo tenés disponible
-
-  card.addEventListener("click", async () => {
-    const uid =
-      sessionStorage.getItem("tempUserId") || sessionStorage.getItem("userId");
-
-    if (selectedChampion === champion.champion) {
-      // Deseleccionamos
-      selectedChampion = null;
-      lastSelectedChampion = null;
-
-      // --- desbloqueamos render del contenedor ---
-      await loadStats(uid, gameFilter.value, roleFilter.value);
-    } else {
-      selectedChampion = champion.champion;
-      lastSelectedChampion = champion.champion;
-
-      // Renderizamos snapshot de **este usuario actual**
-      if (window.defaultChampionsData) {
-        championList.innerHTML = "";
-        (window.defaultChampionsData.championsUsed || []).forEach((c) => {
-          const cardElem = createChampionCard(c);
-          championList.appendChild(cardElem);
-        });
-      }
-
-      // Carga específica del champion seleccionado
-      await loadSelectedChampionStats(
-        uid,
-        selectedChampion,
-        gameFilter.value,
-        roleFilter.value
-      );
-
-      applySelectionStyles();
-    }
-
-    console.log("Champion clicked:", selectedChampion);
-    console.log("Champion last:", lastSelectedChampion);
-  });
+  card.dataset.championId = champion.id;
 
   return card;
 }
 
-// Función global que aplica el estado actual
+
 function applySelectionStyles() {
   const allCards = document.querySelectorAll(".champion-card");
   allCards.forEach((c) => {

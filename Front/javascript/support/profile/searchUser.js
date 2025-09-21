@@ -78,10 +78,10 @@ async function initRanks() {
   }
 }
 
-// 3️⃣ Llamamos a initRanks cuando se carga el DOM
+// initRanks cuando se carga el DOM
 document.addEventListener("DOMContentLoaded", initRanks);
 
-// 👉 función para ejecutar la búsqueda (así la reusamos desde input y select)
+// 👉 función para ejecutar la búsqueda 
 async function doSearch() {
   const query = input.value.trim();
   results.innerHTML = "";
@@ -131,7 +131,7 @@ async function doSearch() {
   }
 }
 
-// 👉 escuchar input con debounce
+// escuchar input con debounce (0.1 seg)
 input.addEventListener("input", () => {
   clearTimeout(timer);
   timer = setTimeout(doSearch, 100);
@@ -146,7 +146,7 @@ serverSelect.addEventListener("change", () => {
 });
 
 // escuchar input con debounce (0.1 seg)
-// 👉 escuchar input con debounce
+
 input.addEventListener("input", () => {
   clearTimeout(timer);
   timer = setTimeout(doSearch, 100);
@@ -163,15 +163,13 @@ if (searchedUserId) loadProfileById(searchedUserId);
 
 // Función para cargar un perfil por userId (original o temporal)
 async function loadProfileById(userId) {
-  sessionStorage.setItem("tempUserId", userId); // opcional, para persistir temporalmente
+  sessionStorage.setItem("tempUserId", userId);
   try {
     const res = await fetch(
       `http://localhost:8080/users/getProfileById/${userId}`
     );
     if (!res.ok) throw new Error("Error al cargar perfil");
     const profile = await res.json();
-    // --- Código existente de loadTopProfile ---
-    // Actualiza icon, nickname, server, background, etc.
   } catch (err) {
     console.error("Error cargando perfil:", err);
   }
@@ -205,7 +203,7 @@ if (btnReturnProfile) {
     updateReturnButton();
 
     setTimeout(() => {
-      // Si estás en resume
+      // resume
       if (typeof loadTopProfile === "function") {
         const originalId = sessionStorage.getItem("userId");
         loadTopProfile(originalId);
@@ -213,7 +211,7 @@ if (btnReturnProfile) {
         loadRanks(originalId);
       }
 
-      // Si estás en stats
+      // stats
       if (typeof loadStats === "function") {
         loadStats(window.originalUserId, gameFilter.value, roleFilter.value);
       }
@@ -237,6 +235,13 @@ function selectSearchedUser(user) {
   window.searchedUserId = user.id;
   sessionStorage.setItem("tempUserId", user.id);
   updateReturnButton();
+
+  // update snapshot del usuario buscado para stats
+  fetchStats(user.id, gameFilter.value, roleFilter.value)
+    .then((data) => {
+      window.defaultChampionsData = data;
+    })
+    .catch((err) => console.error("Error al traer stats del usuario:", err));
 
   setTimeout(() => {
     window.onUserSelected(user.id);
