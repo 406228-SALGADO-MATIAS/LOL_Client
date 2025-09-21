@@ -323,9 +323,17 @@ async function loadResume(userId, isTempUser = false) {
 }
 
 // Ejecutar al cargar la página
-document.addEventListener("DOMContentLoaded", () => {
-  const userId = sessionStorage.getItem("userId");
-  loadResume(userId, false);
+document.addEventListener("DOMContentLoaded", async () => {
+  await fetchRankTiers(); // traemos todos los ranks desde el backend
+
+  const tempUserId = sessionStorage.getItem("tempUserId");
+  const sessionUserId = sessionStorage.getItem("userId");
+
+  const userId = tempUserId || sessionUserId;
+  const isTempUser = !!tempUserId;
+
+  await loadResume(userId, isTempUser);
+
   setupChampionCarouselTitle();
   setupRanksCarouselTitle();
 });

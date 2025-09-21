@@ -61,6 +61,44 @@ const RANKS_ARAM = [
   },
 ];
 
+let RANKS_TIER = [];
+
+async function fetchRankTiers() {
+  try {
+    const res = await fetch("http://localhost:8080/ranks/all");
+    if (!res.ok) throw new Error("Error al traer ranks");
+    const data = await res.json();
+
+    // Añadimos Unranked manualmente
+    RANKS_TIER = [
+      {
+        id: 0,
+        rank: "Unranked",
+        image:
+          "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true",
+        lp: 0,
+      },
+      ...data,
+    ];
+  } catch (err) {
+    console.error("Error fetching ranks:", err);
+    // fallback minimal
+    RANKS_TIER = [
+      {
+        id: 0,
+        rank: "Unranked",
+        image:
+          "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true",
+        lp: 0,
+      },
+    ];
+  }
+}
+
+function getRankEntityByName(rankName) {
+  return RANKS_TIER.find((r) => r.rank === rankName) || RANKS_TIER[0];
+}
+
 // Obtener rango según stats
 function getRankByStats(wins, takedowns, farm, gameType) {
   const rankTable = gameType === "ARAM" ? RANKS_ARAM : RANKS_NORMAL;
@@ -95,12 +133,14 @@ function setSlideMetrics(slideEl, stats, userData, gameType) {
     farm = stats.totalStats.totalFarm || 0;
   }
 
-  // Ahora usamos directamente userData.rank y userData.rankImage
-  const rankName = userData.rank || "Unranked";
-  const rankImg =
-    userData.rankImage ||
-    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true";
+  // Determinar rango dinámicamente usando getRankByStats
+  const rankCalc = getRankByStats(wins, takedowns, farm, gameType);
+  const rankEntity = getRankEntityByName(rankCalc.name);
 
+  const rankName = rankEntity.rank;
+  const rankImg = rankEntity.image;
+
+  // --- Actualizamos métricas numéricas ---
   const smallTextEls = slideEl.querySelectorAll(".small-text-number");
   if (smallTextEls.length >= 3) {
     smallTextEls[0].textContent = takedowns;
@@ -108,14 +148,22 @@ function setSlideMetrics(slideEl, stats, userData, gameType) {
     smallTextEls[2].textContent = farm;
   }
 
+  // --- Large text (para slide Ranked) ---
   const largeTextEl = slideEl.querySelector(".large-text");
   if (largeTextEl && slideEl.classList.contains("rank-slide-single")) {
     largeTextEl.textContent = rankName;
+    largeTextEl.title = rankName; // <-- agregado
   }
 
+  // --- Imagen principal ---
   const rankImgEl = slideEl.querySelector(".rank-img");
+  if (rankImgEl) rankImgEl.title = rankName; // <-- agregado
   if (rankImgEl) rankImgEl.src = rankImg;
 
+  // --- Imágenes pequeñas ---
   const smallImgs = slideEl.querySelectorAll(".rank-img-small");
-  smallImgs.forEach((img) => (img.src = rankImg));
+  smallImgs.forEach((img) => {
+    img.src = rankImg;
+    img.title = rankName; // <-- agregado
+  });
 }
