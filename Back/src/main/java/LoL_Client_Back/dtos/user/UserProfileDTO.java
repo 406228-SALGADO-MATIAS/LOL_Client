@@ -20,6 +20,6 @@ public class UserProfileDTO {
     private Integer blueEssence;
     private String rank = "Unranked";
     @Lob
-    private String rankImage;
+    private String rankImage = "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true";
     private int lp = 0;
 }

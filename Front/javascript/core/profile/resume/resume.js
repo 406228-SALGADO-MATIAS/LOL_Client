@@ -187,20 +187,16 @@ async function loadRanks(userId) {
   }
 
   try {
-    const [profileRes, ranksRes, normalStatsRes, aramStatsRes] =
-      await Promise.all([
-        fetch(`http://localhost:8080/users/getProfileById/${userId}`),
-        fetch("http://localhost:8080/ranks/all"),
-        fetch(
-          `http://localhost:8080/usersMatches/${userId}/stats?gameType=NORMAL`
-        ),
-        fetch(
-          `http://localhost:8080/usersMatches/${userId}/stats?gameType=ARAM`
-        ),
-      ]);
+    // Traemos solo lo necesario: perfil y stats
+    const [profileRes, normalStatsRes, aramStatsRes] = await Promise.all([
+      fetch(`http://localhost:8080/users/getProfileById/${userId}`),
+      fetch(
+        `http://localhost:8080/usersMatches/${userId}/stats?gameType=NORMAL`
+      ),
+      fetch(`http://localhost:8080/usersMatches/${userId}/stats?gameType=ARAM`),
+    ]);
 
     const profile = await profileRes.json();
-    const ranksJson = await ranksRes.json();
     const normalStats = await normalStatsRes.json();
     const aramStats = await aramStatsRes.json();
 
@@ -209,24 +205,20 @@ async function loadRanks(userId) {
       "#ranksCarousel .rank-slide-single"
     );
     if (rankSlideSingle) {
-      const userRank = ranksJson.find(
-        (r) => r.rank.toLowerCase() === profile.rank.toLowerCase()
-      ) || {
-        image:
-          "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true",
-        rank: "Unranked",
-      };
-
       const rankImg = rankSlideSingle.querySelector(".rank-img");
-      if (rankImg) rankImg.src = userRank.image;
+      const rankName = profile.rank || "Unranked";
+      const rankImage =
+        profile.rankImage ||
+        "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true";
+
+      if (rankImg) rankImg.src = rankImage;
 
       const smallImgs = rankSlideSingle.querySelectorAll(".rank-img-small");
-      smallImgs.forEach((img) => (img.src = userRank.image));
+      smallImgs.forEach((img) => (img.src = rankImage));
 
       const rankText = rankSlideSingle.querySelector(".large-text");
-      if (rankText) rankText.textContent = userRank.rank;
+      if (rankText) rankText.textContent = rankName;
 
-      // Texto chico → LP
       const lpText = rankSlideSingle.querySelector(".small-text-number");
       if (lpText) lpText.textContent = `LP: ${profile.lp ?? 0}`;
     }
@@ -238,12 +230,9 @@ async function loadRanks(userId) {
     const normalSlide = slides[0];
     const aramSlide = slides[1];
 
-    if (normalSlide) {
-      setSlideMetrics(normalSlide, normalStats, "NORMAL", ranksJson);
-    }
-    if (aramSlide) {
-      setSlideMetrics(aramSlide, aramStats, "ARAM", ranksJson);
-    }
+    if (normalSlide)
+      setSlideMetrics(normalSlide, normalStats, profile, "NORMAL");
+    if (aramSlide) setSlideMetrics(aramSlide, aramStats, profile, "ARAM");
   } catch (err) {
     console.error("Error cargando ranks:", err);
   }

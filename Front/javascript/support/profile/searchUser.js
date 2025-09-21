@@ -12,19 +12,16 @@ function formatServer(server) {
 }
 
 // renderiza un resultado de usuario con rank
-function renderUserResult(user, ranks) {
+function renderUserResult(user) {
   const item = document.createElement("div");
   item.className =
     "list-group-item list-group-item-action d-flex align-items-center justify-content-between";
 
-  // encontrar la imagen de rank
-  const rankData = ranks.find(
-    (r) => r.rank.toLowerCase() === (user.rank || "").toLowerCase()
-  ) || {
-    image:
-      "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true",
-    rank: "Unranked",
-  };
+  // directamente usamos rankImage y rank del JSON
+  const rankImg =
+    user.rankImage ||
+    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true";
+  const rankName = user.rank || "Unranked";
 
   item.innerHTML = `
     <div class="d-flex align-items-center">
@@ -32,24 +29,23 @@ function renderUserResult(user, ranks) {
         user.iconImage ||
         "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true"
       }" 
-        alt="icon" 
-        class="rounded-circle me-3" 
-        width="32" height="32">
+      alt="icon" 
+      class="rounded-circle me-3" 
+      width="32" height="32">
       <span class="fw-bold">${user.nickname}</span>
       <small class="text-muted ms-2">${formatServer(user.server)}</small>
     </div>
     <img 
-  src="${rankData.image}" 
-  alt="${rankData.rank}" 
-  width="45" 
-  height="45" 
-  title="${rankData.rank}"
->
+      src="${rankImg}" 
+      alt="${rankName}" 
+      width="45" 
+      height="45" 
+      title="${rankName}">
   `;
 
   item.addEventListener("click", () => {
-    selectSearchedUser(user); // carga ese usuario
-    results.style.display = "none"; // oculta dropdown
+    selectSearchedUser(user);
+    results.style.display = "none";
   });
 
   return item;
@@ -81,7 +77,7 @@ async function initRanks() {
 // initRanks cuando se carga el DOM
 document.addEventListener("DOMContentLoaded", initRanks);
 
-// 👉 función para ejecutar la búsqueda 
+// 👉 función para ejecutar la búsqueda
 async function doSearch() {
   const query = input.value.trim();
   results.innerHTML = "";
@@ -203,7 +199,7 @@ if (btnReturnProfile) {
     updateReturnButton();
 
     setTimeout(() => {
-      // resume
+      // Resume de otros módulos
       if (typeof loadTopProfile === "function") {
         const originalId = sessionStorage.getItem("userId");
         loadTopProfile(originalId);
@@ -211,8 +207,18 @@ if (btnReturnProfile) {
         loadRanks(originalId);
       }
 
-      // stats
-      if (typeof loadStats === "function") {
+      // Stats: reset y ocultar preview solo si estamos en stats.html
+      if (
+        typeof loadStats === "function" &&
+        typeof renderSearchedUserPreview === "function"
+      ) {
+        // Ocultamos preview del usuario buscado
+        if (searchedUserPreview) {
+          searchedUserPreview.style.display = "none";
+          searchedUserPreview.innerHTML = "";
+        }
+
+        // Cargamos stats del usuario original
         loadStats(window.originalUserId, gameFilter.value, roleFilter.value);
       }
 
@@ -236,15 +242,31 @@ function selectSearchedUser(user) {
   sessionStorage.setItem("tempUserId", user.id);
   updateReturnButton();
 
-  // update snapshot del usuario buscado para stats
-  fetchStats(user.id, gameFilter.value, roleFilter.value)
-    .then((data) => {
-      window.defaultChampionsData = data;
-    })
-    .catch((err) => console.error("Error al traer stats del usuario:", err));
+  // --- solo si estamos en stats.html ---
+  if (typeof renderSearchedUserPreview === "function") {
+    renderSearchedUserPreview(user.id);
+  }
+
+  // --- opcional: fetchStats para snapshot de champions ---
+  if (
+    typeof fetchStats === "function" &&
+    document.getElementById("game-filter") &&
+    document.getElementById("role-filter")
+  ) {
+    const gameFilter = document.getElementById("game-filter");
+    const roleFilter = document.getElementById("role-filter");
+
+    fetchStats(user.id, gameFilter.value, roleFilter.value)
+      .then((data) => {
+        window.defaultChampionsData = data;
+      })
+      .catch((err) => console.error("Error al traer stats del usuario:", err));
+  }
 
   setTimeout(() => {
-    window.onUserSelected(user.id);
+    if (typeof window.onUserSelected === "function") {
+      window.onUserSelected(user.id);
+    }
     transition.classList.add("hidden");
   }, 200);
 }

@@ -239,6 +239,52 @@ function formatNumber(value) {
   });
 }
 
+// Contenedor de preview
+const searchedUserPreview = document.getElementById("searched-user-preview");
+
+// Llenar preview del usuario buscado
+async function renderSearchedUserPreview(userId) {
+  if (!userId) {
+    searchedUserPreview.style.display = "none";
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `http://localhost:8080/users/getProfileById/${userId}`
+    );
+    if (!res.ok) throw new Error("Error al traer perfil de usuario");
+
+    const user = await res.json(); // ya es un objeto
+
+    const rankImg =
+      user.rankImage ||
+      "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true";
+    const rankName = user.rank || "Unranked";
+    const defaultIcon =
+      "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true";
+
+    // --- Rellenar los elementos existentes ---
+    searchedUserPreview.querySelector(".user-icon").src =
+      user.iconImage || defaultIcon;
+    searchedUserPreview.querySelector(".user-nickname").textContent =
+      user.nickname;
+    searchedUserPreview.querySelector(".server-bold").textContent =
+      formatServer(user.server);
+    searchedUserPreview.querySelector(".user-rank").src = rankImg;
+    searchedUserPreview.querySelector(".user-rank").alt = rankName;
+    searchedUserPreview.querySelector(".user-rank").title = rankName;
+
+    // Mostrar el div
+    searchedUserPreview.style.display = "flex";
+  } catch (err) {
+    console.error("Error cargando preview del usuario:", err);
+    searchedUserPreview.style.display = "none";
+  }
+}
+
+//Listeners
+
 // Cambios de filtro
 
 gameFilter.addEventListener("change", () => {
@@ -263,16 +309,35 @@ roleFilter.addEventListener("change", () => {
   loadStats(uid, gameFilter.value, roleFilter.value);
 });
 
-// Stats iniciales
-document.addEventListener("DOMContentLoaded", async () => {
+function formatServer(server) {
+  const match = server?.match(/\(([^)]+)\)/);
+  return match ? `#${match[1]}` : "";
+}
+
+async function initStatsPage() {
   adjustFilters();
   const uid = window.searchedUserId || window.originalUserId;
 
+  if (!uid) return; // no hay usuario, no hacemos nada
+
+  // Siempre mostramos el preview
+  searchedUserPreview.style.display = "flex";
+
+  // Renderizamos preview del usuario
+  await renderSearchedUserPreview(uid);
+
+  // Cargar stats
   const initialData = await fetchStats(uid, "all", "all");
   window.defaultChampionsData = initialData;
-  loadStats(uid, "all", "all");
+  await loadStats(uid, "all", "all");
+}
 
-  //listener champions card click
+
+// Incio
+document.addEventListener("DOMContentLoaded", () => {
+  initStatsPage();
+
+  // listener champions card click (tu código ya existente)
   championList.addEventListener("click", async (e) => {
     const card = e.target.closest(".champion-card");
     if (!card) return;

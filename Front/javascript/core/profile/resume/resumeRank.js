@@ -80,7 +80,7 @@ function getRankByStats(wins, takedowns, farm, gameType) {
 }
 
 // Setear métricas y asignar imágenes correctas
-function setSlideMetrics(slideEl, stats, gameType, ranksJson) {
+function setSlideMetrics(slideEl, stats, userData, gameType) {
   let takedowns = 0,
     wins = 0,
     farm = 0;
@@ -88,20 +88,19 @@ function setSlideMetrics(slideEl, stats, gameType, ranksJson) {
   if (stats && stats.totalStats) {
     const [k = 0, , a = 0] = stats.totalStats.kdaSum || [0, 0, 0];
     takedowns = k + a;
-    wins = gameType === "NORMAL" ? stats.normalWins || 0 : stats.aramWins || 0;
+    wins =
+      gameType.toUpperCase() === "ARAM"
+        ? stats.aramWins || 0
+        : stats.normalWins || 0;
     farm = stats.totalStats.totalFarm || 0;
   }
 
-  const rankObj = getRankByStats(wins, takedowns, farm, gameType);
-  const rankData = ranksJson.find(
-    (r) => r.rank.toLowerCase() === rankObj.name.toLowerCase()
-  ) || {
-    image:
-      "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true",
-    rank: "Unranked",
-  };
+  // Ahora usamos directamente userData.rank y userData.rankImage
+  const rankName = userData.rank || "Unranked";
+  const rankImg =
+    userData.rankImage ||
+    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true";
 
-  // stats
   const smallTextEls = slideEl.querySelectorAll(".small-text-number");
   if (smallTextEls.length >= 3) {
     smallTextEls[0].textContent = takedowns;
@@ -109,23 +108,14 @@ function setSlideMetrics(slideEl, stats, gameType, ranksJson) {
     smallTextEls[2].textContent = farm;
   }
 
-  // texto grande
   const largeTextEl = slideEl.querySelector(".large-text");
-  if (largeTextEl) {
-    if (slideEl.classList.contains("rank-slide-single")) {
-      // Solo en el primer slide se muestra el nombre del rango
-      largeTextEl.textContent = rankObj.name;
-    } else {
-      // En los demás slides (NORMAL, ARAM) mantenemos el texto fijo (ej: "WINS")
-      // no tocamos el contenido del HTML
-    }
+  if (largeTextEl && slideEl.classList.contains("rank-slide-single")) {
+    largeTextEl.textContent = rankName;
   }
 
-  // imagen principal
   const rankImgEl = slideEl.querySelector(".rank-img");
-  if (rankImgEl) rankImgEl.src = rankData.image;
+  if (rankImgEl) rankImgEl.src = rankImg;
 
-  // imágenes pequeñas
   const smallImgs = slideEl.querySelectorAll(".rank-img-small");
-  smallImgs.forEach((img) => (img.src = rankData.image));
+  smallImgs.forEach((img) => (img.src = rankImg));
 }
