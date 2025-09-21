@@ -188,7 +188,7 @@ function updateReturnButton() {
   });
 }
 
-// Al hacer click en el botón “Regresar al perfil”
+//  botón “Regresar al perfil”
 if (btnReturnProfile) {
   btnReturnProfile.addEventListener("click", () => {
     const transition = document.querySelector(".page-transition");

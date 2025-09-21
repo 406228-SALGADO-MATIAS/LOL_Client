@@ -245,6 +245,7 @@ const searchedUserPreview = document.getElementById("searched-user-preview");
 // Llenar preview del usuario buscado
 async function renderSearchedUserPreview(userId) {
   if (!userId) {
+    searchedUserPreview.innerHTML = "";
     searchedUserPreview.style.display = "none";
     return;
   }
@@ -255,7 +256,7 @@ async function renderSearchedUserPreview(userId) {
     );
     if (!res.ok) throw new Error("Error al traer perfil de usuario");
 
-    const user = await res.json(); // ya es un objeto
+    const user = await res.json();
 
     const rankImg =
       user.rankImage ||
@@ -264,21 +265,52 @@ async function renderSearchedUserPreview(userId) {
     const defaultIcon =
       "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true";
 
-    // --- Rellenar los elementos existentes ---
-    searchedUserPreview.querySelector(".user-icon").src =
-      user.iconImage || defaultIcon;
-    searchedUserPreview.querySelector(".user-nickname").textContent =
-      user.nickname;
-    searchedUserPreview.querySelector(".server-bold").textContent =
-      formatServer(user.server);
-    searchedUserPreview.querySelector(".user-rank").src = rankImg;
-    searchedUserPreview.querySelector(".user-rank").alt = rankName;
-    searchedUserPreview.querySelector(".user-rank").title = rankName;
+    // 🔹 Preview con estilos forzados en línea
+    searchedUserPreview.innerHTML = `
+  <div style="
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(108,117,125,0.5);
+    border-radius: 50px;
+    padding: 0.3rem 0.8rem;
+    max-height: 60px;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    margin-left: 35px;   /* 👈 agregado */
+  ">
+    <div style="display: flex; align-items: center;">
+      <img 
+        src="${user.iconImage || defaultIcon}" 
+        width="42" height="42"
+        alt="icon"
+        style="border-radius: 50%; margin-right: 12px;"
+      />
+      <div style="display: flex; flex-direction: column; line-height: 1.2;">
+        <span style="font-weight: bold; font-size: 1.1rem; color: #fff;">${
+          user.nickname
+        }</span>
+        <span style="font-weight: bold; font-size: 0.95rem; color: #ccc;">#${formatServer(
+          user.server
+        )}</span>
+      </div>
+    </div>
 
-    // Mostrar el div
-    searchedUserPreview.style.display = "flex";
+    <img 
+      src="${rankImg}" 
+      width="48" height="48"
+      alt="${rankName}" 
+      title="${rankName}"
+      style="margin-left: 10px;"
+    />
+  </div>
+`;
+
+    searchedUserPreview.style.display = "block";
   } catch (err) {
     console.error("Error cargando preview del usuario:", err);
+    searchedUserPreview.innerHTML = "";
     searchedUserPreview.style.display = "none";
   }
 }
@@ -318,26 +350,26 @@ async function initStatsPage() {
   adjustFilters();
   const uid = window.searchedUserId || window.originalUserId;
 
-  if (!uid) return; // no hay usuario, no hacemos nada
+  // limpiamos el preview al inicio
+  searchedUserPreview.innerHTML = "";
+  searchedUserPreview.style.display = "none";
 
-  // Siempre mostramos el preview
-  searchedUserPreview.style.display = "flex";
+  if (!uid) return;
 
-  // Renderizamos preview del usuario
-  await renderSearchedUserPreview(uid);
+  if (window.searchedUserId) {
+    await renderSearchedUserPreview(window.searchedUserId);
+  }
 
-  // Cargar stats
   const initialData = await fetchStats(uid, "all", "all");
   window.defaultChampionsData = initialData;
   await loadStats(uid, "all", "all");
 }
 
-
-// Incio
+// Inicio
 document.addEventListener("DOMContentLoaded", () => {
   initStatsPage();
 
-  // listener champions card click (tu código ya existente)
+  // listener champions card click
   championList.addEventListener("click", async (e) => {
     const card = e.target.closest(".champion-card");
     if (!card) return;

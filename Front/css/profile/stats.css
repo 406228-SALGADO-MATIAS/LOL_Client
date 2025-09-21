@@ -3,12 +3,12 @@
 ================================================ */
 body {
   background-image: url("https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700896217.jpg");
-  background-size: cover; /* que cubra toda la pantalla */
-  background-position: center; /* centrado */
-  background-repeat: no-repeat; /* sin mosaico */
-  background-attachment: fixed; /* efecto fijo al scrollear */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   font-family: Arial, sans-serif;
-  color: #fff; /* color de texto por defecto */
+  color: #fff;
 }
 
 /* ================================================
@@ -21,7 +21,7 @@ body {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.8s ease;
-  z-index: 9999; /* debajo del page-transition */
+  z-index: 9999;
 }
 
 .page-transition {
@@ -31,7 +31,7 @@ body {
   width: 100%;
   height: 100%;
   background: black;
-  opacity: 1; /* empieza visible */
+  opacity: 1;
   pointer-events: auto;
   transition: opacity 0.12s ease;
   z-index: 9999;
@@ -46,12 +46,12 @@ body {
    LAYOUT PRINCIPAL
 ================================================ */
 .main-layout-vertical {
-  margin-top: 105px; /* deja espacio para los navbars */
-  padding: 1rem 4rem; /* aire hacia adentro */
+  margin-top: 105px;
+  padding: 1rem 4rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  height: calc(100vh - 120px); /* ocupa lo que queda de alto */
+  height: calc(100vh - 120px);
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -60,7 +60,7 @@ body {
    TARJETAS PRINCIPALES
 ================================================ */
 .stats-card {
-  flex: 6.8; /* 70% */
+  flex: 6.8;
   background: #1e1e1ed2;
   padding: 1.5rem;
   border-radius: 8px;
@@ -68,35 +68,35 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  margin-top: 0.5rem;
 }
 
 .stats-card .row {
-  flex: 1; /* ocupa todo el espacio disponible */
+  flex: 1;
   display: flex;
-  align-items: stretch; /* las columnas se estiran parejas */
-  padding: 0 2rem; /* espacio lateral dentro de stats-card */
-  justify-content: space-between; /* separa las columnas uniformemente */
+  align-items: stretch;
+  padding: 0 1rem;
+  justify-content: space-between;
+  margin-bottom: 0 !important;
 }
 
 .stats-container {
   background-color: rgba(108, 117, 125, 0.5);
   border-radius: 0.75rem;
   padding: 1.5rem;
-
-  /* Ajustes relativos */
-  height: 100%; /* llena la columna */
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .stats-card .row .col-md-4 {
-  flex: 1; /* todas ocupan el mismo ancho */
-  max-width: 35%; /* limita el ancho para que no llenen todo */
+  flex: 1;
+  max-width: 33%;
 }
 
 .champions-card {
-  flex: 3.2; /* 30% */
+  flex: 3.2;
   background: #1e1e1ed2 !important;
   padding: 1.5rem;
   border-radius: 8px;
@@ -104,51 +104,49 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  margin-bottom: 0;
 }
 
-/* Contenedor padre para centrar el pill */
+/* Centra el pill de win-stats */
 .win-filter-container {
-  position: relative; /* necesario para centrar absolutamente el pill */
+  position: relative;
 }
 
-/* Pill centrado exactamente sobre la tarjeta */
 #win-stats {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: -1px; /* sube 10px, ajustalo a tu gusto */
+  top: -1px;
 }
 
-/* =============================
-   Game Filter mejorado
-============================= */
+/* ================================================
+   FILTROS DE JUEGO / ROL
+================================================ */
 #game-filter,
 #role-filter {
-  position: relative; /* mantener en flujo normal, pero poder ajustar */
-  
-  left: -50px; /* lo mueve un poco hacia la izquierda */
-  height: 35px; /* más alto que antes */
-  padding: 0 1rem; /* más espacio interno */
-  font-size: 1.1rem; /* texto más grande */
+  position: relative;
+  left: -50px;
+  height: 35px;
+  padding: 0 1rem;
+  font-size: 1.1rem;
   font-weight: bold;
   color: #fff;
   background-color: #1a1a1a;
   border: 2px solid #555;
-  border-radius: 6px; /* un poco más redondeado */
+  border-radius: 6px;
   outline: none;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
-  z-index: 10; /* para que no quede debajo de nada */
-  margin-right: 15px; /* separación mínima horizontal */
+  z-index: 10;
+  margin-right: 10px;
+  
 }
 
-/* Hover */
 #game-filter:hover {
   border-color: #f0c040;
   background-color: #222;
 }
 
-/* Focus */
 #game-filter:focus {
   border-color: #f0c040;
   box-shadow: 0 0 5px #f0c040;
@@ -174,24 +172,24 @@ body {
   margin: 0.5rem 0 1rem;
 }
 
-/* Compactar títulos y separadores dentro de champions-card */
+/* Ajustes dentro de champions-card */
 .champions-card .stats-title {
-  font-size: 1.25rem; /* más chico que 1.25rem */
-  margin-bottom: 0.1rem; /* menos espacio debajo */
+  font-size: 1.25rem;
+  margin-bottom: 0.1rem;
 }
 
 .champions-card .stats-separator {
-  margin: 0.25rem 0 0.5rem; /* menos alto arriba y abajo */
-  border-top: 1px solid rgba(255, 255, 255, 0.2); /* línea más fina */
+  margin: 0.25rem 0 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Contenedor que centra verticalmente la fila de champions */
+/* Centra verticalmente la lista de campeones */
 .champion-list-wrapper {
-  flex: 1 1 auto; /* ocupa el espacio restante */
+  flex: 1 1 auto;
   display: flex;
-  align-items: center; /* centra verticalmente */
-  justify-content: flex-start; /* opcional: inicia al principio */
-  overflow: hidden; /* evita scroll vertical innecesario */
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
 }
 
 /* ================================================
@@ -213,7 +211,7 @@ body {
 .kda-value {
   font-weight: bold;
   font-size: 1.1rem;
-  margin: 0; /* elimina el margen lateral */
+  margin: 0;
 }
 
 /* ================================================
