@@ -17,18 +17,21 @@ function createChampionCard(champion) {
 
   const name = document.createElement("div");
   name.classList.add("card-body", "p-1", "champion-name");
-  name.innerHTML = `<strong>${champion.champion}</strong>`;
+
+  // Reemplaza ´ por ' para mostrar
+  const displayName = champion.champion.replace(/´/g, "'");
+  name.innerHTML = `<strong>${displayName}</strong>`;
 
   card.appendChild(imgContainer);
   card.appendChild(name);
 
-  card.dataset.champion = champion.champion;
+  // Normalizamos ambos caracteres en dataset para filtrar
+  const normalizedName = champion.champion.replace(/[´']/g, "'").toLowerCase();
+  card.dataset.champion = normalizedName;
   card.dataset.championId = champion.id;
 
   return card;
 }
-
-
 function applySelectionStyles() {
   const allCards = document.querySelectorAll(".champion-card");
   allCards.forEach((c) => {

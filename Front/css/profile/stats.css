@@ -80,6 +80,11 @@ body {
   margin-bottom: 0 !important;
 }
 
+.stats-card .row .col-md-4 {
+  flex: 1;
+  max-width: 33%;
+}
+
 .stats-container {
   background-color: rgba(108, 117, 125, 0.5);
   border-radius: 0.75rem;
@@ -90,24 +95,21 @@ body {
   justify-content: space-between;
 }
 
-.stats-card .row .col-md-4 {
-  flex: 1;
-  max-width: 33%;
-}
-
 .champions-card {
   flex: 3.2;
   background: #1e1e1ed2 !important;
   padding: 1.5rem;
   border-radius: 8px;
   border: 7px solid #00000060;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   margin-bottom: 0;
+  overflow: hidden;
 }
 
-/* Centra el pill de win-stats */
+/* ================================================
+   WIN FILTER / PILL
+================================================ */
 .win-filter-container {
   position: relative;
 }
@@ -117,6 +119,21 @@ body {
   left: 50%;
   transform: translateX(-50%);
   top: -1px;
+}
+
+.stats-pill {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: rgba(108, 117, 125, 0.5);
+  border-radius: 50px;
+}
+
+.stats-pill .stat-label {
+  color: #ddd;
+}
+
+.stats-pill .stat-value {
+  color: #fff;
 }
 
 /* ================================================
@@ -139,7 +156,6 @@ body {
   cursor: pointer;
   z-index: 10;
   margin-right: 10px;
-  
 }
 
 #game-filter:hover {
@@ -174,7 +190,7 @@ body {
 
 /* Ajustes dentro de champions-card */
 .champions-card .stats-title {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   margin-bottom: 0.1rem;
 }
 
@@ -231,19 +247,86 @@ body {
 }
 
 /* ================================================
-   WIN STATS PILL
+   SEARCH / CHAMPIONS CARD
 ================================================ */
-.stats-pill {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background-color: rgba(108, 117, 125, 0.5);
-  border-radius: 50px;
+.champions-card .champion-list-wrapper {
+  height: 160px;
+  min-height: 100px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
 }
 
-.stats-pill .stat-label {
-  color: #ddd;
+.champions-card .search-container {
+  height: 36px;
+  flex: 0 0 auto;
+  margin-bottom: 0.5rem;
+  margin-top: -0.3rem !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-right: 5px;
 }
 
-.stats-pill .stat-value {
+.champions-card .search-container input#championSearch {
+  width: 100%;
+  min-width: 200px;
+  max-width: 250px;
+  height: 36px;
+  padding: 0 0.8rem;
+  font-size: 0.95rem;
+  border: 2px solid #555;
+  border-radius: 3px;
+  background-color: #1a1a1a;
   color: #fff;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.champions-card .search-container input#championSearch:focus {
+  border-color: #f0c040;
+  box-shadow: 0 0 5px #f0c040;
+  background-color: #222;
+}
+
+/* ================================================
+   ANIMATIONS
+================================================ */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animated-number {
+  display: inline-block;
+  animation: pulse 0.2s ease;
+}
+
+/* ================================================
+   CUSTOM SCROLLBARS
+================================================ */
+#champion-list::-webkit-scrollbar {
+  height: 6px;
+}
+
+#champion-list::-webkit-scrollbar-thumb {
+  background-color: #ffd500cc;
+  border-radius: 3px;
+}
+
+#champion-list::-webkit-scrollbar-thumb:hover {
+  background-color: #ffe96a;
+}
+
+#champion-list::-webkit-scrollbar-track {
+  background-color: #071a2d;
 }

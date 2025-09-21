@@ -215,10 +215,35 @@
       </div>
 
       <!-- Most Used Champions (30%) -->
-      <div class="champions-card bg-dark rounded shadow-lg">
-        <h5 class="stats-title">Champions Used</h5>
-        <hr class="stats-separator" />
-        <!-- Contenedor flexible para centrar la fila -->
+      <div
+        class="champions-card bg-dark rounded shadow-lg p-3 position-relative"
+      >
+        <!-- Título centrado absolutamente -->
+        <div
+          class="champions-title-center position-absolute w-100 top-0 start-50 translate-middle-x text-center"
+        >
+          <h5 class="stats-title mb-0">Champions Used</h5>
+        </div>
+
+        <!-- Search a la derecha -->
+        <div
+          class="d-flex align-items-center justify-content-end mb-2 search-container"
+        >
+          <div
+            class="position-relative"
+            style="min-width: 200px; max-width: 250px"
+          >
+            <input
+              id="championSearch"
+              type="search"
+              class="form-control form-control-sm"
+              placeholder="Buscar campeón..."
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <!-- Contenedor de campeones -->
         <div class="champion-list-wrapper d-flex align-items-center">
           <div class="d-flex overflow-auto pb-2" id="champion-list">
             <!-- JS mete los <img> o las champion-card -->

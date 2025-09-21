@@ -17,6 +17,10 @@ window.onUserSelected = async function (userId) {
 window.originalUserId = sessionStorage.getItem("userId") || null;
 window.searchedUserId = sessionStorage.getItem("tempUserId") || null;
 
+const championsTitle = document.querySelector(
+  ".champions-title-center h5.stats-title"
+);
+
 // Selects
 const gameFilter = document.getElementById("game-filter");
 const roleFilter = document.getElementById("role-filter");
@@ -55,55 +59,95 @@ const avgTime = document.getElementById("avg-time");
 const championList = document.getElementById("champion-list");
 
 // Principal
-async function loadStats(userId, gameType = "all", role = "all") {
+async function loadStats(userId, gameType = "all", role = "all", triggeredByFilter = false) {
   if (!userId) return;
 
   try {
-    // --- Si hay campeón seleccionado
+    // Si hay campeón seleccionado, cargamos solo ese
     if (window.selectedChampion) {
-      await loadSelectedChampionStats(
-        userId,
-        window.selectedChampion,
-        gameType,
-        role
-      );
+      await loadSelectedChampionStats(userId, window.selectedChampion, gameType, role);
       return;
     }
 
-    // --- Fetch stats del usuario actual ---
+    // Fetch de stats
     const data = await fetchStats(userId, gameType, role);
+    window.defaultChampionsData = data; // snapshot
 
-    // Actualizamos el contenedor de champions **solo si no hay seleccionado**
-    if (!window.selectedChampion) {
-      window.defaultChampionsData = data; // <-- guardamos el snapshot del usuario actual
-      championList.innerHTML = "";
-      (data.championsUsed || []).forEach((c) => {
-        const card = createChampionCard(c);
-        championList.appendChild(card);
-      });
-    }
-
-    // Win stats
-    const { games, wins, winrate } = getWinStats(data, gameType);
-    wonCount.textContent = wins;
-    lostCount.textContent = games - wins;
-    winRatio.textContent = winrate + "%";
-
+    updateChampionCards(data.championsUsed, triggeredByFilter);
+    updateWinStats(data, gameType);
     renderStats(data);
 
-    // Selección de campeón persistente
-    window.selectedChampion = null;
-    if (window.lastSelectedChampion) {
-      const found = Array.from(
-        document.querySelectorAll(".champion-card")
-      ).find((c) => c.dataset.champion === window.lastSelectedChampion);
-
-      if (found) window.selectedChampion = window.lastSelectedChampion;
-    }
-
+    persistSelectedChampion();
     applySelectionStyles();
+    filterChampionCards(championSearchInput.value.toLowerCase());
   } catch (err) {
     console.error("Error cargando stats:", err);
+  }
+}
+
+// ----------------- Funciones auxiliares -----------------
+
+function updateChampionCards(championsUsed, triggeredByFilter) {
+  const championsTitle = document.querySelector(".champions-title-center h5.stats-title");
+
+  if (!championsUsed || championsUsed.length === 0) {
+    animateRemoveAllCards(triggeredByFilter);
+    championList.innerHTML = "";
+    championsTitle.textContent = "Champions Used (0)";
+    return;
+  }
+
+  // Render normal
+  championList.innerHTML = "";
+  championsUsed.forEach((c) => {
+    const card = createChampionCard(c);
+    if (triggeredByFilter) animateCardAppear(card);
+    championList.appendChild(card);
+  });
+
+  championsTitle.textContent = `Champions Used (${championsUsed.length})`;
+}
+
+function animateRemoveAllCards(triggeredByFilter) {
+  if (!triggeredByFilter) return;
+  const existingCards = Array.from(championList.children);
+  if (existingCards.length === 0) return;
+
+  existingCards.forEach((card) => {
+    card.classList.remove("card-appear");
+    card.classList.add("card-disappear");
+  });
+
+  return Promise.all(
+    existingCards.map(
+      (card) =>
+        new Promise((resolve) =>
+          card.addEventListener("animationend", resolve, { once: true })
+        )
+    )
+  );
+}
+
+function animateCardAppear(card) {
+  card.classList.remove("card-appear");
+  void card.offsetWidth; // fuerza reflow
+  card.classList.add("card-appear");
+}
+
+function updateWinStats(data, gameType) {
+  const { games, wins, winrate } = getWinStats(data, gameType);
+  wonCount.textContent = wins;
+  lostCount.textContent = games - wins;
+  winRatio.textContent = winrate + "%";
+}
+
+function persistSelectedChampion() {
+  window.selectedChampion = null;
+  if (window.lastSelectedChampion) {
+    const found = Array.from(document.querySelectorAll(".champion-card")).find(
+      (c) => c.dataset.champion === window.lastSelectedChampion
+    );
+    if (found) window.selectedChampion = window.lastSelectedChampion;
   }
 }
 
@@ -189,33 +233,59 @@ function getWinStats(data, gameType) {
   return { games, wins, winrate };
 }
 
+// Función para animar números
+function animateValue(element, endValue, duration = 600) {
+  const startValue = parseFloat(element.dataset.current || 0);
+  const diff = endValue - startValue;
+  if (diff === 0) return; // no animar si no cambia
+
+  let startTime = null;
+
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const progress = Math.min((timestamp - startTime) / duration, 1);
+    const value = Math.round(startValue + diff * progress);
+    element.textContent = formatNumber(value);
+    element.dataset.current = value;
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      // opcional: añadir efecto de pulso final
+      element.classList.add("animated-number");
+      setTimeout(() => element.classList.remove("animated-number"), 300);
+    }
+  }
+
+  requestAnimationFrame(step);
+}
+
 // --- Render de stats ---
 function renderStats(data) {
   const totals = data.totalStats ?? {};
-  totalKills.textContent = formatNumber(totals.kdaSum?.[0] || 0);
-  totalDeaths.textContent = formatNumber(totals.kdaSum?.[1] || 0);
-  totalAssists.textContent = formatNumber(totals.kdaSum?.[2] || 0);
-  totalFarm.textContent = formatNumber(totals.totalFarm ?? 0);
-  totalGold.textContent = formatNumber(totals.totalGoldEarned ?? 0);
-  totalDamage.textContent = formatNumber(totals.totalDamageDealt ?? 0);
-  totalTime.textContent = totals.totalTimePlayed ?? "0";
+  animateValue(totalKills, totals.kdaSum?.[0] || 0);
+  animateValue(totalDeaths, totals.kdaSum?.[1] || 0);
+  animateValue(totalAssists, totals.kdaSum?.[2] || 0);
+  animateValue(totalFarm, totals.totalFarm ?? 0);
+  animateValue(totalGold, totals.totalGoldEarned ?? 0);
+  animateValue(totalDamage, totals.totalDamageDealt ?? 0);
+  totalTime.textContent = totals.totalTimePlayed ?? "0"; // strings no animados
 
   const maxs = data.maxStats ?? {};
-  maxKills.textContent = formatNumber(maxs.kdaMax?.[0] || 0);
-  maxDeaths.textContent = formatNumber(maxs.kdaMax?.[1] || 0);
-  maxAssists.textContent = formatNumber(maxs.kdaMax?.[2] || 0);
-  maxFarm.textContent = formatNumber(maxs.maxFarm ?? 0);
-  maxGold.textContent = formatNumber(maxs.maxGoldEarned ?? 0);
-  maxDamage.textContent = formatNumber(maxs.maxDamageDealt ?? 0);
+  animateValue(maxKills, maxs.kdaMax?.[0] || 0);
+  animateValue(maxDeaths, maxs.kdaMax?.[1] || 0);
+  animateValue(maxAssists, maxs.kdaMax?.[2] || 0);
+  animateValue(maxFarm, maxs.maxFarm ?? 0);
+  animateValue(maxGold, maxs.maxGoldEarned ?? 0);
+  animateValue(maxDamage, maxs.maxDamageDealt ?? 0);
   maxTime.textContent = maxs.longestGame ?? "0";
 
   const avgs = data.averageStats ?? {};
-  avgKills.textContent = formatNumber(avgs.avgKda?.[0] || 0);
-  avgDeaths.textContent = formatNumber(avgs.avgKda?.[1] || 0);
-  avgAssists.textContent = formatNumber(avgs.avgKda?.[2] || 0);
-  avgFarm.textContent = formatNumber(avgs.avgFarm ?? 0);
-  avgGold.textContent = formatNumber(avgs.avgGoldEarned ?? 0);
-  avgDamage.textContent = formatNumber(avgs.avgDamageDealt ?? 0);
+  animateValue(avgKills, avgs.avgKda?.[0] || 0);
+  animateValue(avgDeaths, avgs.avgKda?.[1] || 0);
+  animateValue(avgAssists, avgs.avgKda?.[2] || 0);
+  animateValue(avgFarm, avgs.avgFarm ?? 0);
+  animateValue(avgGold, avgs.avgGoldEarned ?? 0);
+  animateValue(avgDamage, avgs.avgDamageDealt ?? 0);
   avgTime.textContent = avgs.avgDurationGame ?? "0";
 }
 
@@ -291,7 +361,7 @@ async function renderSearchedUserPreview(userId) {
         <span style="font-weight: bold; font-size: 1.1rem; color: #fff;">${
           user.nickname
         }</span>
-        <span style="font-weight: bold; font-size: 0.95rem; color: #ccc;">#${formatServer(
+        <span style="font-weight: bold; font-size: 0.95rem; color: #ccc;">${formatServer(
           user.server
         )}</span>
       </div>
@@ -317,28 +387,58 @@ async function renderSearchedUserPreview(userId) {
 
 //Listeners
 
+const championSearchInput = document.getElementById("championSearch");
+
+// Input listener
+championSearchInput.addEventListener("input", () => {
+  const query = championSearchInput.value.replace(/[´']/g, "'").toLowerCase();
+  filterChampionCards(query);
+});
+
+function filterChampionCards(query) {
+  const cards = document.querySelectorAll(".champion-card");
+
+  cards.forEach((card) => {
+    const name = card.dataset.champion;
+
+    if (name.includes(query)) {
+      // mostrar siempre con animación
+      card.style.display = "";
+      card.classList.remove("card-appear"); // reiniciamos animación
+      void card.offsetWidth; // fuerza reflow
+      card.classList.add("card-appear");
+
+      card.addEventListener(
+        "animationend",
+        () => card.classList.remove("card-appear"),
+        { once: true }
+      );
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+
 // Cambios de filtro
 
 gameFilter.addEventListener("change", () => {
   adjustFilters();
   const uid = window.searchedUserId || window.originalUserId;
-  // Reset selección
   selectedChampion = null;
   lastSelectedChampion = null;
   applySelectionStyles();
 
-  loadStats(uid, gameFilter.value, roleFilter.value);
+  loadStats(uid, gameFilter.value, roleFilter.value, true);
 });
 
 roleFilter.addEventListener("change", () => {
   adjustFilters();
   const uid = window.searchedUserId || window.originalUserId;
-  // Reset selección
   selectedChampion = null;
   lastSelectedChampion = null;
   applySelectionStyles();
 
-  loadStats(uid, gameFilter.value, roleFilter.value);
+  loadStats(uid, gameFilter.value, roleFilter.value, true);
 });
 
 function formatServer(server) {
@@ -410,5 +510,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     applySelectionStyles();
+    // Reaplicar filtro
+    const currentQuery = championSearchInput.value.toLowerCase();
+    filterChampionCards(currentQuery);
   });
 });

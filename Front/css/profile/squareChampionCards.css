@@ -73,12 +73,29 @@
 .card-appear {
   opacity: 0;
 
-  animation: fadeInUp 0.7s ease forwards;
+  animation: fadeInUp 0.4s ease forwards;
 }
 
 @keyframes fadeInUp {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+
+/* Animación de desaparecer vertical */
+.card-disappear {
+  animation: fadeOutDown 0.2s ease forwards;
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(1px);
   }
 }
