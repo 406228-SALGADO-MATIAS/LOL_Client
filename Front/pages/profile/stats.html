@@ -271,20 +271,60 @@
           script.src = "/javascript/core/mainNavbar.js";
           document.body.appendChild(script);
         });
-
       fetch("/pages/profile/subNavbar.html")
         .then((res) => res.text())
         .then((html) => {
-          document.getElementById("sub-navbar-container").innerHTML = html;
+          const container = document.getElementById("sub-navbar-container");
+          container.innerHTML = html;
 
-          // Insertar script **después** de que el botón exista
-          if (!document.getElementById("searchUserScript")) {
-            const script = document.createElement("script");
-            script.id = "searchUserScript";
-            script.src = "/javascript/support/profile/searchUser.js";
-            document.body.appendChild(script);
-          }
-        });
+          // Normalizar y pintar link activo
+          const links = container.querySelectorAll(".nav-link");
+
+          const paintActiveLink = () => {
+            const currentPage = window.location.pathname
+              .split("/")
+              .pop()
+              .replace(".html", ""); // solo nombre
+            links.forEach((link) => {
+              link.classList.remove("active");
+              link.style.color = "#a6a6a6"; // gris por defecto
+
+              const linkPage = link
+                .getAttribute("href")
+                ?.split("/")
+                .pop()
+                .replace(".html", "");
+              if (
+                linkPage === currentPage ||
+                (!currentPage && linkPage === "resume")
+              ) {
+                link.classList.add("active");
+                link.style.color = "#fff"; // activo
+              }
+            });
+          };
+
+          // Pintar al cargar
+          paintActiveLink();
+
+          // Pintar al hacer click
+          links.forEach((link) => {
+            link.addEventListener("click", () => {
+              links.forEach((l) => {
+                l.classList.remove("active");
+                l.style.color = "#a6a6a6";
+              });
+              link.classList.add("active");
+              link.style.color = "#fff";
+            });
+          });
+
+          // Cargar JS adicional
+          const script = document.createElement("script");
+          script.src = "/javascript/support/profile/searchUser.js";
+          document.body.appendChild(script);
+        })
+        .catch((err) => console.error("Error cargando sub-navbar:", err));
 
       document.addEventListener("DOMContentLoaded", () => {
         const transition = document.querySelector(".page-transition");

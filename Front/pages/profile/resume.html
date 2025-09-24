@@ -280,7 +280,48 @@
           const container = document.getElementById("sub-navbar-container");
           container.innerHTML = html;
 
-          // Una vez que el HTML está en el DOM, cargamos el JS del sub-navbar
+          // Normalizar y pintar link activo
+          const links = container.querySelectorAll(".nav-link");
+
+          const paintActiveLink = () => {
+            const currentPage = window.location.pathname
+              .split("/")
+              .pop()
+              .replace(".html", ""); // solo nombre
+            links.forEach((link) => {
+              link.classList.remove("active");
+              link.style.color = "#a6a6a6"; // gris oscuro por defecto
+              const linkPage = link
+                .getAttribute("href")
+                ?.split("/")
+                .pop()
+                .replace(".html", "");
+              if (
+                linkPage === currentPage ||
+                (!currentPage && linkPage === "resume")
+              ) {
+                link.classList.add("active");
+                link.style.color = "#fff"; // activo
+              }
+            });
+          };
+
+          // Pintar al cargar
+          paintActiveLink();
+
+          // Pintar al hacer click
+          links.forEach((link) => {
+            link.addEventListener("click", () => {
+              links.forEach((l) => {
+                l.classList.remove("active");
+                l.style.color = "#a6a6a6";
+              });
+              link.classList.add("active");
+              link.style.color = "#fff";
+            });
+          });
+
+          // Cargar JS adicional
           const script = document.createElement("script");
           script.src = "/javascript/support/profile/searchUser.js";
           document.body.appendChild(script);

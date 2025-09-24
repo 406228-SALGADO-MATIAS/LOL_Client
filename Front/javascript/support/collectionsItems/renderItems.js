@@ -18,17 +18,24 @@ function renderItems(items = getFilteredItems()) {
 
 function renderItemsByStyle() {
   collectionsContainer.innerHTML = "";
-  const items = getFilteredItems(); // ya trae todo combinado
+  const items = getFilteredItems();
+  const usedIds = new Set(); // 👈 track de items ya mostrados
 
   ITEM_STYLES.forEach((cat) => {
     const group = items.filter(
-      (i) => i.itemType === cat.value || i.itemType2 === cat.value
+      (i) =>
+        (i.itemType === cat.value || i.itemType2 === cat.value) &&
+        !usedIds.has(i.id) // 👈 solo los que no se mostraron
     );
+
     if (!group.length) return;
+
+    // marcar como usados
+    group.forEach((i) => usedIds.add(i.id));
 
     const title = document.createElement("h3");
     title.innerHTML = `<strong>${cat.label.toUpperCase()}</strong>`;
-    title.classList.add("mt-3", "category-title"); 
+    title.classList.add("mt-3", "category-title");
     collectionsContainer.appendChild(title);
 
     appendItemRows(collectionsContainer, group);
@@ -39,12 +46,12 @@ function renderItemsByStyle() {
     (i) =>
       !ITEM_STYLES.some(
         (cat) => i.itemType === cat.value || i.itemType2 === cat.value
-      )
+      ) && !usedIds.has(i.id)
   );
   if (emptyGroup.length) {
     const title = document.createElement("h3");
     title.innerHTML = `<strong>SIN CATEGORÍA</strong>`;
-    title.classList.add("mt-3", "category-title"); 
+    title.classList.add("mt-3", "category-title");
     collectionsContainer.appendChild(title);
 
     appendItemRows(collectionsContainer, emptyGroup);

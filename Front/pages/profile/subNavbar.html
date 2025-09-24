@@ -10,10 +10,14 @@
         class="navbar-nav d-flex flex-row justify-content-center align-items-center"
       >
         <li class="nav-item">
-          <a class="nav-link active" href="/pages/profile/resume.html">Resume</a>
+          <a class="nav-link active" href="/pages/profile/resume.html"
+            >Resume</a
+          >
         </li>
         <li class="nav-item"><a class="nav-link" href="#">Matches</a></li>
-        <li class="nav-item"><a class="nav-link" href="/pages/profile/stats.html">Stats</a></li>
+        <li class="nav-item">
+          <a class="nav-link" href="/pages/profile/stats.html">Stats</a>
+        </li>
         <li class="nav-item"><a class="nav-link" href="#">Ranked</a></li>
       </ul>
     </div>
@@ -69,7 +73,7 @@
     /* ============================= */
     .sub-navbar {
       margin-top: 56px; /* espacio desde la navbar principal */
-      background-color: #1a1a1ad2!important; /* color de fondo del sub-navbar */
+      background-color: #1a1a1ad2 !important; /* color de fondo del sub-navbar */
       height: 50px; /* altura fija */
       padding: 0 1rem;
       display: flex;
@@ -109,6 +113,13 @@
     /* Link activo */
     .sub-navbar .nav-link.active {
       color: #fff; /* se resalta */
+    }
+
+    /* Hover para links del sub-navbar */
+    .sub-navbar .nav-link:hover {
+      color: #fff !important;
+      text-decoration: none; /* opcional, quita subrayado si lo hubiera */
+      transition: color 0.2s ease-in-out;
     }
 
     /* Marca o logo del navbar */

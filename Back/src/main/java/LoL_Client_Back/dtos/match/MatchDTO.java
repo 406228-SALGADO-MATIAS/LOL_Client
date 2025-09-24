@@ -24,7 +24,7 @@ public class MatchDTO {
     private Integer blueTeamFarm;
     private Integer redTeamFarm;
     private String winnerTeam;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
     private List<PlayerMatchDetailDTO> players;
 }

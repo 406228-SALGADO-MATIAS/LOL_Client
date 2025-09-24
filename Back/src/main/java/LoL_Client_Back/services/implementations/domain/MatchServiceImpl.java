@@ -4,15 +4,13 @@ import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.enums.ServerOption;
 import LoL_Client_Back.dtos.enums.UserRankTier;
 import LoL_Client_Back.dtos.match.MatchDTO;
+import LoL_Client_Back.dtos.match.PlayerMatchesHistoryDTO;
 import LoL_Client_Back.dtos.user.UserMatchesDTO;
 import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.domain.*;
 import LoL_Client_Back.entities.reference.*;
 import LoL_Client_Back.repositories.association.UserXChampionRepository;
-import LoL_Client_Back.repositories.domain.ChampionRepository;
-import LoL_Client_Back.repositories.domain.ItemRepository;
-import LoL_Client_Back.repositories.domain.MatchRepository;
-import LoL_Client_Back.repositories.domain.UserRepository;
+import LoL_Client_Back.repositories.domain.*;
 import LoL_Client_Back.repositories.reference.*;
 import LoL_Client_Back.services.implementations.domain.matchLogic.ChampionWinrateService;
 import LoL_Client_Back.services.implementations.domain.matchLogic.DamageEstimatorService;
@@ -69,6 +67,8 @@ public class MatchServiceImpl implements MatchService {
     UserLootServiceImpl userLootService;
     @Autowired
     UserLpService userLpService;
+    @Autowired
+    PlayerMatchDetailRepository detailRepository;
 
     @Override
     public MatchDTO getMatchById(Long matchId, boolean showChampionImg, boolean showItemImg) {
@@ -330,6 +330,16 @@ public class MatchServiceImpl implements MatchService {
         return "Successfully added matches to each Server. " +
                 "4 matches per tier on each server = 40 per server = 160 matches in total";
     }
+
+    @Override
+    public List<PlayerMatchesHistoryDTO> getUserMatchesHistory(Long idUser) {
+        List<PlayerMatchDetailEntity> detailEntities =
+                Optional.ofNullable(detailRepository.findByUserId(idUser, null))
+                        .orElse(Collections.emptyList());
+
+        return PlayerMatchesHistoryDTO.getUserHistory(detailEntities);
+    }
+
 
     // Returns the match completed through calling other methods to assist it
     private MatchEntity buildMatchEntity(MatchEntity matchToUpdate,ServerOption serverOption, String gameMode, String map, UserRankTier elo,

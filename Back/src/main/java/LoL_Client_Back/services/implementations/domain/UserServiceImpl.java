@@ -42,6 +42,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -139,7 +140,17 @@ public class UserServiceImpl implements UserService {
 
             userXChampionService.giveChampionsToUsersWithNoChampions();
             userXSkinService.giveSkinsToUsersWithout();
-            
+            Optional<ProfileIconEntity> optional =
+                    profileIconRepository.findById(48L);
+            if (optional.isPresent())
+            {
+                UserXIconEntity userXIcon = new UserXIconEntity();
+                userXIcon.setAdquisitionDate(LocalDateTime.now());
+                userXIcon.setIcon(optional.get());
+                userXIcon.setUser(userEntitySaved);
+                userXIconRepository.save(userXIcon);
+            }
+
             return dtoBuilder.buildUserLootMatchesDTO(userSaved,loot,matches);
 
         } else {

@@ -3,6 +3,7 @@ package LoL_Client_Back.controllers.domain;
 import LoL_Client_Back.dtos.enums.ServerOption;
 import LoL_Client_Back.dtos.enums.UserRankTier;
 import LoL_Client_Back.dtos.match.MatchDTO;
+import LoL_Client_Back.dtos.match.PlayerMatchesHistoryDTO;
 import LoL_Client_Back.services.interfaces.domain.MatchService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -46,6 +47,12 @@ public class MatchController
 
         List<MatchDTO> matches = matchService.findMatchesByUserId(userId, showChampionImg, showItemImg);
         return ResponseEntity.ok(matches);
+    }
+
+    @GetMapping("/getUserHistory/{idUser}")
+    public ResponseEntity<List<PlayerMatchesHistoryDTO>> getUserHistory(@PathVariable Long idUser) {
+        List<PlayerMatchesHistoryDTO> history = matchService.getUserMatchesHistory(idUser);
+        return ResponseEntity.ok(history);
     }
 
     @PostMapping("/createMatch")
