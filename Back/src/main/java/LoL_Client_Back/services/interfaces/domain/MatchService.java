@@ -3,7 +3,8 @@ package LoL_Client_Back.services.interfaces.domain;
 import LoL_Client_Back.dtos.enums.ServerOption;
 import LoL_Client_Back.dtos.enums.UserRankTier;
 import LoL_Client_Back.dtos.match.MatchDTO;
-import LoL_Client_Back.dtos.match.PlayerMatchesHistoryDTO;
+import LoL_Client_Back.dtos.match.playerHistory.PlayerHistoryDTO;
+import LoL_Client_Back.dtos.match.playerHistory.PlayerMatchDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public interface MatchService {
     MatchDTO createMatchARAMForUserAndChampion(Long userId, Long championId, boolean showChampion, boolean showItem);
     void delete (Long id);
     String generateRankedGames();
-    List<PlayerMatchesHistoryDTO> getUserMatchesHistory (Long idUser);
+    PlayerHistoryDTO getUserMatchesHistory (Long idUser, String gameType, String optionalRole, String optionalStyle);
 
 
 }

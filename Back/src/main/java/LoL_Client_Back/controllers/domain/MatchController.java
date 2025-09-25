@@ -3,7 +3,8 @@ package LoL_Client_Back.controllers.domain;
 import LoL_Client_Back.dtos.enums.ServerOption;
 import LoL_Client_Back.dtos.enums.UserRankTier;
 import LoL_Client_Back.dtos.match.MatchDTO;
-import LoL_Client_Back.dtos.match.PlayerMatchesHistoryDTO;
+import LoL_Client_Back.dtos.match.playerHistory.PlayerHistoryDTO;
+import LoL_Client_Back.dtos.match.playerHistory.PlayerMatchDTO;
 import LoL_Client_Back.services.interfaces.domain.MatchService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -49,11 +50,23 @@ public class MatchController
         return ResponseEntity.ok(matches);
     }
 
-    @GetMapping("/getUserHistory/{idUser}")
-    public ResponseEntity<List<PlayerMatchesHistoryDTO>> getUserHistory(@PathVariable Long idUser) {
-        List<PlayerMatchesHistoryDTO> history = matchService.getUserMatchesHistory(idUser);
+    @GetMapping("/getUserHistory/{userId}")
+    public ResponseEntity<PlayerHistoryDTO> getUserMatchesHistory(
+            @PathVariable Long userId,
+            @RequestParam(required = false)
+            @Parameter(schema = @Schema(allowableValues = {"RANKED", "NORMAL", "ARAM"}))
+            String gameType,
+            @RequestParam(required = false)
+            @Parameter(schema = @Schema(allowableValues = {"TOP", "JUNGLE", "MID", "ADC", "SUPPORT"}))
+            String optionalRole,
+            @RequestParam(required = false)
+            @Parameter(schema = @Schema(allowableValues = {"Fighter", "Marksman", "Mage", "Assassin", "Tank", "Support"}))
+            String optionalStyle
+    ) {
+        PlayerHistoryDTO history = matchService.getUserMatchesHistory(userId, gameType, optionalRole, optionalStyle);
         return ResponseEntity.ok(history);
     }
+
 
     @PostMapping("/createMatch")
     public ResponseEntity<MatchDTO> createMatch(@RequestParam ServerOption server,

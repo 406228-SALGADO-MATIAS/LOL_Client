@@ -4,7 +4,8 @@ import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.enums.ServerOption;
 import LoL_Client_Back.dtos.enums.UserRankTier;
 import LoL_Client_Back.dtos.match.MatchDTO;
-import LoL_Client_Back.dtos.match.PlayerMatchesHistoryDTO;
+import LoL_Client_Back.dtos.match.playerHistory.PlayerHistoryDTO;
+import LoL_Client_Back.dtos.match.playerHistory.PlayerMatchDTO;
 import LoL_Client_Back.dtos.user.UserMatchesDTO;
 import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.domain.*;
@@ -332,13 +333,56 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public List<PlayerMatchesHistoryDTO> getUserMatchesHistory(Long idUser) {
-        List<PlayerMatchDetailEntity> detailEntities =
-                Optional.ofNullable(detailRepository.findByUserId(idUser, null))
-                        .orElse(Collections.emptyList());
+    public PlayerHistoryDTO getUserMatchesHistory(Long idUser, String gameType, String optionalRole, String optionalStyle) {
+        List<PlayerMatchDetailEntity> details;
 
-        return PlayerMatchesHistoryDTO.getUserHistory(detailEntities);
+        if (gameType == null && optionalRole == null) {
+            details = detailRepository.findByUserId(idUser,null);
+        }
+        else if ("ARAM".equalsIgnoreCase(gameType)) {
+            //no tiene rol
+            details = detailRepository.findUserAramMatches(idUser);
+        } else {
+            // NORMAL o RANKED, opcional role
+            details = detailRepository.findUserNormalOrRankedMatches(idUser,
+                    gameType != null ? gameType.toUpperCase() : null,
+                    optionalRole);
+        }
+        // style
+        if (optionalStyle != null && !optionalStyle.isEmpty()) {
+            details = details.stream()
+                    .filter(detail -> determinePredominantStyle(detail).equalsIgnoreCase(optionalStyle))
+                    .toList();
+        }
+
+        // return dto
+        PlayerHistoryDTO history = new PlayerHistoryDTO();
+        history.buildPlayerHistoryDTO(details);
+
+        return history;
     }
+
+
+    private String determinePredominantStyle(PlayerMatchDetailEntity detail) {
+        if (detail.getItems() == null || detail.getItems().isEmpty()) return "Unknown";
+
+        Map<String, Integer> styleCount = new HashMap<>();
+        for (PlayerMatchItemEntity pItem : detail.getItems()) {
+            if (pItem.getItem().getItemType() != null) {
+                String style = pItem.getItem().getItemType().getStyle();
+                styleCount.put(style, styleCount.getOrDefault(style, 0) + 1);
+            }
+        }
+
+        if (styleCount.isEmpty()) return "Unknown";
+
+        // Tomamos el style con mayor cantidad
+        return styleCount.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .get()
+                .getKey();
+    }
+
 
 
     // Returns the match completed through calling other methods to assist it

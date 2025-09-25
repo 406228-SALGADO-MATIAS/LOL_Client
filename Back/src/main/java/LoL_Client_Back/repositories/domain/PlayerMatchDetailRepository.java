@@ -99,5 +99,35 @@ public interface PlayerMatchDetailRepository extends JpaRepository<PlayerMatchDe
                                                             @Param("gameType") String gameType);
 
 
+    @Query("""
+    SELECT p 
+    FROM PlayerMatchDetailEntity p
+    WHERE p.user.id = :userId
+      AND UPPER(p.match.map.map) = 'ARAM - HOWLING ABYSS'
+""")
+    List<PlayerMatchDetailEntity> findUserAramMatches(@Param("userId") Long userId);
+
+
+    @Query("""
+    SELECT p
+    FROM PlayerMatchDetailEntity p
+    WHERE p.user.id = :userId
+      AND (
+            :gameType IS NULL
+         OR (:gameType = 'NORMAL' AND p.match.ranked = false AND UPPER(p.match.map.map) = 'SUMMONERS RIFT')
+         OR (:gameType = 'RANKED' AND p.match.ranked = true AND UPPER(p.match.map.map) = 'SUMMONERS RIFT')
+      )
+      AND (:role IS NULL OR LOWER(p.role.role) = LOWER(:role))
+""")
+    List<PlayerMatchDetailEntity> findUserNormalOrRankedMatches(
+            @Param("userId") Long userId,
+            @Param("gameType") String gameType,
+            @Param("role") String role
+    );
+
+
+
+
+
 
 }
