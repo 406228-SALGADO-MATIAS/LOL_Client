@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/css/profile/matches/matches.css" />
+    <link rel="stylesheet" href="/css/profile/matches/matchesNavbar.css" />
+  </head>
+  <body>
+    <div id="bg-overlay"></div>
+    <div class="page-transition"></div>
+
+    <!-- Main Navbar -->
+    <div id="navbar-container"></div>
+
+    <!-- Contenedor para el sub-navbar -->
+    <div id="sub-navbar-container"></div>
+
+    <!-- Contenido principal -->
+    <main class="matches-main">
+      <!-- Navbar interno -->
+      <nav class="matches-navbar">
+        <!-- Tabs a la izquierda -->
+        <ul class="matches-tabs">
+          <li><a data-tab="general" class="active">General</a></li>
+          <li><a data-tab="ranked">Ranked</a></li>
+          <li><a data-tab="normal">Normal</a></li>
+          <li><a data-tab="aram">Aram</a></li>
+        </ul>
+
+        <!-- Controles a la derecha -->
+        <div class="navbar-filters">
+          <!-- Buscador de campeones -->
+          <input
+            type="text"
+            id="searchChampion"
+            placeholder="Buscar campeón..."
+          />
+          <!-- Select de Rol -->
+          <select id="selectRole">
+            <option value="">Rol</option>
+            <option value="TOP">Top</option>
+            <option value="JUNGLE">Jungle</option>
+            <option value="MID">Mid</option>
+            <option value="ADC">ADC</option>
+            <option value="SUPPORT">Support</option>
+          </select>
+
+          <!-- Select de Style -->
+          <select id="selectStyle">
+            <option value="">Style</option>
+            <option value="Fighter">Fighter</option>
+            <option value="Marksman">Marksman</option>
+            <option value="Mage">Mage</option>
+            <option value="Assassin">Assassin</option>
+            <option value="Tank">Tank</option>
+            <option value="Support">Support</option>
+          </select>
+        </div>
+      </nav>
+
+      <!-- Contenedor en dos columnas -->
+      <div class="matches-content">
+        <!-- Columna izquierda (cards, scrolleable) -->
+        <section class="cards-section">
+          <!-- Acá van tus cards -->
+        </section>
+
+        <!-- Sidebar derecha -->
+        <aside class="sidebar">
+          <!-- Top 3 champions -->
+          <div class="sidebar-block top-champions">
+            <h4>Top 3 Champions</h4>
+            <div class="champions-row">
+              <div class="champion">
+                <img src="/img/champion1.png" alt="Champion 1" />
+                <p>Ahri</p>
+                <span>Use ratio: 20%</span>
+              </div>
+              <div class="champion">
+                <img src="/img/champion2.png" alt="Champion 2" />
+                <p>Zed</p>
+                <span>Use ratio: 15%</span>
+              </div>
+              <div class="champion">
+                <img src="/img/champion3.png" alt="Champion 3" />
+                <p>Ezreal</p>
+                <span>Use ratio: 10%</span>
+              </div>
+            </div>
+            <p class="extra-info">% de partidas jugadas</p>
+          </div>
+
+          <!-- Actividad reciente -->
+          <div class="sidebar-block recent-activity">
+            <h4>Actividad Reciente</h4>
+
+            <!-- RoleRatiosDTO -->
+            <h3 class="ratios-title">Roles</h3>
+            <div class="ratios-group">
+              <div class="ratio-item">
+                <img src="/img/top.png" alt="Top" />
+                <span>Top</span>
+              </div>
+              <div class="ratio-item">
+                <img src="/img/jg.png" alt="Jungle" />
+                <span>JG</span>
+              </div>
+              <div class="ratio-item">
+                <img src="/img/mid.png" alt="Mid" />
+                <span>Mid</span>
+              </div>
+              <div class="ratio-item">
+                <img src="/img/adc.png" alt="ADC" />
+                <span>ADC</span>
+              </div>
+              <div class="ratio-item">
+                <img src="/img/support.png" alt="Support" />
+                <span>Support</span>
+              </div>
+            </div>
+
+            <!-- StyleRatiosDTO -->
+            <h3 class="ratios-title">Styles</h3>
+            <div class="ratios-group">
+              <div class="ratio-item">
+                <img src="/img/fighter.png" alt="Fighter" />
+                <span>Fighter</span>
+              </div>
+              <div class="ratio-item">
+                <img src="/img/marksman.png" alt="Marksman" />
+                <span>Marksman</span>
+              </div>
+              <div class="ratio-item">
+                <img src="/img/mage.png" alt="Mage" />
+                <span>Mage</span>
+              </div>
+              <div class="ratio-item">
+                <img src="/img/assassin.png" alt="Assassin" />
+                <span>Assassin</span>
+              </div>
+              <div class="ratio-item">
+                <img src="/img/tank.png" alt="Tank" />
+                <span>Tank</span>
+              </div>
+              <div class="ratio-item">
+                <img src="/img/support.png" alt="Support" />
+                <span>Support</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Navbar dinámico
+      fetch("/pages/mainNavbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          const container = document.getElementById("navbar-container");
+          container.innerHTML = html;
+
+          const mainNav = container.querySelector("nav");
+          mainNav.style.position = "fixed";
+          mainNav.style.top = "0";
+          mainNav.style.left = "0";
+          mainNav.style.width = "100%";
+          mainNav.style.zIndex = "1040";
+
+          const script = document.createElement("script");
+          script.src = "/javascript/core/mainNavbar.js";
+          document.body.appendChild(script);
+        })
+        .catch((err) => console.error(err));
+    </script>
+
+    <script>
+      // Subnavbar
+      fetch("/pages/profile/subNavbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          const container = document.getElementById("sub-navbar-container");
+          container.innerHTML = html;
+
+          // Normalizar y pintar link activo
+          const links = container.querySelectorAll(".nav-link");
+
+          const paintActiveLink = () => {
+            const currentPage = window.location.pathname
+              .split("/")
+              .pop()
+              .replace(".html", ""); // solo nombre
+            links.forEach((link) => {
+              link.classList.remove("active");
+              link.style.color = "#a6a6a6"; // gris oscuro por defecto
+              const linkPage = link
+                .getAttribute("href")
+                ?.split("/")
+                .pop()
+                .replace(".html", "");
+              if (
+                linkPage === currentPage ||
+                (!currentPage && linkPage === "resume")
+              ) {
+                link.classList.add("active");
+                link.style.color = "#fff"; // activo
+              }
+            });
+          };
+
+          // Pintar al cargar
+          paintActiveLink();
+
+          // Pintar al hacer click
+          links.forEach((link) => {
+            link.addEventListener("click", () => {
+              links.forEach((l) => {
+                l.classList.remove("active");
+                l.style.color = "#a6a6a6";
+              });
+              link.classList.add("active");
+              link.style.color = "#fff";
+            });
+          });
+
+          // Cargar JS adicional
+          const script = document.createElement("script");
+          script.src = "/javascript/support/profile/searchUser.js";
+          document.body.appendChild(script);
+        })
+        .catch((err) => console.error("Error cargando sub-navbar:", err));
+    </script>
+
+    <script>
+      // Transición
+      function setupPageTransitions() {
+        const transition = document.querySelector(".page-transition");
+
+        // Entrada → al cargar la página
+        window.addEventListener("load", () => {
+          setTimeout(() => transition.classList.add("hidden"), 100);
+        });
+
+        // Salida → al hacer clic en links internos
+        document.querySelectorAll("a").forEach((link) => {
+          if (
+            link.hostname === window.location.hostname &&
+            !link.closest(".carousel") && // Ignorar carousels
+            !link.closest(".sub-navbar") // Ignorar sub-navbar
+          ) {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              const url = link.href;
+
+              transition.classList.remove("hidden");
+              setTimeout(() => (window.location.href = url), 400);
+            });
+          }
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", setupPageTransitions);
+    </script>
+  </body>
+</html>
