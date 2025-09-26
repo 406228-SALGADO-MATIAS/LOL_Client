@@ -148,8 +148,8 @@ public class PlayerHistoryDTO {
             if (!match.getRanked()) {
                 dto.setMirrorChampions(true);
                 if ("ARAM - Howling Abyss".equals(match.getMap().getMap())) {
-                    dto.setMap("ARAM - Howling Abyss");
-                    dto.setMatchType("Normal - Random Picks");
+                    dto.setMap("Howling Abyss");
+                    dto.setMatchType("ARAM - Random Picks");
                 } else {
                     dto.setMap("Summoners Rift");
                     dto.setMatchType("Normal - Classic 5v5");

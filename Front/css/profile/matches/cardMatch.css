@@ -1,0 +1,113 @@
+.match-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1e1e1e;
+  color: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  margin: 10px 0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  font-family: Arial, sans-serif;
+}
+
+.match-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+}
+
+/* Columna Campeón */
+.champ-col {
+  width: 120px;
+  text-align: center;
+}
+
+.champ-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.champ-name {
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+/* Resultado */
+.result-col {
+  width: 150px;
+  text-align: center;
+}
+
+.result-text {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.result-text.win {
+  color: #4caf50;
+}
+
+.result-text.lose {
+  color: #f44336;
+}
+
+.match-type {
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* Items + Stats */
+.stats-col {
+  flex: 1;
+  padding: 0 12px;
+}
+
+.items-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.item-slot {
+  width: 40px;
+  height: 40px;
+  background: #333;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.stats-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Info extra */
+.info-col {
+  width: 180px;
+  font-size: 14px;
+  text-align: left;
+}
