@@ -165,6 +165,25 @@ public class PlayerHistoryDTO {
             if (detail.getRole() != null) {
                 dto.setRole(detail.getRole().getRole());
             }
+
+            String style = "Unknown";
+            if (detail.getItems() != null && !detail.getItems().isEmpty()) {
+                Map<String, Integer> styleCount = new HashMap<>();
+                for (PlayerMatchItemEntity pItem : detail.getItems()) {
+                    if (pItem.getItem().getItemType() != null) {
+                        String s = pItem.getItem().getItemType().getStyle();
+                        styleCount.put(s, styleCount.getOrDefault(s, 0) + 1);
+                    }
+                }
+
+                if (!styleCount.isEmpty()) {
+                    style = styleCount.entrySet().stream()
+                            .max(Map.Entry.comparingByValue())
+                            .get()
+                            .getKey();
+                }
+            }
+            dto.setStyle(style);
             dto.setWin(match.getWinnerTeam().equals(detail.getTeam()));
 
             // items

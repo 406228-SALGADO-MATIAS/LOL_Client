@@ -31,6 +31,7 @@ public class PlayerMatchDTO {
     @Lob
     private String squareChampion;
     private String role;
+    private String style;
     private int kills;
     private int deaths;
     private int assists;

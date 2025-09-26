@@ -119,15 +119,19 @@ function renderMatchCards(matches) {
 
   matches.forEach((match) => {
     const card = createMatchCard({
-      championName: match.champion,
+      champion: match.champion,              
       squareChampion: match.squareChampion,
       win: match.win,
       matchType: match.matchType,
+      role: match.role,                      
+      style: match.style,                    
+      kills: match.kills,                    
+      deaths: match.deaths,
+      assists: match.assists,
       items: match.items.map((i) => ({
         image: i.image,
-        itemName: i.itemName, // no 'name'
+        itemName: i.itemName,
       })),
-      kda: `${match.kills}/${match.deaths}/${match.assists}`,
       totalFarm: match.totalFarm,
       totalGold: match.totalGold,
       map: match.map,
@@ -137,6 +141,7 @@ function renderMatchCards(matches) {
     cardsSection.appendChild(card);
   });
 }
+
 
 // ----------------- Listeners -----------------
 function getCurrentFilters() {

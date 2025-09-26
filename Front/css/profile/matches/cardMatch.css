@@ -1,3 +1,6 @@
+/* =========================================
+   CARD BASE
+========================================= */
 .match-card {
   display: flex;
   justify-content: space-between;
@@ -7,7 +10,7 @@
   border-radius: 12px;
   padding: 12px;
   margin: 10px 0;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   font-family: Arial, sans-serif;
 }
 
@@ -18,32 +21,36 @@
   padding: 8px;
 }
 
-/* Columna Campeón */
+/* =========================================
+   COL 1: CAMPEÓN
+========================================= */
 .champ-col {
-  width: 120px;
+  width: 140px;
   text-align: center;
 }
 
 .champ-img {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   border-radius: 10px;
   object-fit: cover;
 }
 
 .champ-name {
-  margin-top: 6px;
-  font-size: 14px;
+  margin-top: 3px;
+  font-size: 19px;
 }
 
-/* Resultado */
+/* =========================================
+   COL 2: RESULTADO
+========================================= */
 .result-col {
   width: 150px;
   text-align: center;
 }
 
 .result-text {
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bold;
 }
 
@@ -56,11 +63,35 @@
 }
 
 .match-type {
-  font-size: 14px;
-  margin-top: 4px;
+  font-size: 20px;
+  margin-top: 3px;
 }
 
-/* Items + Stats */
+/* =========================================
+   COL 2.5: STYLE
+========================================= */
+.style-col {
+  width: 120px;
+  text-align: center;
+  gap: 6px;
+  margin-left: 35px;
+}
+
+.style-icon {
+  width: 55px !important;
+  height: 55px !important;
+  object-fit: contain !important;
+  margin-bottom: 4px !important;
+}
+
+.style-col span {
+  font-size: 16px;
+  color: #ccc;
+}
+
+/* =========================================
+   COL 3: ITEMS + STATS
+========================================= */
 .stats-col {
   flex: 1;
   padding: 0 12px;
@@ -73,8 +104,8 @@
 }
 
 .item-slot {
-  width: 40px;
-  height: 40px;
+  width: 55px;
+  height: 55px;
   background: #333;
   border-radius: 6px;
   display: flex;
@@ -89,8 +120,9 @@
 }
 
 .stats-row {
+  margin-top: 2px;
   display: flex;
-  gap: 12px;
+  gap: 55px;
   justify-content: center;
 }
 
@@ -98,6 +130,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
+  font-size: 20px;
 }
 
 .stat-icon {
@@ -105,9 +138,45 @@
   height: 18px;
 }
 
-/* Info extra */
+/* =========================================
+   COL 3.5: ROLE + MAPA
+========================================= */
+.role-col {
+  width: 160px;
+  text-align: center;
+  margin-right: 30px;
+}
+
+.role-col div {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #ccc;
+}
+
+.role-icon {
+  width: 42px !important;
+  height: 42px !important;
+  object-fit: contain !important;
+}
+
+/* =========================================
+   COL 4: INFO EXTRA
+========================================= */
 .info-col {
   width: 180px;
-  font-size: 14px;
+  font-size: 18px;
   text-align: left;
+}
+
+.match-date {
+  font-size: 16px;
+  color: #ffffff; /* gris clarito */
+  font-weight: bold;
+}
+
+.match-duration {
+  font-size: 16px;
+  color: #ffcc00; /* dorado para que resalte */
+  font-weight: bold;
 }
