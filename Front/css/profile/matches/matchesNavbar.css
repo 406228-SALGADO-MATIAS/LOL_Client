@@ -88,3 +88,41 @@
 #searchChampion::placeholder {
   color: #aaa;
 }
+
+.matches-tabs li a {
+  position: relative;
+  text-decoration: none;
+  color: #ccc;
+  font-weight: bold;
+  font-size: 1.5rem;
+  padding: 0.4rem 0.6rem;
+  font-family: Arial, sans-serif;
+  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+/* Hover con "vidita" */
+.matches-tabs li a:hover {
+  color: #fff;
+}
+
+/* Active más destacado */
+.matches-tabs li a.active {
+  color: #f0c040; /* dorado */
+}
+
+/* Subrayado animado */
+.matches-tabs li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0;
+  height: 3px;
+  background: #f0c040;
+  transition: width 0.15s ease-in-out;
+}
+
+.matches-tabs li a:hover::after,
+.matches-tabs li a.active::after {
+  width: 100%;
+}

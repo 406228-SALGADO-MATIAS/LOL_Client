@@ -15,6 +15,7 @@ const tabAram = document.querySelector('[data-tab="aram"]');
 const searchChampion = document.getElementById("searchChampion");
 const selectRole = document.getElementById("selectRole");
 const selectStyle = document.getElementById("selectStyle");
+let currentGameType = null; // null = general
 
 // Containers
 const cardsSection = document.querySelector(".cards-section");
@@ -57,6 +58,12 @@ async function loadMatches(gameType = null, role = null, style = null) {
 
     // Cards
     renderMatchCards(data.matches);
+
+    // Aplicar filtro de campeón si hay texto en el input
+    const query = searchChampion.value.trim();
+    if (query) {
+      filterCardsByChampion(query); // aquí ocurre la animación solo de los filtrados
+    }
   } catch (err) {
     console.error("Error cargando matches:", err);
   }
@@ -110,38 +117,33 @@ function renderSidebar(data) {
 
 // ----------------- Render Cards -----------------
 function renderMatchCards(matches) {
-  cardsSection.innerHTML = "";
+  const existingCards = Array.from(cardsSection.querySelectorAll(".match-card"));
 
+  // Si no hay matches → desaparecer las cards actuales
   if (!matches || matches.length === 0) {
-    cardsSection.innerHTML = "<p>No hay partidas registradas.</p>";
+    if (existingCards.length === 0) {
+      cardsSection.innerHTML = "<p>No hay partidas registradas.</p>";
+      return;
+    }
+    animateCards(existingCards, "disappear");
     return;
   }
 
-  matches.forEach((match) => {
-    const card = createMatchCard({
-      champion: match.champion,              
-      squareChampion: match.squareChampion,
-      win: match.win,
-      matchType: match.matchType,
-      role: match.role,                      
-      style: match.style,                    
-      kills: match.kills,                    
-      deaths: match.deaths,
-      assists: match.assists,
-      items: match.items.map((i) => ({
-        image: i.image,
-        itemName: i.itemName,
-      })),
-      totalFarm: match.totalFarm,
-      totalGold: match.totalGold,
-      map: match.map,
-      date: new Date(match.date).toLocaleString(),
-      duration: match.duration,
-    });
-    cardsSection.appendChild(card);
-  });
-}
+  // Hay matches → limpiar antes de renderizar nuevas
+  cardsSection.innerHTML = "";
 
+  const newCards = matches.map((match) => {
+    const card = createMatchCard(match);
+    card.classList.add("match-card");
+    cardsSection.appendChild(card);
+    return card;
+  });
+
+  // Solo animar appear si el input está vacío
+  if (!searchChampion.value.trim()) {
+    animateCards(newCards, "appear", existingCards, matches);
+  }
+}
 
 // ----------------- Listeners -----------------
 function getCurrentFilters() {
@@ -152,41 +154,50 @@ function getCurrentFilters() {
 
 tabGeneral.addEventListener("click", () => {
   const { role, style } = getCurrentFilters();
-  loadMatches(null, role, style);
+  currentGameType = null; // General
+  toggleRoleSelectByGameType(currentGameType);
+  loadMatches(currentGameType, role, style);
 });
 
 tabRanked.addEventListener("click", () => {
   const { role, style } = getCurrentFilters();
-  loadMatches("RANKED", role, style);
+  currentGameType = "RANKED";
+  toggleRoleSelectByGameType(currentGameType);
+  loadMatches(currentGameType, role, style);
 });
 
 tabNormal.addEventListener("click", () => {
   const { role, style } = getCurrentFilters();
-  loadMatches("NORMAL", role, style);
+  currentGameType = "NORMAL";
+  toggleRoleSelectByGameType(currentGameType);
+  loadMatches(currentGameType, role, style);
 });
 
 tabAram.addEventListener("click", () => {
   const { role, style } = getCurrentFilters();
-  loadMatches("ARAM", role, style);
+  currentGameType = "ARAM";
+  toggleRoleSelectByGameType(currentGameType);
+  loadMatches(currentGameType, role, style);
 });
 
 searchChampion.addEventListener("input", (e) => {
-  console.log("Buscar campeón:", e.target.value);
-  // Filtrar las cards después
+  filterCardsByChampion(e.target.value);
 });
 
 selectRole.addEventListener("change", () => {
   const { style } = getCurrentFilters();
-  loadMatches(null, selectRole.value || null, style);
+  loadMatches(currentGameType, selectRole.value || null, style);
 });
 
 selectStyle.addEventListener("change", () => {
   const { role } = getCurrentFilters();
-  loadMatches(null, role, selectStyle.value || null);
+  loadMatches(currentGameType, role, selectStyle.value || null);
 });
 
 // ----------------- Init -----------------
 document.addEventListener("DOMContentLoaded", () => {
   console.log("matches.js inicializado");
-  loadMatches(); // Primera carga sin filtros
+  currentGameType = null; // default: general
+  toggleRoleSelectByGameType(currentGameType);
+  loadMatches();
 });

@@ -24,8 +24,8 @@ public class PlayerMatchDTO {
     private String map;
     private boolean win;
     private String duration;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime date;
     private String champion;
     @Lob

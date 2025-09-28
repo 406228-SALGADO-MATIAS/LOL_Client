@@ -3,6 +3,8 @@ function createMatchCard(match) {
   const card = document.createElement("div");
   card.classList.add("match-card");
 
+  card.dataset.matchId = match.idMatch;
+
   // ========== 1) Columna Campeón ==========
   const champDiv = document.createElement("div");
   champDiv.classList.add("match-col", "champ-col");
@@ -77,7 +79,7 @@ function createMatchCard(match) {
       styleText.textContent = match.style;
   }
 
-  styleImg.alt = match.style;
+  styleImg.title = "Items build style";
   styleImg.classList.add("style-icon");
   styleDiv.appendChild(styleImg);
   styleDiv.appendChild(styleText);
@@ -99,6 +101,7 @@ function createMatchCard(match) {
       const itemImg = document.createElement("img");
       itemImg.src = item.image;
       itemImg.alt = item.itemName;
+      itemImg.title = item.itemName;
       slot.appendChild(itemImg);
     }
 
@@ -116,6 +119,7 @@ function createMatchCard(match) {
   kdaIcon.src =
     "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/kills.png?raw=true";
   kdaIcon.classList.add("stat-icon");
+  kdaIcon.title = "Kills/Deaths/Assits"
   const kdaText = document.createElement("span");
   kdaText.textContent = match.kills + "/" + match.deaths + "/" + match.assists;
   kdaDiv.appendChild(kdaIcon);
@@ -128,6 +132,7 @@ function createMatchCard(match) {
   farmIcon.src =
     "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/minions.png?raw=true";
   farmIcon.classList.add("stat-icon");
+  farmIcon.title = "Creatures killed"
   const farmText = document.createElement("span");
   farmText.textContent = match.totalFarm;
   farmDiv.appendChild(farmIcon);
@@ -140,6 +145,7 @@ function createMatchCard(match) {
   goldIcon.src =
     "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/coin.png?raw=true";
   goldIcon.classList.add("stat-icon");
+  goldIcon.title = "Gold"
   const goldText = document.createElement("span");
   goldText.textContent = match.totalGold;
   goldDiv.appendChild(goldIcon);
@@ -178,8 +184,8 @@ function createMatchCard(match) {
       break;
     case "ADC":
       roleImg.src =
-        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/adc.png";
-      roleImg.title = "ADC";
+        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/styles/adc.png";
+      roleImg.title = "AD Carry";
       break;
     case "SUPPORT":
       roleImg.src =
@@ -215,9 +221,9 @@ function createMatchCard(match) {
   // Agregar columnas a la card
   card.appendChild(champDiv);
   card.appendChild(resultDiv);
-  card.appendChild(styleDiv);
-  card.appendChild(statsDiv);
   card.appendChild(roleDiv);
+  card.appendChild(statsDiv);
+  card.appendChild(styleDiv);
   card.appendChild(infoDiv);
 
   return card;
