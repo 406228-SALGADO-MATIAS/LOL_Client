@@ -70,7 +70,6 @@ async function loadMatches(gameType = null, role = null, style = null) {
 }
 
 // ----------------- Render Sidebar -----------------
-// ----------------- Render Sidebar -----------------
 function renderSidebar(data) {
   // Top 3 champions
   const topChampsContainer = sidebar.querySelector(
