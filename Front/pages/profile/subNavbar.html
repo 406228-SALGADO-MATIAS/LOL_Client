@@ -14,7 +14,9 @@
             >Resume</a
           >
         </li>
-        <li class="nav-item"><a class="nav-link" href="/pages/profile/matches.html">Matches</a></li>
+        <li class="nav-item">
+          <a class="nav-link" href="/pages/profile/matches.html">Matches</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="/pages/profile/stats.html">Stats</a>
         </li>
@@ -32,6 +34,24 @@
       >
         Perfil original
       </button>
+      <!-- Dropdown rank -->
+      <select
+        id="rankSelect"
+        class="form-select form-select-sm"
+        style="width: 90px; margin-left: 0.5rem"
+      >
+        <option value="">Rank</option>
+        <option value="Unranked">Unranked</option>
+        <option value="Bronze">Bronze</option>
+        <option value="Silver">Silver</option>
+        <option value="Gold">Gold</option>
+        <option value="Platinum">Platinum</option>
+        <option value="Emerald">Emerald</option>
+        <option value="Diamond">Diamond</option>
+        <option value="Master">Master</option>
+        <option value="Grandmaster">Grandmaster</option>
+        <option value="Challenger">Challenger</option>
+      </select>
       <!-- Dropdown servidor -->
       <select
         id="serverSelect"
@@ -178,19 +198,23 @@
     }
 
     #btnReturnProfile {
-      min-width: 140px; /* ancho mínimo */
-      height: 25px;
-      margin-top: -0.2rem;
+      display: flex; /* importante */
+      justify-content: center; /* centra horizontal */
+      align-items: center; /* centra vertical */
+      min-width: 120px;
+      height: 26px; 
       font-size: 0.85rem;
       font-weight: bold;
       color: #111;
       background-color: #f0c040;
       border: 2px solid #d1a630;
-      border-radius: 3px;
+      border-radius: 1px;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
       transition: all 0.2s ease-in-out;
       cursor: pointer;
-      flex-shrink: 0; /* no se encoge */
+      flex-shrink: 0;
+      padding: 0; 
+      line-height: normal; /* importante para que no se sume al height */
     }
 
     #btnReturnProfile:hover {
@@ -241,6 +265,31 @@
       border-color: #f0c040;
       box-shadow: 0 0 5px #f0c040;
       background-color: #222;
+    }
+
+    #rankSelect {
+      height: 30px;
+      width: 130px!important;
+      padding: 0 0.6rem;
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #c4c4c4;
+      background-color: #1a1a1a;
+      border: 2px solid #555;
+      border-radius: 3px;
+      outline: none;
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    #rankSelect:hover {
+      border-color: #f0c040;
+      background-color: #222;
+    }
+
+    #rankSelect:focus {
+      border-color: #f0c040;
+      box-shadow: 0 0 5px #f0c040;
     }
   </style>
 </nav>

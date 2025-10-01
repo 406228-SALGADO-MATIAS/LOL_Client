@@ -33,4 +33,6 @@ public interface UserService {
     List<UserLootMatchesDTO> create100ForServer(ServerOption serverOption);
     UserProfileDTO getUserProfileById (Long id);
     UserProfileDTO updateUserIconImage (Long idUser, Long idIcon);
+    List<UserProfileDTO> findUsersByNickNameAndRank(String nickname, UserRankTier rankTier);
+    List<UserProfileDTO> findUsersByNicknameAndRankAndServer(String nickname, UserRankTier rankTier,  ServerOption serverOptions);
 }

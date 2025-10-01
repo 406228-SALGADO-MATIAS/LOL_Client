@@ -82,7 +82,7 @@ function renderSidebar(data) {
     div.innerHTML = `
       <img src="${champ.imageSquare}" alt="${champ.name}" />
       <p>${champ.name}</p>
-      <span>Use ratio: ${champ.useRatio}%</span>
+      <span>${champ.useRatio}%</span>
     `;
     topChampsContainer.appendChild(div);
   });
@@ -117,7 +117,9 @@ function renderSidebar(data) {
 
 // ----------------- Render Cards -----------------
 function renderMatchCards(matches) {
-  const existingCards = Array.from(cardsSection.querySelectorAll(".match-card"));
+  const existingCards = Array.from(
+    cardsSection.querySelectorAll(".match-card")
+  );
 
   // Si no hay matches → desaparecer las cards actuales
   if (!matches || matches.length === 0) {
@@ -201,3 +203,13 @@ document.addEventListener("DOMContentLoaded", () => {
   toggleRoleSelectByGameType(currentGameType);
   loadMatches();
 });
+
+// Integración con searchUser.js
+window.onUserSelected = async function (userId) {
+  window.searchedUserId = userId; // persistencia
+  // NO resetear currentGameType → respetamos el tab activo
+  // currentGameType = null; // <-- quitamos esta línea
+
+  const { role, style } = getCurrentFilters();
+  await loadMatches(currentGameType, role, style);
+};

@@ -491,6 +491,62 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public List<UserProfileDTO> findUsersByNickNameAndRank(String nickname, UserRankTier rankTier) {
+        List<UserEntity> users;
+
+        if (rankTier == UserRankTier.Unranked) {
+            // Usuarios sin rank
+            users = userRepository.findByRankIsNull().stream()
+                    .filter(u -> u.getNickname() != null && u.getNickname().toLowerCase().contains(nickname.toLowerCase()))
+                    .toList();
+        } else {
+            // Usuarios con rank
+            RankTierEntity rank = getRankByName(rankTier.name());
+            users = userRepository.findByRank(rank).stream()
+                    .filter(u -> u.getNickname() != null && u.getNickname().toLowerCase().contains(nickname.toLowerCase()))
+                    .toList();
+        }
+
+        if (users.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Did not find users with nickname containing '" + nickname + "' and rank " + rankTier.name());
+        }
+
+        return users.stream()
+                .map(dtoBuilder::buildUserProfileDTO)
+                .toList();
+    }
+
+    @Override
+    public List<UserProfileDTO> findUsersByNicknameAndRankAndServer(String nickname, UserRankTier rankTier, ServerOption serverOption) {
+        ServerRegionEntity server = getServerByName(serverOption.getFullName());
+        List<UserEntity> users;
+
+        if (rankTier == UserRankTier.Unranked) {
+            // Usuarios sin rank, filtrados por server
+            users = userRepository.findByRankIsNullAndServer(server).stream()
+                    .filter(u -> u.getNickname() != null && u.getNickname().toLowerCase().contains(nickname.toLowerCase()))
+                    .toList();
+        } else {
+            // Usuarios con rank, filtrados por server
+            RankTierEntity rank = getRankByName(rankTier.name());
+            users = userRepository.findByRankAndServer(rank, server).stream()
+                    .filter(u -> u.getNickname() != null && u.getNickname().toLowerCase().contains(nickname.toLowerCase()))
+                    .toList();
+        }
+
+        if (users.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Did not find users with nickname containing '" + nickname + "', rank " + rankTier.name() + " on server " + serverOption.name());
+        }
+
+        return users.stream()
+                .map(dtoBuilder::buildUserProfileDTO)
+                .toList();
+    }
+
+
     private RankTierEntity getRankByName(String rankname)
     {
         Optional<RankTierEntity> optionalRankTier =

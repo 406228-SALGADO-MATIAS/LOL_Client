@@ -88,34 +88,46 @@ async function doSearch() {
   }
 
   try {
-    // Ver qué server está seleccionado
     const selectedServer = serverSelect.value;
+    const selectedRank = rankSelect.value;
 
-    let url;
-    if (selectedServer) {
-      // 👉 Con server elegido
+    let url = "";
+
+    if (selectedRank && selectedServer) {
+      // Nickname + Rank + Server
+      url = `http://localhost:8080/users/findUsers/nickname/rankTierAndServer?nickname=${encodeURIComponent(
+        query
+      )}&rankTier=${encodeURIComponent(
+        selectedRank
+      )}&server=${encodeURIComponent(selectedServer)}`;
+    } else if (selectedRank) {
+      // Nickname + Rank
+      url = `http://localhost:8080/users/findUsers/nickname/rankTier?nickname=${encodeURIComponent(
+        query
+      )}&rankTier=${encodeURIComponent(selectedRank)}`;
+    } else if (selectedServer) {
+      // Nickname + Server
       url = `http://localhost:8080/users/findUsers/nicknameAndserver?nickname=${encodeURIComponent(
         query
-      )}&serverOption=${selectedServer}`;
+      )}&serverOption=${encodeURIComponent(selectedServer)}`;
     } else {
-      // 👉 Sin server (búsqueda general)
+      // Solo nickname
       url = `http://localhost:8080/users/findUsers/nickname/${encodeURIComponent(
         query
       )}`;
     }
 
     const res = await fetch(url);
-
     if (!res.ok) throw new Error("Error al buscar usuarios");
     let usuarios = await res.json();
 
-    // filtrar usuario original
+    // Filtrar usuario original
     usuarios = usuarios.filter((u) => String(u.id) !== String(originalUserId));
 
     if (usuarios.length > 0) {
       usuarios
         .slice(0, MAX_RESULTS)
-        .forEach((u) => results.appendChild(renderUserResult(u, ranksCache)));
+        .forEach((u) => results.appendChild(renderUserResult(u)));
     } else {
       results.appendChild(renderNoResults());
     }
@@ -136,6 +148,15 @@ input.addEventListener("input", () => {
 // 👉 escuchar cambio en el serverSelect
 serverSelect.addEventListener("change", () => {
   // si hay algo escrito, relanzamos búsqueda con el nuevo filtro
+  if (input.value.trim().length > 0) {
+    doSearch();
+  }
+});
+
+// Dropdown rank
+const rankSelect = document.getElementById("rankSelect");
+
+rankSelect.addEventListener("change", () => {
   if (input.value.trim().length > 0) {
     doSearch();
   }
@@ -194,38 +215,46 @@ if (btnReturnProfile) {
     const transition = document.querySelector(".page-transition");
     transition.classList.remove("hidden");
 
+    // Reset búsqueda temporal
     window.searchedUserId = null;
-    sessionStorage.removeItem("tempUserId"); // borrar persistencia
+    sessionStorage.removeItem("tempUserId");
     updateReturnButton();
 
     setTimeout(() => {
-      // Resume de otros módulos
+      window.originalUserId = sessionStorage.getItem("userId") || null;
+
+      // --- Top Profile ---
       if (typeof loadTopProfile === "function") {
-        const originalId = sessionStorage.getItem("userId");
-        loadTopProfile(originalId);
-        loadTopChampions(originalId);
-        loadRanks(originalId);
+        loadTopProfile(window.originalUserId);
+        loadTopChampions(window.originalUserId);
+        loadRanks(window.originalUserId);
       }
 
-      // Stats: reset y ocultar preview solo si estamos en stats.html
+      // --- Stats ---
       if (
         typeof loadStats === "function" &&
         typeof renderSearchedUserPreview === "function"
       ) {
-        // Ocultamos preview del usuario buscado
         if (searchedUserPreview) {
           searchedUserPreview.style.display = "none";
           searchedUserPreview.innerHTML = "";
         }
-
-        // Cargamos stats del usuario original
         loadStats(window.originalUserId, gameFilter.value, roleFilter.value);
+      }
+
+      // --- Matches ---
+      if (typeof loadMatches === "function") {
+        // No resetear currentGameType, usamos el activo
+        toggleRoleSelectByGameType(currentGameType);
+        const { role, style } = getCurrentFilters();
+        loadMatches(currentGameType, role, style);
       }
 
       transition.classList.add("hidden");
     }, 200);
   });
 }
+
 
 window.onUserSelected =
   window.onUserSelected ||

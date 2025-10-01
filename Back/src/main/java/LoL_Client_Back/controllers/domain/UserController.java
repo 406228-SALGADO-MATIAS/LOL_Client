@@ -150,6 +150,25 @@ public class UserController {
         return ResponseEntity.ok((userService.findUsersByServer(option)));
     }
 
+    @GetMapping("/findUsers/nickname/rankTier")
+    public ResponseEntity<List<UserProfileDTO>> findUsersByNicknameAndRank(
+            @RequestParam String nickname,
+            @RequestParam UserRankTier rankTier
+    ) {
+        List<UserProfileDTO> users = userService.findUsersByNickNameAndRank(nickname, rankTier);
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/findUsers/nickname/rankTierAndServer")
+    public ResponseEntity<List<UserProfileDTO>> findUsersByNicknameRankAndServer(
+            @RequestParam String nickname,
+            @RequestParam UserRankTier rankTier,
+            @RequestParam ServerOption server
+    ) {
+        List<UserProfileDTO> users = userService.findUsersByNicknameAndRankAndServer(nickname, rankTier, server);
+        return ResponseEntity.ok(users);
+    }
+
     @PutMapping("/updateUser/{id}")
     public ResponseEntity<UserMatchesDTO> putUser (@PathVariable Long id,
                                                    @RequestBody UserDTO userDTO,
