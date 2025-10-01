@@ -76,7 +76,25 @@ function renderSidebar(data) {
     ".top-champions .champions-row"
   );
   topChampsContainer.innerHTML = "";
-  (data.top3Champions || []).forEach((champ) => {
+
+  // Tomamos los campeones del backend, si vienen
+  let topChamps = data.top3Champions || [];
+
+  // Ordenar de mayor a menor useRatio
+  topChamps.sort((a, b) => (b.useRatio || 0) - (a.useRatio || 0));
+
+  // Rellenar hasta 3 si faltan
+  while (topChamps.length < 3) {
+    topChamps.push({
+      name: "-",
+      imageSquare:
+        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/profileIcons/none.jpg",
+      useRatio: 0,
+    });
+  }
+
+  // Crear los divs
+  topChamps.forEach((champ) => {
     const div = document.createElement("div");
     div.classList.add("champion");
     div.innerHTML = `
@@ -207,9 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
 // Integración con searchUser.js
 window.onUserSelected = async function (userId) {
   window.searchedUserId = userId; // persistencia
-  // NO resetear currentGameType → respetamos el tab activo
-  // currentGameType = null; // <-- quitamos esta línea
-
   const { role, style } = getCurrentFilters();
   await loadMatches(currentGameType, role, style);
 };
