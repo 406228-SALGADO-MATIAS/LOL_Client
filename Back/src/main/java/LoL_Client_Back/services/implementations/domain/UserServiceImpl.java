@@ -509,7 +509,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (users.isEmpty()) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
 
         return users.stream()
@@ -536,7 +536,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (users.isEmpty()) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
 
         return users.stream()

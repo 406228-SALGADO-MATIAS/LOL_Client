@@ -219,7 +219,7 @@
 
 /* clase para aparecer */
 .match-card.appear {
-  animation: fadeIn 0.3s ease forwards;
+  animation: fadeIn 0.18s ease forwards;
 }
 
 /* clase para desaparecer */
