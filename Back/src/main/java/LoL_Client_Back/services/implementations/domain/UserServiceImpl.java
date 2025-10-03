@@ -509,8 +509,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (users.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Did not find users with nickname containing '" + nickname + "' and rank " + rankTier.name());
+            return Collections.emptyList();
         }
 
         return users.stream()
@@ -537,8 +536,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (users.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Did not find users with nickname containing '" + nickname + "', rank " + rankTier.name() + " on server " + serverOption.name());
+            return Collections.emptyList();
         }
 
         return users.stream()

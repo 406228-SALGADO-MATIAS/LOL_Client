@@ -105,31 +105,49 @@ function renderSidebar(data) {
     topChampsContainer.appendChild(div);
   });
 
+  // -------------------------------
   // Roles
+  // -------------------------------
   const roles = data.rolesPlayed;
-  const rolesItems = sidebar.querySelectorAll(
-    ".recent-activity .ratios-group:nth-of-type(1) .ratio-item span"
-  );
+  const roleKeys = [
+    "topRatio",
+    "jgRatio",
+    "midRatio",
+    "adcRatio",
+    "supportRatio",
+  ];
+  const roleBars = sidebar.querySelectorAll(".roles-bars .bar");
+
   if (roles) {
-    rolesItems[0].textContent = `Top (${roles.topRatio}%)`;
-    rolesItems[1].textContent = `Jg (${roles.jgRatio}%)`;
-    rolesItems[2].textContent = `Mid (${roles.midRatio}%)`;
-    rolesItems[3].textContent = `Adc (${roles.adcRatio}%)`;
-    rolesItems[4].textContent = `Support (${roles.supportRatio}%)`;
+    roleKeys.forEach((key, i) => {
+      const value = roles[key] || 0;
+      const fill = roleBars[i].querySelector(".fill");
+      fill.style.height = `${value}%`;
+      roleBars[i].title = `${value}%`;
+    });
   }
 
+  // -------------------------------
   // Styles
+  // -------------------------------
   const styles = data.stylesPlayed;
-  const stylesItems = sidebar.querySelectorAll(
-    ".recent-activity .ratios-group:nth-of-type(2) .ratio-item span"
-  );
+  const styleKeys = [
+    "fighterRatio",
+    "marksmanRatio",
+    "mageRatio",
+    "assassinRatio",
+    "tankRatio",
+    "supportRatio",
+  ];
+  const styleBars = sidebar.querySelectorAll(".styles-bars .bar");
+
   if (styles) {
-    stylesItems[0].textContent = `Fighter (${styles.fighterRatio}%)`;
-    stylesItems[1].textContent = `Marksman (${styles.marksmanRatio}%)`;
-    stylesItems[2].textContent = `Mage (${styles.mageRatio}%)`;
-    stylesItems[3].textContent = `Assassin (${styles.assassinRatio}%)`;
-    stylesItems[4].textContent = `Tank (${styles.tankRatio}%)`;
-    stylesItems[5].textContent = `Support (${styles.supportRatio}%)`;
+    styleKeys.forEach((key, i) => {
+      const value = styles[key] || 0;
+      const fill = styleBars[i].querySelector(".fill");
+      fill.style.height = `${value}%`;
+      styleBars[i].title = `${value}%`;
+    });
   }
 }
 

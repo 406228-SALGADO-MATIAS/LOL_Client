@@ -120,10 +120,9 @@ async function doSearch() {
     const res = await fetch(url);
     if (!res.ok) throw new Error("Error al buscar usuarios");
     let usuarios = await res.json();
-
     // Filtrar usuario original
     usuarios = usuarios.filter((u) => String(u.id) !== String(originalUserId));
-
+    console.log("Resultados:", usuarios.length);
     if (usuarios.length > 0) {
       usuarios
         .slice(0, MAX_RESULTS)
@@ -254,7 +253,6 @@ if (btnReturnProfile) {
     }, 200);
   });
 }
-
 
 window.onUserSelected =
   window.onUserSelected ||
