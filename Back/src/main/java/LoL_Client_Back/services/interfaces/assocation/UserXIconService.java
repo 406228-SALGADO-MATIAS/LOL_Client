@@ -19,4 +19,5 @@ public interface UserXIconService {
     String giveIconsToAllUsers();
     UserXIconDTO unlockIcon (Long idUser, Long idIcon);
     List<UpdateStatementDTO> getUpdateUsers ();
+    void unlockAllIcons (Long idUser);
 }

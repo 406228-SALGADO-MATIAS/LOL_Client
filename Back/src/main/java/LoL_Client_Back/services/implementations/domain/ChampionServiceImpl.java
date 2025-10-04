@@ -356,9 +356,16 @@ public class ChampionServiceImpl implements ChampionService {
                championsOwnedIds.add(u.getChampion().getId());
             }
 
-            return dtoBuilder.buildChampionDTOList(championRepository.findByIdNotIn(championsOwnedIds),
-                    "The user has all the champions, " +
-                            "there are no champions available for acquisition");
+            List<ChampionEntity> championsNotOwned =
+                    championRepository.findByIdNotIn(championsOwnedIds);
+
+            List<ChampionDTO> dtoList = new ArrayList<>();
+            for (ChampionEntity  c : championsNotOwned)
+            {
+                dtoList.add(dtoBuilder.buildChampionDTO(c));
+            }
+            return dtoList;
+
         }
         return dtoBuilder.buildChampionDTOList
                 (championRepository.findAll(),"There are no champions");

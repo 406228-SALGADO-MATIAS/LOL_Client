@@ -99,4 +99,11 @@ public class UserXChampionController {
         UserXChampionDTO dto = service.unlockChampion(idUser, idChampion);
         return ResponseEntity.ok(dto);
     }
+
+    @PostMapping("/unlockAllChampions/{idUser}")
+    public ResponseEntity<UserXChampionDTO> unlockAllChampions(@PathVariable Long idUser)
+    {
+        service.unlockAllChampions(idUser);
+        return ResponseEntity.noContent().build(); // 204
+    }
 }

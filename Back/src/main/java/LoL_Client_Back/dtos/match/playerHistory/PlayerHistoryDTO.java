@@ -33,7 +33,13 @@ public class PlayerHistoryDTO {
             return;
         }
 
-        int total = this.matches.size();
+        int total = 0;
+
+        for (PlayerMatchDTO match : this.matches)
+        {
+            if (match.getMap().equals("Summoners Rift"))
+                total++;
+        }
 
         long topCount = this.matches.stream().filter(m -> "TOP".equals(m.getRole())).count();
         long jgCount = this.matches.stream().filter(m -> "JUNGLE".equals(m.getRole())).count();

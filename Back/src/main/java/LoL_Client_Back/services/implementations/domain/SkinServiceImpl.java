@@ -163,8 +163,15 @@ public class SkinServiceImpl implements SkinService {
             for (UserXSkinEntity u : list) {
                 skinsOwnedIds.add(u.getSkin().getId());
             }
-            return dtoBuilder.buildSkinDTOList(skinRepository.findByIdNotIn(skinsOwnedIds),
-                    "The user with id \"+idUser +\" has all the skins");
+
+            List<SkinEntity> skinsAvailable =
+                    skinRepository.findByIdNotIn(skinsOwnedIds);
+            List<SkinDTO> dtos = new ArrayList<>();
+            for (SkinEntity s : skinsAvailable)
+            {
+                dtos.add(dtoBuilder.buildSkinDTO(s));
+            }
+            return dtos;
         }
         return dtoBuilder.buildSkinDTOList(skinRepository.findAll(),
                 "There are no skins in the database");
@@ -200,11 +207,14 @@ public class SkinServiceImpl implements SkinService {
                 .filter(skin -> !skinsOwnedIds.contains(skin.getId()))
                 .toList();
 
+        List<SkinDTO> dtoList = new ArrayList<>();
+
         if (filtered.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No available skins to purchase");
+            return dtoList;
         }
 
         // Return the list of skins the user can purchase
+
         return dtoBuilder.buildSkinDTOList(filtered,
                 "The user does have all the skins of the champions he owns");
     }

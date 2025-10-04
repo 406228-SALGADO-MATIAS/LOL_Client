@@ -22,7 +22,6 @@ import LoL_Client_Back.entities.association.UserXSkinEntity;
 import LoL_Client_Back.entities.domain.*;
 import LoL_Client_Back.entities.reference.PlayerMatchItemEntity;
 import LoL_Client_Back.entities.reference.ProfileIconEntity;
-import LoL_Client_Back.entities.reference.RankTierEntity;
 import LoL_Client_Back.entities.transaction.LootInventoryChampionsEntity;
 import LoL_Client_Back.entities.transaction.LootInventoryIconsEntity;
 import LoL_Client_Back.entities.transaction.LootInventorySkinsEntity;
@@ -31,7 +30,6 @@ import LoL_Client_Back.models.domain.User;
 import LoL_Client_Back.models.domain.UserMatches;
 import LoL_Client_Back.models.transaction.UserLoot;
 import LoL_Client_Back.repositories.association.UserXIconRepository;
-import LoL_Client_Back.repositories.reference.RankTierRepository;
 import LoL_Client_Back.services.interfaces.domain.UserMatchesService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -462,7 +460,7 @@ public class DTOBuilder
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,notFoundMsg);
     }
 
-    public List<ProfileIconDTO> buildDtoList (List<ProfileIconEntity> list, String errorMsg) {
+    public List<ProfileIconDTO> buildIconDtoList(List<ProfileIconEntity> list, String errorMsg) {
         if (!list.isEmpty()) {
             List<ProfileIconDTO> dtoList = new ArrayList<>();
             for (ProfileIconEntity i : list)

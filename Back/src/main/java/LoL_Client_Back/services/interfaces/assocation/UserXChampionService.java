@@ -19,4 +19,5 @@ public interface UserXChampionService {
     String giveChampionsToUsersWithNoChampions();
     UserXChampionDTO unlockChampion (Long idUser, Long idChampion);
     List<UpdateStatementDTO> updateUserProfiles ();
+    void unlockAllChampions(Long idUser);
 }

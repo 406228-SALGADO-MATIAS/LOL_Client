@@ -17,4 +17,5 @@ public interface UserXSkinService {
     UserXSkinDTO updateSkinBelongiong(Long idBelonging, Long idUser, Long idChampion);
     String giveSkinsToUsersWithout();
     UserXSkinDTO unlockSkin (Long idUser, Long idSkin);
+    void unlockAllSkins(Long idUser);
 }

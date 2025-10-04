@@ -3,7 +3,9 @@ package LoL_Client_Back.services.implementations.association;
 import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.UpdateStatementDTO;
 import LoL_Client_Back.dtos.association.UserXIconDTO;
+import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.association.UserXIconEntity;
+import LoL_Client_Back.entities.domain.ChampionEntity;
 import LoL_Client_Back.entities.domain.UserEntity;
 import LoL_Client_Back.entities.reference.ProfileIconEntity;
 import LoL_Client_Back.repositories.association.UserXIconRepository;
@@ -217,6 +219,27 @@ public class UserXIconServiceImpl implements UserXIconService {
     @Override
     public List<UpdateStatementDTO> getUpdateUsers() {
         return dtoBuilder.buildUpdateStatementDTOs(userRepository.findAll());
+    }
+
+    @Override
+    public void unlockAllIcons(Long idUser) {
+        Optional<UserEntity> optionalUser = userRepository.findById(idUser);
+        if (optionalUser.isEmpty())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User id "+idUser + " does not exists");
+        List<UserXIconEntity> userIcons = userXIconRepository.findByUser_Id(idUser);
+        List<Long> iconsOwnedIds = new ArrayList<>();
+        for (UserXIconEntity x : userIcons)
+        {
+            iconsOwnedIds.add(x.getIcon().getId());
+        }
+        List<ProfileIconEntity> championsToUnlock = iconRepository.findByIdNotIn(iconsOwnedIds);
+        for (ProfileIconEntity p : championsToUnlock)
+        {
+            UserXIconEntity x = new UserXIconEntity();
+            x.setUser(optionalUser.get());
+            x.setIcon(p);
+            userXIconRepository.save(x);
+        }
     }
 
 

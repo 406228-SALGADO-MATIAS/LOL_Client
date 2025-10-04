@@ -74,4 +74,9 @@ public class UserXSkinController {
         UserXSkinDTO dto = service.unlockSkin(idUser, idSkin);
         return ResponseEntity.ok(dto);
     }
+    @PostMapping("/unlockAllSkin/{idUser}")
+    public ResponseEntity<UserXSkinDTO> unlockAllSkins(@PathVariable Long idUser) {
+        service.unlockAllSkins(idUser);
+        return ResponseEntity.noContent().build();
+    }
 }

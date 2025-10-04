@@ -247,6 +247,43 @@ public class UserXSkinServiceImpl implements UserXSkinService {
         return dtoBuilder.buildUserXSkinDTO(userXSkinRepository.save(userXSkin));
     }
 
+    @Transactional
+    @Override
+    public void unlockAllSkins(Long idUser) {
+        UserEntity user = userRepository.findById(idUser)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST, "User id " + idUser + " does not exist"));
+
+        // Campeones que posee el usuario
+        List<UserXChampionEntity> userXChampionEntities = userXChampionRepository.findByUser_Id(idUser);
+        List<Long> championsOwnedIds = userXChampionEntities.stream()
+                .map(x -> x.getChampion().getId())
+                .toList();
+
+        if (championsOwnedIds.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "The user does not own any champions, so no skins can be unlocked");
+        }
+
+        // Skins que el usuario ya tiene
+        List<UserXSkinEntity> userOwnedSkins = userXSkinRepository.findByUser_Id(idUser);
+        Set<Long> ownedSkinIds = userOwnedSkins.stream()
+                .map(s -> s.getSkin().getId())
+                .collect(Collectors.toSet());
+
+        // Skins de los campeones que posee el usuario
+        List<SkinEntity> availableSkins = skinRepository.findByChampion_IdIn(championsOwnedIds);
+
+        for (SkinEntity skin : availableSkins) {
+            if (!ownedSkinIds.contains(skin.getId())) {
+                UserXSkinEntity newUserSkin = new UserXSkinEntity();
+                newUserSkin.setUser(user);
+                newUserSkin.setSkin(skin);
+                newUserSkin.setAdquisitionDate(LocalDateTime.now());
+                userXSkinRepository.save(newUserSkin);
+            }
+        }
+    }
 
     private void verifyChampionBelonging(Long idUser, Long idChampion) {
         try {

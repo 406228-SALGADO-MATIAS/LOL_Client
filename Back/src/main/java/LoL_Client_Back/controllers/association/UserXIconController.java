@@ -76,6 +76,12 @@ public class UserXIconController {
         return ResponseEntity.ok(dto);
     }
 
+    @PostMapping("/unlockAllIcons/{idUser}")
+    public ResponseEntity<UserXIconDTO> unlockAllIcons(@PathVariable Long idUser) {
+        service.unlockAllIcons(idUser);
+        return ResponseEntity.noContent().build(); // 204
+    }
+
     @GetMapping(value = "/generateIconUpdates", produces = "text/plain")
     public ResponseEntity<String> generateIconUpdates() {
         try {

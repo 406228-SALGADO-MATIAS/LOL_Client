@@ -274,7 +274,6 @@ public class UserXChampionServiceImpl implements UserXChampionService {
             Collections.shuffle(userXChampionEntities);
             ChampionEntity champion = userXChampionEntities.get(0).getChampion();
 
-            // Aquí ponemos la URL entre comillas simples y escapamos comillas internas
             String imageUrl = champion.getImage().replace("'", "''");
             String sql = "UPDATE users SET background_image = '" + imageUrl + "' WHERE id = " + user.getId();
 
@@ -285,6 +284,27 @@ public class UserXChampionServiceImpl implements UserXChampionService {
         return dtos;
     }
 
+    @Override
+    public void unlockAllChampions(Long idUser) {
+
+        Optional<UserEntity> optionalUser = userRepository.findById(idUser);
+        if (optionalUser.isEmpty())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User id "+idUser + " does not exists");
+        List<UserXChampionEntity> userXChampionEntities = userXChampionRepository.findByUser_Id(idUser);
+        List<Long> championsOwnedIds = new ArrayList<>();
+        for (UserXChampionEntity x : userXChampionEntities)
+        {
+            championsOwnedIds.add(x.getChampion().getId());
+        }
+        List<ChampionEntity> championsToUnlock = championRepository.findByIdNotIn(championsOwnedIds);
+        for (ChampionEntity c : championsToUnlock)
+        {
+            UserXChampionEntity x = new UserXChampionEntity();
+            x.setUser(optionalUser.get());
+            x.setChampion(c);
+            userXChampionRepository.save(x);
+        }
+    }
 
 
     private ChampionEntity randomFrom(List<ChampionEntity> list, Random random) {
