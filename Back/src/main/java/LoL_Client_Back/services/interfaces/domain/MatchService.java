@@ -5,6 +5,7 @@ import LoL_Client_Back.dtos.enums.UserRankTier;
 import LoL_Client_Back.dtos.match.MatchDTO;
 import LoL_Client_Back.dtos.match.playerHistory.PlayerHistoryDTO;
 import LoL_Client_Back.dtos.match.playerHistory.PlayerMatchDTO;
+import LoL_Client_Back.dtos.match.playerMatch.UserMatchDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public interface MatchService {
     void delete (Long id);
     String generateRankedGames();
     PlayerHistoryDTO getUserMatchesHistory (Long idUser, String gameType, String optionalRole, String optionalStyle);
+    UserMatchDTO getUserMatch (Long idUser, Long idMatch);
 
 
 }

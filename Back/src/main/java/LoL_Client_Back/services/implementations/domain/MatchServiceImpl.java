@@ -6,6 +6,7 @@ import LoL_Client_Back.dtos.enums.UserRankTier;
 import LoL_Client_Back.dtos.match.MatchDTO;
 import LoL_Client_Back.dtos.match.playerHistory.PlayerHistoryDTO;
 import LoL_Client_Back.dtos.match.playerHistory.PlayerMatchDTO;
+import LoL_Client_Back.dtos.match.playerMatch.UserMatchDTO;
 import LoL_Client_Back.dtos.user.UserMatchesDTO;
 import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.domain.*;
@@ -360,6 +361,33 @@ public class MatchServiceImpl implements MatchService {
         history.buildPlayerHistoryDTO(details);
 
         return history;
+    }
+
+    @Override
+    public UserMatchDTO getUserMatch(Long idUser, Long idMatch) {
+
+        Optional<UserEntity> optionalUser = userRepository.findById(idUser);
+        Optional<MatchEntity> optionalMatch = matchRepository.findById(idMatch);
+
+        if (optionalUser.isEmpty() || optionalMatch.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The user id "+idUser+", or  the match id" +idMatch+" do not exists");
+
+        boolean isPlayerInMatch = false;
+        for (PlayerMatchDetailEntity detail : optionalMatch.get().getPlayerDetails())
+        {
+            if (detail.getUser().getId().equals(idUser))
+            {
+                isPlayerInMatch = true;
+                break;
+            }
+        }
+
+        if (!isPlayerInMatch)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"The user with id "+idUser+" did not play on the match id "+idMatch);
+
+        UserMatchDTO dto = new UserMatchDTO();
+        dto.buildUserMatchDto(optionalMatch.get(),optionalUser.get().getId());
+        return dto;
     }
 
 

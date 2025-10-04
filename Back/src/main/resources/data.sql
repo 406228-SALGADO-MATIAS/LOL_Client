@@ -41,12 +41,12 @@ INSERT INTO rank_tiers (id, image, rank, lp) VALUES
 (8, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Grandmaster.png?raw=true', 'Grandmaster', 1075),
 (9, 'https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Challenger.png?raw=true', 'Challenger', 1290);
 
-INSERT INTO roles VALUES
-(1, 'TOP'),
-(2, 'JUNGLE'),
-(3, 'MID'),
-(4, 'ADC'),
-(5, 'SUPPORT');
+INSERT INTO roles (id, role, role_img) VALUES
+(1, 'TOP', 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/top.png'),
+(2, 'JUNGLE', 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/jg.png'),
+(3, 'MID', 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/mid.png'),
+(4, 'ADC','https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/styles/adc.png'),
+(5, 'SUPPORT', 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/support.png');
 
 INSERT INTO server_regions VALUES
 (1, 'North America (NA)'),
