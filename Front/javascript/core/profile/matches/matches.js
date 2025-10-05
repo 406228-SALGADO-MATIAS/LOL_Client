@@ -177,10 +177,34 @@ function renderMatchCards(matches) {
     return card;
   });
 
+  attachCardEvents();
+
   // Solo animar appear si el input está vacío
   if (!searchChampion.value.trim()) {
     animateCards(newCards, "appear", existingCards, matches);
   }
+}
+
+// ----------------- Vincular eventos de las cards -----------------
+function attachCardEvents() {
+  const userId = getActiveUserId();
+  if (!userId) {
+    console.warn("No hay userId activo para abrir modales");
+    return;
+  }
+
+  // Esperar a que el script de modal esté cargado (por si se carga después)
+  if (typeof openMatchModal !== "function") {
+    console.error("openMatchModal no está disponible");
+    return;
+  }
+
+  document.querySelectorAll(".match-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      const matchId = card.dataset.matchId;
+      openMatchModal(matchId, userId);
+    });
+  });
 }
 
 // ----------------- Listeners -----------------
