@@ -1,7 +1,7 @@
 /* ===============================
    MODAL OVERLAY
 =============================== */
-.match-modal-overlay {
+.mm-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
@@ -14,7 +14,7 @@
 /* ===============================
    MODAL BASE
 =============================== */
-.match-modal {
+.mm-modal {
   width: 85%;
   max-height: 90vh;
   background: #1c1c1c;
@@ -26,7 +26,7 @@
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
-.close-btn {
+.mm-close {
   position: absolute;
   top: 10px;
   right: 20px;
@@ -34,14 +34,14 @@
   cursor: pointer;
   color: #bbb;
 }
-.close-btn:hover {
+.mm-close:hover {
   color: #fff;
 }
 
 /* ===============================
    HEADER
 =============================== */
-.match-header {
+.mm-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,38 +51,38 @@
   margin-bottom: 1rem;
 }
 
-.match-result {
+.mm-result {
   font-size: 2rem;
   font-weight: bold;
 }
-.match-result.win {
+.mm-result.win {
   color: #4cd137;
 }
-.match-result.lose {
+.mm-result.lose {
   color: #e84118;
 }
 
-.match-map {
+.mm-map {
   text-align: center;
   font-size: 1.5rem;
   flex: 1;
 }
 
-.match-info div {
+.mm-info div {
   margin: 0.2rem 0;
 }
 
 /* ===============================
    NAVBAR
 =============================== */
-.match-nav {
+.mm-nav {
   display: flex;
   justify-content: center;
   gap: 1rem;
   margin-bottom: 1rem;
 }
 
-.match-nav button {
+.mm-nav button {
   background: #2f3640;
   color: #f5f6fa;
   border: none;
@@ -92,94 +92,182 @@
   transition: 0.2s;
 }
 
-.match-nav button.active {
+.mm-nav button.active {
   background: #718093;
 }
 
-.match-nav button:hover {
+.mm-nav button:hover {
   background: #636e72;
 }
 
 /* ===============================
    MAIN CONTENT
 =============================== */
-.match-main {
+.mm-main {
   padding: 1rem 0;
 }
 
-.teams-container {
+.mm-teams {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
 }
 
-.team-block {
+.mm-team {
   flex: 1;
   background: #2b2b2b;
   border-radius: 8px;
   padding: 1rem;
 }
 
-.team-header {
+.mm-team-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
 }
 
-.team-header h3 {
+.mm-team-header h3 {
   margin: 0;
 }
 
-.team-stats span {
+.mm-team-stats span {
   margin-left: 1rem;
 }
 
-.members-container {
+/* ===============================
+   MEMBERS (EQUIPO)
+=============================== */
+.mm-members {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 6px;
+  margin-top: 8px;
 }
 
-.member-card {
+/* --- Miembro individual --- */
+.mm-member {
   display: flex;
   align-items: center;
-  background: #1f1f1f;
+  justify-content: space-between;
+  background-color: rgba(25, 25, 25, 0.5);
   border-radius: 8px;
-  padding: 0.5rem;
+  padding: 6px 10px;
+  transition: background 0.2s ease;
 }
 
-.champ-square {
-  width: 64px;
-  height: 64px;
-  border-radius: 8px;
-  margin-right: 0.8rem;
+.mm-member:hover {
+  background-color: rgba(40, 40, 40, 0.7);
 }
 
-.member-info {
+/* --- Izquierda: campeón + nick + rol --- */
+.mm-member-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   flex: 1;
 }
 
-.member-info .nick {
-  font-weight: bold;
-  font-size: 1.1rem;
+.mm-champ-square {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  margin-right: 0.4rem;
+  object-fit: cover;
 }
 
-.items {
+.mm-member-id {
   display: flex;
-  gap: 0.2rem;
-  margin: 0.3rem 0;
+  align-items: center;
+  gap: 6px;
 }
 
-.item-slot img {
-  width: 32px;
-  height: 32px;
-  border-radius: 4px;
-}
-
-.stats-line {
+.mm-nick {
+  font-weight: 500;
   font-size: 0.9rem;
-  color: #ccc;
+}
+
+.mm-role-icon {
+  width: 23px;
+  height: 23px;
+}
+
+/* ===============================
+   CENTRO: ÍTEMS (con slots visibles)
+=============================== */
+.mm-member-center {
+  flex: 2;
   display: flex;
-  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.mm-items-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+  margin-top: 18px;
+}
+
+.mm-item-slot {
+  width: 35px;
+  height: 35px;
+  background: #333;
+  border-radius: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mm-item-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* ===============================
+   DERECHA: ESTADÍSTICAS
+=============================== */
+.mm-member-right {
+  flex: 1;
+  text-align: right;
+}
+
+.mm-stats-row {
+  margin-top: 2px;
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.mm-stat {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 20px;
+}
+
+/* ===============================
+   EQUIPOS DIFERENCIADOS
+=============================== */
+.mm-team.blue {
+  border: 2px solid #2980b9;
+  box-shadow: 0 0 10px rgba(41, 128, 185, 0.4);
+}
+
+.mm-team.red {
+  border: 2px solid #c23616;
+  box-shadow: 0 0 10px rgba(194, 54, 22, 0.4);
+}
+
+/* ===============================
+   COMING SOON (TAB GRÁFICOS)
+=============================== */
+.mm-coming-soon {
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 2rem;
+  color: #ccc;
 }

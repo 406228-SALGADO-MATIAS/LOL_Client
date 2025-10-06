@@ -1,5 +1,5 @@
 // ================================
-// modalMatch.js
+// matchModal.js (version aislada)
 // ================================
 
 // ----------- CREAR Y MOSTRAR MODAL -----------
@@ -9,7 +9,6 @@ async function openMatchModal(matchId, userId) {
     console.error("No se pudo obtener la partida");
     return;
   }
-
   createMatchModal(match);
 }
 
@@ -29,52 +28,44 @@ async function fetchMatchData(matchId, userId) {
 
 // ----------- CREAR MODAL GENERAL -----------
 function createMatchModal(match) {
-  // Remover modal anterior si existe
-  const existing = document.querySelector(".match-modal-overlay");
+  const existing = document.querySelector(".mm-overlay");
   if (existing) existing.remove();
 
-  // Overlay
   const overlay = document.createElement("div");
-  overlay.classList.add("match-modal-overlay");
+  overlay.classList.add("mm-overlay");
 
-  // Contenedor principal
   const modal = document.createElement("div");
-  modal.classList.add("match-modal");
+  modal.classList.add("mm-modal");
 
-  // Botón de cierre
   const closeBtn = document.createElement("span");
-  closeBtn.classList.add("close-btn");
+  closeBtn.classList.add("mm-close");
   closeBtn.innerHTML = "&times;";
   closeBtn.onclick = () => overlay.remove();
 
-  // Secciones
   const header = createHeaderSection(match);
   const nav = createNavSection();
   const content = createMainSection(match);
 
-  modal.appendChild(closeBtn);
-  modal.appendChild(header);
-  modal.appendChild(nav);
-  modal.appendChild(content);
+  modal.append(closeBtn, header, nav, content);
   overlay.appendChild(modal);
   document.body.appendChild(overlay);
 }
 
-// ----------- HEADER (Datos globales) -----------
+// ----------- HEADER -----------
 function createHeaderSection(match) {
   const header = document.createElement("div");
-  header.classList.add("match-header");
+  header.classList.add("mm-header");
 
   const result = document.createElement("div");
-  result.classList.add("match-result", match.win ? "win" : "lose");
+  result.classList.add("mm-result", match.win ? "win" : "lose");
   result.textContent = match.win ? "VICTORIA" : "DERROTA";
 
   const map = document.createElement("div");
-  map.classList.add("match-map");
+  map.classList.add("mm-map");
   map.textContent = match.map;
 
   const info = document.createElement("div");
-  info.classList.add("match-info");
+  info.classList.add("mm-info");
   info.innerHTML = `
     <div><b>Tipo:</b> ${match.gameType}</div>
     <div><b>Duración:</b> ${match.duration}</div>
@@ -86,10 +77,10 @@ function createHeaderSection(match) {
   return header;
 }
 
-// ----------- NAVBAR (Tabs: Stats / Gráficos) -----------
+// ----------- NAVBAR -----------
 function createNavSection() {
   const nav = document.createElement("div");
-  nav.classList.add("match-nav");
+  nav.classList.add("mm-nav");
 
   const statsBtn = document.createElement("button");
   statsBtn.textContent = "Estadísticas";
@@ -109,27 +100,27 @@ function switchTab(tab, activeBtn, inactiveBtn) {
   activeBtn.classList.add("active");
   inactiveBtn.classList.remove("active");
 
-  const content = document.querySelector(".match-main");
+  const content = document.querySelector(".mm-main");
   content.innerHTML = "";
 
   if (tab === "stats")
     content.appendChild(createTeamsSection(window.currentMatchData));
-  else content.innerHTML = "<div class='coming-soon'>📊 En desarrollo</div>";
+  else content.innerHTML = "<div class='mm-coming-soon'>📊 En desarrollo</div>";
 }
 
 // ----------- MAIN CONTENT -----------
 function createMainSection(match) {
-  window.currentMatchData = match; // Guardar para cambiar de tab sin refetch
+  window.currentMatchData = match;
   const main = document.createElement("div");
-  main.classList.add("match-main");
+  main.classList.add("mm-main");
   main.appendChild(createTeamsSection(match));
   return main;
 }
 
-// ----------- EQUIPOS (Blue / Red) -----------
+// ----------- EQUIPOS -----------
 function createTeamsSection(match) {
   const container = document.createElement("div");
-  container.classList.add("teams-container");
+  container.classList.add("mm-teams");
 
   const blue = createTeamBlock(match.blueTeam, "blue");
   const red = createTeamBlock(match.redTeam, "red");
@@ -141,13 +132,13 @@ function createTeamsSection(match) {
 // ----------- BLOQUE DE EQUIPO -----------
 function createTeamBlock(team, side) {
   const teamDiv = document.createElement("div");
-  teamDiv.classList.add("team-block", side);
+  teamDiv.classList.add("mm-team", side);
 
   const header = document.createElement("div");
-  header.classList.add("team-header");
+  header.classList.add("mm-team-header");
   header.innerHTML = `
     <h3>${side === "blue" ? "Equipo Azul" : "Equipo Rojo"}</h3>
-    <div class="team-stats">
+    <div class="mm-team-stats">
       <span>🗡️ ${team.kills}/${team.deaths}/${team.assists}</span>
       <span>💰 ${team.totalGold}</span>
       <span>🐉 ${team.totalFarm}</span>
@@ -155,35 +146,66 @@ function createTeamBlock(team, side) {
   `;
 
   const membersDiv = document.createElement("div");
-  membersDiv.classList.add("members-container");
+  membersDiv.classList.add("mm-members");
 
   team.members.forEach((p) => {
-    const card = document.createElement("div");
-    card.classList.add("member-card");
-
-    card.innerHTML = `
-      <img src="${p.squareChampion}" class="champ-square" alt="${p.champion}">
-      <div class="member-info">
-        <span class="nick">${p.nickName}</span>
-        <div class="items">
-          ${p.items
-            .map(
-              (i) =>
-                `<div class="item-slot"><img src="${i.image}" title="${i.itemName}" alt="${i.itemName}"></div>`
-            )
-            .join("")}
-        </div>
-        <div class="stats-line">
-          <span>🗡️ ${p.kills}/${p.deaths}/${p.assists}</span>
-          <span>🐉 ${p.totalFarm}</span>
-          <span>💰 ${p.totalGold}</span>
-        </div>
-      </div>
-    `;
-
+    const card = createMemberCard(p);
     membersDiv.appendChild(card);
   });
 
   teamDiv.append(header, membersDiv);
   return teamDiv;
+}
+
+// ----------- BLOQUE DE JUGADOR -----------
+function createMemberCard(p) {
+  const card = document.createElement("div");
+  card.classList.add("mm-member");
+
+  const left = document.createElement("div");
+  left.classList.add("mm-member-left");
+  left.innerHTML = `
+    <img src="${p.squareChampion}" class="mm-champ-square" alt="${p.champion}">
+    <div class="mm-member-id">
+      <span class="mm-nick">${p.nickName}</span>
+      <img src="${p.roleImg}" class="mm-role-icon" title="${p.role}" alt="${p.role}">
+    </div>
+  `;
+
+  const center = document.createElement("div");
+  center.classList.add("mm-member-center");
+
+  const itemsRow = document.createElement("div");
+  itemsRow.classList.add("mm-items-row");
+
+  for (let i = 0; i < 6; i++) {
+    const slot = document.createElement("div");
+    slot.classList.add("mm-item-slot");
+
+    const item = p.items[i];
+    if (item) {
+      const itemImg = document.createElement("img");
+      itemImg.src = item.image;
+      itemImg.alt = item.itemName;
+      itemImg.title = item.itemName;
+      slot.appendChild(itemImg);
+    }
+
+    itemsRow.appendChild(slot);
+  }
+
+  center.appendChild(itemsRow);
+
+  const right = document.createElement("div");
+  right.classList.add("mm-member-right");
+  right.innerHTML = `
+    <div class="mm-stats-row">
+      <div class="mm-stat"><span>🗡️</span>${p.kills}/${p.deaths}/${p.assists}</div>
+      <div class="mm-stat"><span>🐉</span>${p.totalFarm}</div>
+      <div class="mm-stat"><span>💰</span>${p.totalGold}</div>
+    </div>
+  `;
+
+  card.append(left, center, right);
+  return card;
 }
