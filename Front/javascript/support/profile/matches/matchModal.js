@@ -10,6 +10,14 @@ async function openMatchModal(matchId, userId) {
     return;
   }
   createMatchModal(match);
+  // Destacar la card del usuario
+  const userCard = document.querySelector(
+    `.mm-member[data-userid='${userId}']`
+  );
+  if (userCard) {
+    userCard.style.border = "1px solid #ffbb009c"; // ejemplo: borde dorado
+    userCard.style.boxShadow = "0 0 10px #635400ff";
+  }
 }
 
 // ----------- FETCH DE DATOS -----------
@@ -56,25 +64,61 @@ function createHeaderSection(match) {
   const header = document.createElement("div");
   header.classList.add("mm-header");
 
+  // --- Resultado (Victoria / Derrota) ---
   const result = document.createElement("div");
   result.classList.add("mm-result", match.win ? "win" : "lose");
   result.textContent = match.win ? "VICTORIA" : "DERROTA";
+
+  // --- Fila central con los datos ---
+  const infoRow = document.createElement("div");
+  infoRow.classList.add("mm-header-row");
+
+  // Separar fecha y hora
+  const [fecha, hora] = match.date.split(" ");
 
   const map = document.createElement("div");
   map.classList.add("mm-map");
   map.textContent = match.map;
 
-  const info = document.createElement("div");
-  info.classList.add("mm-info");
-  info.innerHTML = `
-    <div><b>Tipo:</b> ${match.gameType}</div>
-    <div><b>Duración:</b> ${match.duration}</div>
-    <div><b>Fecha:</b> ${match.date}</div>
-    <div><b>Servidor:</b> ${match.server}</div>
-  `;
+  const type = document.createElement("div");
+  type.classList.add("mm-detail");
+  type.textContent = match.gameType;
 
-  header.append(result, map, info);
+  const duration = document.createElement("div");
+  duration.classList.add("mm-detail");
+  duration.textContent = match.duration;
+
+  const date = document.createElement("div");
+  date.classList.add("mm-detail");
+  date.textContent = `${fecha} | ${hora}`;
+
+  const server = document.createElement("div");
+  server.classList.add("mm-detail");
+  server.textContent = `Servidor: ${match.server}`;
+
+  // Agregar con guiones entre los valores
+  infoRow.append(
+    map,
+    createSeparator(),
+    type,
+    createSeparator(),
+    duration,
+    createSeparator(),
+    date,
+    createSeparator(),
+    server
+  );
+
+  header.append(result, infoRow);
   return header;
+}
+
+// --- Separador visual ---
+function createSeparator() {
+  const sep = document.createElement("span");
+  sep.textContent = " - ";
+  sep.classList.add("mm-separator");
+  return sep;
 }
 
 // ----------- NAVBAR -----------
@@ -136,12 +180,16 @@ function createTeamBlock(team, side) {
 
   const header = document.createElement("div");
   header.classList.add("mm-team-header");
+
+  // Nuevo layout horizontal y centrado con títulos
   header.innerHTML = `
-    <h3>${side === "blue" ? "Equipo Azul" : "Equipo Rojo"}</h3>
-    <div class="mm-team-stats">
-      <span>🗡️ ${team.kills}/${team.deaths}/${team.assists}</span>
-      <span>💰 ${team.totalGold}</span>
-      <span>🐉 ${team.totalFarm}</span>
+    <div class="mm-team-info">
+      <h3>${side === "blue" ? "Equipo Azul" : "Equipo Rojo"}</h3>
+      <div class="mm-team-stats">
+        <span title="KDA">🗡️ ${team.kills}/${team.deaths}/${team.assists}</span>
+        <span title="Farm">🐉 ${team.totalFarm}</span>
+        <span title="Gold">💰 ${team.totalGold}</span>
+      </div>
     </div>
   `;
 
@@ -162,10 +210,13 @@ function createMemberCard(p) {
   const card = document.createElement("div");
   card.classList.add("mm-member");
 
+  // Asignar el userId como atributo
+  card.dataset.userid = p.userId;
+
   const left = document.createElement("div");
   left.classList.add("mm-member-left");
   left.innerHTML = `
-    <img src="${p.squareChampion}" class="mm-champ-square" alt="${p.champion}">
+    <img src="${p.squareChampion}" class="mm-champ-square" alt="${p.champion}" title="${p.champion}">
     <div class="mm-member-id">
       <span class="mm-nick">${p.nickName}</span>
       <img src="${p.roleImg}" class="mm-role-icon" title="${p.role}" alt="${p.role}">
@@ -200,9 +251,15 @@ function createMemberCard(p) {
   right.classList.add("mm-member-right");
   right.innerHTML = `
     <div class="mm-stats-row">
-      <div class="mm-stat"><span>🗡️</span>${p.kills}/${p.deaths}/${p.assists}</div>
-      <div class="mm-stat"><span>🐉</span>${p.totalFarm}</div>
-      <div class="mm-stat"><span>💰</span>${p.totalGold}</div>
+      <div class="mm-stat">
+        <span title="KDA">🗡️</span>${p.kills}/${p.deaths}/${p.assists}
+      </div>
+      <div class="mm-stat">
+        <span title="Farm">🐉</span>${p.totalFarm}
+      </div>
+      <div class="mm-stat">
+        <span title="Gold">💰</span>${p.totalGold}
+      </div>
     </div>
   `;
 

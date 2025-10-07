@@ -13,7 +13,7 @@ public class PlayerDTO {
     @Lob
     private String squareChampion;
     private String nickName;
-    private String role = "none";
+    private String role = "Aram - No role";
     @Lob
     private String roleImg = "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/mid.png";
     private List<PlayerMatchItemDTO> items;
