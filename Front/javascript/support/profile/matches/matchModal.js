@@ -43,7 +43,7 @@ function createMatchModal(match) {
   const closeBtn = document.createElement("span");
   closeBtn.classList.add("mm-close");
   closeBtn.innerHTML = "&times;";
-  closeBtn.onclick = () => overlay.remove();
+  closeBtn.onclick = () => closeModal(); // usa la misma función de cierre
 
   const header = createHeaderSection(match);
   const nav = createNavSection();
@@ -52,6 +52,12 @@ function createMatchModal(match) {
   modal.append(closeBtn, header, nav, content);
   overlay.appendChild(modal);
   document.body.appendChild(overlay);
+
+  // 🔥 Forzar reflow para activar la animación de entrada
+  requestAnimationFrame(() => overlay.classList.add("show"));
+
+  // 🔥 Habilitar cierre al hacer click fuera
+  enableModalCloseOnOutsideClick();
 }
 
 // ----------- HEADER -----------
@@ -108,14 +114,6 @@ function createHeaderSection(match) {
   return header;
 }
 
-// --- Separador visual ---
-function createSeparator() {
-  const sep = document.createElement("span");
-  sep.textContent = " - ";
-  sep.classList.add("mm-separator");
-  return sep;
-}
-
 // ----------- NAVBAR -----------
 function createNavSection() {
   const nav = document.createElement("div");
@@ -142,9 +140,13 @@ function switchTab(tab, activeBtn, inactiveBtn) {
   const content = document.querySelector(".mm-main");
   content.innerHTML = "";
 
-  if (tab === "stats")
+  if (tab === "stats") {
     content.appendChild(createTeamsSection(window.currentMatchData));
-  else content.innerHTML = "<div class='mm-coming-soon'>📊 En desarrollo</div>";
+  } else if (tab === "graphics") {
+    content.appendChild(createGraphsSection(window.currentMatchData)); // <- aquí
+  }
+
+  highlightMemberCard();
 }
 
 // ----------- MAIN CONTENT -----------
@@ -281,77 +283,4 @@ function createMemberRight(p) {
     </div>
   `;
   return right;
-}
-
-function highlightMemberCard() {
-  const allMembers = document.querySelectorAll(".mm-member");
-
-  allMembers.forEach((card) => {
-    const uid = card.dataset.userid;
-
-    // Resetear todos los borders
-    card.style.border = "1px solid transparent";
-    card.style.boxShadow = "none";
-
-    // Caso 1: hay searchedUserId
-    if (window.searchedUserId) {
-      if (String(uid) === String(window.searchedUserId)) {
-        card.style.border = "2px solid #ffbb00cb"; // dorado
-        card.style.boxShadow = "0 0 10px #635400ff";
-      } else if (String(uid) === String(window.originalUserId)) {
-        card.style.border = "2px solid white"; // blanco
-        card.style.boxShadow = "0 0 10px #808080ff";
-      }
-    }
-    // Caso 2: no hay searchedUserId → original es dorado
-    else if (String(uid) === String(window.originalUserId)) {
-      card.style.border = "2px solid #ffbb009c"; // dorado
-      card.style.boxShadow = "0 0 10px #635400ff";
-    }
-  });
-}
-
-// ----------- LÓGICA DE CLICK EN EL NICK -----------
-async function handleNickClick(userId) {
-  const transition = document.querySelector(".page-transition");
-  if (!transition) return;
-
-  // Mostrar la transición
-  transition.classList.remove("hidden");
-
-  // Esperar a que la transición termine (150ms)
-  await new Promise((resolve) => setTimeout(resolve, 150));
-
-  // Lógica de selección/deselección
-  if (String(userId) === String(window.originalUserId)) {
-    window.searchedUserId = null;
-    sessionStorage.removeItem("tempUserId");
-  } else {
-    window.searchedUserId = userId;
-    sessionStorage.setItem("tempUserId", userId);
-  }
-
-  // **Resaltar la tarjeta correcta**
-  highlightMemberCard();
-
-  // Actualizar botón de retorno
-  const btn = document.getElementById("btnReturnProfile");
-  if (btn) {
-    btn.style.display =
-      window.searchedUserId && window.searchedUserId !== window.originalUserId
-        ? "inline-block"
-        : "none";
-  }
-
-  // Ejecutar la carga principal
-  if (typeof window.onUserSelected === "function") {
-    await window.onUserSelected(window.searchedUserId);
-  }
-
-  // Cerrar modal
-  const overlay = document.querySelector(".mm-overlay");
-  if (overlay) overlay.remove();
-
-  // Ocultar la transición
-  transition.classList.add("hidden");
 }

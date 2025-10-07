@@ -4,12 +4,12 @@
 .mm-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
-  margin-top: 95px;
+  z-index: 10000; /* Más alto que bg-overlay o page-transition */
+  margin-top: 35px;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 /* ===============================
@@ -18,7 +18,7 @@
 .mm-modal {
   width: 90vw;
   max-height: 90vh;
-  background: #0f1620;
+  background: #0f1620f9;
   border-radius: 1rem;
   overflow-y: auto;
   padding: 1rem 2rem;
@@ -37,6 +37,28 @@
 }
 .mm-close:hover {
   color: #fff;
+}
+
+/* ===============================
+   ANIMACIÓN DE MODAL
+=============================== */
+
+.mm-overlay {
+  opacity: 1;
+  transform: scale(0.85);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: center center;
+}
+
+.mm-overlay.show {
+  transform: scale(1);
+}
+
+.mm-overlay.hide {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.25s ease;
 }
 
 /* ===============================
@@ -327,4 +349,43 @@
   font-size: 1.5rem;
   padding: 2rem;
   color: #ccc;
+}
+
+.mm-graphs-header {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.mm-graph-option {
+  font-size: 0.9rem;
+  color: #ccc;
+  cursor: pointer;
+}
+.mm-graph-option input {
+  margin-right: 4px;
+}
+
+.mm-graph-bar-wrapper {
+  display: flex;
+  align-items: flex-end;
+  height: 80px;
+  width: 40px;
+  justify-content: center;
+}
+
+.mm-graph-bar {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  width: 10px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.mm-graph-fill {
+  background: linear-gradient(180deg, #0af, #09f);
+  width: 100%;
+  height: 0%;
+  transition: height 0.5s ease;
 }
