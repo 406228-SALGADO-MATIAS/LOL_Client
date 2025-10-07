@@ -11,13 +11,8 @@ async function openMatchModal(matchId, userId) {
   }
   createMatchModal(match);
   // Destacar la card del usuario
-  const userCard = document.querySelector(
-    `.mm-member[data-userid='${userId}']`
-  );
-  if (userCard) {
-    userCard.style.border = "1px solid #ffbb009c"; // ejemplo: borde dorado
-    userCard.style.boxShadow = "0 0 10px #635400ff";
-  }
+
+  highlightMemberCard();
 }
 
 // ----------- FETCH DE DATOS -----------
@@ -205,14 +200,22 @@ function createTeamBlock(team, side) {
   return teamDiv;
 }
 
-// ----------- BLOQUE DE JUGADOR -----------
+// ----------- BLOQUE PRINCIPAL -----------
 function createMemberCard(p) {
   const card = document.createElement("div");
   card.classList.add("mm-member");
-
-  // Asignar el userId como atributo
   card.dataset.userid = p.userId;
 
+  const left = createMemberLeft(p);
+  const center = createMemberCenter(p);
+  const right = createMemberRight(p);
+
+  card.append(left, center, right);
+  return card;
+}
+
+// ----------- BLOQUE IZQUIERDO (Nick + Campeón + Rol) -----------
+function createMemberLeft(p) {
   const left = document.createElement("div");
   left.classList.add("mm-member-left");
   left.innerHTML = `
@@ -223,6 +226,17 @@ function createMemberCard(p) {
     </div>
   `;
 
+  const nickSpan = left.querySelector(".mm-nick");
+  nickSpan.addEventListener("click", (e) => {
+    e.stopPropagation();
+    handleNickClick(p.userId);
+  });
+
+  return left;
+}
+
+// ----------- BLOQUE CENTRAL (Items) -----------
+function createMemberCenter(p) {
   const center = document.createElement("div");
   center.classList.add("mm-member-center");
 
@@ -246,7 +260,11 @@ function createMemberCard(p) {
   }
 
   center.appendChild(itemsRow);
+  return center;
+}
 
+// ----------- BLOQUE DERECHO (Stats) -----------
+function createMemberRight(p) {
   const right = document.createElement("div");
   right.classList.add("mm-member-right");
   right.innerHTML = `
@@ -262,7 +280,78 @@ function createMemberCard(p) {
       </div>
     </div>
   `;
+  return right;
+}
 
-  card.append(left, center, right);
-  return card;
+function highlightMemberCard() {
+  const allMembers = document.querySelectorAll(".mm-member");
+
+  allMembers.forEach((card) => {
+    const uid = card.dataset.userid;
+
+    // Resetear todos los borders
+    card.style.border = "1px solid transparent";
+    card.style.boxShadow = "none";
+
+    // Caso 1: hay searchedUserId
+    if (window.searchedUserId) {
+      if (String(uid) === String(window.searchedUserId)) {
+        card.style.border = "2px solid #ffbb00cb"; // dorado
+        card.style.boxShadow = "0 0 10px #635400ff";
+      } else if (String(uid) === String(window.originalUserId)) {
+        card.style.border = "2px solid white"; // blanco
+        card.style.boxShadow = "0 0 10px #808080ff";
+      }
+    }
+    // Caso 2: no hay searchedUserId → original es dorado
+    else if (String(uid) === String(window.originalUserId)) {
+      card.style.border = "2px solid #ffbb009c"; // dorado
+      card.style.boxShadow = "0 0 10px #635400ff";
+    }
+  });
+}
+
+// ----------- LÓGICA DE CLICK EN EL NICK -----------
+async function handleNickClick(userId) {
+  const transition = document.querySelector(".page-transition");
+  if (!transition) return;
+
+  // Mostrar la transición
+  transition.classList.remove("hidden");
+
+  // Esperar a que la transición termine (150ms)
+  await new Promise((resolve) => setTimeout(resolve, 150));
+
+  // Lógica de selección/deselección
+  if (String(userId) === String(window.originalUserId)) {
+    window.searchedUserId = null;
+    sessionStorage.removeItem("tempUserId");
+  } else {
+    window.searchedUserId = userId;
+    sessionStorage.setItem("tempUserId", userId);
+  }
+
+  // **Resaltar la tarjeta correcta**
+  highlightMemberCard();
+
+  // Actualizar botón de retorno
+  const btn = document.getElementById("btnReturnProfile");
+  if (btn) {
+    btn.style.display =
+      window.searchedUserId && window.searchedUserId !== window.originalUserId
+        ? "inline-block"
+        : "none";
+  }
+
+  // Ejecutar la carga principal
+  if (typeof window.onUserSelected === "function") {
+    await window.onUserSelected(window.searchedUserId);
+  }
+
+  // Cerrar modal
+  const overlay = document.querySelector(".mm-overlay");
+  if (overlay) overlay.remove();
+
+  // Ocultar la transición
+  transition.classList.add("hidden");
 }
