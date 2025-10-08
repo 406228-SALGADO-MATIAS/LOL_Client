@@ -43,6 +43,8 @@ async function fetchUserMatchesHistory(userId, gameType, role, style) {
 }
 
 // ----------------- Carga de datos -----------------
+let lastGameType = null; // fuera de funciones, global
+
 async function loadMatches(gameType = null, role = null, style = null) {
   const userId = getActiveUserId();
   if (!userId) {
@@ -50,19 +52,17 @@ async function loadMatches(gameType = null, role = null, style = null) {
     return;
   }
 
+  const animate = gameType !== lastGameType; // solo animar si cambió de tab
+  lastGameType = gameType;
+
   try {
     const data = await fetchUserMatchesHistory(userId, gameType, role, style);
-
-    // Sidebar
-    renderSidebar(data);
-
-    // Cards
+    renderSidebar(data, animate); // <--- pasamos animate
     renderMatchCards(data.matches);
 
-    // Aplicar filtro de campeón si hay texto en el input
     const query = searchChampion.value.trim();
     if (query) {
-      filterCardsByChampion(query); // aquí ocurre la animación solo de los filtrados
+      filterCardsByChampion(query);
     }
   } catch (err) {
     console.error("Error cargando matches:", err);
@@ -70,20 +70,15 @@ async function loadMatches(gameType = null, role = null, style = null) {
 }
 
 // ----------------- Render Sidebar -----------------
-function renderSidebar(data) {
+function renderSidebar(data, animate = true) {
   // Top 3 champions
   const topChampsContainer = sidebar.querySelector(
     ".top-champions .champions-row"
   );
   topChampsContainer.innerHTML = "";
 
-  // Tomamos los campeones del backend, si vienen
   let topChamps = data.top3Champions || [];
-
-  // Ordenar de mayor a menor useRatio
   topChamps.sort((a, b) => (b.useRatio || 0) - (a.useRatio || 0));
-
-  // Rellenar hasta 3 si faltan
   while (topChamps.length < 3) {
     topChamps.push({
       name: "-",
@@ -93,8 +88,7 @@ function renderSidebar(data) {
     });
   }
 
-  // Crear los divs
-  topChamps.forEach((champ) => {
+  topChamps.forEach((champ, index) => {
     const div = document.createElement("div");
     div.classList.add("champion");
     div.innerHTML = `
@@ -103,6 +97,19 @@ function renderSidebar(data) {
       <span>${champ.useRatio}%</span>
     `;
     topChampsContainer.appendChild(div);
+
+    // Animación solo si corresponde
+    const img = div.querySelector("img");
+    if (animate) {
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          img.classList.add("show");
+        }, index * 150);
+      });
+    } else {
+      // Si no animamos, aseguramos que aparezca
+      img.classList.add("show");
+    }
   });
 
   // -------------------------------

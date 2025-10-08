@@ -66,6 +66,10 @@ async function handleNickClick(userId) {
   // Mostrar la transición
   transition.classList.remove("hidden");
 
+  // Cerrar modal primero
+  const overlay = document.querySelector(".mm-overlay");
+  if (overlay) overlay.remove();
+
   // Esperar a que la transición termine (150ms)
   await new Promise((resolve) => setTimeout(resolve, 150));
 
@@ -94,10 +98,6 @@ async function handleNickClick(userId) {
   if (typeof window.onUserSelected === "function") {
     await window.onUserSelected(window.searchedUserId);
   }
-
-  // Cerrar modal
-  const overlay = document.querySelector(".mm-overlay");
-  if (overlay) overlay.remove();
 
   // Ocultar la transición
   transition.classList.add("hidden");

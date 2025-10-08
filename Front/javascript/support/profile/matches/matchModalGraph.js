@@ -20,7 +20,14 @@ function createGraphsSection(match) {
   window.currentGraphMatch = match;
   window.currentGraphStat = "kills";
 
+  // --- Render de los equipos ---
   renderGraphTeams(teamsWrapper, match, "kills");
+
+  // 🔹 Forzar updateGraphBars después del render para que se vea la barra
+  setTimeout(() => {
+    window.currentGraphStat = "kills";
+    updateGraphBars();
+  }, 0);
 
   return container;
 }
@@ -36,8 +43,8 @@ function createGraphsHeader() {
     { key: "kills", label: "Kills" },
     { key: "deaths", label: "Deaths" },
     { key: "assists", label: "Assists" },
-    { key: "totalDamage", label: "Daño" },
-    { key: "totalGold", label: "Oro" },
+    { key: "totalDamage", label: "Damage" },
+    { key: "totalGold", label: "Gold" },
     { key: "totalFarm", label: "Farm" },
   ];
 
@@ -45,18 +52,48 @@ function createGraphsHeader() {
     const label = document.createElement("label");
     label.classList.add("mm-graph-option");
 
+    // Estilo tipo botón
+    label.style.cursor = "pointer";
+    label.style.padding = "6px 12px";
+    label.style.marginRight = "6px";
+    label.style.borderRadius = "4px";
+    label.style.backgroundColor = i === 0 ? "rgba(0, 75, 124, 1)" : "#222";
+    label.style.color = i === 0 ? "#fff" : "#ccc";
+    label.style.userSelect = "none";
+    label.style.display = "flex";
+    label.style.alignItems = "center";
+    label.style.gap = "4px";
+
     const input = document.createElement("input");
     input.type = "radio";
     input.name = "graphStat";
     input.value = stat.key;
+    input.style.display = "none"; 
     if (i === 0) input.checked = true;
 
     input.addEventListener("change", () => {
       window.currentGraphStat = stat.key;
       updateGraphBars();
+
+      // actualizar estilos de los botones
+      header.querySelectorAll("label").forEach((l) => {
+        l.style.backgroundColor = l.querySelector("input").checked
+          ? "rgba(0, 75, 124, 1)"
+          : "#222";
+        l.style.color = l.querySelector("input").checked ? "#fff" : "#ccc";
+      });
     });
 
+    // --- Imagen del stat ---
+    const img = document.createElement("img");
+    img.src = STAT_ICON_URLS[stat.key];
+    img.alt = stat.label;
+    img.title = stat.label;
+    img.style.width = "20px";
+    img.style.height = "20px";
+
     label.appendChild(input);
+    label.appendChild(img);
     label.appendChild(document.createTextNode(stat.label));
     header.appendChild(label);
   });
@@ -106,7 +143,7 @@ function createGraphTeamBlock(team, side, statKey) {
 // ------------------------------------------
 // Member card con barra gráfica
 // ------------------------------------------
-function createGraphMemberCard(p, statKey) {
+function createGraphMemberCard(p) {
   const card = document.createElement("div");
   card.classList.add("mm-member");
   card.dataset.userid = p.userId;
@@ -127,22 +164,62 @@ function createGraphMemberCard(p, statKey) {
     handleNickClick(p.userId);
   });
 
-  // --- derecha: barra ---
-  const right = document.createElement("div");
-  right.classList.add("mm-graph-bar-wrapper");
+  // --- centro: barra horizontal ---
+  const center = document.createElement("div");
+  center.classList.add("mm-graph-bar-wrapper");
 
   const bar = document.createElement("div");
   bar.classList.add("mm-graph-bar");
 
   const fill = document.createElement("div");
   fill.classList.add("mm-graph-fill");
-  fill.dataset.value = p[statKey]; // guardamos valor
-
+  fill.dataset.value = 0; // se inicializa en 0
   bar.appendChild(fill);
-  right.append(bar);
+  center.appendChild(bar);
 
-  card.append(left, right);
+  // --- derecha: icono + valor ---
+  const right = document.createElement("div");
+  right.classList.add("mm-stat-display");
+  right.innerHTML = `
+    <img src="" alt="" class="mm-stat-icon" title="">
+    <span class="mm-stat-value">0</span>
+  `;
+
+  // --- ensamblar todo ---
+  card.append(left, center, right);
   return card;
+}
+
+// ------------------------------------------
+// Preload de íconos (para evitar lag)
+// ------------------------------------------
+const STAT_ICON_URLS = {
+  kills:
+    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/stats%20kills.png?raw=true",
+  deaths:
+    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/stats%20deaths.png?raw=true",
+  assists:
+    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/stats%20assists.png?raw=true",
+  totalFarm:
+    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/minions.png?raw=true",
+  totalGold: "https://pngimg.com/d/coin_PNG36939.png",
+  totalDamage: "https://cdn-icons-png.flaticon.com/512/7380/7380434.png",
+};
+
+function getStatIconAndTitle(statKey) {
+  const titles = {
+    kills: "Kills",
+    deaths: "Deaths",
+    assists: "Assists",
+    totalFarm: "Farm",
+    totalGold: "Gold",
+    totalDamage: "Damage",
+  };
+
+  return {
+    icon: STAT_ICON_URLS[statKey] || "",
+    title: titles[statKey] || "",
+  };
 }
 
 // ------------------------------------------
@@ -151,15 +228,57 @@ function createGraphMemberCard(p, statKey) {
 function updateGraphBars() {
   const match = window.currentGraphMatch;
   const statKey = window.currentGraphStat;
-  const allPlayers = [...match.blueTeam.members, ...match.redTeam.members];
+  if (!match || !statKey) return;
 
+  const allPlayers = [...match.blueTeam.members, ...match.redTeam.members];
   const maxValue = Math.max(...allPlayers.map((p) => p[statKey] || 0));
 
-  document.querySelectorAll(".mm-graph-fill").forEach((fill) => {
-    const value = parseInt(fill.dataset.value) || 0;
+  document.querySelectorAll(".mm-member").forEach((card) => {
+    const fill = card.querySelector(".mm-graph-fill");
+    const right = card.querySelector(".mm-stat-display");
+    if (!fill || !right) return;
+
+    const userId = parseInt(card.dataset.userid);
+    const player =
+      match.blueTeam.members.find((p) => p.userId === userId) ||
+      match.redTeam.members.find((p) => p.userId === userId);
+    if (!player) return;
+
+    const value = player[statKey] || 0;
     const percent = maxValue > 0 ? (value / maxValue) * 100 : 0;
-    fill.style.height = `${percent}%`;
+
+    // --- actualizar barra ---
+    fill.style.width = `${percent}%`;
     fill.title = `${value} ${statKey}`;
+
+    // --- actualizar icono + valor ---
+    const { icon, title } = getStatIconAndTitle(statKey);
+    const iconImg = right.querySelector(".mm-stat-icon");
+    const valueSpan = right.querySelector(".mm-stat-value");
+
+    iconImg.src = icon;
+    iconImg.alt = title;
+    iconImg.title = title;
+    valueSpan.textContent = value;
+
+    // 🔧 Ajustes dinámicos de estilo según tipo de estadística
+    if (statKey === "kills") {
+      iconImg.style.width = "30px";
+      iconImg.style.height = "30px";
+      right.style.gap = "0px";
+      right.style.marginRight = ""; // reset al default
+
+      right.style.marginLeft = "20px"; // reset al default
+    } else if (["deaths", "assists"].includes(statKey)) {
+      iconImg.style.width = "28px";
+      iconImg.style.height = "28px";
+      right.style.gap = "0px";
+      right.style.marginRight = ""; // reset al default
+      right.style.marginLeft = "20px";
+    } else {
+      iconImg.style.width = "26px";
+      iconImg.style.height = "26px";
+      right.style.gap = "4px";
+    }
   });
 }
-
