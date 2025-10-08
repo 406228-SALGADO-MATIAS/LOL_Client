@@ -19,7 +19,7 @@
 
 .match-card:hover {
   border-color: #ffffff85;
-  background-color: rgba(0, 0, 0, 0.295);
+  background-color: rgba(0, 0, 0, 0.534);
 }
 
 .match-col {
@@ -27,6 +27,16 @@
   flex-direction: column;
   align-items: center;
   padding: 8px;
+}
+
+.match-card.shared-match {
+  border: 0.5px solid #ffffff;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.889);
+}
+
+.match-card.shared-match:hover {
+  border-color: #ffffffed;
+  background-color: rgba(0, 0, 0, 0.534);
 }
 
 /* =========================================

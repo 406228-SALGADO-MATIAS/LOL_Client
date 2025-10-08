@@ -217,6 +217,9 @@ function createMemberCard(p) {
 }
 
 // ----------- BLOQUE IZQUIERDO (Nick + Campeón + Rol) -----------
+
+let activeModal = null;
+
 function createMemberLeft(p) {
   const left = document.createElement("div");
   left.classList.add("mm-member-left");
@@ -229,9 +232,75 @@ function createMemberLeft(p) {
   `;
 
   const nickSpan = left.querySelector(".mm-nick");
+  let hoverTimeout;
+
+  // CLICK → ir al perfil y cerrar cualquier hover modal abierto
   nickSpan.addEventListener("click", (e) => {
     e.stopPropagation();
+
+    // Cerrar hover modal 
+    if (activeModal) {
+      activeModal.remove();
+      activeModal = null;
+    }
+
     handleNickClick(p.userId);
+  });
+
+  // HOVER → mostrar modal con info del usuario
+  nickSpan.addEventListener("mouseenter", async (e) => {
+    clearTimeout(hoverTimeout);
+
+    // Cerrar modal previo si existe
+    if (activeModal) {
+      activeModal.remove();
+      activeModal = null;
+    }
+
+    const rect = nickSpan.getBoundingClientRect();
+    const nickname = p.nickName;
+
+    // Buscar servidor dentro del modal principal
+    const matchModal = nickSpan.closest(".mm-modal");
+    const serverDetail = Array.from(
+      matchModal?.querySelectorAll(".mm-detail") || []
+    ).find((el) => el.textContent.includes("Servidor:"));
+    const serverText = serverDetail
+      ? serverDetail.textContent.replace("Servidor: ", "").trim()
+      : null;
+    const serverOption = mapServerToEnum(serverText);
+
+    // Fetch de datos del usuario
+    const userData = await fetchUserProfileByNickname(nickname, serverOption);
+    if (!userData) return;
+
+    const modal = createHoverModal(userData);
+    activeModal = modal;
+
+    // Posicionar modal
+    modal.style.top = `${rect.top + window.scrollY - 10}px`;
+    modal.style.left = `${rect.right + 10}px`;
+
+    document.body.appendChild(modal);
+
+    // Fade-in
+    setTimeout(() => modal.classList.add("visible"), 10);
+  });
+
+  // MOUSELEAVE → ocultar modal (con protección anti-click)
+  nickSpan.addEventListener("mouseleave", () => {
+    hoverTimeout = setTimeout(() => {
+      // Si el usuario clickeó recientemente, no cerrar instantáneamente
+      if (document.activeElement === nickSpan) return;
+
+      if (activeModal) {
+        activeModal.classList.remove("visible");
+        setTimeout(() => {
+          activeModal?.remove();
+          activeModal = null;
+        }, 150);
+      }
+    }, 150);
   });
 
   return left;

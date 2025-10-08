@@ -66,6 +66,17 @@ async function handleNickClick(userId) {
   // Mostrar la transición
   transition.classList.remove("hidden");
 
+  // Cerrar cualquier hover modal abierto
+  try {
+    const hoverModal = document.querySelector(".nick-hover-modal");
+    if (hoverModal && hoverModal.parentNode) {
+      hoverModal.remove();
+    }
+    activeModal = null;
+  } catch (e) {
+    console.warn("Modal hover no se pudo cerrar limpiamente:", e);
+  }
+
   // Cerrar modal primero
   const overlay = document.querySelector(".mm-overlay");
   if (overlay) overlay.remove();

@@ -45,19 +45,24 @@ async function fetchUserMatchesHistory(userId, gameType, role, style) {
 // ----------------- Carga de datos -----------------
 let lastGameType = null; // fuera de funciones, global
 
-async function loadMatches(gameType = null, role = null, style = null) {
+async function loadMatches(
+  gameType = null,
+  role = null,
+  style = null,
+  forceAnimate = false
+) {
   const userId = getActiveUserId();
   if (!userId) {
     console.warn("No hay userId activo");
     return;
   }
 
-  const animate = gameType !== lastGameType; // solo animar si cambió de tab
+  const animate = forceAnimate || gameType !== lastGameType; // 👈 prioridad al forceAnimate
   lastGameType = gameType;
 
   try {
     const data = await fetchUserMatchesHistory(userId, gameType, role, style);
-    renderSidebar(data, animate); // <--- pasamos animate
+    renderSidebar(data, animate);
     renderMatchCards(data.matches);
 
     const query = searchChampion.value.trim();
@@ -164,7 +169,6 @@ function renderMatchCards(matches) {
     cardsSection.querySelectorAll(".match-card")
   );
 
-  // Si no hay matches → desaparecer las cards actuales
   if (!matches || matches.length === 0) {
     if (existingCards.length === 0) {
       cardsSection.innerHTML = "<p>No hay partidas registradas.</p>";
@@ -174,7 +178,6 @@ function renderMatchCards(matches) {
     return;
   }
 
-  // Hay matches → limpiar antes de renderizar nuevas
   cardsSection.innerHTML = "";
 
   const newCards = matches.map((match) => {
@@ -186,10 +189,11 @@ function renderMatchCards(matches) {
 
   attachCardEvents();
 
-  // Solo animar appear si el input está vacío
   if (!searchChampion.value.trim()) {
     animateCards(newCards, "appear", existingCards, matches);
   }
+
+  highlightSharedMatches();
 }
 
 // ----------------- Vincular eventos de las cards -----------------
@@ -255,18 +259,18 @@ searchChampion.addEventListener("input", (e) => {
 
 selectRole.addEventListener("change", () => {
   const { style } = getCurrentFilters();
-  loadMatches(currentGameType, selectRole.value || null, style);
+  loadMatches(currentGameType, selectRole.value || null, style, true);
 });
 
 selectStyle.addEventListener("change", () => {
   const { role } = getCurrentFilters();
-  loadMatches(currentGameType, role, selectStyle.value || null);
+  loadMatches(currentGameType, role, selectStyle.value || null, true);
 });
 
 // ----------------- Init -----------------
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("matches.js inicializado");
-  currentGameType = null; // default: general
+document.addEventListener("DOMContentLoaded", async () => {
+  await preloadOriginalUserMatches(); // 👈 precargamos los match IDs originales
+  currentGameType = null;
   toggleRoleSelectByGameType(currentGameType);
   loadMatches();
 });
