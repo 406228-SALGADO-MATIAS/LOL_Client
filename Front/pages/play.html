@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legacy Client - LoL</title>
+
+    <link rel="stylesheet" href="/css/play/play.css" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- Fondo general -->
+    <div id="bg-overlay"></div>
+    <div class="page-transition"></div>
+
+    <!-- Navbar -->
+    <div id="navbar-container"></div>
+
+    <!-- ===== Layout Principal ===== -->
+    <main class="layout">
+      <div class="content-wrapper">
+        <div class="client-container">
+          <!-- ===== Sección Superior ===== -->
+          <section class="client-top">
+            <!-- GAME MODE -->
+            <div id="game-mode" class="client-category">
+              <h4>Game Mode</h4>
+              <ul>
+                <li data-mode="classic">Classic</li>
+                <li data-mode="aram">ARAM</li>
+              </ul>
+            </div>
+
+            <!-- GAME MAP -->
+            <div id="game-map" class="client-category">
+              <h4>Game Map</h4>
+              <ul></ul>
+            </div>
+
+            <!-- GAME TYPE -->
+            <div id="game-type" class="client-category">
+              <h4>Game Type</h4>
+              <ul></ul>
+            </div>
+          </section>
+
+          <!-- ===== Sección Inferior (Dinámica) ===== -->
+          <section id="client-bottom" class="client-bottom">
+            <div class="description">
+              <h2>Selecciona un modo de juego</h2>
+              <p>Elige el modo, mapa y tipo de partida para comenzar.</p>
+            </div>
+            <button id="launch-btn" class="btn btn-warning" disabled>
+              Launch
+            </button>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/javascript/core/play.js"></script>
+
+    <script>
+      // Navbar dinámico
+      fetch("/pages/mainNavbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          const container = document.getElementById("navbar-container");
+          container.innerHTML = html;
+
+          const mainNav = container.querySelector("nav");
+          mainNav.style.position = "fixed";
+          mainNav.style.top = "0";
+          mainNav.style.left = "0";
+          mainNav.style.width = "100%";
+          mainNav.style.zIndex = "1040";
+
+          const script = document.createElement("script");
+          script.src = "/javascript/core/mainNavbar.js";
+          document.body.appendChild(script);
+        })
+        .catch((err) => console.error(err));
+    </script>
+
+    <script>
+      // Transición
+      function setupPageTransitions() {
+        const transition = document.querySelector(".page-transition");
+
+        // Entrada → al cargar la página
+        window.addEventListener("load", () => {
+          setTimeout(() => transition.classList.add("hidden"), 100);
+        });
+
+        // Salida → al hacer clic en links internos
+        document.querySelectorAll("a").forEach((link) => {
+          if (
+            link.hostname === window.location.hostname &&
+            !link.closest(".carousel") && // Ignorar carousels
+            !link.closest(".sub-navbar") // Ignorar sub-navbar
+          ) {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              const url = link.href;
+
+              transition.classList.remove("hidden");
+              setTimeout(() => (window.location.href = url), 400);
+            });
+          }
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", setupPageTransitions);
+    </script>
+  </body>
+</html>
