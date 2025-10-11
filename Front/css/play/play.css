@@ -23,12 +23,14 @@ body {
 
 /* ===== CONTENIDO INTERNO ===== */
 .client-container {
-  margin-top: 80px;
+  margin-top: 60px;
   width: 1000px;
+
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   min-height: 770px;
+
   position: relative;
   z-index: 1;
 }
@@ -51,7 +53,7 @@ body {
 .client-category {
   text-align: center;
   width: 210px;
-  height: 180px;
+  height: 160px;
   color: #ddd;
   background-color: rgb(0, 0, 0);
   border: 2px solid #aaaaaa4d;
@@ -128,11 +130,11 @@ body {
   flex-direction: column;
   justify-content: space-between;
   padding: 2rem;
-  height: 490px;
+  height: 550px;
   border-radius: 12px;
   border: 2px solid #ffffff4d;
 
-  background-image: url("https://images5.alphacoders.com/887/887241.jpg");
+  background-image: url("https://cdn.wallpapersafari.com/31/65/JEdnVm.jpg");
   background-size: cover;
   background-position: center; /* default, puede ajustarse desde JS para ARAM */
   background-repeat: no-repeat;
@@ -140,7 +142,7 @@ body {
   /* 🔹 Oscurecer sin perder contraste */
   background-color: rgba(0, 0, 0, 0.021); /* capa de sombra */
   background-blend-mode: multiply; /* mezcla con la imagen */
-  filter: brightness(0.95) contrast(1.1); /* brillo un poco bajo + contraste alto */
+  filter: brightness(0.95) contrast(1.1) saturate(1.1); /* brillo un poco bajo + contraste alto */
 
   color: #ffffff;
   font-size: 1.1rem;
@@ -225,16 +227,18 @@ body {
   width: 60%;
   background: linear-gradient(to bottom, #ffa500, #492e01);
   border-radius: 4px;
-  font-weight: bold;
+  font-weight: 500;
   padding: 0.8rem;
   color: #ffffff;
   border: 2px solid black;
   transition: transform 0.2s ease;
 }
 
-/* Hover siempre que el botón esté dentro de un contenedor */
-#launch-btn-wrapper:hover #launch-btn {
-  transform: scale(1.03);
+/* Hover del botón */
+.launch-btn-wrapper:hover #launch-btn:not(:disabled) {
+  transform: scale(1.01);
+  filter: brightness(1.2);
+  cursor: pointer;
 }
 
 /* ================================================

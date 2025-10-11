@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const mapContainer = document.querySelector("#game-map ul");
   const typeContainer = document.querySelector("#game-type ul");
   const selectionContainer = document.querySelector("#game-selection ul");
-  const description = document.querySelector(".description h2");
   const launchBtn = document.querySelector("#launch-btn");
 
   // --- BACKGROUNDS DEFINIDOS ---
@@ -36,6 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
   bgOverlay.style.opacity = "0";
   bgOverlay.style.transition = "opacity 0.4s ease";
   bgOverlay.style.zIndex = "1";
+  bgOverlay.style.pointerEvents = "none";
+
   bgOverlay.style.borderRadius = "12px";
   clientBottom.appendChild(bgOverlay);
 
@@ -162,7 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
       li.classList.remove("active");
 
       clearSelection();
-      launchBtn.disabled = true;
       animateSelection = true;
 
       // Backtracking: si hay mapa seleccionado, mostrar fondo del mapa
@@ -198,7 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
       selectedSelection = null;
       li.classList.remove("active");
       updateDescription();
-      launchBtn.disabled = true;
       return;
     }
 
@@ -209,7 +208,6 @@ document.addEventListener("DOMContentLoaded", () => {
     li.classList.add("active");
 
     updateDescription();
-    launchBtn.disabled = false;
   });
 
   // --- FUNCIONES AUXILIARES ---
@@ -281,7 +279,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function clearSelection() {
     selectionContainer.innerHTML = "";
     selectedSelection = null;
-    launchBtn.disabled = true;
   }
 
   function fadeIn(el, duration = 400) {
