@@ -6,6 +6,77 @@ document.addEventListener("DOMContentLoaded", () => {
   const description = document.querySelector(".description h2");
   const launchBtn = document.querySelector("#launch-btn");
 
+  // --- BACKGROUNDS DEFINIDOS ---
+  const backgrounds = {
+    // MODO
+    classic: "https://cdn.wallpapersafari.com/31/65/JEdnVm.jpg",
+    aram: "https://gamevigor.wordpress.com/wp-content/uploads/2013/06/original-9.jpg",
+
+    // MAPAS
+    "Summoner's Rift":
+      "https://cdn.gameboost.com/article-images/2024-02-27/bb716d85-86e8-4d6d-bea3-cde048aff368.webp",
+    "Howling Abyss":
+      "https://i.rutab.net/upload/2020/userfiles/legends-of-runeterra-freljord-1212x610.jpg",
+
+    // TIPOS
+    Ranked: "https://images2.alphacoders.com/499/499385.jpg",
+  };
+
+  // --- REFERENCIA AL CONTENEDOR ---
+  const clientBottom = document.querySelector(".client-bottom");
+
+  // --- OVERLAY PARA TRANSICIÓN ---
+  const bgOverlay = document.createElement("div");
+  bgOverlay.style.position = "absolute";
+  bgOverlay.style.top = 0;
+  bgOverlay.style.left = 0;
+  bgOverlay.style.width = "100%";
+  bgOverlay.style.height = "100%";
+  bgOverlay.style.backgroundColor = "#000";
+  bgOverlay.style.opacity = "0";
+  bgOverlay.style.transition = "opacity 0.4s ease";
+  bgOverlay.style.zIndex = "1";
+  bgOverlay.style.borderRadius = "12px";
+  clientBottom.appendChild(bgOverlay);
+
+  // --- FUNCIÓN PRINCIPAL ---
+  function updateBackground() {
+    let newBg = null;
+
+    // --- Determinar imagen según combinación ---
+    if (selectedType && selectedMap === "Summoner's Rift") {
+      if (selectedType.includes("Ranked")) newBg = backgrounds["Ranked"];
+      else if (selectedType.includes("Normal"))
+        newBg = backgrounds["Summoner's Rift"];
+    }
+
+    if (!newBg && selectedMap) newBg = backgrounds[selectedMap];
+    if (!newBg && selectedMode) newBg = backgrounds[selectedMode];
+    if (!newBg) return;
+
+    const formattedNewBg = `url("${newBg}")`;
+    const currentBg = clientBottom.style.backgroundImage;
+
+    // 🚫 Si la imagen ya es la misma, salir sin transición
+    if (currentBg === formattedNewBg) return;
+
+    // --- Aplicar transición ---
+    bgOverlay.style.opacity = "1";
+    setTimeout(() => {
+      clientBottom.style.backgroundImage = formattedNewBg;
+
+      // 🔹 Ajuste especial para ARAM
+      if (newBg === backgrounds["aram"]) {
+        // Colocamos el centro de la imagen más abajo
+        clientBottom.style.backgroundPosition = "center 67%"; // ← centro mas hacia abajo
+      } else {
+        clientBottom.style.backgroundPosition = "center center"; // default
+      }
+
+      bgOverlay.style.opacity = "0";
+    }, 120);
+  }
+
   // Datos de configuración
   const gameData = {
     classic: {
@@ -15,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     aram: {
       maps: {
-        "Howling Abyss": ["Normal (Random Pick)"],
+        "Howling Abyss": ["Random Picks"],
       },
     },
   };
@@ -30,25 +101,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const li = e.target.closest("li");
     if (!li) return;
 
+    // 🔹 Si ya está seleccionado, no hacemos nada (no se puede deseleccionar)
     if (selectedMode === li.dataset.mode) {
-      selectedMode = null;
-      li.classList.remove("active");
-      clearMaps();
-      clearTypes();
-      clearSelection();
-      updateDescription(); // <--- limpia todo
       return;
     }
 
     selectedMode = li.dataset.mode;
+
+    // Actualizar visual y resto
+    requestAnimationFrame(() => updateBackground());
     [...modeContainer.children].forEach((el) => el.classList.remove("active"));
     li.classList.add("active");
 
     clearMaps();
     clearTypes();
-    clearSelection(); // limpia game map, type y selection
-    renderMaps(selectedMode); // renderiza mapas
-    updateDescription(); // <--- limpia y actualiza descripción
+    clearSelection();
+    renderMaps(selectedMode);
+    updateDescription();
   });
 
   // --- SELECCIÓN DE MAPA ---
@@ -57,11 +126,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!li) return;
 
     if (selectedMap === li.dataset.map) {
+      // Deseleccionar mapa -> fallback al modo
       selectedMap = null;
       li.classList.remove("active");
       clearTypes();
       clearSelection();
-      updateDescription(); // <--- limpia descripción
+
+      // Backtracking: si hay modo seleccionado, mostrar fondo del modo
+      updateBackground();
+      updateDescription();
       return;
     }
 
@@ -70,9 +143,10 @@ document.addEventListener("DOMContentLoaded", () => {
     li.classList.add("active");
 
     clearTypes();
-    clearSelection(); // limpia game type y game selection
-    renderTypes(selectedMode, selectedMap); // renderiza tipos
-    updateDescription(); // <--- limpia y actualiza descripción
+    clearSelection();
+    renderTypes(selectedMode, selectedMap);
+    updateBackground();
+    updateDescription();
   });
 
   let animateSelection = true; // 🔹 bandera para animar Game Selection
@@ -83,32 +157,35 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!li) return;
 
     if (selectedType === li.dataset.type) {
-      // 🔹 Se deselecciona
+      // Deseleccionar tipo -> fallback al mapa
       selectedType = null;
       li.classList.remove("active");
 
       clearSelection();
-      updateDescription();
       launchBtn.disabled = true;
+      animateSelection = true;
 
-      animateSelection = true; // 🔹 la próxima vez que se seleccione, animar
+      // Backtracking: si hay mapa seleccionado, mostrar fondo del mapa
+      updateBackground();
+      updateDescription();
       return;
     }
 
     const wasSelected = selectedType !== null;
     selectedType = li.dataset.type;
+
     [...typeContainer.children].forEach((el) => el.classList.remove("active"));
     li.classList.add("active");
 
-    // 🔹 Renderizar Game Selection solo si corresponde
     clearSelection();
     if (!wasSelected && animateSelection) {
       renderSelectionWithAnimation();
-      animateSelection = false; // 🔹 ya animó, no volver a animar hasta deseleccionar
+      animateSelection = false;
     } else {
       renderSelectionWithoutAnimation();
     }
 
+    updateBackground();
     updateDescription();
   });
 
@@ -307,6 +384,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  const defaultModeLi = modeContainer.querySelector('li[data-mode="classic"]');
+  if (defaultModeLi) {
+    defaultModeLi.click(); // dispara todo: render de mapas, actualización de fondo, descripción
   }
 });
 
