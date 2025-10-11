@@ -2,14 +2,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const modeContainer = document.querySelector("#game-mode ul");
   const mapContainer = document.querySelector("#game-map ul");
   const typeContainer = document.querySelector("#game-type ul");
-  const description = document.querySelector(".description h3");
+  const selectionContainer = document.querySelector("#game-selection ul");
+  const description = document.querySelector(".description h2");
   const launchBtn = document.querySelector("#launch-btn");
 
   // Datos de configuración
   const gameData = {
     classic: {
       maps: {
-        "Summoner's Rift": ["Ranked Solo (Blind Pick)", "Normal (Blind Pick)"],
+        "Summoner's Rift": ["Ranked", "Normal"],
       },
     },
     aram: {
@@ -22,19 +23,20 @@ document.addEventListener("DOMContentLoaded", () => {
   let selectedMode = null;
   let selectedMap = null;
   let selectedType = null;
+  let selectedSelection = null;
 
   // --- SELECCIÓN DE MODO ---
   modeContainer.addEventListener("click", (e) => {
     const li = e.target.closest("li");
     if (!li) return;
 
-    // toggle selección
     if (selectedMode === li.dataset.mode) {
       selectedMode = null;
       li.classList.remove("active");
       clearMaps();
       clearTypes();
-      updateDescription();
+      clearSelection();
+      updateDescription(); // <--- limpia todo
       return;
     }
 
@@ -42,10 +44,11 @@ document.addEventListener("DOMContentLoaded", () => {
     [...modeContainer.children].forEach((el) => el.classList.remove("active"));
     li.classList.add("active");
 
-    // actualizar mapas
-    renderMaps(selectedMode);
+    clearMaps();
     clearTypes();
-    updateDescription();
+    clearSelection(); // limpia game map, type y selection
+    renderMaps(selectedMode); // renderiza mapas
+    updateDescription(); // <--- limpia y actualiza descripción
   });
 
   // --- SELECCIÓN DE MAPA ---
@@ -57,7 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
       selectedMap = null;
       li.classList.remove("active");
       clearTypes();
-      updateDescription();
+      clearSelection();
+      updateDescription(); // <--- limpia descripción
       return;
     }
 
@@ -65,9 +69,13 @@ document.addEventListener("DOMContentLoaded", () => {
     [...mapContainer.children].forEach((el) => el.classList.remove("active"));
     li.classList.add("active");
 
-    renderTypes(selectedMode, selectedMap);
-    updateDescription();
+    clearTypes();
+    clearSelection(); // limpia game type y game selection
+    renderTypes(selectedMode, selectedMap); // renderiza tipos
+    updateDescription(); // <--- limpia y actualiza descripción
   });
+
+  let animateSelection = true; // 🔹 bandera para animar Game Selection
 
   // --- SELECCIÓN DE TIPO ---
   typeContainer.addEventListener("click", (e) => {
@@ -75,15 +83,52 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!li) return;
 
     if (selectedType === li.dataset.type) {
+      // 🔹 Se deselecciona
       selectedType = null;
+      li.classList.remove("active");
+
+      clearSelection();
+      updateDescription();
+      launchBtn.disabled = true;
+
+      animateSelection = true; // 🔹 la próxima vez que se seleccione, animar
+      return;
+    }
+
+    const wasSelected = selectedType !== null;
+    selectedType = li.dataset.type;
+    [...typeContainer.children].forEach((el) => el.classList.remove("active"));
+    li.classList.add("active");
+
+    // 🔹 Renderizar Game Selection solo si corresponde
+    clearSelection();
+    if (!wasSelected && animateSelection) {
+      renderSelectionWithAnimation();
+      animateSelection = false; // 🔹 ya animó, no volver a animar hasta deseleccionar
+    } else {
+      renderSelectionWithoutAnimation();
+    }
+
+    updateDescription();
+  });
+
+  // --- SELECCIÓN DE GAME SELECTION ---
+  selectionContainer.addEventListener("click", (e) => {
+    const li = e.target.closest("li");
+    if (!li) return;
+
+    if (selectedSelection === li.dataset.selection) {
+      selectedSelection = null;
       li.classList.remove("active");
       updateDescription();
       launchBtn.disabled = true;
       return;
     }
 
-    selectedType = li.dataset.type;
-    [...typeContainer.children].forEach((el) => el.classList.remove("active"));
+    selectedSelection = li.dataset.selection;
+    [...selectionContainer.children].forEach((el) =>
+      el.classList.remove("active")
+    );
     li.classList.add("active");
 
     updateDescription();
@@ -98,7 +143,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const li = document.createElement("li");
       li.textContent = map;
       li.dataset.map = map;
+      li.classList.add("fade-element"); // ⬅ clase de fade
       mapContainer.appendChild(li);
+
+      // Forzar animación
+      requestAnimationFrame(() => li.classList.add("show"));
     });
   }
 
@@ -109,7 +158,36 @@ document.addEventListener("DOMContentLoaded", () => {
       const li = document.createElement("li");
       li.textContent = type;
       li.dataset.type = type;
+      li.classList.add("fade-element");
       typeContainer.appendChild(li);
+
+      requestAnimationFrame(() => li.classList.add("show"));
+    });
+  }
+
+  // --- Render Game Selection con animación ---
+  function renderSelectionWithAnimation() {
+    selectionContainer.innerHTML = "";
+    ["Automatic", "Custom"].forEach((sel) => {
+      const li = document.createElement("li");
+      li.textContent = sel;
+      li.dataset.selection = sel;
+      li.classList.add("fade-element");
+      selectionContainer.appendChild(li);
+
+      // Forzar animación
+      requestAnimationFrame(() => li.classList.add("show"));
+    });
+  }
+
+  // --- Render Game Selection sin animación ---
+  function renderSelectionWithoutAnimation() {
+    selectionContainer.innerHTML = "";
+    ["Automatic", "Custom"].forEach((sel) => {
+      const li = document.createElement("li");
+      li.textContent = sel;
+      li.dataset.selection = sel;
+      selectionContainer.appendChild(li);
     });
   }
 
@@ -121,26 +199,118 @@ document.addEventListener("DOMContentLoaded", () => {
   function clearTypes() {
     typeContainer.innerHTML = "";
     selectedType = null;
+  }
+
+  function clearSelection() {
+    selectionContainer.innerHTML = "";
+    selectedSelection = null;
     launchBtn.disabled = true;
   }
 
+  function fadeIn(el, duration = 400) {
+    el.style.opacity = 0;
+    el.style.transition = `opacity ${duration}ms ease`;
+    requestAnimationFrame(() => {
+      el.style.opacity = 1;
+    });
+  }
+
+  function fadeOut(el, duration = 200) {
+    el.style.opacity = 1;
+    el.style.transition = `opacity ${duration}ms ease`;
+    requestAnimationFrame(() => {
+      el.style.opacity = 0;
+    });
+  }
+
   function updateDescription() {
-    if (!selectedMode) {
-      description.textContent = "Selecciona un modo de juego";
-    } else if (!selectedMap) {
-      description.textContent = `Modo: ${capitalize(
-        selectedMode
-      )} — elige un mapa`;
-    } else if (!selectedType) {
-      description.textContent = `Mapa: ${selectedMap} — elige un tipo de partida`;
+    const descMode = document.getElementById("desc-mode");
+    const descMap = document.getElementById("desc-map");
+    const hr = document.querySelector(".client-bottom hr");
+    const p1 = document.getElementById("desc-p1");
+    const p2 = document.getElementById("desc-p2");
+    const p3 = document.getElementById("desc-p3");
+    const launchContainer = document.getElementById("launch-container");
+
+    // Guardar el texto actual de p3 para detectar cambios
+    const prevP3Text = p3.textContent;
+
+    // Fade out p1 y p2 (los que cambian con modo/mapa)
+    fadeOut(p1);
+    fadeOut(p2);
+
+    // Limpiar encabezados
+    descMode.textContent = "";
+    descMap.textContent = "";
+    hr.style.display = "none";
+
+    if (!selectedMode) return;
+
+    // --- P1: descripción del modo ---
+    descMode.textContent = capitalize(selectedMode);
+    if (selectedMode === "classic") {
+      p1.textContent =
+        "Trabajá con tus aliados para sitiar la base enemiga y destruir su Nexo.";
+    } else if (selectedMode === "aram") {
+      p1.textContent =
+        "Luchá como equipo con campeones aleatorios para destruir el Nexo enemigo.";
+    }
+    fadeIn(p1);
+
+    // --- P2: descripción del mapa ---
+    if (selectedMap) {
+      descMap.textContent = selectedMap;
+      hr.style.display = "block";
+
+      if (selectedMap === "Summoner's Rift") {
+        p2.textContent = "Duración promedio de la partida: 30–45 minutos.";
+      } else if (selectedMap === "Howling Abyss") {
+        p2.textContent = "Duración promedio de la partida: 20–30 minutos.";
+      }
+      fadeIn(p2);
     } else {
-      description.textContent = `Listo: ${capitalize(
-        selectedMode
-      )} | ${selectedMap} | ${selectedType}`;
+      p2.textContent = "";
+    }
+
+    // --- P3: descripción del Game Selection ---
+    let newP3Text = "";
+    if (selectedSelection) {
+      if (selectedSelection === "Automatic") {
+        newP3Text = "Armar la partida automáticamente.";
+      } else if (selectedSelection === "Custom") {
+        if (selectedMode === "classic") {
+          newP3Text =
+            "Elegir manualmente el Rol a desempeñar en el mapa y el Campeón a jugar.";
+        } else if (selectedMode === "aram") {
+          newP3Text =
+            "Elegir manualmente el Campeón entre 3 opciones aleatorias.";
+        }
+      }
+    }
+
+    // Si cambió el texto (es decir, cambiamos de Automatic ↔ Custom)
+    if (newP3Text !== prevP3Text) {
+      fadeOut(p3, 80);
+      setTimeout(() => {
+        p3.textContent = newP3Text;
+        fadeIn(p3, 200);
+      }, 50);
+    }
+
+    // --- Botón Launch ---
+    if (selectedMode && selectedMap && selectedType && selectedSelection) {
+      launchContainer.classList.add("show");
+    } else {
+      launchContainer.classList.remove("show");
     }
   }
 
   function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
+});
+
+// Animación inicial de aparición
+document.querySelectorAll(".fade-in").forEach((el) => {
+  setTimeout(() => el.classList.add("show"), 50);
 });

@@ -24,43 +24,67 @@
 
     <!-- ===== Layout Principal ===== -->
     <main class="layout">
-      <div class="content-wrapper">
-        <div class="client-container">
-          <!-- ===== Sección Superior ===== -->
-          <section class="client-top">
-            <!-- GAME MODE -->
+      <div class="client-container">
+        <!-- ===== Sección Superior ===== -->
+        <section class="client-top">
+          <!-- GAME MODE -->
+          <div class="client-category-wrapper">
+            <h4>Game Mode</h4>
             <div id="game-mode" class="client-category">
-              <h4>Game Mode</h4>
               <ul>
                 <li data-mode="classic">Classic</li>
                 <li data-mode="aram">ARAM</li>
               </ul>
             </div>
+          </div>
 
-            <!-- GAME MAP -->
+          <!-- GAME MAP -->
+          <div class="client-category-wrapper">
+            <h4>Game Map</h4>
             <div id="game-map" class="client-category">
-              <h4>Game Map</h4>
               <ul></ul>
             </div>
+          </div>
 
-            <!-- GAME TYPE -->
+          <!-- GAME TYPE -->
+          <div class="client-category-wrapper">
+            <h4>Game Type</h4>
             <div id="game-type" class="client-category">
-              <h4>Game Type</h4>
               <ul></ul>
             </div>
-          </section>
+          </div>
 
-          <!-- ===== Sección Inferior (Dinámica) ===== -->
-          <section id="client-bottom" class="client-bottom">
-            <div class="description">
-              <h2>Selecciona un modo de juego</h2>
-              <p>Elige el modo, mapa y tipo de partida para comenzar.</p>
+          <!-- GAME SELECTION -->
+          <div class="client-category-wrapper">
+            <h4>Game Selection</h4>
+            <div id="game-selection" class="client-category">
+              <ul></ul>
             </div>
-            <button id="launch-btn" class="btn btn-warning" disabled>
-              Launch
-            </button>
-          </section>
-        </div>
+          </div>
+        </section>
+
+        <!-- ===== Sección Inferior (Dinámica) ===== -->
+        <section id="client-bottom" class="client-bottom">
+          <div class="description">
+            <h1 id="desc-mode"></h1>
+            <h4 id="desc-map"></h4>
+            <hr />
+            <p id="desc-p1"></p>
+            <p id="desc-p2"></p>
+            <p id="desc-p3"></p>
+          </div>
+
+          <!-- Contenedor oculto al inicio -->
+          <div class="launch-container fade-element" id="launch-container">
+            <p class="launch-text">Last Step</p>
+            <hr />
+            <div class="launch-btn-wrapper">
+              <button id="launch-btn" class="btn btn-warning" disabled>
+                Launch
+              </button>
+            </div>
+          </div>
+        </section>
       </div>
     </main>
 

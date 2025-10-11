@@ -3,10 +3,13 @@
 /* ===== GENERAL ===== */
 body {
   margin: 0;
-  background-color: #0b0b0b;
+  background: url("https://cdnb.artstation.com/p/assets/images/images/037/662/867/large/scribble-px-studios-finish-sample.jpg?1620974351")
+    no-repeat center center fixed;
+  background-size: cover;
   color: #ddd;
   font-family: "Segoe UI", sans-serif;
   overflow-x: hidden;
+  z-index: 0;
 }
 
 /* ===== LAYOUT PRINCIPAL ===== */
@@ -14,29 +17,20 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 70px); /* espacio para navbar */
-  position: relative;
-  z-index: 1;
-  padding: 2rem 0;
-}
-
-.content-wrapper {
-  margin-top: 70px;
-  width: 90%;
-  width: 1000px;
-  background-color: rgba(20, 20, 20, 0.7);
-  border: 1px solid #222;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-  overflow: hidden;
-  height: 800px;
-  margin-bottom: 30px;
+  min-height: 100vh;
+  padding: 2rem;
 }
 
 /* ===== CONTENIDO INTERNO ===== */
 .client-container {
+  margin-top: 60px;
+  width: 1000px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
+  min-height: 770px;
+  position: relative;
+  z-index: 1;
 }
 
 /* ==========================================================
@@ -47,17 +41,38 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
-  background-color: rgba(30, 30, 30, 0.8);
-  border-bottom: 2px solid #222;
+  background-color: rgba(0, 0, 0, 0.644);
+  border: 2px solid #ffffff4d;
+  border-radius: 12px;
   padding: 1rem;
 }
 
 /* --- Categorías dentro de la sección superior --- */
 .client-category {
   text-align: center;
+  width: 210px;
+  height: 180px;
+  color: #ddd;
+  background-color: rgb(0, 0, 0);
+  border: 2px solid #aaaaaa4d;
+  border-radius: 3px;
+  font-size: 1.05rem;
+  margin-top: 3px;
+}
+
+/* Wrapper para centrar título y categoría */
+.client-category-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra el h4 y la categoría */
   width: 30%;
-  height: 250px;
-  color:#ddd
+}
+
+/* Ajuste del h4 dentro del wrapper */
+.client-category-wrapper h4 {
+  margin-bottom: 0.5rem;
+  color: #f1c40f;
+  text-align: center;
 }
 
 .client-category h4 {
@@ -73,16 +88,25 @@ body {
 .client-category li {
   cursor: pointer;
   padding: 0.5rem;
-  transition: background 0.3s;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
+/* Hover: azul → negro */
 .client-category li:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(
+    100deg,
+    rgba(0, 53, 197, 0.74),
+    rgba(0, 0, 0, 0.8)
+  );
 }
 
+/* Active: verde → negro */
 .client-category li.active {
-  background-color: rgba(15, 129, 0, 0.219);
+  background: linear-gradient(
+    100deg,
+    rgba(0, 207, 52, 0.45),
+    rgba(0, 24, 6, 0.45)
+  );
 }
 
 .client-category small {
@@ -97,40 +121,146 @@ body {
 
 .client-bottom {
   position: relative;
-  background-size: cover;
-  background-position: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 2rem;
-  transition: background-image 0.5s ease;
-  min-height: 300px;
+  height: 490px;
+  border-radius: 12px;
+  border: 2px solid #ffffff4d;
+  background-image: url("https://images5.alphacoders.com/887/887241.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #d6d6d6;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* Línea separadora general de la descripción */
+.client-bottom hr {
+  border: none;
+  height: 1px;
+  background-color: rgb(187, 187, 187);
+  margin: 0.5rem 0 1rem 0;
+  display: none;
+  margin-top: 18px;
 }
 
 .client-bottom .description {
   max-width: 60%;
 }
 
-#launch-btn {
-  align-self: flex-end;
-  background-color: #f39c12;
-  border: none;
-  font-weight: bold;
-  padding: 0.8rem 2rem;
-  border-radius: 10px;
-}
-
 /* ==========================================================
-   FONDO / OVERLAY GLOBAL
+   CONTENEDOR DEL BOTÓN (launch-container)
 ========================================================== */
 
+.launch-container {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex; /* asegúrate que no quede hidden */
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch; /* 🔹 cambio aquí para que hr ocupe todo */
+  padding: 1rem 1.2rem;
+  width: 300px;
+  min-height: 120px; /* mejor que height fijo */
+  border: 3px solid #caa9738e;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(131, 72, 1, 0.5),
+    inset 0 0 6px rgba(128, 64, 0, 0.6);
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Texto “Last Step” */
+.launch-text {
+  align-self: flex-start;
+  font-size: 1.3rem;
+  color: #f7d168; /* dorado */
+  font-weight: 400;
+  margin-top: -4px;
+}
+
+.launch-container.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* hr dentro del contenedor */
+#launch-container hr {
+  border: solid 1px black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  height: 2px;
+  width: 100%; /* 🔹 obligatorio */
+  background: linear-gradient(to bottom, #ffffff, #000000);
+  display: block;
+  margin-top: -10px;
+}
+
+/* Envoltura del botón */
+.launch-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Botón */
+#launch-btn {
+  width: 60%;
+  background: linear-gradient(to bottom, #ffa500, #492e01);
+  border-radius: 4px;
+  font-weight: bold;
+  padding: 0.8rem;
+  color: #ffffff;
+  border: 2px solid black;
+}
+
+#launch-btn:enabled:hover {
+  transform: scale(1.03);
+}
+
+/* ================================================
+   OVERLAYS & TRANSITIONS
+================================================ */
 #bg-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  z-index: 9999;
+}
+
+.page-transition {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/assets/backgrounds/lol_bg.jpg") center/cover no-repeat;
-  filter: blur(3px) brightness(0.4);
-  z-index: 0;
+  background: black;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.12s ease;
+  z-index: 9999;
+}
+
+.page-transition.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Animación fade-in para elementos de esta página */
+.fade-element {
+  opacity: 0;
+  transition: opacity 0.2s ease; /* más suave que 0.1s */
+}
+
+.fade-element.show {
+  opacity: 1;
 }

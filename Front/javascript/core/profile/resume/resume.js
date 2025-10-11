@@ -273,9 +273,9 @@ function setupRanksCarouselTitle() {
   };
 
   const backgroundsByIndex = {
-    0: 'url("https://external-preview.redd.it/2De7Zdl-bfLL1I4l6f2QqLWvDO4T42l8e2JK88MIxZQ.jpg?auto=webp&s=7e073fb6571f4b808b029c7355dce683c53cc5f2")',
+    0: 'url("https://cdn.wallpapersafari.com/31/65/JEdnVm.jpg")',
     1: 'url("https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700896217.jpg")',
-    2: 'url("https://automaton-media.com/wp-content/uploads/2017/04/bg-howling-abyss.jpg")',
+    2: 'url("https://images5.alphacoders.com/887/887241.jpg")',
   };
 
   function changeBackground(index) {
