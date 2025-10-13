@@ -21,7 +21,7 @@ function createResultModal(matchData) {
   const modal = document.createElement("div");
   modal.classList.add("result-modal");
 
-  // 🔹 Render modular
+  // --- Render modular
   modal.append(
     renderResultHeader(isWinner),
     renderRewardsSection(player.rewards),
@@ -30,6 +30,28 @@ function createResultModal(matchData) {
 
   overlay.appendChild(modal);
   document.body.appendChild(overlay);
+
+  // 🔹 Animación de aparición
+  requestAnimationFrame(() => {
+    overlay.classList.add("show");
+    modal.classList.add("show");
+  });
+}
+
+function closeResultModal() {
+  const overlay = document.querySelector(".result-modal-overlay");
+  const modal = overlay?.querySelector(".result-modal");
+
+  if (!overlay || !modal) return;
+
+  // 🔹 Agregamos clase de salida
+  modal.classList.add("hide");
+  overlay.classList.add("hide");
+
+  // Esperamos que termine la animación (0.25s)
+  setTimeout(() => {
+    overlay.remove();
+  }, 250);
 }
 
 // --- Renderiza la parte superior (imagen de resultado)
@@ -93,7 +115,7 @@ function renderButtonsSection(matchData) {
   btnSalir.addEventListener("click", closeResultModal);
 
   const btnRepetir = document.createElement("button");
-  btnRepetir.textContent = "Volver a Jugar";
+  btnRepetir.textContent = "Jugar";
   btnRepetir.classList.add("btn-replay");
   btnRepetir.addEventListener("click", () => {
     closeResultModal();
@@ -108,14 +130,14 @@ function renderButtonsSection(matchData) {
     if (!userId || !matchData) return;
 
     // Abrimos el modal de estadísticas encima del modal de resultado
-    openMatchModal(matchData.id, userId);
+    openMatchModal(matchData.id, userId, true);
   });
 
   section.append(btnSalir, btnRepetir, btnStats);
   return section;
 }
 
-// ---  Construcción de datos base (ya lo tenés)
+// ---  Construcción de datos base para las rewards
 function buildMaterialItems(materials) {
   return [
     {
@@ -152,5 +174,16 @@ function buildMaterialItems(materials) {
 // --- 6️⃣ Cierre del modal
 function closeResultModal() {
   const overlay = document.querySelector(".result-modal-overlay");
-  if (overlay) overlay.remove();
+  const modal = overlay?.querySelector(".result-modal");
+
+  if (!overlay || !modal) return;
+
+  // 🔹 Agregamos clase de salida
+  modal.classList.add("hide");
+  overlay.classList.add("hide");
+
+  // Esperamos que termine la animación (0.25s)
+  setTimeout(() => {
+    overlay.remove();
+  }, 250);
 }

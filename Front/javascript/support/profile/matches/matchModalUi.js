@@ -59,32 +59,15 @@ function highlightMemberCard() {
 }
 
 // ----------- LÓGICA DE CLICK EN EL NICK -----------
-async function handleNickClick(userId) {
-  const transition = document.querySelector(".page-transition");
-  if (!transition) return;
-
-  // Mostrar la transición
-  transition.classList.remove("hidden");
-
-  // Cerrar cualquier hover modal abierto
+async function handleNickClick(userId, redirectToProfile = false) {
   try {
     const hoverModal = document.querySelector(".nick-hover-modal");
-    if (hoverModal && hoverModal.parentNode) {
-      hoverModal.remove();
-    }
+    if (hoverModal && hoverModal.parentNode) hoverModal.remove();
     activeModal = null;
   } catch (e) {
-    console.warn("Modal hover no se pudo cerrar limpiamente:", e);
+    console.warn("Modal hover no se pudo cerrar:", e);
   }
 
-  // Cerrar modal primero
-  const overlay = document.querySelector(".mm-overlay");
-  if (overlay) overlay.remove();
-
-  // Esperar a que la transición termine (150ms)
-  await new Promise((resolve) => setTimeout(resolve, 150));
-
-  // Lógica de selección/deselección
   if (String(userId) === String(window.originalUserId)) {
     window.searchedUserId = null;
     sessionStorage.removeItem("tempUserId");
@@ -93,10 +76,23 @@ async function handleNickClick(userId) {
     sessionStorage.setItem("tempUserId", userId);
   }
 
-  // **Resaltar la tarjeta correcta**
+  if (redirectToProfile) {
+    window.location.href = "/pages/profile/resume.html";
+    return;
+  }
+
+  const transition = document.querySelector(".page-transition");
+  if (!transition) return;
+
+  transition.classList.remove("hidden");
+
+  const overlay = document.querySelector(".mm-overlay");
+  if (overlay) overlay.remove();
+
+  await new Promise((resolve) => setTimeout(resolve, 150));
+
   highlightMemberCard();
 
-  // Actualizar botón de retorno
   const btn = document.getElementById("btnReturnProfile");
   if (btn) {
     btn.style.display =
@@ -105,11 +101,9 @@ async function handleNickClick(userId) {
         : "none";
   }
 
-  // Ejecutar la carga principal
   if (typeof window.onUserSelected === "function") {
     await window.onUserSelected(window.searchedUserId);
   }
 
-  // Ocultar la transición
   transition.classList.add("hidden");
 }

@@ -2,16 +2,17 @@
 // matchModal.js (version aislada)
 // ================================
 
+let matchRedirectMode = false; // ← valor global por defecto
+
 // ----------- CREAR Y MOSTRAR MODAL -----------
-async function openMatchModal(matchId, userId) {
+async function openMatchModal(matchId, userId, redirectMode = false) {
+  matchRedirectMode = redirectMode; // ← guardamos el modo recibido
   const match = await fetchMatchData(matchId, userId);
   if (!match) {
     console.error("No se pudo obtener la partida");
     return;
   }
   createMatchModal(match);
-  // Destacar la card del usuario
-
   highlightMemberCard();
 }
 
@@ -143,7 +144,9 @@ function switchTab(tab, activeBtn, inactiveBtn) {
   if (tab === "stats") {
     content.appendChild(createTeamsSection(window.currentMatchData));
   } else if (tab === "graphics") {
-    content.appendChild(createGraphsSection(window.currentMatchData)); // <- aquí
+    content.appendChild(
+      createGraphsSection(window.currentMatchData, matchRedirectMode)
+    );
   }
 
   highlightMemberCard();
@@ -238,13 +241,13 @@ function createMemberLeft(p) {
   nickSpan.addEventListener("click", (e) => {
     e.stopPropagation();
 
-    // Cerrar hover modal 
+    // Cerrar hover modal
     if (activeModal) {
       activeModal.remove();
       activeModal = null;
     }
 
-    handleNickClick(p.userId);
+    handleNickClick(p.userId, matchRedirectMode);
   });
 
   // HOVER → mostrar modal con info del usuario

@@ -15,7 +15,7 @@
   background: rgba(15, 15, 25, 0.95);
   border: 2px solid #444;
   border-radius: 16px;
-  width: 550px;
+  width: 580px;
   padding: 20px;
   text-align: center;
   color: white;
@@ -44,6 +44,7 @@
   margin-bottom: 12px;
   color: #ffcc66;
   text-transform: uppercase;
+  margin-top: -40px;
 }
 
 .rewards-grid {
@@ -118,4 +119,36 @@
 
 .btn-stats {
   color: #66b3ff;
+}
+
+/* ===========================================
+   ANIMACIONES DE APARICIÓN / DESAPARICIÓN
+=========================================== */
+.result-modal-overlay {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.result-modal-overlay.show {
+  opacity: 1;
+}
+
+.result-modal-overlay.hide {
+  opacity: 0;
+}
+
+.result-modal {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.result-modal.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.result-modal.hide {
+  opacity: 0;
+  transform: scale(0.9);
 }

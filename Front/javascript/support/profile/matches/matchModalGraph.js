@@ -2,8 +2,12 @@
 // matchModalGraphs.js
 // ================================
 
+let graphRedirectMode = false; // ← valor por defecto
+
 // Render principal de la pestaña "Gráficos"
-function createGraphsSection(match) {
+function createGraphsSection(match, redirectMode = false) {
+  graphRedirectMode = redirectMode; // ← guardamos el modo recibido
+
   const container = document.createElement("div");
   container.classList.add("mm-graphs-container");
 
@@ -68,7 +72,7 @@ function createGraphsHeader() {
     input.type = "radio";
     input.name = "graphStat";
     input.value = stat.key;
-    input.style.display = "none"; 
+    input.style.display = "none";
     if (i === 0) input.checked = true;
 
     input.addEventListener("change", () => {
@@ -152,16 +156,81 @@ function createGraphMemberCard(p) {
   const left = document.createElement("div");
   left.classList.add("mm-member-left");
   left.innerHTML = `
-    <img src="${p.squareChampion}" class="mm-champ-square" alt="${p.champion}">
+    <img src="${p.squareChampion}" class="mm-champ-square" alt="${p.champion}" title="${p.champion}">
     <div class="mm-member-id">
       <span class="mm-nick">${p.nickName}</span>
-      <img src="${p.roleImg}" class="mm-role-icon" title="${p.role}">
+      <img src="${p.roleImg}" class="mm-role-icon" title="${p.role}" alt="${p.role}">
     </div>
   `;
+
   const nickSpan = left.querySelector(".mm-nick");
+  let hoverTimeout;
+
+  // CLICK → ir al perfil y cerrar cualquier hover modal abierto
   nickSpan.addEventListener("click", (e) => {
     e.stopPropagation();
-    handleNickClick(p.userId);
+
+    if (activeModal) {
+      activeModal.remove();
+      activeModal = null;
+    }
+
+    handleNickClick(p.userId, graphRedirectMode);
+  });
+
+  // HOVER → mostrar modal con info del usuario
+  nickSpan.addEventListener("mouseenter", async (e) => {
+    clearTimeout(hoverTimeout);
+
+    // Cerrar modal previo si existe
+    if (activeModal) {
+      activeModal.remove();
+      activeModal = null;
+    }
+
+    const rect = nickSpan.getBoundingClientRect();
+    const nickname = p.nickName;
+
+    // Buscar servidor dentro del modal principal
+    const matchModal = nickSpan.closest(".mm-modal");
+    const serverDetail = Array.from(
+      matchModal?.querySelectorAll(".mm-detail") || []
+    ).find((el) => el.textContent.includes("Servidor:"));
+    const serverText = serverDetail
+      ? serverDetail.textContent.replace("Servidor: ", "").trim()
+      : null;
+    const serverOption = mapServerToEnum(serverText);
+
+    // Fetch de datos del usuario
+    const userData = await fetchUserProfileByNickname(nickname, serverOption);
+    if (!userData) return;
+
+    const modal = createHoverModal(userData);
+    activeModal = modal;
+
+    // Posicionar modal
+    modal.style.top = `${rect.top + window.scrollY - 10}px`;
+    modal.style.left = `${rect.right + 10}px`;
+
+    document.body.appendChild(modal);
+
+    // Fade-in
+    setTimeout(() => modal.classList.add("visible"), 10);
+  });
+
+  // MOUSELEAVE → ocultar modal
+  nickSpan.addEventListener("mouseleave", () => {
+    hoverTimeout = setTimeout(() => {
+      if (document.activeElement === nickSpan) return;
+
+      if (activeModal) {
+        activeModal.classList.remove("visible");
+        setTimeout(() => {
+          activeModal?.remove();
+          activeModal = null;
+        }, 150);
+      }
+    }, 150);
   });
 
   // --- centro: barra horizontal ---

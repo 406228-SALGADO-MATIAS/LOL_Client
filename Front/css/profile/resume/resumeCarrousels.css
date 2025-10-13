@@ -64,24 +64,23 @@
   margin-top: 2.5rem;
   font-size: 1.7rem;
   color: #ccc;
-
 }
 
 .champion-name-small {
   margin-top: 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #ccc;
 }
 
 .champion-big {
-  transform: scale(1.8); 
+  transform: scale(1.8);
   margin-left: 5rem; /* empuja hacia abajo */
   margin-right: 5rem; /* empuja hacia abajo */
   margin-bottom: 1rem;
 }
 
 .champion-medium {
-  transform: scale(1.6); 
+  transform: scale(1.6);
 }
 
 .champion-small {
@@ -155,7 +154,6 @@
 
   /* bloquea el tamaño máximo */
 
-  
   overflow: hidden; /* oculta lo que se pase */
 }
 
@@ -246,7 +244,6 @@
   margin: 0 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-  
 }
 
 /* Indicador activo */
