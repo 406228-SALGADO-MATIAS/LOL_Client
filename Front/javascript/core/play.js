@@ -1,5 +1,101 @@
 // --- play.js --- //
 
+// --- IDs DE SESIÓN (definir antes de todo) ---
+window.originalUserId = sessionStorage.getItem("userId") || null;
+
+// --- CREAR PARTIDA VIA FETCH ---
+async function createMatch() {
+  const userId = window.originalUserId;
+  if (!userId) {
+    alert("Error: no se encontró el ID del usuario en la sesión.");
+    console.error("⚠️ No se encontró userId en sessionStorage");
+    return;
+  }
+
+  // Solo para selección AUTOMÁTICA
+  const selectionLi = document.querySelector("#game-selection li.active");
+  if (!selectionLi || selectionLi.dataset.selection !== "Automatic") {
+    alert("Solo se puede iniciar partidas automáticas desde este botón.");
+    return;
+  }
+
+  const data = getSelectedGameData();
+  if (!data) {
+    alert("Faltan selecciones para crear la partida.");
+    return;
+  }
+
+  const { gameMode, map } = data;
+
+  const params = new URLSearchParams({
+    gameMode,
+    map,
+    showChampionImg: false,
+    showItemImg: false,
+  });
+
+  // 🔧 Endpoint completo
+  const url = `http://localhost:8080/matches/createMatch/${userId}?${params.toString()}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText || "Error al crear la partida");
+    }
+
+    const match = await response.json();
+    console.log("✅ Partida creada con éxito:", match);
+    // 👇 Reemplazo el alert por el modal visual
+    createResultModal(match);
+    return match;
+  } catch (err) {
+    console.error("❌ Error creando partida:", err);
+    alert("Error al crear la partida.");
+  }
+}
+
+// --- OBTENER DATOS DE SELECCIÓN ---
+function getSelectedGameData() {
+  const modeLi = document.querySelector("#game-mode li.active");
+  const mapLi = document.querySelector("#game-map li.active");
+  const typeLi = document.querySelector("#game-type li.active");
+  const selectionLi = document.querySelector("#game-selection li.active");
+
+  if (!modeLi || !mapLi || !typeLi || !selectionLi) {
+    return null;
+  }
+
+  const selectedMode = modeLi.dataset.mode;
+  const selectedMap = mapLi.dataset.map;
+  const selectedType = typeLi.dataset.type;
+  const selectedSelection = selectionLi.dataset.selection;
+
+  // --- Traducción a parámetros del backend ---
+  let gameMode;
+  let map;
+  let ranked;
+
+  if (selectedMode === "classic") {
+    map = "SUMMONERS RIFT";
+    ranked = selectedType === "Ranked";
+    gameMode = ranked ? "RANKED" : "NORMAL";
+  } else if (selectedMode === "aram") {
+    map = "ARAM";
+    gameMode = "NORMAL";
+    ranked = false;
+  } else {
+    console.error("Modo no reconocido:", selectedMode);
+    return null;
+  }
+
+  return { gameMode, map, ranked };
+}
+
 // --- DATOS DE CONFIGURACIÓN ---
 const gameData = {
   classic: {
@@ -178,4 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".fade-in").forEach((el) => {
     setTimeout(() => el.classList.add("show"), 50);
   });
+
+  const launchBtn = document.getElementById("launch-btn");
+  launchBtn.addEventListener("click", createMatch);
 });

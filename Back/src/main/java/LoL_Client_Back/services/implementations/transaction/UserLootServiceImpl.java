@@ -2,6 +2,8 @@ package LoL_Client_Back.services.implementations.transaction;
 
 import LoL_Client_Back.dtos.DTOBuilder;
 import LoL_Client_Back.dtos.loot.*;
+import LoL_Client_Back.dtos.match.MatchDTO;
+import LoL_Client_Back.dtos.match.playerMatch.RewardDTO;
 import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.association.UserXIconEntity;
 import LoL_Client_Back.entities.association.UserXSkinEntity;
@@ -1191,7 +1193,7 @@ public class UserLootServiceImpl implements UserLootService {
         }
     }
 
-    public void giveRewardsToPlayersFromMatch(MatchEntity match) {
+    public void giveRewardsToPlayersFromMatch(MatchEntity match, MatchDTO matchDTO) {
         TeamEntity winnerTeam = match.getWinnerTeam();
         Random random = new Random();
 
@@ -1209,10 +1211,9 @@ public class UserLootServiceImpl implements UserLootService {
             UserLootEntity updatedLoot = optional.get();
 
             boolean isWinner = playerDetail.getTeam().equals(winnerTeam);
-            boolean isRanked = match.getRanked() != null && match.getRanked();
+            boolean isRanked = Boolean.TRUE.equals(match.getRanked());
 
             int numRolls = 0;
-
             if (isRanked) {
                 numRolls = isWinner ? 4 : 2; // ranked win = 4, ranked loss = 2
             } else {
@@ -1224,26 +1225,42 @@ public class UserLootServiceImpl implements UserLootService {
 
             boolean hasChestOverflow = (totalChests - totalKeys) >= 4;
 
+            // --- Nuevo: inicializamos un contador local ---
+            RewardDTO rewardDTO = new RewardDTO();
+
             if (hasChestOverflow) {
                 updatedLoot.setKeys(updatedLoot.getKeys() + 1);
+                rewardDTO.setKeys(1);
             } else {
                 for (int i = 0; i < numRolls; i++) {
                     int roll = random.nextInt(100) + 1; // 1-100
 
                     if (roll <= 35) {
                         updatedLoot.setChests(updatedLoot.getChests() + 1);
+                        rewardDTO.setChests(rewardDTO.getChests() + 1);
                     } else if (roll <= 80) {
                         updatedLoot.setKeys(updatedLoot.getKeys() + 1);
+                        rewardDTO.setKeys(rewardDTO.getKeys() + 1);
                     } else if (roll <= 95) {
                         updatedLoot.setMasterChests(updatedLoot.getMasterChests() + 1);
+                        rewardDTO.setMasterChests(rewardDTO.getMasterChests() + 1);
                     } else {
                         updatedLoot.setOrangeEssence(updatedLoot.getOrangeEssence() + 150);
+                        rewardDTO.setOrangeEssence(rewardDTO.getOrangeEssence() + 150);
                     }
                 }
             }
+
             userLootRepository.save(updatedLoot);
+
+            // --- Asociar el RewardDTO al PlayerMatchDetailDTO correspondiente ---
+            matchDTO.getPlayers().stream()
+                    .filter(p -> p.getIdUser().equals(playerDetail.getUser().getId()))
+                    .findFirst()
+                    .ifPresent(p -> p.setRewards(rewardDTO));
         }
     }
+
 
 
 

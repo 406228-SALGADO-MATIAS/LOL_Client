@@ -113,10 +113,11 @@ public class MatchServiceImpl implements MatchService {
         MatchEntity matchSaved = matchRepository.save(match);
         //UPDATING USER MATCHES
         userMatchesService.updateUsers(matchSaved.getPlayerDetails());
-        userLootService.giveRewardsToPlayersFromMatch(matchSaved);
         if (matchSaved.getRanked())
             userLpService.calculateUserRanks(matchSaved);
-        return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
+        MatchDTO dto = dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
+        userLootService.giveRewardsToPlayersFromMatch(matchSaved,dto);
+        return dto;
     }
 
     @Override
@@ -140,10 +141,11 @@ public class MatchServiceImpl implements MatchService {
         MatchEntity matchSaved = matchRepository.save(match);
         //UPDATING USER MATCHES
         userMatchesService.updateUsers(matchSaved.getPlayerDetails());
-        userLootService.giveRewardsToPlayersFromMatch(matchSaved);
         if (matchSaved.getRanked())
             userLpService.calculateUserRanks(matchSaved);
-        return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
+        MatchDTO dto = dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
+        userLootService.giveRewardsToPlayersFromMatch(matchSaved,dto);
+        return dto;
     }
 
     @Override
@@ -165,10 +167,11 @@ public class MatchServiceImpl implements MatchService {
         MatchEntity matchSaved = matchRepository.save(match);
         //UPDATING USER MATCHES
         userMatchesService.updateUsers(matchSaved.getPlayerDetails());
-        userLootService.giveRewardsToPlayersFromMatch(matchSaved);
         if (matchSaved.getRanked())
             userLpService.calculateUserRanks(matchSaved);
-        return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
+        MatchDTO dto = dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
+        userLootService.giveRewardsToPlayersFromMatch(matchSaved,dto);
+        return dto;
     }
 
 
@@ -204,13 +207,13 @@ public class MatchServiceImpl implements MatchService {
 
         MatchEntity matchSaved = matchRepository.save(match);
 
-
+        //UPDATING USER MATCHES
         userMatchesService.updateUsers(matchSaved.getPlayerDetails());
-        userLootService.giveRewardsToPlayersFromMatch(matchSaved);
         if (matchSaved.getRanked())
             userLpService.calculateUserRanks(matchSaved);
-
-        return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
+        MatchDTO dto = dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
+        userLootService.giveRewardsToPlayersFromMatch(matchSaved,dto);
+        return dto;
     }
 
 
@@ -246,10 +249,12 @@ public class MatchServiceImpl implements MatchService {
 
         MatchEntity matchSaved = matchRepository.save(match);
 
+        //UPDATING USER MATCHES
         userMatchesService.updateUsers(matchSaved.getPlayerDetails());
-        userLootService.giveRewardsToPlayersFromMatch(matchSaved);
 
-        return dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
+        MatchDTO dto = dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
+        userLootService.giveRewardsToPlayersFromMatch(matchSaved,dto);
+        return dto;
     }
 
     @Override

@@ -13,6 +13,7 @@ import java.util.List;
 public class UserMatchDTO {
 
     private Long matchId;
+    private Long userId;
     private boolean win;
     private String map;
     private String gameType;
@@ -25,6 +26,7 @@ public class UserMatchDTO {
     private TeamDTO redTeam;
 
     public void buildUserMatchDto(MatchEntity match, Long userId) {
+        this.userId = userId;
         this.matchId = match.getId();
         this.date = match.getDate();
         this.duration = match.getDuration();
