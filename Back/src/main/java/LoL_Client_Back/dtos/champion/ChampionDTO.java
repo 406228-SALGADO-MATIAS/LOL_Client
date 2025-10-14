@@ -27,4 +27,6 @@ public class ChampionDTO {
     private String style2;
     @Lob
     private String imageUrl;
+    @Lob
+    private String squareImageUrl;
 }

@@ -243,6 +243,20 @@ async function initStatsPage() {
 document.addEventListener("DOMContentLoaded", () => {
   initStatsPage();
 
+  // 🟡 Scroll horizontal con la rueda del mouse
+  const championList = document.getElementById("champion-list");
+  if (championList) {
+    championList.addEventListener("wheel", (e) => {
+      if (championList.scrollWidth > championList.clientWidth) {
+        e.preventDefault();
+        championList.scrollBy({
+          left: e.deltaY * 1.2, // velocidad ajustable
+          behavior: "smooth", // movimiento suave
+        });
+      }
+    });
+  }
+
   // listener champions card click
   championList.addEventListener("click", async (e) => {
     const card = e.target.closest(".champion-card");
@@ -284,7 +298,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     applySelectionStyles();
-    // Reaplicar filtro
+
+    // Reaplicar filtro de búsqueda actual
     const currentQuery = championSearchInput.value.toLowerCase();
     filterChampionCards(currentQuery);
   });

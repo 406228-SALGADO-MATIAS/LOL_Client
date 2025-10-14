@@ -218,6 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
       li.classList.add("active");
 
       clearContainer(selectionContainer);
+      selectedSelection = null;
       renderList(
         selectionContainer,
         ["Automatic", "Custom"],

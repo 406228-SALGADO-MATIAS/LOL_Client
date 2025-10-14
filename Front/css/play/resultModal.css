@@ -4,7 +4,7 @@
 .result-modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.596);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,7 +12,7 @@
 }
 
 .result-modal {
-  background: rgba(15, 15, 25, 0.95);
+  background: rgba(6, 6, 9, 0.95);
   border: 2px solid #444;
   border-radius: 16px;
   width: 580px;
@@ -29,8 +29,8 @@
    SECCIÓN RESULTADO (IMAGEN)
 =========================================== */
 .result-header img {
-  width: 70%;
-  max-width: 380px;
+  width: 80%;
+  width: 480px;
   object-fit: contain;
   margin: 0 auto;
   display: block;
@@ -58,7 +58,7 @@
   position: relative;
   width: 90px;
   height: 90px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   overflow: hidden;
@@ -68,8 +68,8 @@
 }
 
 .reward-card img {
-  width: 70%;
-  height: 70%;
+  width: 90%;
+  height: 90%;
   object-fit: contain;
   filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
 }
@@ -90,35 +90,52 @@
 .buttons-section {
   display: flex;
   justify-content: center;
-  gap: 20px;
 }
 
-.buttons-section button {
-  background: #222;
-  border: 1px solid #666;
-  border-radius: 8px;
-  color: white;
-  padding: 10px 18px;
-  font-size: 0.95rem;
+.buttons-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* --- BOTONES BASE --- */
+.buttons-wrapper button {
+  flex: 1;
+  display: flex; /* 🔹 Hace que el texto se centre */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  height: 40px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1 px solid gray;
   cursor: pointer;
-  transition: all 0.2s ease;
+  color: white;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  text-transform: uppercase;
 }
 
-.buttons-section button:hover {
-  background: #333;
-  border-color: #aaa;
+/* --- Animación hover común --- */
+.buttons-wrapper button:hover {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.705);
+  opacity: 0.95;
 }
 
+/* --- BOTÓN SALIR (rojo) --- */
 .btn-exit {
-  color: #ff6961;
+  background: linear-gradient(180deg, #930000, #5f0000);
 }
 
+/* --- BOTÓN JUGAR (azul) --- */
 .btn-replay {
-  color: #76ff7a;
+  background: linear-gradient(180deg, #00750eca, #004308);
 }
 
+/* --- BOTÓN ESTADÍSTICAS (violeta) --- */
 .btn-stats {
-  color: #66b3ff;
+  background: linear-gradient(180deg, #0016a7, #000c58);
 }
 
 /* ===========================================
@@ -151,4 +168,23 @@
 .result-modal.hide {
   opacity: 0;
   transform: scale(0.9);
+}
+
+/* ===========================================
+   ANIMACIÓN DE APARICIÓN DE RECOMPENSAS
+=========================================== */
+@keyframes rewardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.reward-appear {
+  opacity: 0;
+  animation: rewardFadeIn 0.4s ease forwards;
 }

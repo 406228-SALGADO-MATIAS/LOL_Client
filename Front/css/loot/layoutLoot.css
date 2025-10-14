@@ -42,8 +42,7 @@ body {
   height: 100dvh; /* usa viewport real en móviles */
   overflow: hidden; /* elimina el scroll global */
 
-  
-  background: linear-gradient(180deg, #041d1f, #062328);
+  background: linear-gradient(180deg, #06292b, #03181a);
   user-select: none; /* No se puede seleccionar texto */
 }
 

@@ -21,21 +21,28 @@ function createResultModal(matchData) {
   const modal = document.createElement("div");
   modal.classList.add("result-modal");
 
-  // --- Render modular
-  modal.append(
-    renderResultHeader(isWinner),
-    renderRewardsSection(player.rewards),
-    renderButtonsSection(matchData)
-  );
+  // 🔹 Render modular (condicional para rewards)
+  const elements = [renderResultHeader(isWinner)];
+
+  if (player.rewards && hasRewards(player.rewards)) {
+    elements.push(renderRewardsSection(player.rewards));
+  }
+
+  elements.push(renderButtonsSection(matchData));
+  modal.append(...elements);
 
   overlay.appendChild(modal);
   document.body.appendChild(overlay);
 
-  // 🔹 Animación de aparición
   requestAnimationFrame(() => {
     overlay.classList.add("show");
     modal.classList.add("show");
   });
+}
+
+// helper
+function hasRewards(rewards) {
+  return Object.values(rewards).some((qty) => qty && qty > 0);
 }
 
 function closeResultModal() {
@@ -75,17 +82,21 @@ function renderRewardsSection(rewards) {
   section.classList.add("rewards-section");
 
   const title = document.createElement("h3");
-  title.textContent = "Recompensas Obtenidas";
+  title.textContent = "Recompensas";
   section.appendChild(title);
 
   const grid = document.createElement("div");
   grid.classList.add("rewards-grid");
 
   const items = buildMaterialItems(rewards);
+  let visibleIndex = 0;
+
   items.forEach((item) => {
     if (item.quantity > 0) {
       const card = document.createElement("div");
-      card.classList.add("reward-card");
+      card.classList.add("reward-card", "reward-appear");
+      card.style.animationDelay = `${visibleIndex * 0.1}s`; // ⚡ Delay escalonado
+      visibleIndex++;
 
       const img = document.createElement("img");
       img.src = item.imageUrl;
@@ -109,6 +120,10 @@ function renderButtonsSection(matchData) {
   const section = document.createElement("div");
   section.classList.add("buttons-section");
 
+  // 🔹 Wrapper para centrar correctamente los botones
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("buttons-wrapper");
+
   const btnSalir = document.createElement("button");
   btnSalir.textContent = "Salir";
   btnSalir.classList.add("btn-exit");
@@ -123,17 +138,18 @@ function renderButtonsSection(matchData) {
   });
 
   const btnStats = document.createElement("button");
-  btnStats.textContent = "Ver Estadísticas";
+  btnStats.textContent = "Estadísticas";
   btnStats.classList.add("btn-stats");
   btnStats.addEventListener("click", () => {
     const userId = window.originalUserId;
     if (!userId || !matchData) return;
-
-    // Abrimos el modal de estadísticas encima del modal de resultado
     openMatchModal(matchData.id, userId, true);
   });
 
-  section.append(btnSalir, btnRepetir, btnStats);
+  // orden: salir - jugar - stats
+  wrapper.append(btnSalir, btnRepetir, btnStats);
+  section.appendChild(wrapper);
+
   return section;
 }
 
