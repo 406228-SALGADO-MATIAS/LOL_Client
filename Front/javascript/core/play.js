@@ -12,20 +12,39 @@ async function createMatch() {
     return;
   }
 
-  // Solo para selección AUTOMÁTICA
+  // --- Tomamos los LI activos tal como lo hacés en getSelectedGameData() ---
+  const modeLi = document.querySelector("#game-mode li.active");
+  const mapLi = document.querySelector("#game-map li.active");
+  const typeLi = document.querySelector("#game-type li.active");
   const selectionLi = document.querySelector("#game-selection li.active");
-  if (!selectionLi || selectionLi.dataset.selection !== "Automatic") {
-    alert("Solo se puede iniciar partidas automáticas desde este botón.");
-    return;
-  }
 
-  const data = getSelectedGameData();
-  if (!data) {
+  if (!modeLi || !mapLi || !typeLi || !selectionLi) {
     alert("Faltan selecciones para crear la partida.");
     return;
   }
 
-  const { gameMode, map } = data;
+  const selectedMode = modeLi.dataset.mode;
+  const selectedMap = mapLi.dataset.map;
+  const selectedType = typeLi.dataset.type;
+  const selectedSelection = selectionLi.dataset.selection;
+
+  const ranked = selectedType === "Ranked";
+
+  // --- CASO CLASSIC → CUSTOM ---
+  if (selectedMode === "classic" && selectedSelection === "Custom") {
+    openClassicModal(ranked); // 🔥 llamamos al modal con ranked true/false
+    return;
+  }
+
+  // --- CASO CLASSIC / ARAM → AUTOMATIC ---
+  if (selectedSelection !== "Automatic") {
+    alert("Solo se puede iniciar partidas automáticas desde este botón.");
+    return;
+  }
+
+  const gameMode =
+    selectedMode === "classic" ? (ranked ? "RANKED" : "NORMAL") : "NORMAL";
+  const map = selectedMode === "classic" ? "SUMMONERS RIFT" : "ARAM";
 
   const params = new URLSearchParams({
     gameMode,
@@ -34,7 +53,6 @@ async function createMatch() {
     showItemImg: false,
   });
 
-  // 🔧 Endpoint completo
   const url = `http://localhost:8080/matches/createMatch/${userId}?${params.toString()}`;
 
   try {
@@ -50,7 +68,6 @@ async function createMatch() {
 
     const match = await response.json();
     console.log("✅ Partida creada con éxito:", match);
-    // 👇 Reemplazo el alert por el modal visual
     createResultModal(match);
     return match;
   } catch (err) {
