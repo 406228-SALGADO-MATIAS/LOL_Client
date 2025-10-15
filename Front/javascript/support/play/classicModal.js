@@ -12,6 +12,35 @@ let roleImg, champGrid, champImg, champActionBtn, nextBtn;
 // Nueva variable para guardar el modo de juego
 let isRanked = false;
 
+// 🔹 Botones de roles
+const roles = [
+  {
+    key: "TOP",
+    name: "Top",
+    img: "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/top.png",
+  },
+  {
+    key: "JUNGLE",
+    name: "Jungle",
+    img: "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/jg.png",
+  },
+  {
+    key: "MID",
+    name: "Mid",
+    img: "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/mid.png",
+  },
+  {
+    key: "ADC",
+    name: "AD Carry",
+    img: "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/styles/adc.png",
+  },
+  {
+    key: "SUPPORT",
+    name: "Support",
+    img: "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/support.png",
+  },
+];
+
 // ==============================
 // ABRIR MODAL CLASSIC
 // ==============================
@@ -68,43 +97,9 @@ function renderRoleSelection() {
   const section = document.createElement("div");
   section.classList.add("modal-section", "role-selection-section");
 
+  // 🔹 Contenedor visual del mapa
   const displayDiv = document.createElement("div");
   displayDiv.classList.add("role-display");
-
-  roleImg = document.createElement("img");
-  roleImg.classList.add("role-display-img");
-  roleImg.src =
-    "https://wiki.leagueoflegends.com/en-us/images/thumb/Summoner's_Rift_map_s14.png/1200px-Summoner's_Rift_map_s14.png?172d7";
-  roleImg.title = "Map: Summoner's Rift";
-  displayDiv.appendChild(roleImg);
-
-  const roles = [
-    {
-      key: "TOP",
-      name: "Top",
-      img: "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/top.png",
-    },
-    {
-      key: "JUNGLE",
-      name: "Jungle",
-      img: "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/jg.png",
-    },
-    {
-      key: "MID",
-      name: "Mid",
-      img: "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/mid.png",
-    },
-    {
-      key: "ADC",
-      name: "AD Carry",
-      img: "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/styles/adc.png",
-    },
-    {
-      key: "SUPPORT",
-      name: "Support",
-      img: "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/support.png",
-    },
-  ];
 
   const buttonsDiv = document.createElement("div");
   buttonsDiv.classList.add("role-buttons-container");
@@ -119,13 +114,14 @@ function renderRoleSelection() {
 
   nextBtn = document.createElement("button");
   nextBtn.classList.add("modal-next-btn");
-  nextBtn.textContent = "Siguiente →";
-  nextBtn.disabled = true; // inicialmente deshabilitado
+  nextBtn.textContent = "Siguiente";
+  nextBtn.disabled = true;
   nextBtn.addEventListener("click", () => {
-    if (!selectedRole) return; // seguridad extra
+    if (!selectedRole) return;
     goToChampionSelection();
   });
 
+  // 🔹 Apilamos fondo y controles
   section.append(displayDiv, buttonsDiv, nextBtn);
   return section;
 }
@@ -133,13 +129,49 @@ function renderRoleSelection() {
 // ==============================
 // RENDER CHAMPION SELECTION
 // ==============================
+
+let activeRole = null;
+
 function renderChampionSelection() {
   const section = document.createElement("div");
   section.classList.add("modal-section", "champion-selection-section");
 
+  // 🔸 Header con filtros de roles
+  const filterHeader = document.createElement("div");
+  filterHeader.classList.add("champion-filter-header");
+
+  roles.forEach((role) => {
+    const btn = document.createElement("button");
+    btn.classList.add("role-filter-btn");
+    btn.title = role.name;
+
+    const img = document.createElement("img");
+    img.src = role.img;
+    img.alt = role.name;
+    btn.appendChild(img);
+
+    btn.addEventListener("click", () => {
+      if (activeRole === role.key) {
+        activeRole = null;
+        btn.classList.remove("active");
+      } else {
+        activeRole = role.key;
+        document
+          .querySelectorAll(".role-filter-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      }
+      renderChampionGrid();
+    });
+
+    filterHeader.appendChild(btn);
+  });
+
+  // 🔸 Grilla de campeones
   champGrid = document.createElement("div");
   champGrid.classList.add("champion-grid");
 
+  // 🔸 Preview del campeón
   const previewDiv = document.createElement("div");
   previewDiv.classList.add("champion-preview");
 
@@ -147,29 +179,61 @@ function renderChampionSelection() {
   champImg.classList.add("champion-preview-img");
   previewDiv.appendChild(champImg);
 
+  // 🔸 Botón de acción
   champActionBtn = document.createElement("button");
   champActionBtn.classList.add("modal-action-btn");
   champActionBtn.textContent = "Omitir";
   champActionBtn.addEventListener("click", finishSelection);
 
-  section.append(champGrid, previewDiv, champActionBtn);
+  section.append(filterHeader, champGrid, previewDiv, champActionBtn);
+
+  renderChampionGrid(); // render inicial
   return section;
 }
 
+// ==============================
+// RENDER CHAMP GRID (FILTRADO + ORDENADO)
+// ==============================
+function renderChampionGrid() {
+  if (!championsData.length) return; // seguridad
+
+  champGrid.innerHTML = "";
+
+  let filtered = championsData
+    .slice()
+    .sort((a, b) => a.name.localeCompare(b.name));
+  if (activeRole) {
+    filtered = filtered.filter((c) => c.mainRole === activeRole);
+  }
+
+  filtered.forEach((champ) => {
+    const card = document.createElement("div");
+    card.classList.add("champion-card");
+
+    const img = document.createElement("img");
+    img.src = champ.squareImageUrl || `images/champs/${champ.name}.jpg`;
+    img.alt = champ.name;
+
+    const name = document.createElement("p");
+    name.textContent = champ.name;
+
+    card.append(img, name);
+    card.addEventListener("click", () => selectChampion(champ, card));
+
+    champGrid.appendChild(card);
+  });
+}
 // ==============================
 // SELECCIÓN DE ROL
 // ==============================
 function selectRole(role, btn) {
   selectedRole = role.key;
-  roleImg.src = role.img;
-  roleImg.title = role.name;
 
   document
     .querySelectorAll(".role-btn")
     .forEach((b) => b.classList.remove("selected"));
   btn.classList.add("selected");
 
-  // habilitar botón de siguiente
   nextBtn.disabled = false;
 }
 
@@ -186,6 +250,10 @@ function goToChampionSelection() {
 // ==============================
 // FETCH CHAMPIONS
 // ==============================
+
+// Variable global para campeones
+let championsData = [];
+
 async function loadChampions() {
   const userId = window.originalUserId || sessionStorage.getItem("userId");
 
@@ -193,16 +261,13 @@ async function loadChampions() {
     const res = await fetch(
       `http://localhost:8080/champions/userChampions/${userId}`
     );
-    const champions = await res.json();
+    const data = await res.json();
 
-    champGrid.innerHTML = "";
-    champions.forEach((champ) => {
-      const card = document.createElement("div");
-      card.classList.add("champion-card");
-      card.innerHTML = `<img src="${champ.squareImageUrl}" alt="${champ.name}"><p>${champ.name}</p>`;
-      card.addEventListener("click", () => selectChampion(champ, card));
-      champGrid.appendChild(card);
-    });
+    // Guardamos en la variable global
+    championsData = data;
+
+    // Renderizamos la grilla
+    renderChampionGrid();
   } catch (err) {
     console.error("Error al cargar campeones:", err);
   }
