@@ -243,18 +243,85 @@
   background-color: #252525;
   transform: scale(1.05);
 }
-
 /* ================================================
    CHAMPION PREVIEW
 ================================================ */
 .champion-preview {
-  margin-top: 1rem;
-  text-align: center;
+  width: 750px;
+  height: 420px;
+  border-radius: 5px;
+  border: 3px solid #08663d8c;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.5s ease;
+  margin-top: 30px;
+  /* Añadido: */
+  pointer-events: auto; /* asegurar que los hijos puedan recibir clicks */
 }
 
-.champion-preview-img {
-  width: 750px;
-  height: auto;
+.champion-preview-overlay {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+.champion-preview-name {
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.champion-preview-action-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 150px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border: 1px solid gray;
+  cursor: pointer;
+  color: white;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #930000, #5f0000);
+  transition: all 0.2s ease;
+}
+
+.champion-preview-action-btn:hover {
+  background: linear-gradient(180deg, #930000, #5f0000);
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  z-index: 20; /* asegúrate que esté encima del overlay */
   border-radius: 5px;
-  border: 2px solid #08663d8c;
+}
+
+.left-arrow {
+  left: 10px;
+}
+
+.right-arrow {
+  right: 10px;
+}
+
+.carousel-arrow:hover {
+  background: rgba(0, 0, 0, 0.8);
 }

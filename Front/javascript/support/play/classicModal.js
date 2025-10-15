@@ -12,6 +12,16 @@ let roleImg, champGrid, champImg, champActionBtn, nextBtn;
 // Nueva variable para guardar el modo de juego
 let isRanked = false;
 
+let activeRole = null;
+
+// Variable global para campeones
+let championsData = [];
+
+//skins
+let currentChampionSkins = [];
+let currentSkinIndex = 0;
+let skinsData = [];
+
 // 🔹 Botones de roles
 const roles = [
   {
@@ -47,6 +57,10 @@ const roles = [
 function openClassicModal(ranked = false) {
   isRanked = ranked;
   console.log("Abrir modal classic. Ranked:", isRanked);
+
+  currentChampionSkins = [];
+  currentSkinIndex = 0;
+  activeRole = null;
 
   createModal(); // ✅ Solo se crea, no se toca DOM todavía
 
@@ -130,8 +144,6 @@ function renderRoleSelection() {
 // RENDER CHAMPION SELECTION
 // ==============================
 
-let activeRole = null;
-
 function renderChampionSelection() {
   const section = document.createElement("div");
   section.classList.add("modal-section", "champion-selection-section");
@@ -171,26 +183,15 @@ function renderChampionSelection() {
   champGrid = document.createElement("div");
   champGrid.classList.add("champion-grid");
 
-  // 🔸 Preview del campeón
-  const previewDiv = document.createElement("div");
-  previewDiv.classList.add("champion-preview");
+  // 🔸 Preview de campeón (modular)
+  const previewDiv = renderChampionPreview();
 
-  champImg = document.createElement("img");
-  champImg.classList.add("champion-preview-img");
-  previewDiv.appendChild(champImg);
-
-  // 🔸 Botón de acción
-  champActionBtn = document.createElement("button");
-  champActionBtn.classList.add("modal-action-btn");
-  champActionBtn.textContent = "Omitir";
-  champActionBtn.addEventListener("click", finishSelection);
-
-  section.append(filterHeader, champGrid, previewDiv, champActionBtn);
+  section.append(filterHeader, champGrid, previewDiv);
 
   renderChampionGrid(); // render inicial
+
   return section;
 }
-
 // ==============================
 // RENDER CHAMP GRID (FILTRADO + ORDENADO)
 // ==============================
@@ -223,6 +224,55 @@ function renderChampionGrid() {
     champGrid.appendChild(card);
   });
 }
+
+// ==============================
+// RENDER CHAMPION PREVIEW
+// ==============================
+function renderChampionPreview() {
+  const previewDiv = document.createElement("div");
+  previewDiv.classList.add("champion-preview");
+
+  // Overlay con nombre y botón
+  const infoOverlay = document.createElement("div");
+  infoOverlay.classList.add("champion-preview-overlay");
+
+  const champNameDiv = document.createElement("div");
+  champNameDiv.classList.add("champion-preview-name");
+  champNameDiv.textContent = "";
+
+  champActionBtn = document.createElement("button");
+  champActionBtn.classList.add("champion-preview-action-btn");
+  champActionBtn.textContent = "Omitir";
+  champActionBtn.addEventListener("click", finishSelection);
+
+  infoOverlay.append(champNameDiv, champActionBtn);
+  previewDiv.appendChild(infoOverlay);
+
+  // Flechas para carrousel
+  const leftArrow = document.createElement("button");
+  leftArrow.classList.add("carousel-arrow", "left-arrow");
+  leftArrow.textContent = "<";
+
+  const rightArrow = document.createElement("button");
+  rightArrow.classList.add("carousel-arrow", "right-arrow");
+  rightArrow.textContent = ">";
+
+  previewDiv.append(leftArrow, rightArrow);
+
+  leftArrow.addEventListener("click", () => changeSkin(-1));
+  rightArrow.addEventListener("click", () => changeSkin(1));
+
+  // Eventos de flechas
+  leftArrow.addEventListener("click", () => changeSkin(-1));
+  rightArrow.addEventListener("click", () => changeSkin(1));
+
+  // Guardamos referencias
+  champImg = previewDiv;
+  champImgNameDiv = champNameDiv;
+
+  return previewDiv;
+}
+
 // ==============================
 // SELECCIÓN DE ROL
 // ==============================
@@ -251,9 +301,6 @@ function goToChampionSelection() {
 // FETCH CHAMPIONS
 // ==============================
 
-// Variable global para campeones
-let championsData = [];
-
 async function loadChampions() {
   const userId = window.originalUserId || sessionStorage.getItem("userId");
 
@@ -274,18 +321,76 @@ async function loadChampions() {
 }
 
 // ==============================
+// CARROUSEL DE SKINS
+// ==============================
+
+async function loadSkins(userId) {
+  try {
+    const res = await fetch(
+      `http://localhost:8080/skins/getUserSkins/${userId}`
+    );
+    const data = await res.json();
+    skinsData = data;
+  } catch (err) {
+    console.error("Error al cargar skins:", err);
+    skinsData = [];
+  }
+}
+
+// ==============================
+// FUNCION PARA MOSTRAR SKINS EN PREVIEW
+// ==============================
+
+// No hace falta autoplay
+
+function showChampionSkins(champion) {
+  // Primero armamos el array de skins + imagen base
+  currentChampionSkins = [
+    {
+      name: champion.name,
+      image: champion.imageUrl || champion.squareImageUrl,
+    },
+    ...skinsData.filter((skin) => skin.championName === champion.name),
+  ];
+
+  currentSkinIndex = 0;
+  updateSkin();
+}
+
+function updateSkin() {
+  if (!currentChampionSkins.length) return;
+  const skin = currentChampionSkins[currentSkinIndex];
+  champImg.style.backgroundImage = `url(${skin.image})`;
+  champImgNameDiv.textContent = skin.name;
+}
+
+function changeSkin(direction) {
+  if (!currentChampionSkins.length) return;
+
+  currentSkinIndex =
+    (currentSkinIndex + direction + currentChampionSkins.length) %
+    currentChampionSkins.length;
+
+  updateSkin();
+}
+
+// ==============================
 // SELECCIÓN DE CAMPEÓN
 // ==============================
-function selectChampion(champ, card) {
+async function selectChampion(champ, card) {
   selectedChampionId = champ.id;
-  champImg.src = champ.imageUrl;
-  champImg.alt = champ.name;
-  champActionBtn.textContent = "Elegir →";
 
   document
     .querySelectorAll(".champion-card")
     .forEach((c) => c.classList.remove("selected"));
   card.classList.add("selected");
+
+  champActionBtn.textContent = "Elegir";
+
+  // cargar skins del usuario si no están cargadas
+  await loadSkins(window.originalUserId || sessionStorage.getItem("userId"));
+
+  showChampionSkins(champ);
 }
 
 // ==============================
