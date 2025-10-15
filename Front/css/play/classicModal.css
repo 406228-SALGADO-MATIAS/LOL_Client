@@ -21,11 +21,11 @@
    MODAL CONTAINER
 ================================================ */
 .classic-modal-container {
-  background: #ffffff;
+  background: linear-gradient(180deg, #070430, #242201);
   color: #fff;
-  border-radius: 1rem;
-  width: 1300px !important;
-  height: 920px !important;
+  border-radius: 3rem;
+  width: 1100px !important;
+  height: 880px !important;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -158,19 +158,22 @@
 .champion-grid {
   margin-top: 10px;
   display: grid;
-  grid-template-columns: repeat(8, 130px);
+  grid-template-columns: repeat(7, 130px);
   justify-content: center;
   align-content: start; /* 🔥 clave */
-  gap: 0.8rem;
+  gap: 0.4rem;
   width: 100%;
-  height: 380px;
+  height: 310px;
   overflow-y: auto;
-  padding: 0.2rem;
+  padding: 1.5rem;
+  background: linear-gradient(180deg, #000000, #1f1f1f);
+  border-radius: 30px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
 }
 
 .champion-card {
   background: #1e1e1e;
-  border: 2px solid #333;
+  border: 2px solid #000000;
   border-radius: 10px;
   text-align: center;
   cursor: pointer;
@@ -181,7 +184,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 0.1rem;
+  padding: 0.2rem;
+  margin-top: 5px;
+  margin-left: 10px;
 }
 
 .champion-card img {
@@ -193,7 +198,6 @@
 
 .champion-card p {
   font-size: 0.7rem;
-  margin-top: 0.1rem;
 }
 
 .champion-card:hover,
@@ -219,8 +223,8 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   padding: 4px;
   display: flex;
   align-items: center;
@@ -250,7 +254,8 @@
   width: 750px;
   height: 420px;
   border-radius: 5px;
-  border: 3px solid #08663d8c;
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -260,7 +265,7 @@
   background-size: cover;
   background-position: center;
   transition: background-image 0.5s ease;
-  margin-top: 30px;
+  margin-top: 38px;
   /* Añadido: */
   pointer-events: auto; /* asegurar que los hijos puedan recibir clicks */
 }
@@ -275,11 +280,73 @@
   box-sizing: border-box;
 }
 
+/* ================================================
+   CHAMPION PREVIEW HEADER DE CHAMPION DATA
+================================================ */
+
+.champion-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.champion-preview-difficulty,
+.champion-preview-name,
+.champion-preview-winrate {
+  flex: 1;
+  font-weight: bold;
+  color: #f2f2f2;
+}
+
+.champion-preview-difficulty {
+  text-align: left;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.champion-preview-winrate {
+  text-align: right;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
 .champion-preview-name {
   color: #fff;
   font-size: 1.2rem;
 }
 
+/* ================================================
+   CHAMPION PREVIEW SECCION BOTONES?
+================================================ */
+
+/* Overlay inferior de botones */
+.champion-preview-overlay.bottom {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  position: relative; /* necesario para centrar el botón "Elegir" con absolute */
+}
+
+/* Botón "Elegir" centrado */
+.champion-preview-action-btn.choose-btn {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none; /* oculto por defecto */
+}
+
+/* Botón "Omitir" alineado a la derecha */
+.champion-preview-random-btn.skip-btn {
+  margin-left: auto; /* empuja a la derecha */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .champion-preview-action-btn {
   display: flex;
   justify-content: center;
@@ -288,17 +355,44 @@
   width: 150px;
   font-size: 1.1rem;
   font-weight: 500;
-  border: 1px solid gray;
+  border: 1px solid rgb(0, 0, 0);
   cursor: pointer;
   color: white;
-  text-transform: uppercase;
-  background: linear-gradient(180deg, #930000, #5f0000);
+  background: linear-gradient(180deg, #003b0d, #002c0a);
   transition: all 0.2s ease;
+  border-radius: 6px;
 }
 
 .champion-preview-action-btn:hover {
-  background: linear-gradient(180deg, #930000, #5f0000);
+  background: linear-gradient(180deg, #00410e, #002b09);
+  box-shadow: 0 0 4px rgba(204, 204, 204, 0.7);
 }
+
+.champion-preview-random-btn {
+  border-radius: 6px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 150px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border: 1px solid rgb(0, 0, 0);
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(180deg, #630000, #3d0000);
+  transition: all 0.2s ease;
+}
+
+.champion-preview-random-btn:hover {
+  background: linear-gradient(180deg, #680000, #5f0000);
+  box-shadow: 0 0 4px rgba(204, 204, 204, 0.7);
+}
+
+/* ================================================
+   CHAMPION PREVIEW IMG CARROUSEL DESIGN
+================================================ */
 
 .carousel-arrow {
   position: absolute;
