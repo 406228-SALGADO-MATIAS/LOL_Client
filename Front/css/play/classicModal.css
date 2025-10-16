@@ -70,6 +70,29 @@
 }
 
 /* ================================================
+   ROLE SELECTION SECTION
+================================================ */
+.role-selection-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* --- Título principal --- */
+.role-selection-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-top: 10px;
+  margin-bottom: -10px;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+/* ================================================
    ROLE DISPLAY
 ================================================ */
 .role-display {
@@ -83,6 +106,11 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
   position: relative;
   overflow: hidden;
+
+  /* Animación añadida */
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
 /* ================================================
@@ -95,7 +123,7 @@
   flex-wrap: wrap;
   position: relative;
   z-index: 2; /* 👈 para que estén por encima del mapa */
-  margin-top: 40px;
+  margin-top: 28px;
 }
 
 .role-btn {
@@ -109,6 +137,11 @@
   text-align: center;
   transition: all 0.2s ease;
   font-size: 1.1rem;
+
+  /* Animación añadida */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .role-btn img {
@@ -121,6 +154,7 @@
 .role-btn:hover {
   background-color: #1c1c1c;
 }
+
 .role-btn.selected {
   border: 1px solid #bcc4bd;
   background-color: #000000;
@@ -131,27 +165,36 @@
 ================================================ */
 .modal-next-btn,
 .modal-action-btn {
-  display: flex; /* 🔹 Hace que el texto se centre */
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center; /* Centra verticalmente */
-  height: 50px !important;
-  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 130px;
   font-size: 1.1rem;
   font-weight: 500;
-  border: 1 px solid gray;
+  border: 1px solid rgb(0, 0, 0);
   cursor: pointer;
   color: white;
-  text-transform: uppercase;
-  background: linear-gradient(180deg, #930000, #5f0000);
-
+  background: linear-gradient(180deg, #006d18, #002b09);
+  transition: all 0.2s ease;
+  border-radius: 6px;
   margin-top: 25px;
+
+  /* Animación añadida */
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.4s ease;
 }
 
 .modal-next-btn:hover,
 .modal-action-btn:hover {
-  background: linear-gradient(180deg, #930000, #5f0000);
+  background: linear-gradient(180deg, #006115, #003b0d);
+  box-shadow: 0 0 4px rgba(204, 204, 204, 0.7);
 }
 
+/* Efecto pop opcional cuando aparece */
+.modal-next-btn.show {
+  transform: scale(1.05);
+}
 /* ================================================
    CHAMPION GRID
 ================================================ */
@@ -168,7 +211,7 @@
   padding: 1.5rem;
   background: linear-gradient(180deg, #000000, #1f1f1f);
   border-radius: 30px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 30px rgba(90, 90, 90, 0.61);
 }
 
 .champion-card {
@@ -200,11 +243,17 @@
   font-size: 0.7rem;
 }
 
-.champion-card:hover,
-.champion-card.selected {
-  border-color: #3b82f6;
-  background-color: #252525;
+.champion-card:hover {
+  background-color: #2e2e2e;
+  box-shadow: 0 0 10px #c99300;
+  transform: scale(1.02);
 }
+
+.champion-card.selected {
+  background: #1616168c;
+  box-shadow: 0 0 10px #ffffff;
+}
+
 /* ================================================
    HEADER DE FILTRO DE ROLES
 ================================================ */
@@ -253,9 +302,8 @@
 .champion-preview {
   width: 750px;
   height: 420px;
-  border-radius: 5px;
-
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  border-radius: 40px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.884);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -264,7 +312,6 @@
   align-items: center;
   background-size: cover;
   background-position: center;
-  transition: background-image 0.5s ease;
   margin-top: 38px;
   /* Añadido: */
   pointer-events: auto; /* asegurar que los hijos puedan recibir clicks */
@@ -272,7 +319,38 @@
 
 .champion-preview-overlay {
   width: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5); /* mantener semitransparente */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 10; /* sobre la imagen */
+}
+
+.champion-preview-overlay-fade {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.774);
+  pointer-events: none; /* que no bloquee clicks */
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+
+.champion-preview-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  border-radius: inherit;
+  z-index: 0; /* que quede debajo de overlays y botones */
+  transition: opacity 0.25s ease;
+}
+
+.champion-preview-overlay {
+  width: 100%;
+  background: rgba(0, 0, 0, 0);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -291,6 +369,7 @@
   width: 100%;
   text-align: center;
   padding: 0 20px;
+  height: 50px;
 }
 
 .champion-preview-difficulty,
@@ -330,6 +409,7 @@
   padding: 10px 20px;
   box-sizing: border-box;
   position: relative; /* necesario para centrar el botón "Elegir" con absolute */
+  background: rgba(0, 0, 0, 0);
 }
 
 /* Botón "Elegir" centrado */
@@ -351,20 +431,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
-  width: 150px;
+  height: 40px;
+  width: 130px;
   font-size: 1.1rem;
   font-weight: 500;
   border: 1px solid rgb(0, 0, 0);
   cursor: pointer;
   color: white;
-  background: linear-gradient(180deg, #003b0d, #002c0a);
+  background: linear-gradient(180deg, #006d18, #002b09);
   transition: all 0.2s ease;
   border-radius: 6px;
 }
 
 .champion-preview-action-btn:hover {
-  background: linear-gradient(180deg, #00410e, #002b09);
+  background: linear-gradient(180deg, #006115, #003b0d);
   box-shadow: 0 0 4px rgba(204, 204, 204, 0.7);
 }
 
@@ -374,8 +454,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
-  width: 150px;
+  height: 40px;
+  width: 110px;
   font-size: 1.1rem;
   font-weight: 500;
   border: 1px solid rgb(0, 0, 0);
@@ -398,14 +478,30 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: white;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.658);
   border: none;
   cursor: pointer;
   padding: 5px 10px;
   z-index: 20; /* asegúrate que esté encima del overlay */
-  border-radius: 5px;
+  border-radius: 12px;
+}
+
+/* Contenedor interno para animación de slide */
+.champion-preview-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  border-radius: inherit;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  opacity: 0;
+  transform: translateX(30px); /* empieza un poco a la derecha */
+}
+.champion-preview-slide.show {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .left-arrow {
@@ -418,4 +514,46 @@
 
 .carousel-arrow:hover {
   background: rgba(0, 0, 0, 0.8);
+}
+
+/* ================================================
+   CUSTOM SCROLLBARS - CHAMPION GRID
+================================================ */
+.champion-grid::-webkit-scrollbar {
+  height: 6px;
+  width: 6px; /* 👈 agregado por si hay scroll vertical */
+}
+
+.champion-grid::-webkit-scrollbar-thumb {
+  background-color: #ffd500cc;
+  border-radius: 3px;
+}
+
+.champion-grid::-webkit-scrollbar-thumb:hover {
+  background-color: #ffe96a;
+}
+
+.champion-grid::-webkit-scrollbar-track {
+  background-color: #071a2d;
+}
+
+.champion-search-input {
+  height: 32px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background-color: #1e1e1e;
+  color: #fff;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.champion-search-input::placeholder {
+  color: #ccc;
+}
+
+.champion-search-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 4px rgba(59, 130, 246, 0.5);
 }

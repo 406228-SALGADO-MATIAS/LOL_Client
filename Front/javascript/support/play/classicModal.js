@@ -1,4 +1,8 @@
 // ======================================================
+// classicModal.js
+// ======================================================
+
+// ======================================================
 // 🧩 VARIABLES GLOBALES
 // ======================================================
 let selectedRole = null;
@@ -106,9 +110,16 @@ function renderRoleSelection() {
   const section = document.createElement("div");
   section.classList.add("modal-section", "role-selection-section");
 
+  // --- TÍTULO ---
+  const title = document.createElement("h4");
+  title.classList.add("role-selection-title");
+  title.textContent = "Seleccionar Rol";
+
+  // --- DISPLAY DE ROL ---
   const displayDiv = document.createElement("div");
   displayDiv.classList.add("role-display");
 
+  // --- BOTONES DE ROLES ---
   const buttonsDiv = document.createElement("div");
   buttonsDiv.classList.add("role-buttons-container");
 
@@ -120,16 +131,42 @@ function renderRoleSelection() {
     buttonsDiv.appendChild(btn);
   });
 
+  // --- BOTÓN SIGUIENTE ---
   nextBtn = document.createElement("button");
   nextBtn.classList.add("modal-next-btn");
   nextBtn.textContent = "Siguiente";
   nextBtn.disabled = true;
+  nextBtn.style.opacity = 0; // empieza oculto
   nextBtn.addEventListener("click", () => {
     if (!selectedRole) return;
     goToChampionSelection();
   });
 
-  section.append(displayDiv, buttonsDiv, nextBtn);
+  section.append(title, displayDiv, buttonsDiv, nextBtn);
+
+  // === ANIMACIONES ===
+  requestAnimationFrame(() => {
+    // 1️⃣ título
+    title.style.opacity = 1;
+    title.style.transform = "translateY(0)";
+
+    // 2️⃣ imagen display (con leve delay)
+    setTimeout(() => {
+      displayDiv.style.opacity = 1;
+      displayDiv.style.transform = "translateY(0)";
+    }, 300);
+
+    // 3️⃣ botones de roles (en cascada horizontal)
+    setTimeout(() => {
+      const buttons = buttonsDiv.querySelectorAll(".role-btn");
+      buttons.forEach((b, i) => {
+        b.style.opacity = 1;
+        b.style.transform = "translateY(0)";
+        b.style.transitionDelay = `${i * 100}ms`;
+      });
+    }, 600);
+  });
+
   return section;
 }
 
@@ -163,11 +200,22 @@ function renderChampionSelection() {
           .forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
       }
-      renderChampionGrid();
+      filterAndRenderChampions();
     });
 
     filterHeader.appendChild(btn);
   });
+
+  // ==== BUSCADOR ==== //
+  const searchInput = document.createElement("input");
+  searchInput.type = "text";
+  searchInput.placeholder = "Buscar campeón...";
+  searchInput.classList.add("champion-search-input");
+  searchInput.style.marginLeft = "auto"; // lo lleva full a la derecha
+  searchInput.addEventListener("input", () => {
+    filterAndRenderChampions();
+  });
+  filterHeader.appendChild(searchInput);
 
   champGrid = document.createElement("div");
   champGrid.classList.add("champion-grid");
@@ -175,8 +223,77 @@ function renderChampionSelection() {
   const previewDiv = renderChampionPreview();
   section.append(filterHeader, champGrid, previewDiv);
 
-  renderChampionGrid();
+  renderChampionGrid(); // render inicial completo
   return section;
+}
+
+function normalizeText(str) {
+  return str
+    .normalize("NFD") // descompone acentos y caracteres especiales
+    .replace(/[\u0300-\u036f]/g, "") // quita los diacríticos
+    .replace(/['´]/g, "'") // trata ´ y ' como el mismo caracter
+    .toLowerCase();
+}
+
+// Array para guardar IDs de la grilla actual
+let currentFilteredChampionIds = [];
+
+function filterAndRenderChampions() {
+  if (!championsData.length) return;
+
+  let filtered = championsData.slice();
+
+  // Filtrado por rol
+  if (activeRole) {
+    filtered = filtered.filter((c) => c.mainRole === activeRole);
+  }
+
+  // Filtrado por búsqueda
+  const searchInput = document.querySelector(".champion-search-input");
+  if (searchInput && searchInput.value.trim() !== "") {
+    const term = normalizeText(searchInput.value.trim());
+    filtered = filtered.filter((c) => normalizeText(c.name).includes(term));
+  }
+
+  // Ordenamos
+  filtered.sort((a, b) => a.name.localeCompare(b.name));
+
+  // ✅ Comprobamos si cambió el resultado
+  const newIds = filtered.map((c) => c.id);
+  const unchanged =
+    newIds.length === currentFilteredChampionIds.length &&
+    newIds.every((id, idx) => id === currentFilteredChampionIds[idx]);
+
+  if (unchanged) return; // nada cambió, no renderizamos
+
+  // Actualizamos referencia
+  currentFilteredChampionIds = newIds;
+
+  // Renderizamos la grilla con los resultados
+  champGrid.innerHTML = "";
+  filtered.forEach((champ) => {
+    const card = document.createElement("div");
+    card.classList.add("champion-card");
+
+    // ✅ Reaplicamos la selección si coincide con el seleccionado actual
+    if (champ.id === selectedChampionId) {
+      card.classList.add("selected");
+    }
+
+    const img = document.createElement("img");
+    img.src = champ.squareImageUrl || `images/champs/${champ.name}.jpg`;
+    img.alt = champ.name;
+
+    const name = document.createElement("p");
+    name.textContent = champ.name;
+
+    card.append(img, name);
+    card.addEventListener("click", () => selectChampion(champ, card));
+
+    champGrid.appendChild(card);
+  });
+
+  animateChampionCards();
 }
 
 // ======================================================
@@ -210,11 +327,18 @@ function renderChampionGrid() {
 
     champGrid.appendChild(card);
   });
+
+  animateChampionCards();
 }
 
 function renderChampionPreview() {
   const previewDiv = document.createElement("div");
   previewDiv.classList.add("champion-preview");
+
+  // ===== DIV EXCLUSIVO PARA LA IMAGEN DE FONDO =====
+  const imageDiv = document.createElement("div");
+  imageDiv.classList.add("champion-preview-image"); // nuevo div
+  previewDiv.appendChild(imageDiv);
 
   // ===== Overlay superior =====
   const infoOverlay = document.createElement("div");
@@ -224,7 +348,6 @@ function renderChampionPreview() {
   const champHeaderDiv = document.createElement("div");
   champHeaderDiv.classList.add("champion-preview-header");
 
-  // Subdivs alineados
   const champDifficulty = document.createElement("div");
   champDifficulty.classList.add("champion-preview-difficulty");
   champDifficulty.textContent = "";
@@ -244,26 +367,21 @@ function renderChampionPreview() {
   const buttonsOverlay = document.createElement("div");
   buttonsOverlay.classList.add("champion-preview-overlay", "bottom");
 
-  // Botón "Elegir" centrado y oculto por defecto
   const actionBtn = document.createElement("button");
   actionBtn.classList.add("champion-preview-action-btn", "choose-btn");
   actionBtn.textContent = "Elegir";
-  actionBtn.style.display = "none"; // oculto hasta seleccionar un campeón
+  actionBtn.style.display = "none";
   actionBtn.addEventListener("click", finishSelection);
 
-  // Botón "Omitir" siempre visible a la derecha
   const randomBtn = document.createElement("button");
   randomBtn.classList.add("champion-preview-random-btn", "skip-btn");
-  randomBtn.textContent = "Random";
+  randomBtn.textContent = "Skip";
   randomBtn.addEventListener("click", () => {
     selectedChampionId = null;
     finishSelection();
   });
 
   buttonsOverlay.append(actionBtn, randomBtn);
-
-  // Guardar referencias globales
-  champActionBtn = actionBtn; // este será el que mostramos al seleccionar
 
   // ===== Flechas =====
   const leftArrow = document.createElement("button");
@@ -283,7 +401,7 @@ function renderChampionPreview() {
   previewDiv.append(infoOverlay, buttonsOverlay, leftArrow, rightArrow);
 
   // ===== Guardar referencias globales =====
-  champImg = previewDiv;
+  champImg = imageDiv; // ahora la animación se hace solo sobre la imagen
   champImgNameDiv = champNameDiv;
   champImg.leftArrow = leftArrow;
   champImg.rightArrow = rightArrow;
@@ -297,20 +415,56 @@ function renderChampionPreview() {
 // ======================================================
 // 🧩 LÓGICA DE SELECCIÓN Y NAVEGACIÓN
 // ======================================================
+
 function selectRole(role, btn) {
   selectedRole = role.key;
   document
     .querySelectorAll(".role-btn")
     .forEach((b) => b.classList.remove("selected"));
   btn.classList.add("selected");
+
   nextBtn.disabled = false;
+  nextBtn.style.transition = "opacity 0.5s ease";
+  nextBtn.style.opacity = 1; // aparece suave
 }
 
 function goToChampionSelection() {
   roleSection.style.display = "none";
   champSection.style.display = "flex";
   currentSection = "championSelection";
-  loadChampions();
+
+  // === ELEMENTOS A ANIMAR ===
+  const filterHeader = champSection.querySelector(".champion-filter-header");
+  const champGrid = champSection.querySelector(".champion-grid");
+  const previewDiv = champSection.querySelector(".champion-preview");
+
+  // === ESTADOS INICIALES ===
+  [filterHeader, champGrid, previewDiv].forEach((el) => {
+    el.style.opacity = 0;
+    el.style.transform = "translateY(25px)";
+    el.style.transition = "opacity 0.7s ease, transform 0.7s ease";
+  });
+
+  loadChampions(); // renderiza cards
+
+  // === ANIMACIONES EN SECUENCIA ===
+  requestAnimationFrame(() => {
+    // 1️⃣ filtro
+    filterHeader.style.opacity = 1;
+    filterHeader.style.transform = "translateY(0)";
+
+    // 2️⃣ grilla (con delay)
+    setTimeout(() => {
+      champGrid.style.opacity = 1;
+      champGrid.style.transform = "translateY(0)";
+    }, 300);
+
+    // 3️⃣ preview (después de la grilla)
+    setTimeout(() => {
+      previewDiv.style.opacity = 1;
+      previewDiv.style.transform = "translateY(0)";
+    }, 600);
+  });
 }
 
 // ======================================================
@@ -328,6 +482,8 @@ async function loadChampions() {
   } catch (err) {
     console.error("Error al cargar campeones:", err);
   }
+
+  animateChampionCards();
 }
 
 async function loadSkins(userId) {
@@ -372,10 +528,23 @@ function updateSkin() {
 
 function changeSkin(direction) {
   if (!currentChampionSkins.length) return;
+
   currentSkinIndex =
     (currentSkinIndex + direction + currentChampionSkins.length) %
     currentChampionSkins.length;
-  updateSkin();
+
+  const newSkin = currentChampionSkins[currentSkinIndex];
+
+  // Fade-out de la imagen únicamente
+  champImg.style.opacity = "0";
+
+  setTimeout(() => {
+    champImg.style.backgroundImage = `url(${newSkin.image})`;
+    champImg.style.opacity = "1";
+  }, 120);
+
+  // Nombre del skin actualizado (header NO se toca)
+  champImgNameDiv.textContent = newSkin.name;
 }
 
 // ======================================================
@@ -384,31 +553,73 @@ function changeSkin(direction) {
 async function selectChampion(champ, card) {
   selectedChampionId = champ.id;
 
-  // Deseleccionamos todas las cards
   document
     .querySelectorAll(".champion-card")
     .forEach((c) => c.classList.remove("selected"));
   card.classList.add("selected");
 
-  // Mostrar botón "Elegir" centrado
   const chooseBtn = document.querySelector(
     ".champion-preview-action-btn.choose-btn"
   );
   if (chooseBtn) chooseBtn.style.display = "flex";
 
-  // Actualizamos datos del overlay superior
+  // --- Animación de fade-in sin tocar el background ---
+  // 1️⃣ Crear overlay
+  const fadeOverlay = document.createElement("div");
+  fadeOverlay.classList.add("champion-preview-overlay-fade");
+  champImg.appendChild(fadeOverlay);
+
+  // Restaurar backgrounds originales
+  const topOverlay = document.querySelector(
+    ".champion-preview-overlay:not(.bottom)"
+  );
+  const bottomOverlay = document.querySelector(
+    ".champion-preview-overlay.bottom"
+  );
+
+  if (topOverlay) topOverlay.style.background = "rgba(0, 0, 0, 0.651)";
+  if (bottomOverlay) bottomOverlay.style.background = "rgba(0, 0, 0, 0.651)";
+
+  // 2️⃣ Actualizar contenido
   champImgNameDiv.textContent = champ.name;
   champImg.winrateDiv.textContent = `Winrate: ${
     champ.winrate?.toFixed(2) ?? "??"
   }%`;
   champImg.difficultyDiv.textContent = `Dificultad: ${champ.difficulty ?? "?"}`;
 
-  // Aplicar box-shadow al preview
   champImg.style.boxShadow = "0 0 10px rgba(245, 245, 245, 0.6)";
 
-  // Cargar skins y mostrar carrusel
   await loadSkins(window.originalUserId || sessionStorage.getItem("userId"));
   showChampionSkins(champ);
+
+  // 3️⃣ Animar overlay para revelar
+  requestAnimationFrame(() => {
+    fadeOverlay.style.opacity = "0";
+  });
+
+  // 4️⃣ Borrar overlay después de la animación
+  setTimeout(() => fadeOverlay.remove(), 400);
+}
+
+function animateChampionCards() {
+  const cards = champGrid.querySelectorAll(".champion-card");
+  if (!cards.length) return;
+
+  cards.forEach((card, i) => {
+    card.style.opacity = 0;
+    card.style.transform = "translateY(25px)";
+    card.style.transition = `opacity 0.4s ease ${
+      i * 0.04
+    }s, transform 0.4s ease ${i * 0.04}s`;
+  });
+
+  // activamos en el siguiente frame para que el browser reconozca el estado inicial
+  requestAnimationFrame(() => {
+    cards.forEach((card) => {
+      card.style.opacity = 1;
+      card.style.transform = "translateY(0)";
+    });
+  });
 }
 
 // ======================================================

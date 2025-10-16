@@ -34,6 +34,8 @@
   object-fit: contain;
   margin: 0 auto;
   display: block;
+  opacity: 0;
+  transform: scale(0.5);
 }
 
 /* ===========================================
@@ -41,10 +43,10 @@
 =========================================== */
 .rewards-section h3 {
   font-size: 1.2rem;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
   color: #ffcc66;
   text-transform: uppercase;
-  margin-top: -40px;
+  margin-top: -10px;
 }
 
 .rewards-grid {
@@ -90,6 +92,7 @@
 .buttons-section {
   display: flex;
   justify-content: center;
+  margin-top: 0px;
 }
 
 .buttons-wrapper {

@@ -117,6 +117,7 @@ public class MatchServiceImpl implements MatchService {
             userLpService.calculateUserRanks(matchSaved);
         MatchDTO dto = dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
         userLootService.giveRewardsToPlayersFromMatch(matchSaved,dto);
+        championWinrateService.updateChampionWinrate(matchSaved);
         return dto;
     }
 
@@ -145,6 +146,7 @@ public class MatchServiceImpl implements MatchService {
             userLpService.calculateUserRanks(matchSaved);
         MatchDTO dto = dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
         userLootService.giveRewardsToPlayersFromMatch(matchSaved,dto);
+        championWinrateService.updateChampionWinrate(matchSaved);
         return dto;
     }
 
@@ -171,6 +173,7 @@ public class MatchServiceImpl implements MatchService {
             userLpService.calculateUserRanks(matchSaved);
         MatchDTO dto = dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
         userLootService.giveRewardsToPlayersFromMatch(matchSaved,dto);
+        championWinrateService.updateChampionWinrate(matchSaved);
         return dto;
     }
 
@@ -213,6 +216,7 @@ public class MatchServiceImpl implements MatchService {
             userLpService.calculateUserRanks(matchSaved);
         MatchDTO dto = dtoBuilder.buildMatchDTO(matchSaved, showChampion, showItem);
         userLootService.giveRewardsToPlayersFromMatch(matchSaved,dto);
+        championWinrateService.updateChampionWinrate(matchSaved);
         return dto;
     }
 
@@ -516,7 +520,6 @@ public class MatchServiceImpl implements MatchService {
                     buildPlayerMatchDetailEntityList(matchEntity, serverOption, elo, mirrorChampions, userId, role,optionalChampionId));
         }
         damageEstimatorService.distributeDamage(matchEntity);
-        championWinrateService.updateChampionWinrate(matchEntity);
         return matchEntity;
     }
 
@@ -637,35 +640,76 @@ public class MatchServiceImpl implements MatchService {
         List<UserMatchesDTO> result = new ArrayList<>(baseList);
         Random random = new Random();
 
-        if (result.size() >= minPlayers) return result;
-
         UserRankTier[] ranks = UserRankTier.values();
-        int currentIndex = rank.ordinal();
+        int currentIndex = rank != null ? rank.ordinal() : -1; // -1 = unranked
 
-        List<UserRankTier> neighbors = new ArrayList<>();
+        // Lista temporal de candidatos adicionales
+        List<UserMatchesDTO> candidates = new ArrayList<>();
 
-        // Estrategia de búsqueda:
-        // 1. Primero rangos superiores
-        for (int i = currentIndex + 1; i < ranks.length; i++) neighbors.add(ranks[i]);
-        // 2. Luego rangos inferiores
-        for (int i = currentIndex - 1; i >= 0; i--) neighbors.add(ranks[i]);
+        // Offset de búsqueda (1, 2, 3,...)
+        int offset = 1;
+        boolean finished = false;
 
-        // Vamos agregando jugadores de rangos aledaños
-        for (UserRankTier neighborRank : neighbors) {
-            List<UserMatchesDTO> additionalUsers = userService.findUsersByRankAndServer(neighborRank, serverOption);
-            additionalUsers.removeAll(result); // evitar duplicados
-            Collections.shuffle(additionalUsers, random);
+        while (!finished && result.size() + candidates.size() < minPlayers) {
+            List<UserMatchesDTO> plusList = new ArrayList<>();
+            List<UserMatchesDTO> minusList = new ArrayList<>();
 
-            for (UserMatchesDTO u : additionalUsers) {
-                if (result.size() >= minPlayers) break;
-                result.add(u);
+            int plusIndex = currentIndex + offset;
+            int minusIndex = currentIndex - offset;
+
+            // +offset
+            if (plusIndex >= 0 && plusIndex < ranks.length) {
+                try {
+                    plusList = userService.findUsersByRankAndServer(ranks[plusIndex], serverOption);
+                } catch (Exception e) {
+                    // ignoramos rango sin usuarios
+                }
             }
 
-            if (result.size() >= minPlayers) break;
+            // -offset
+            if (minusIndex == -1) { // unranked
+                try {
+                    minusList = userService.findUsersByRankAndServer(null, serverOption);
+                } catch (Exception e) {
+                }
+            } else if (minusIndex >= 0) {
+                try {
+                    minusList = userService.findUsersByRankAndServer(ranks[minusIndex], serverOption);
+                } catch (Exception e) {
+                }
+            }
+
+            // eliminar duplicados
+            plusList.removeAll(result);
+            plusList.removeAll(candidates);
+            minusList.removeAll(result);
+            minusList.removeAll(candidates);
+
+            // agregar a candidatos
+            candidates.addAll(plusList);
+            candidates.addAll(minusList);
+
+            // si ya no hay más rangos para buscar
+            if ((plusList.isEmpty() && minusList.isEmpty()) || (plusIndex >= ranks.length && minusIndex < -1)) {
+                finished = true;
+            }
+
+            offset++;
+        }
+
+        // Mezclar candidatos y añadir al resultado
+        Collections.shuffle(candidates, random);
+        result.addAll(candidates);
+
+        // Rellenar hasta minPlayers con elementos aleatorios de la lista final
+        while (result.size() < minPlayers && !result.isEmpty()) {
+            int idx = random.nextInt(result.size());
+            result.add(result.get(idx));
         }
 
         return result;
     }
+
 
     private List<PlayerMatchDetailEntity> championSelectionTeams(MatchEntity match, List<Long> blueTeam, List<Long> redTeam,
                                                                  boolean mirrorChampions) {

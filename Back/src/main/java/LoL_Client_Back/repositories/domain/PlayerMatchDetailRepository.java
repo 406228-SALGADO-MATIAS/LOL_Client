@@ -17,7 +17,7 @@ public interface PlayerMatchDetailRepository extends JpaRepository<PlayerMatchDe
     List<MatchEntity> findMatchesByUserId(@Param("userId") Long userId);
     @Query("""
     SELECT p.champion.id,
-           SUM(CASE WHEN p.team = m.winnerTeam THEN 1 ELSE 0 END) as wins,
+           SUM(CASE WHEN p.team.id = m.winnerTeam.id THEN 1 ELSE 0 END) as wins,
            COUNT(p) as total
     FROM PlayerMatchDetailEntity p
     JOIN p.match m
@@ -25,7 +25,7 @@ public interface PlayerMatchDetailRepository extends JpaRepository<PlayerMatchDe
 """)
     List<Object[]> calculateChampionWinrates();
     @Query("""
-    SELECT SUM(CASE WHEN p.team = m.winnerTeam THEN 1 ELSE 0 END),
+    SELECT SUM(CASE WHEN p.team.id = m.winnerTeam.id THEN 1 ELSE 0 END),
            COUNT(p)
     FROM PlayerMatchDetailEntity p
     JOIN p.match m

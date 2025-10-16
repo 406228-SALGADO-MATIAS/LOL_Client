@@ -58,7 +58,7 @@ public class ChampionWinrateService {
             ChampionEntity champ = championRepository.findById(champId).orElseThrow();
             Double previous = champ.getWinrate();
 
-            champ.setWinrate(clampWinrate(winrate, previous));
+            champ.setWinrate(clampWinrate(winrate));
             championRepository.save(champ);
         }
         return true;
@@ -87,7 +87,8 @@ public class ChampionWinrateService {
                     ChampionEntity champ = championRepository.findById(championId).orElseThrow();
                     Double previous = champ.getWinrate();
 
-                    champ.setWinrate(clampWinrate(winrate, previous));
+                    champ.setWinrate(clampWinrate(winrate));
+
                     championRepository.save(champ);
                 }
             }
@@ -98,60 +99,32 @@ public class ChampionWinrateService {
     public TeamEntity simulateMatchWinner(List<PlayerMatchDetailEntity> details) {
         if (details == null || details.isEmpty()) return null;
 
-        List<PlayerMatchDetailEntity> blueTeam = new ArrayList<>();
-        List<PlayerMatchDetailEntity> redTeam = new ArrayList<>();
+        TeamEntity blueTeamEntity = details.get(0).getTeam();
+        TeamEntity redTeamEntity = details.get(9).getTeam();
 
-        for (PlayerMatchDetailEntity detail : details) {
-            if (detail.getTeam() == null || detail.getChampion() == null) continue;
-            if ("Blue".equalsIgnoreCase(detail.getTeam().getTeamColor())) blueTeam.add(detail);
-            else if ("Red".equalsIgnoreCase(detail.getTeam().getTeamColor())) redTeam.add(detail);
-        }
-
-        double blueAvg = blueTeam.stream()
+        double blueAvg = details.stream()
+                .filter(d -> "Blue".equalsIgnoreCase(d.getTeam().getTeamColor()))
                 .mapToDouble(d -> d.getChampion().getWinrate() != null ? d.getChampion().getWinrate() : 50.0)
-                .average()
-                .orElse(50.0);
+                .average().orElse(50.0);
 
-        double redAvg = redTeam.stream()
+        double redAvg = details.stream()
+                .filter(d -> "Red".equalsIgnoreCase(d.getTeam().getTeamColor()))
                 .mapToDouble(d -> d.getChampion().getWinrate() != null ? d.getChampion().getWinrate() : 50.0)
-                .average()
-                .orElse(50.0);
+                .average().orElse(50.0);
 
         double total = blueAvg + redAvg;
         double random = ThreadLocalRandom.current().nextDouble() * total;
 
-        if (random <= blueAvg) {
-            return blueTeam.isEmpty() ? null : blueTeam.get(0).getTeam();
-        } else {
-            return redTeam.isEmpty() ? null : redTeam.get(0).getTeam();
-        }
+        // asignamos la misma instancia que usamos para los jugadores
+        return (random <= blueAvg) ? blueTeamEntity : redTeamEntity;
     }
 
-    private double clampWinrate(double raw, Double previous) {
-        double min = 44.0;
-        double max = 54.0;
+    private double clampWinrate(double raw) {
+        double min = 47.0;
+        double max = 53.0;
 
-        // initial
-        if (previous == null) {
-            if (raw < min) return ThreadLocalRandom.current().nextDouble(min, min + 1.0);
-            if (raw > max) return ThreadLocalRandom.current().nextDouble(max - 1.0, max);
-            return raw;
-        }
-
-        // for updates
-        if (raw > previous) { // up
-            double from = Math.min(previous, max);
-            double to = max;
-            if (from >= to) return previous; // ya no se puede sumar
-            return ThreadLocalRandom.current().nextDouble(from, to);
-        } else if (raw < previous) { // down
-            double from = min;
-            double to = Math.max(previous, min);
-            if (from >= to) return previous; // ya no se puede restar
-            return ThreadLocalRandom.current().nextDouble(from, to);
-        } else {
-            return raw; // no cambió
-        }
+        if (raw < min) return min;
+        return Math.min(raw, max);
     }
 
 
