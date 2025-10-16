@@ -44,7 +44,7 @@
   animation: scaleUpModal 0.15s ease 0.55s forwards; /* <--- delay de 0.75s */
   opacity: 0;
   transform: scale(0.95);
-  margin-top: 65px;
+  margin-top: 40px;
 }
 
 /* Animación de aparición del modal */
