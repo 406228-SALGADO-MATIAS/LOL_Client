@@ -530,7 +530,6 @@ public class MatchServiceImpl implements MatchService {
         List<UserMatchesDTO> usersFromServer;
 
         // if is ranked -> bring players with specific elo from the server
-        //todo: si users from server < 10 -> incorporar los rangos aledaños
         if (match.getRanked()) {
             List<UserMatchesDTO> baseUsers = userService.findUsersByRankAndServer(elo, serverOption);
             usersFromServer = findUsersForRanked(baseUsers, elo, serverOption, 10);
@@ -618,6 +617,37 @@ public class MatchServiceImpl implements MatchService {
             Collections.shuffle(redTeamIds);
             details = championSelectionTeams(match, blueTeamIds, redTeamIds, mirrorChampions);
         }
+
+
+        //SHUFFLE MEMBERS FOR ARAM - BEFORE STATS CALCULATE
+        if (match.getMap().getMap().equals("ARAM - Howling Abyss")) {
+            List<PlayerMatchDetailEntity> blueTeam = new ArrayList<>();
+            List<PlayerMatchDetailEntity> redTeam = new ArrayList<>();
+
+            // separar por equipo
+            for (PlayerMatchDetailEntity detail : details) {
+                if (detail.getTeam() != null &&
+                        "Blue".equalsIgnoreCase(detail.getTeam().getTeamColor())) {
+                    blueTeam.add(detail);
+                } else if (detail.getTeam() != null &&
+                        "Red".equalsIgnoreCase(detail.getTeam().getTeamColor())) {
+                    redTeam.add(detail);
+                }
+            }
+
+            // mezclar cada equipo por separado
+            Collections.shuffle(blueTeam);
+            Collections.shuffle(redTeam);
+
+            // combinar en nuevo orden
+            List<PlayerMatchDetailEntity> orderedDetails = new ArrayList<>();
+            orderedDetails.addAll(blueTeam);
+            orderedDetails.addAll(redTeam);
+
+            // reemplazar
+            details = orderedDetails;
+        }
+
 
         // Calculate additional match statistics
         calculateMatchStats(details);
@@ -885,6 +915,8 @@ public class MatchServiceImpl implements MatchService {
             detailList.add(detail);
             pickedChampions = getUniqueChampionsFromMatchDetails(detailList);
         }
+
+
 
         if (mirrorChampions) pickedChampions.clear();
 

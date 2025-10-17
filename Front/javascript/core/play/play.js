@@ -32,7 +32,13 @@ async function createMatch() {
 
   // --- CASO CLASSIC → CUSTOM ---
   if (selectedMode === "classic" && selectedSelection === "Custom") {
-    openClassicModal(ranked); // 🔥 llamamos al modal con ranked true/false
+    openClassicModal(ranked); // ✅ Modal clásico (ranked o no)
+    return;
+  }
+
+  // --- CASO ARAM → CUSTOM ---
+  if (selectedMode === "aram" && selectedSelection === "Custom") {
+    openAramModal(); // ✅ Modal ARAM
     return;
   }
 

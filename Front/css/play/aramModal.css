@@ -1,0 +1,161 @@
+/* ======== OVERLAY ======== */
+.aram-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.aram-modal-overlay.closing {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+/* ======== CONTAINER ======== */
+.aram-modal-container {
+  width: 90%;
+  max-width: 1200px;
+  background-color: #141414;
+  border-radius: 1rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* ======== GRID ======== */
+.aram-champion-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* ======== CARD ======== */
+.aram-champion-card {
+  position: relative;
+  background-color: #1e1e1e;
+  border: 2px solid transparent;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 320px;
+}
+
+.aram-champion-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+}
+
+.aram-champion-card.selected {
+  border-color: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+/* ======== IMAGE ======== */
+.aram-champion-image-container {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  overflow: hidden;
+}
+
+.aram-champion-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+/* ======== ARROWS ======== */
+.aram-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.aram-arrow:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.aram-arrow.left {
+  left: 10px;
+}
+
+.aram-arrow.right {
+  right: 10px;
+}
+
+/* ======== NAME ======== */
+.aram-champion-name {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #fff;
+  padding: 1rem 0;
+  background-color: #222;
+}
+
+/* ======== CONFIRM BUTTON ======== */
+.aram-confirm-btn {
+  background-color: #3b82f6;
+  color: white;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.8rem 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.aram-confirm-btn:hover {
+  background-color: #2563eb;
+  transform: scale(1.05);
+}
+
+/* ======== ANIMATIONS ======== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
