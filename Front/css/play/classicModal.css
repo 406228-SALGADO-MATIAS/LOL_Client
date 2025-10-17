@@ -47,6 +47,26 @@
   transform: scale(1);
 }
 
+
+.classic-modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  margin-right: 16px;
+  cursor: pointer;
+  color: white;
+  z-index: 10;
+  transition: color 0.2s ease;
+  font-weight: 500;
+}
+
+.classic-modal-close-btn:hover {
+  color: #ff4d4d;
+}
+
 /* ================================================
    SECTIONS
 ================================================ */
@@ -467,6 +487,27 @@
 
 .champion-preview-random-btn:hover {
   background: linear-gradient(180deg, #680000, #5f0000);
+  box-shadow: 0 0 4px rgba(204, 204, 204, 0.7);
+}
+
+.champion-preview-role-btn {
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 110px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border: 1px solid rgb(0, 0, 0);
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(180deg, #3b82f6, #1e40af);
+  transition: all 0.2s ease;
+}
+
+.champion-preview-role-btn:hover {
+  background: linear-gradient(180deg, #2563eb, #1e3a8a);
   box-shadow: 0 0 4px rgba(204, 204, 204, 0.7);
 }
 

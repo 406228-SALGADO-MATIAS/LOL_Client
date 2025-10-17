@@ -71,7 +71,6 @@ function openClassicModal(ranked = false) {
     modal.classList.add("show");
   });
 }
-
 function createModal() {
   if (overlay) {
     overlay.remove();
@@ -83,15 +82,25 @@ function createModal() {
   selectedChampionId = null;
   currentSection = "roleSelection";
 
+  // --- OVERLAY ---
   overlay = document.createElement("div");
   overlay.classList.add("classic-modal-overlay");
   overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) closeModal();
+    if (e.target === overlay) closeClassicModal();
   });
 
+  // --- MODAL ---
   modal = document.createElement("div");
   modal.classList.add("classic-modal-container");
 
+  // --- BOTÓN CERRAR ---
+  const closeBtn = document.createElement("button");
+  closeBtn.classList.add("classic-modal-close-btn");
+  closeBtn.innerHTML = "X";
+  closeBtn.addEventListener("click", closeClassicModal);
+  modal.appendChild(closeBtn);
+
+  // --- SECCIONES ---
   roleSection = renderRoleSelection();
   champSection = renderChampionSelection();
   champSection.style.display = "none";
@@ -110,6 +119,25 @@ function goToChampionSelection() {
 
   loadChampions(); // renderiza cards
   animateChampionSelection(); // ejecuta la animación
+}
+
+function goToRolesSection() {
+  if (!roleSection || !champSection) return;
+
+  // Ocultar sección de campeones
+  champSection.style.display = "none";
+
+  // Mostrar sección de roles
+  roleSection.style.display = "flex"; // o "block" según tu layout
+  currentSection = "roleSelection";
+
+  // Obtener referencias internas
+  const title = roleSection.querySelector(".role-selection-title");
+  const displayDiv = roleSection.querySelector(".role-display");
+  const buttonsDiv = roleSection.querySelector(".role-buttons-container");
+
+  // Ejecutar animación
+  animateRoleSelection(title, displayDiv, buttonsDiv);
 }
 
 // ======================================================

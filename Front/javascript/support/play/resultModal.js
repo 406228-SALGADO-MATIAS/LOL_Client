@@ -278,7 +278,7 @@ function animateRewardCards(rewardsSection) {
 function animateButtons(buttonsSection) {
   buttonsSection.style.opacity = 0;
   buttonsSection.style.transform = "translateY(20px)";
-  buttonsSection.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+  buttonsSection.style.transition = "opacity 0.15s ease, transform 0.15s ease";
 
   setTimeout(() => {
     buttonsSection.style.opacity = 1;

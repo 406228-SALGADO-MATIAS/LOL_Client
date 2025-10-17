@@ -206,6 +206,12 @@ function renderPreviewButtons() {
   const buttonsOverlay = document.createElement("div");
   buttonsOverlay.classList.add("champion-preview-overlay", "bottom");
 
+  // --- NUEVO BOTÓN "ROL" ---
+  const roleBtn = document.createElement("button");
+  roleBtn.classList.add("champion-preview-role-btn");
+  roleBtn.textContent = "Regresar";
+  roleBtn.addEventListener("click", goToRolesSection);
+
   const actionBtn = document.createElement("button");
   actionBtn.classList.add("champion-preview-action-btn", "choose-btn");
   actionBtn.textContent = "Elegir";
@@ -220,7 +226,8 @@ function renderPreviewButtons() {
     finishSelection();
   });
 
-  buttonsOverlay.append(actionBtn, randomBtn);
+  // Append: rolBtn primero para que quede a la izquierda
+  buttonsOverlay.append(roleBtn, actionBtn, randomBtn);
   return buttonsOverlay;
 }
 
