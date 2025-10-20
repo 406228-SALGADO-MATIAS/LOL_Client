@@ -45,12 +45,17 @@ function renderAramChampions() {
     selected.push(shuffled[2]);
   }
 
-  selected.forEach((champion) => {
+  selected.forEach((champion, index) => {
     const championSkins = skinsData.filter(
       (s) => s.championName === champion.name
     );
     const card = createChampionCard(champion, championSkins);
     grid.appendChild(card);
+
+    const delay = index * 700; // 0.3s entre cada card
+    setTimeout(() => {
+      card.style.animation = `cardFadeIn 0.7s ease-out forwards`; // 0.9s de duración
+    }, delay);
   });
 }
 
@@ -197,7 +202,6 @@ function closeAramModal() {
 
 async function finishAramSelection() {
   if (!selectedChampionId) {
-    alert("Selecciona un campeón antes de confirmar.");
     return;
   }
 

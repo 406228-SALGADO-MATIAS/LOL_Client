@@ -37,6 +37,7 @@
 }
 
 /* ======== CARD ======== */
+
 .aram-champion-card {
   position: relative;
   background-color: #1e1e1e;
@@ -46,6 +47,10 @@
   cursor: pointer;
   transition: all 0.3s ease;
   width: 320px;
+
+  opacity: 0;
+  transform: translateY(40px) scale(0.93);
+  
 }
 
 .aram-champion-card:hover {
@@ -56,6 +61,17 @@
 .aram-champion-card.selected {
   border-color: #ffffff;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.93);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* ======== IMAGE ======== */
@@ -159,3 +175,5 @@
     transform: scale(0.95);
   }
 }
+
+
