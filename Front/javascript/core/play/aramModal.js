@@ -34,13 +34,9 @@ function renderAramChampions() {
   const grid = document.getElementById("aramChampionGrid");
   grid.innerHTML = "";
 
-  // Clonamos el array y lo mezclamos
   const shuffled = [...championsData].sort(() => Math.random() - 0.5);
-
-  // Tomamos 2 campeones sí o sí
   let selected = shuffled.slice(0, 2);
 
-  // 30% de chance de agregar un tercero
   if (Math.random() < 0.3 && shuffled.length > 2) {
     selected.push(shuffled[2]);
   }
@@ -49,13 +45,15 @@ function renderAramChampions() {
     const championSkins = skinsData.filter(
       (s) => s.championName === champion.name
     );
+
+    // Crear card normalmente
     const card = createChampionCard(champion, championSkins);
     grid.appendChild(card);
 
-    const delay = index * 700; // 0.3s entre cada card
+    // Cada card hace su propia animación de entrada
     setTimeout(() => {
-      card.style.animation = `cardFadeIn 0.7s ease-out forwards`; // 0.9s de duración
-    }, delay);
+      card.style.animation = `cardFadeIn 0.7s ease-out forwards`;
+    }, index * 700); // se crea inmediato, animación secuencial
   });
 }
 
@@ -67,13 +65,18 @@ function createChampionCard(champion, skins) {
 
   let currentSkinIndex = 0;
 
-  // Render base de la card
-  const { card, imageContainer } = renderChampionBaseCard(allSkins[0]);
+  const { card, imageContainer, img, name } = renderChampionBaseCard(
+    allSkins[0]
+  );
 
-  // Aplicar posición inicial
-  updateSkinAram(card, allSkins[0]);
+  // Inicializar imagen y nombre sin animación
+  img.src = allSkins[0].image;
+  name.textContent = allSkins[0].name;
+  img.style.objectPosition = allSkins[0].isBase
+    ? getChampionObjectPosition(allSkins[0].name)
+    : getSkinObjectPosition(allSkins[0].name);
 
-  // Render carrusel si hay más de una imagen
+  // Carrusel
   if (allSkins.length > 1) {
     renderChampionCarousel(
       card,
@@ -82,11 +85,11 @@ function createChampionCard(champion, skins) {
       () => {
         currentSkinIndex =
           (currentSkinIndex - 1 + allSkins.length) % allSkins.length;
-        updateSkinAram(card, allSkins[currentSkinIndex]);
+        updateSkinAram(card, allSkins[currentSkinIndex]); // solo al click
       },
       () => {
         currentSkinIndex = (currentSkinIndex + 1) % allSkins.length;
-        updateSkinAram(card, allSkins[currentSkinIndex]);
+        updateSkinAram(card, allSkins[currentSkinIndex]); // solo al click
       }
     );
   }
