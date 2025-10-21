@@ -35,25 +35,33 @@ function renderAramChampions() {
   grid.innerHTML = "";
 
   const shuffled = [...championsData].sort(() => Math.random() - 0.5);
-  let selected = shuffled.slice(0, 2);
 
-  if (Math.random() < 0.3 && shuffled.length > 2) {
-    selected.push(shuffled[2]);
-  }
+  // Tomar siempre 3 campeones
+  const selected = shuffled.slice(0, 3);
 
   selected.forEach((champion, index) => {
     const championSkins = skinsData.filter(
       (s) => s.championName === champion.name
     );
 
-    // Crear card normalmente
     const card = createChampionCard(champion, championSkins);
     grid.appendChild(card);
 
-    // Cada card hace su propia animación de entrada
+    // Animación de entrada de la card
     setTimeout(() => {
-      card.style.animation = `cardFadeIn 0.7s ease-out forwards`;
-    }, index * 700); // se crea inmediato, animación secuencial
+      card.style.animation = `cardFadeIn 0.5s ease-out forwards`;
+
+      // Fade-in del contenido de la card tras la animación de la card
+      setTimeout(() => {
+        const img = card.querySelector(".aram-champion-image");
+        const name = card.querySelector(".aram-champion-name");
+        const arrows = card.querySelectorAll(".aram-arrow");
+
+        img.classList.add("fade-in-content");
+        name.classList.add("fade-in-content");
+        arrows.forEach((arrow) => arrow.classList.add("fade-in-content"));
+      }, 350); // esperar a que termine la animación de la card
+    }, index * 280); // secuencial de las cards
   });
 }
 
@@ -69,7 +77,7 @@ function createChampionCard(champion, skins) {
     allSkins[0]
   );
 
-  // Inicializar imagen y nombre sin animación
+  // Inicializar imagen y nombre
   img.src = allSkins[0].image;
   name.textContent = allSkins[0].name;
   img.style.objectPosition = allSkins[0].isBase
@@ -85,11 +93,11 @@ function createChampionCard(champion, skins) {
       () => {
         currentSkinIndex =
           (currentSkinIndex - 1 + allSkins.length) % allSkins.length;
-        updateSkinAram(card, allSkins[currentSkinIndex]); // solo al click
+        updateSkinAram(card, allSkins[currentSkinIndex]);
       },
       () => {
         currentSkinIndex = (currentSkinIndex + 1) % allSkins.length;
-        updateSkinAram(card, allSkins[currentSkinIndex]); // solo al click
+        updateSkinAram(card, allSkins[currentSkinIndex]);
       }
     );
   }
@@ -192,8 +200,8 @@ function animateSkinTransition(img, name, onUpdate) {
     setTimeout(() => {
       img.classList.remove("fade-in");
       name.classList.remove("fade-in");
-    }, 300);
-  }, 200);
+    }, 25);
+  }, 300);
 }
 
 function closeAramModal() {
