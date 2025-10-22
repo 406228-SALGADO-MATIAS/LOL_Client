@@ -141,7 +141,9 @@ async function handleOpenChest(type) {
 
   if (!res.ok) throw new Error("Error abriendo cofre");
 
-  return await res.json();
+  const json = await res.json();
+  console.log(`[HANDLE OPEN CHEST] Resultado recibido:`, json);
+  return json;
 }
 
 async function handleEnchantItem(item, type, enchant = true) {
@@ -269,11 +271,28 @@ function applyCurrentFilter() {
   renderMaterials(materialsInventory);
   renderBottomBarMaterials(materialsInventory);
 
-  renderLootGrid("championContainer", championsInventory, "champion", filterValue, searchValue);
-  renderLootGrid("skinContainer", skinsInventory, "skin", filterValue, searchValue);
-  renderLootGrid("iconContainer", iconsInventory, "icon", filterValue, searchValue);
+  renderLootGrid(
+    "championContainer",
+    championsInventory,
+    "champion",
+    filterValue,
+    searchValue
+  );
+  renderLootGrid(
+    "skinContainer",
+    skinsInventory,
+    "skin",
+    filterValue,
+    searchValue
+  );
+  renderLootGrid(
+    "iconContainer",
+    iconsInventory,
+    "icon",
+    filterValue,
+    searchValue
+  );
 }
-
 
 // Inicialización
 
@@ -298,7 +317,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 });
-
 
 const disenchantBtn = document.getElementById("disenchantBtn");
 const disenchantModal = document.getElementById("disenchantModal");
@@ -375,7 +393,6 @@ confirmDisenchantBtn.addEventListener("click", async () => {
 
   closeLootRollModal();
   closeItemModal();
-
 });
 
 document.getElementById("rollChampion").addEventListener("click", () => {

@@ -1,66 +1,152 @@
-function createChestClickModal(item, type) {
+async function createChestClickModal(item, type) {
   if (isLootRollModalOpen) {
     console.log(
       "No se puede abrir itemClickModal mientras está abierto lootRollModal"
     );
     return;
   }
-  const container = document.getElementById("lootModalContainer");
-  container.innerHTML = ""; // limpio por si ya hay otro modal abierto
 
-  // Overlay del modal (fondo oscuro semitransparente)
+  const container = document.getElementById("lootModalContainer");
+  container.innerHTML = "";
+
+  // 1️⃣ Traemos los datos del usuario
+  let userLootData;
+  try {
+    const res = await fetch(
+      `http://localhost:8080/userLoot/${userId}?showInactives=false`
+    );
+    if (!res.ok) throw new Error("Error cargando loot del usuario");
+    userLootData = await res.json();
+  } catch (err) {
+    alert("Error cargando info de cofres: " + err.message);
+    return;
+  }
+
+  const chestsCount =
+    type === "chest" ? userLootData.chests : userLootData.masterChests;
+  const keysCount = userLootData.keys;
+  const maxOpenable = Math.min(chestsCount, keysCount);
+
+  // Overlay y modal
+  const overlay = createOverlay();
+  const modal = createModal();
+
+  // Imagen del cofre
+  const img = createChestImage(item);
+  modal.appendChild(img);
+
+  // Botón abrir 1 cofre
+  const openOneButton = createChestButton(
+    getItemStatus(item, type) === "NEEDS_KEY" || keysCount === 0
+      ? "Necesita llave"
+      : "Abrir",
+    async () => {
+      if (keysCount === 0) {
+        alert("No hay llaves disponibles 🔑");
+        return;
+      }
+      try {
+        const newItem = await handleOpenChest(type, 1);
+        container.innerHTML = "";
+        createNewItemModal(newItem);
+      } catch (err) {
+        alert("Error abriendo cofre: " + err.message);
+      }
+    },
+    getItemStatus(item, type) === "NEEDS_KEY" || keysCount === 0
+  );
+
+  // Botón abrir varios cofres (solo si hay más de 1 posible)
+  // En createChestClickModal, reemplazá la parte del openAllButton:
+
+  let openAllButton = null;
+  if (maxOpenable > 1) {
+    openAllButton = createChestButton(`Abrir ${maxOpenable}`, async () => {
+      if (maxOpenable === 0) {
+        alert("No hay suficientes cofres o llaves");
+        return;
+      }
+
+      container.innerHTML = ""; // limpiamos modal principal
+
+      try {
+        await showItemsSequentiallyDynamic(type, maxOpenable);
+      } catch (err) {
+        alert("Error abriendo cofres: " + err.message);
+      }
+    });
+  }
+
+  // Contenedor de botones
+  const buttons = [openOneButton];
+  if (openAllButton) buttons.push(openAllButton);
+
+  const buttonsContainer = createButtonsContainer(buttons);
+  modal.appendChild(buttonsContainer);
+
+  overlay.appendChild(modal);
+  container.appendChild(overlay);
+
+  // Cerrar modal al hacer click fuera
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) container.innerHTML = "";
+  });
+}
+
+// ---------------------------
+// FUNCIONES AUXILIARES
+// ---------------------------
+
+// Crear overlay
+function createOverlay() {
   const overlay = document.createElement("div");
   overlay.classList.add("chest-modal-overlay");
+  return overlay;
+}
 
-  // Contenido del modal (imagen + botón)
+// Crear modal
+function createModal() {
   const modal = document.createElement("div");
   modal.classList.add("chest-modal");
+  return modal;
+}
 
+// Crear imagen del cofre
+function createChestImage(item) {
   const img = document.createElement("img");
   img.src = item.imageUrl;
   img.alt = "Chest";
   img.style.maxWidth = "200px";
   img.style.height = "auto";
   img.style.display = "block";
-  img.style.margin = "0 auto";
+  img.style.margin = "0 auto 1rem"; // separa la imagen de los botones
+  return img;
+}
 
-  const button = document.createElement("button");
-  button.classList.add("chest-btn");
+// Crear botón con event listener
+function createChestButton(text, onClick, disabled = false) {
+  const btn = document.createElement("button");
+  btn.classList.add("chest-btn");
+  btn.textContent = text;
 
-  if (getItemStatus(item, type) === "NEEDS_KEY") {
-    button.textContent = "Necesita llave";
-    button.classList.add("disabled-chest"); // aplicamos estilo especial
+  if (disabled) {
+    btn.classList.add("disabled-chest");
   } else {
-    button.textContent = "Abrir";
+    btn.addEventListener("click", onClick);
   }
 
-  // Acción del botón
-  button.addEventListener("click", async () => {
-    if (getItemStatus(item, type) === "NEEDS_KEY") {
-      alert("Este cofre necesita una llave 🔑");
-    } else {
-      try {
-        const newItem = await handleOpenChest(type);
-        container.innerHTML = ""; // cierro modal del cofre
-        createNewItemModal(newItem); // abro modal del reward;
-      } catch (err) {
-        alert("Error abriendo cofre: " + err.message);
-      }
-    }
-  });
+  return btn;
+}
 
-  modal.appendChild(img);
-  modal.appendChild(button);
+// Contenedor de botones en fila
+function createButtonsContainer(buttons = []) {
+  const container = document.createElement("div");
+  container.style.display = "flex";
+  container.style.justifyContent = "center";
+  container.style.gap = "1rem";
 
-  overlay.appendChild(modal);
-  container.appendChild(overlay);
-
-  // Cerrar modal clickeando afuera
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) {
-      container.innerHTML = "";
-    }
-  });
+  buttons.forEach((btn) => container.appendChild(btn));
+  return container;
 }
 
 function createItemClickModal(item, type) {

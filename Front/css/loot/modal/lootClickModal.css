@@ -48,6 +48,7 @@
 
 .chest-btn {
   margin-top: -1rem;
+  margin-bottom: 2rem;
   padding: 1.5rem 3vh 1vw; /* botón grande */
   border: none;
   border-radius: 6px;
@@ -58,11 +59,10 @@
   border-radius: 1px; /* mantenemos redondeo actual */
   color: white;
   font-size: 1.8rem;
-  
 }
 
 .chest-btn:hover {
-  filter:brightness(1.1);
+  filter: brightness(1.1);
 }
 
 .disabled-chest {
