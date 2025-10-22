@@ -1,6 +1,8 @@
 function createChestClickModal(item, type) {
   if (isLootRollModalOpen) {
-    console.log("No se puede abrir itemClickModal mientras está abierto lootRollModal");
+    console.log(
+      "No se puede abrir itemClickModal mientras está abierto lootRollModal"
+    );
     return;
   }
   const container = document.getElementById("lootModalContainer");
@@ -24,10 +26,15 @@ function createChestClickModal(item, type) {
 
   const button = document.createElement("button");
   button.classList.add("chest-btn");
-  button.textContent =
-    getItemStatus(item, type) === "NEEDS_KEY" ? "Necesita llave" : "Abrir";
 
-  // Acción del botón (acá después conectamos la lógica real)
+  if (getItemStatus(item, type) === "NEEDS_KEY") {
+    button.textContent = "Necesita llave";
+    button.classList.add("disabled-chest"); // aplicamos estilo especial
+  } else {
+    button.textContent = "Abrir";
+  }
+
+  // Acción del botón
   button.addEventListener("click", async () => {
     if (getItemStatus(item, type) === "NEEDS_KEY") {
       alert("Este cofre necesita una llave 🔑");
@@ -58,7 +65,9 @@ function createChestClickModal(item, type) {
 
 function createItemClickModal(item, type) {
   if (isLootRollModalOpen) {
-    console.log("No se puede abrir itemClickModal mientras está abierto lootRollModal");
+    console.log(
+      "No se puede abrir itemClickModal mientras está abierto lootRollModal"
+    );
     return;
   }
   const container = document.getElementById("lootModalContainer");
@@ -87,7 +96,7 @@ function createItemClickModal(item, type) {
     closeItemModal();
   });
 
-  // Imagen 
+  // Imagen
   const img = document.createElement("img");
   img.src = item.imageUrl;
   img.alt = item.championName || item.skinName || item.iconName || "Item";
@@ -108,10 +117,19 @@ function createItemClickModal(item, type) {
   const userBE = userLoot?.userBlueEssence || 0;
   const userOE = userLoot?.orangeEssence || 0;
 
+  // Imagen de esencia azul (BE)
+  const beIcon =
+    '<img class="be-icon" src="https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/lootMaterials/blueEssence.png" alt="BE">';
+
+  // Imagen de esencia naranja
+  const oeIcon =
+    '<img class="oe-icon" src="https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/lootMaterials/orangeEssence.png" alt="OE">';
+
   switch (status) {
     case "OWNED":
       mainButton.textContent = "En colección";
-      mainButton.style.backgroundColor = "#dc7900b8";
+      mainButton.style.background =
+        "linear-gradient(180deg, #b86500c2, #9c560059)";
       mainButton.disabled = true;
       mainButton.style.cursor = "not-allowed";
       break;
@@ -119,21 +137,24 @@ function createItemClickModal(item, type) {
       if (type === "champion" || type === "icon") {
         const cost = item.blueEssenceCost || 0;
         const faltante = cost - userBE;
+
         if (faltante > 0) {
-          mainButton.textContent = `Necesita BE ${faltante}`;
-          mainButton.style.backgroundColor = "#500000ff"; // rojo oscuro
+          mainButton.innerHTML = `Necesita +${beIcon} ${faltante}`;
+          mainButton.style.background =
+            "linear-gradient(180deg, #64000086, #92000036)";
           mainButton.disabled = true;
           mainButton.style.cursor = "not-allowed";
         } else {
-          mainButton.textContent = `Desbloquear (-BE ${cost})`;
-          mainButton.style.backgroundColor = "#4a0077ff";
+          mainButton.innerHTML = `Desbloquear (-${beIcon} ${cost})`;
+          mainButton.style.background =
+            "linear-gradient(180deg, #490077af, #2a0044b6)";
           mainButton.disabled = false;
           mainButton.style.cursor = "pointer";
+
           mainButton.addEventListener("click", async () => {
             try {
               await handleEnchantItem(item, type, true);
               closeItemModal(); // <-- reemplaza container.innerHTML=""
-              
             } catch (err) {
               alert("Error desbloqueando: " + err.message);
             }
@@ -142,21 +163,24 @@ function createItemClickModal(item, type) {
       } else if (type === "skin") {
         const cost = item.orangeEssenceCost || 0;
         const faltante = cost - userOE;
+
         if (faltante > 0) {
-          mainButton.textContent = `Necesita OE ${faltante}`;
-          mainButton.style.backgroundColor = "#500000ff"; // rojo oscuro
+          mainButton.innerHTML = `Necesita +${oeIcon} ${faltante}`;
+          mainButton.style.background =
+            "linear-gradient(180deg, #64000086, #92000036)";
           mainButton.disabled = true;
           mainButton.style.cursor = "not-allowed";
         } else {
-          mainButton.textContent = `Desbloquear (-OE ${cost} )`;
-          mainButton.style.backgroundColor = "#4a0077ff"; // azul
+          mainButton.innerHTML = `Desbloquear (-${oeIcon} ${cost})`;
+          mainButton.style.background =
+            "linear-gradient(180deg, #490077af, #2a0044b6)";
           mainButton.disabled = false;
           mainButton.style.cursor = "pointer";
+
           mainButton.addEventListener("click", async () => {
             try {
               await handleEnchantItem(item, type, true);
               closeItemModal(); // <-- reemplaza container.innerHTML=""
-             
             } catch (err) {
               alert("Error desbloqueando: " + err.message);
             }
@@ -164,20 +188,23 @@ function createItemClickModal(item, type) {
         }
       } else {
         mainButton.textContent = "No disponible";
-        mainButton.style.backgroundColor = "#500000ff"; // rojo oscuro
+        mainButton.style.background =
+          "linear-gradient(180deg, #64000086, #92000036)";
         mainButton.disabled = true;
         mainButton.style.cursor = "not-allowed";
       }
       break;
     case "NEEDS_CHAMPION":
       mainButton.textContent = "Necesita campeón";
-      mainButton.style.backgroundColor = "#b69b009c"; // amarillo
+      mainButton.style.background =
+        "linear-gradient(180deg, #b69b00c4, #756300af)";
       mainButton.disabled = true;
       mainButton.style.cursor = "not-allowed";
       break;
     default:
       mainButton.textContent = "No disponible";
-      mainButton.style.backgroundColor = "#500000ff"; // rojo oscuro
+      mainButton.style.background =
+        "linear-gradient(180deg, #64000086, #92000036)";
       mainButton.disabled = true;
       mainButton.style.cursor = "not-allowed";
   }
@@ -187,10 +214,10 @@ function createItemClickModal(item, type) {
   // Botón de desencantar (siempre disponible)
   const disenchantButton = document.createElement("button");
   disenchantButton.classList.add("item-btn");
-  disenchantButton.textContent =
+  disenchantButton.innerHTML =
     type === "skin"
-      ? `Desencantar (+OE ${item.disenchantRefund || 0})`
-      : `Desencantar (+BE ${item.disenchantRefund || 0})`;
+      ? `Desencantar (+${oeIcon} ${item.disenchantRefund || 0})`
+      : `Desencantar (+${beIcon} ${item.disenchantRefund || 0})`;
 
   disenchantButton.addEventListener("click", async () => {
     try {

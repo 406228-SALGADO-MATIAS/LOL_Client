@@ -199,14 +199,16 @@ function updateRollButtonState() {
 
   if (allFilled) {
     rollButton.disabled = false;
-    rollButton.style.backgroundColor = "#280041ff";
+    rollButton.style.background =
+            "linear-gradient(180deg, #6b00adaf, #2a0044b6)";
     rollButton.style.color = "#fff";
     rollButton.style.pointerEvents = "auto";
     rollButton.classList.remove("loot-roll-btn-disabled");
   } else {
     rollButton.disabled = true;
-    rollButton.style.backgroundColor = "#ccc";
-    rollButton.style.color = "#666";
+    rollButton.style.background =
+            "linear-gradient(180deg, #ddddddaf, #9b9b9bb6)";
+    rollButton.style.color = "#252525ff";
     rollButton.style.pointerEvents = "none";
     rollButton.classList.add("loot-roll-btn-disabled");
   }

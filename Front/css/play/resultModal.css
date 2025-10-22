@@ -4,7 +4,7 @@
 .result-modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.596);
+  background-color: rgba(0, 0, 0, 0.767);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,17 +12,16 @@
 }
 
 .result-modal {
-  background: rgba(6, 6, 9, 0.95);
-  border: 2px solid #444;
+  background: rgba(6, 6, 9, 0);
   border-radius: 16px;
   width: 580px;
   padding: 20px;
   text-align: center;
   color: white;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
   gap: 25px;
+  margin-bottom: 40px;
 }
 
 /* ===========================================
@@ -42,11 +41,16 @@
    SECCIÓN RECOMPENSAS
 =========================================== */
 .rewards-section h3 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin-bottom: 15px;
-  color: #ffcc66;
+  color: #c58402;
   text-transform: uppercase;
   margin-top: -10px;
+  font-weight: 500;
+  font-style: oblique;
+  -webkit-text-stroke: 0.5px #facf78; /* grosor y color del borde */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* X offset, Y offset, blur, color */
+  opacity: 0;
 }
 
 .rewards-grid {
@@ -60,8 +64,10 @@
   position: relative;
   width: 90px;
   height: 90px;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.705);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  border-image: linear-gradient(90deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
   border-radius: 12px;
   overflow: hidden;
   display: flex;
@@ -118,27 +124,31 @@
   color: white;
   transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
   text-transform: uppercase;
+  border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7); /* X offset, Y offset, blur, color */
 }
 
 /* --- Animación hover común --- */
 .buttons-wrapper button:hover {
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.705);
   opacity: 0.95;
+  transform: scale(1.03);
 }
 
 /* --- BOTÓN SALIR (rojo) --- */
 .btn-exit {
-  background: linear-gradient(180deg, #930000, #5f0000);
+  background: linear-gradient(180deg, #ff000086, #c5020236);
 }
 
 /* --- BOTÓN JUGAR (azul) --- */
 .btn-replay {
-  background: linear-gradient(180deg, #00750eca, #004308);
+  background: linear-gradient(180deg, #00750ec2, #00430886);
 }
 
 /* --- BOTÓN ESTADÍSTICAS (violeta) --- */
 .btn-stats {
-  background: linear-gradient(180deg, #0016a7, #000c58);
+  background: linear-gradient(180deg, #1f3dffde, #000c58a8);
 }
 
 /* ===========================================

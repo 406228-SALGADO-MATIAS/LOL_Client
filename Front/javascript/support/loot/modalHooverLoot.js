@@ -26,30 +26,31 @@ function attachHoverModal(card, item, type) {
   const scrollParent = card.closest(".sidebar") || window;
 
   card.addEventListener("mouseenter", () => {
-  modal.classList.add("show");
-  const rect = card.getBoundingClientRect();
+    modal.classList.add("show");
+    const rect = card.getBoundingClientRect();
 
-  // --- ajustar top según el tipo usando proporciones vh ---
-  let offsetTop;
-  switch (type) {
-    case "champion":
-    case "skin":
-      offsetTop = 7; // 7vh desde la parte superior
-      break;
-    case "icon":
-      offsetTop = 17; // 17vh desde la parte superior
-      break;
-    default:
-      offsetTop = 10; // fallback
-  }
+    // --- ajustar top según el tipo usando proporciones vh ---
+    let offsetTop;
+    switch (type) {
+      case "champion":
+      case "skin":
+        offsetTop = 20; // 7vh desde la parte superior
+        break;
+      case "icon":
+        offsetTop = 17; // 17vh desde la parte superior
+        break;
+      default:
+        offsetTop = 10; // fallback
+    }
 
-  modal.style.top = `${window.scrollY + rect.top - (offsetTop * window.innerHeight / 100)}px`;
-  modal.style.left = `${rect.right + 10 + window.scrollX}px`;
+    modal.style.top = `${
+      window.scrollY + rect.top - (offsetTop * window.innerHeight) / 100
+    }px`;
+    modal.style.left = `${rect.right + 10 + window.scrollX}px`;
 
-  scrollHandler = () => modal.classList.remove("show");
-  scrollParent.addEventListener("scroll", scrollHandler, { passive: true });
-});
-
+    scrollHandler = () => modal.classList.remove("show");
+    scrollParent.addEventListener("scroll", scrollHandler, { passive: true });
+  });
 
   card.addEventListener("mouseleave", () => {
     modal.classList.remove("show");
@@ -134,45 +135,53 @@ function createHoverChestModal(item, type) {
   const modal = document.createElement("div");
   modal.classList.add("loot-hover-modal");
   modal.style.width = "15vw";
-  modal.style.height = "15vw";
+  modal.style.height = "auto"; // altura automática según contenido
+  modal.style.textAlign = "center"; // todo centrado
 
-  const topInfo = document.createElement("div");
-  topInfo.classList.add("modal-info");
-  topInfo.style.marginBottom = "0.3rem";
-  topInfo.style.textAlign = "center";
+  // --- Arriba: tipo de cofre ---
+  const chestTypeDiv = document.createElement("div");
+  chestTypeDiv.classList.add("chest-type");
+  chestTypeDiv.style.fontWeight = "bold";
+  chestTypeDiv.style.fontSize = "1.2rem";
+  chestTypeDiv.style.color = "white"; // color blanco
+  chestTypeDiv.style.marginBottom = type === "chest" ? "-1rem" : "0"; // <-- margen condicional
+  chestTypeDiv.textContent = type === "chest" ? "Chest" : "Master Chest";
 
-  const topName = document.createElement("div");
-  topName.classList.add("name");
-  topName.style.fontWeight = "bold";
-  topName.style.fontSize = "1.2rem";
+  modal.appendChild(chestTypeDiv);
 
-  const status = getItemStatus(item, type);
-  switch (status) {
-    case "OPENABLE":
-      topName.textContent = "Abrir";
-      topName.style.color = "limegreen";
-      break;
-    case "NEEDS_KEY":
-      topName.textContent = "Necesita llave";
-      topName.style.color = "orange";
-      break;
-    default:
-      topName.textContent = "Desconocido";
-      topName.style.color = "gray";
-  }
-
-  topInfo.appendChild(topName);
-  modal.appendChild(topInfo);
-
+  // --- Imagen del cofre ---
   const img = document.createElement("img");
   img.src = item.imageUrl;
   img.alt = type === "chest" ? "Chest" : "Master Chest";
   img.style.width = "100%";
   img.style.borderRadius = "4px";
-
   img.style.objectFit = "contain";
+  img.style.marginBottom = "-1rem";
 
   modal.appendChild(img);
+
+  // --- Abajo: estado (Abrir / Necesita llave) ---
+  const statusDiv = document.createElement("div");
+  const status = getItemStatus(item, type);
+  statusDiv.style.fontWeight = "bold";
+  statusDiv.style.fontSize = "1.1rem";
+
+  switch (status) {
+    case "OPENABLE":
+      statusDiv.textContent = "Abrir";
+      statusDiv.style.color = "limegreen";
+      break;
+    case "NEEDS_KEY":
+      statusDiv.textContent = "Necesita llave";
+      statusDiv.style.color = "orange";
+      break;
+    default:
+      statusDiv.textContent = "Desconocido";
+      statusDiv.style.color = "white";
+  }
+
+  modal.appendChild(statusDiv);
+
   document.body.appendChild(modal);
   return modal;
 }
@@ -224,6 +233,14 @@ function createHoverItemModal(item, type) {
   img.style.borderRadius = "4px";
   img.style.objectFit = "contain";
 
+  // Imagen de esencia azul (BE)
+  const beIcon =
+    '<img class="hbe-icon" src="https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/lootMaterials/blueEssence.png" alt="BE">';
+
+  // Imagen de esencia naranja
+  const oeIcon =
+    '<img class="hoe-icon" src="https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/lootMaterials/orangeEssence.png" alt="OE">';
+
   if (type === "icon") {
     img.style.maxHeight = "22vh";
   }
@@ -241,14 +258,14 @@ function createHoverItemModal(item, type) {
     const nameAndCost = document.createElement("div");
     nameAndCost.classList.add("name");
     nameAndCost.style.fontWeight = "bold";
-    nameAndCost.textContent = `${item.championName} - Coste: BE ${
+    nameAndCost.innerHTML = `${item.championName} - Coste: ${beIcon} ${
       item.blueEssenceCost * 2
     }`;
     info.appendChild(nameAndCost);
 
     const unlock = document.createElement("div");
     unlock.classList.add("cost");
-    unlock.textContent = `Desbloquear:  - BE ${item.blueEssenceCost}`;
+    unlock.innerHTML = `Desbloquear: - ${beIcon} ${item.blueEssenceCost}`;
     info.appendChild(unlock);
   } else {
     const name = document.createElement("div");
@@ -261,7 +278,7 @@ function createHoverItemModal(item, type) {
     if (type === "skin" && item.orangeEssenceCost != null) {
       const unlock = document.createElement("div");
       unlock.classList.add("cost");
-      unlock.textContent = `Desbloquear:  - OE ${item.orangeEssenceCost}`;
+      unlock.innerHTML = `Desbloquear: - ${oeIcon} ${item.orangeEssenceCost}`;
       info.appendChild(unlock);
     }
 
@@ -269,12 +286,12 @@ function createHoverItemModal(item, type) {
       const originalCost = document.createElement("div");
       originalCost.classList.add("name");
       originalCost.style.fontWeight = "bold";
-      originalCost.textContent = `Coste: BE ${item.blueEssenceCost * 2}`;
+      originalCost.innerHTML = `Coste: ${beIcon} ${item.blueEssenceCost * 2}`;
       info.appendChild(originalCost);
 
       const unlock = document.createElement("div");
       unlock.classList.add("cost");
-      unlock.textContent = `Desbloquear:  - BE ${item.blueEssenceCost}`;
+      unlock.innerHTML = `Desbloquear: - ${beIcon} ${item.blueEssenceCost}`;
       info.appendChild(unlock);
     }
   }
@@ -283,10 +300,10 @@ function createHoverItemModal(item, type) {
   if (item.disenchantRefund != null) {
     const disenchant = document.createElement("div");
     disenchant.classList.add("cost");
-    disenchant.textContent =
+    disenchant.innerHTML =
       type === "skin"
-        ? `Desencantar:  + OE ${item.disenchantRefund}`
-        : `Desencantar:  + BE ${item.disenchantRefund}`;
+        ? `Desencantar: + ${oeIcon} ${item.disenchantRefund}`
+        : `Desencantar: + ${beIcon} ${item.disenchantRefund}`;
     info.appendChild(disenchant);
   }
 
@@ -309,12 +326,14 @@ function createHoverOrangeEssenceModal(item) {
   img.style.borderRadius = "4px";
   img.style.maxHeight = "19vh";
   img.style.objectFit = "contain";
+  img.style.marginTop = "-2rem";
 
   // Texto naranja
   const label = document.createElement("div");
-  label.textContent = "Orange Essence (OE)";
+  label.textContent = "Orange Essence";
   label.style.color = "orange";
   label.style.fontWeight = "bold";
+  label.style.marginTop = "-2rem";
 
   modal.appendChild(img);
   modal.appendChild(label);
@@ -323,7 +342,7 @@ function createHoverOrangeEssenceModal(item) {
 }
 
 function closeAllHoverModals() {
-  document.querySelectorAll(".loot-hover-modal.show").forEach(modal => {
+  document.querySelectorAll(".loot-hover-modal.show").forEach((modal) => {
     modal.classList.remove("show");
   });
 }

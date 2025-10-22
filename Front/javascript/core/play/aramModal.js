@@ -11,14 +11,14 @@ async function openAramModal() {
 }
 
 function createAramModal() {
-  if (aramModal) aramModal.remove(); // evita duplicados
+  if (aramModal) aramModal.remove();
 
   aramModal = document.createElement("div");
   aramModal.className = "aram-modal-overlay";
   aramModal.innerHTML = `
     <div class="aram-modal-container">
       <div class="aram-champion-grid" id="aramChampionGrid"></div>
-      <button class="aram-confirm-btn" id="aramConfirmBtn">Confirmar</button>
+      <button class="aram-confirm-btn hidden" id="aramConfirmBtn">Confirmar</button>
     </div>
   `;
 
@@ -107,8 +107,18 @@ function createChampionCard(champion, skins) {
     document
       .querySelectorAll(".aram-champion-card.selected")
       .forEach((c) => c.classList.remove("selected"));
+
     card.classList.add("selected");
     selectedChampionId = champion.id;
+
+    // Mostrar el botón de confirmar con animación si estaba oculto
+    const confirmBtn = document.getElementById("aramConfirmBtn");
+    if (confirmBtn.classList.contains("hidden")) {
+      confirmBtn.classList.remove("hidden");
+      // Forzar reflow para que la transición funcione
+      void confirmBtn.offsetWidth;
+      confirmBtn.classList.add("show");
+    }
   });
 
   return card;

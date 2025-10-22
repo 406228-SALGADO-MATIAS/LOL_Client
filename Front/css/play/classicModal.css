@@ -4,7 +4,7 @@
 .classic-modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.836);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,7 +21,6 @@
    MODAL CONTAINER
 ================================================ */
 .classic-modal-container {
-  background: linear-gradient(180deg, #070430, #242201);
   color: #fff;
   border-radius: 3rem;
   width: 1100px !important;
@@ -46,7 +45,6 @@
   opacity: 1;
   transform: scale(1);
 }
-
 
 .classic-modal-close-btn {
   position: absolute;
@@ -195,10 +193,13 @@
   border: 1px solid rgb(0, 0, 0);
   cursor: pointer;
   color: white;
-  background: linear-gradient(180deg, #006d18, #002b09);
+  background: linear-gradient(180deg, #00750ec2, #00430886);
   transition: all 0.2s ease;
   border-radius: 6px;
   margin-top: 25px;
+  border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7); /* X offset, Y offset, blur, color */
 
   /* Animación añadida */
   opacity: 0;
@@ -207,8 +208,8 @@
 
 .modal-next-btn:hover,
 .modal-action-btn:hover {
-  background: linear-gradient(180deg, #006115, #003b0d);
   box-shadow: 0 0 4px rgba(204, 204, 204, 0.7);
+  transform: scale(1.04);
 }
 
 /* Efecto pop opcional cuando aparece */
@@ -309,6 +310,7 @@
 .role-filter-btn:hover {
   border-color: #3b82f6;
   background-color: #1e1e1e;
+  transform: scale(1.03);
 }
 
 .role-filter-btn.active {
@@ -323,7 +325,6 @@
   width: 750px;
   height: 420px;
   border-radius: 40px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.884);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -458,13 +459,16 @@
   border: 1px solid rgb(0, 0, 0);
   cursor: pointer;
   color: white;
-  background: linear-gradient(180deg, #006d18, #002b09);
+  background: linear-gradient(180deg, #00750ec2, #00430886);
+
   transition: all 0.2s ease;
   border-radius: 6px;
+  border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7); /* X offset, Y offset, blur, color */
 }
 
 .champion-preview-action-btn:hover {
-  background: linear-gradient(180deg, #006115, #003b0d);
   box-shadow: 0 0 4px rgba(204, 204, 204, 0.7);
 }
 
@@ -481,13 +485,16 @@
   border: 1px solid rgb(0, 0, 0);
   cursor: pointer;
   color: white;
-  background: linear-gradient(180deg, #630000, #3d0000);
+  background: linear-gradient(180deg, #ff000086, #c5020236);
   transition: all 0.2s ease;
+  border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7); /* X offset, Y offset, blur, color */
 }
 
 .champion-preview-random-btn:hover {
-  background: linear-gradient(180deg, #680000, #5f0000);
   box-shadow: 0 0 4px rgba(204, 204, 204, 0.7);
+  transform: scale(1.03);
 }
 
 .champion-preview-role-btn {
@@ -502,13 +509,16 @@
   border: 1px solid rgb(0, 0, 0);
   cursor: pointer;
   color: white;
-  background: linear-gradient(180deg, #3b82f6, #1e40af);
+  background: linear-gradient(180deg, #1f3dffde, #000c58a8);
   transition: all 0.2s ease;
+  border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7); /* X offset, Y offset, blur, color */
 }
 
 .champion-preview-role-btn:hover {
-  background: linear-gradient(180deg, #2563eb, #1e3a8a);
   box-shadow: 0 0 4px rgba(204, 204, 204, 0.7);
+  transform: scale(1.03);
 }
 
 /* ================================================

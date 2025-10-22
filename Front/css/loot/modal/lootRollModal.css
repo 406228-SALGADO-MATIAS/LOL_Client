@@ -71,14 +71,14 @@
   left: 50%;
   top: 48%;
   transform: translate(-50%, -50%) scale(0.68);
-  
-  background-color: transparent!important;
-
+  background: linear-gradient(90deg, #1a1a1a, #141414);
   padding: 1.5rem;
-  border-radius: 0.67rem;
+  border: 6px solid;
+  border-image: linear-gradient(180deg, #5e5000da, #00724675, #003d619d);
+  border-image-slice: 1;
   text-align: center;
   width: 87vw;
-  height: 82vh;
+  height: 88vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -96,7 +96,7 @@
   right: 0.5rem;
   background: black;
   border: none;
-  color: #ffe990;
+  color: #fcd63f;
   font-size: 3rem;
   font-weight: bold;
   cursor: pointer;
@@ -110,6 +110,12 @@
   transform: scale(1.1);
 }
 
+.loot-roll-close:focus,
+.loot-roll-close:active {
+  outline: none;
+  box-shadow: none;
+}
+
 /* Contenedor de imágenes */
 .loot-roll-img-container {
   display: flex;
@@ -117,8 +123,7 @@
   align-items: flex-start;
   gap: 2.6vw;
   margin-bottom: 1rem;
-  filter: brightness(1.02) contrast(1.1) 
-  
+  filter: brightness(1.02) contrast(1.1);
 }
 
 /* Imágenes de loot */
@@ -128,21 +133,22 @@
   border-radius: 0.53rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   object-fit: cover;
-  
 }
 
 /* Botón ROLL */
 .loot-roll-btn {
   padding: 0.7rem 2rem;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
   color: #fff;
-  background-color: #4a0077ff;
-  border: none;
-  border-radius: 0.67rem;
+  background-color: linear-gradient(180deg, #8200d3af, #2a0044b6) !important;
+  border: 1px solid;
+  border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
   cursor: pointer;
   transition: transform 0.15s ease, filter 0.25s ease, box-shadow 0.25s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  margin-top: 20px;
 }
 .loot-roll-btn:hover {
   transform: scale(1.05);
@@ -153,22 +159,24 @@
 
 .loot-roll-slot {
   position: relative;
-  width: 26vw;
+  width: 24vw;
   height: 60vh;
-  border: 0.4vh solid #007e63;
-  background: linear-gradient(145deg, #1f1f1f, #2b2b2b);
+  border: 4px solid;
+  border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+  background: linear-gradient(145deg, #1f1f1f, #414141);
+
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 1vh;
-  box-shadow: 0 0 1vh rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 1vh rgba(185, 185, 185, 0.6);
   transition: all 0.25s ease;
   overflow: hidden; /* 🔑 recorta la imagen al hacer zoom */
 }
 
 .loot-roll-slot:hover {
-  border-color: #700000;
-  box-shadow: 0 0 1.2vh rgba(255, 0, 0, 0.26);
+  box-shadow: 0 0 7vh rgba(182, 0, 0, 0.6);
   transform: scale(1.02);
   filter: brightness(1.1);
 }
@@ -202,6 +210,6 @@
 .loot-roll-title {
   font-weight: bold;
   font-size: 4.3vh;
-  color: #c4c100;
-  margin-bottom: 1.6vh;
+  color: #f7f200;
+  margin-bottom: 3vh;
 }

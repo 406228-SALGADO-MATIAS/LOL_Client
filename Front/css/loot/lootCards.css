@@ -3,7 +3,9 @@
   aspect-ratio: 1 / 1; /* cuadrado automático */
   overflow: hidden;
   cursor: pointer;
-  border: 1px solid #444;
+  border: 2px solid #444;
+  border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -29,9 +31,11 @@
 
 /* Hover: borde iluminado de la card */
 .card-loot:hover {
-  border-color: #ffc400; /* color dorado brillante */
-  box-shadow: 0 0 8px #eed60066; /* efecto glow sutil */
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  border: 3px solid;
+  border-image: linear-gradient(180deg, #553802, #ffae00, #cc8500);
+
+  border-image-slice: 1;
+  box-shadow: 800px rgb(255, 255, 255);
 }
 
 /* Animación de fade-in sigue intacta */
