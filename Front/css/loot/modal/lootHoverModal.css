@@ -3,7 +3,7 @@
   display: none;
   flex-direction: column;
   max-height: 50h; /* limitar altura */
-  background: linear-gradient(90deg, #1a1a1a, #0e0e0e);
+  background: linear-gradient(90deg, #1d1d1d, #070707);
   border-radius: 8px;
   border: 3px solid;
   border-image: linear-gradient(225deg, #635400da, #00724675, #6b6b6b9d);

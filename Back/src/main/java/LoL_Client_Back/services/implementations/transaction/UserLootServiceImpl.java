@@ -179,26 +179,49 @@ public class UserLootServiceImpl implements UserLootService {
     @Override
     public UserLootDTO findByUserId(Long idUser, boolean showInactives) {
         Optional<UserEntity> optional = userRepository.findById(idUser);
-        if (optional.isPresent())
-        {
+        if (optional.isPresent()) {
             Optional<UserLootEntity> optionalUserLoot =
                     userLootRepository.findByUser_Id(idUser);
 
-            if (optionalUserLoot.isPresent())  //THE USER HAS LOOT
-            {
-                return dtoBuilder.buildUserLootDTO(optionalUserLoot.get(),showInactives);
-            }
-            else //USERS DOES NOT HAVE LOOT -> create
-            {
+            UserLootDTO dto;
+
+            if (optionalUserLoot.isPresent()) {
+                dto = dtoBuilder.buildUserLootDTO(optionalUserLoot.get(), showInactives);
+            } else {
                 UserLootEntity userLootEntity = new UserLootEntity();
                 userLootEntity.setUser(optional.get());
-
-                return dtoBuilder.buildUserLootDTO(
-                        userLootRepository.save(userLootEntity),showInactives);
+                dto = dtoBuilder.buildUserLootDTO(
+                        userLootRepository.save(userLootEntity), showInactives);
             }
+
+            // ✅ Ordenamos las listas antes del return
+            if (dto.getChampionsInventory() != null) {
+                dto.getChampionsInventory().sort(
+                        Comparator.comparing(LootInventoryChampionDTO::getBlueEssenceCost,
+                                Comparator.nullsLast(Integer::compareTo))
+                );
+            }
+
+            if (dto.getSkinsInventory() != null) {
+                dto.getSkinsInventory().sort(
+                        Comparator.comparing(LootInventorySkinDTO::getOrangeEssenceCost,
+                                Comparator.nullsLast(Integer::compareTo))
+                );
+            }
+
+            if (dto.getIconsInventory() != null) {
+                dto.getIconsInventory().sort(
+                        Comparator.comparing(LootInventoryIconDTO::getBlueEssenceCost,
+                                Comparator.nullsLast(Integer::compareTo))
+                );
+            }
+
+            return dto;
         }
+
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find user with id " + idUser);
     }
+
 
     @Override
     public UserLootDTO updateUserLoot(Long idUser, Integer chests, Integer masterChests, Integer keys, Integer orangeEssence, boolean showInactives)

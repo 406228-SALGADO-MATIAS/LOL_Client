@@ -233,7 +233,7 @@ function createItemClickModal(item, type) {
         } else {
           mainButton.innerHTML = `Desbloquear (-${beIcon} ${cost})`;
           mainButton.style.background =
-            "linear-gradient(180deg, #490077af, #2a0044b6)";
+            "linear-gradient(180deg, #490077ff, #2a0044d5)";
           mainButton.disabled = false;
           mainButton.style.cursor = "pointer";
 

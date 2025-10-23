@@ -97,24 +97,28 @@ function updateUnlockButtonSkin(skin, championName) {
   // Verificar si el usuario tiene el campeón
   const hasChampion = ownedChampions.some((c) => c.name === championName);
 
+  // Ícono de RP
+  const rpIcon =
+    '<img class="rp-icon" src="https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/stats/rp.png" alt="RP" style="width:16px; height:16px; vertical-align:middle; margin-right:4px;">';
+
   if (skin.owned) {
     unlockButtonSkin.textContent = "DESBLOQUEADO";
-    unlockButtonSkin.style.backgroundColor = "#5e5e5eff";
+    unlockButtonSkin.style.backgroundColor = "#5e5e5ec2";
     unlockButtonSkin.style.cursor = "not-allowed";
     unlockButtonSkin.onclick = null;
   } else if (!hasChampion) {
     unlockButtonSkin.textContent = "NECESITA EL CAMPEÓN";
-    unlockButtonSkin.style.backgroundColor = "#b69b009c";
+    unlockButtonSkin.style.backgroundColor = "#b69b00cb";
     unlockButtonSkin.style.cursor = "not-allowed";
     unlockButtonSkin.onclick = null;
   } else if (userRP >= skin.rpCost) {
-    unlockButtonSkin.textContent = `DESBLOQUEAR: RP ${skin.rpCost}`;
-    unlockButtonSkin.style.backgroundColor = "#4a0077ff";
+    unlockButtonSkin.innerHTML = `DESBLOQUEAR: ${rpIcon}${skin.rpCost}`;
+    unlockButtonSkin.style.backgroundColor = "#490077bd";
     unlockButtonSkin.style.cursor = "pointer";
     unlockButtonSkin.onclick = () => handleUnlockSkin(skin);
   } else {
-    unlockButtonSkin.textContent = `NECESITA RP ${skin.rpCost}`;
-    unlockButtonSkin.style.backgroundColor = "#500000ff";
+    unlockButtonSkin.innerHTML = `NECESITA ${rpIcon}${skin.rpCost}`;
+    unlockButtonSkin.style.backgroundColor = "#500000bb";
     unlockButtonSkin.style.cursor = "not-allowed";
     unlockButtonSkin.onclick = null;
   }

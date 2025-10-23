@@ -61,10 +61,13 @@ async function loadTopProfile(
 
       if (imageContainer) {
         if (profile.userBackground && profile.userBackground.trim() !== "") {
-          imageContainer.style.backgroundImage = `url(${profile.userBackground})`;
+          const bgUrl = profile.userBackground;
+
+          imageContainer.style.backgroundImage = `url(${bgUrl})`;
           imageContainer.style.backgroundSize = "cover";
+
+          applyChampionBackgroundPosition(imageContainer, bgUrl);
         } else {
-          // ✅ limpia el fondo si el usuario no tiene background
           imageContainer.style.backgroundImage = "none";
         }
       }

@@ -42,3 +42,19 @@ body {
   opacity: 0;
   pointer-events: none;
 }
+
+.be-icon {
+  width: 22px !important; /* mismo tamaño que la fuente actual */
+  height: 22px !important; /* mantiene proporción */
+  vertical-align: middle; /* centra el iconito con el texto */
+  margin-right: -5px !important;
+  margin-bottom: 4px !important;
+}
+
+.rp-icon {
+  width: 20px !important;
+  height: 20px !important;
+  vertical-align: middle;
+  margin-right: 4px !important;
+  margin-bottom: 5px !important;
+}

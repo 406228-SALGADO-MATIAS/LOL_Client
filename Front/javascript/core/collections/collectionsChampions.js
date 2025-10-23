@@ -76,25 +76,39 @@ async function handleUnlock(champ) {
 }
 
 function updateUnlockButton(champ) {
+  const unlockButton = document.getElementById("unlockButton");
   const userBE = parseInt(document.getElementById("userBE").textContent, 10);
 
+  // Ícono de esencia azul
+  const beIcon =
+    '<img class="be-icon" src="https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/lootMaterials/blueEssence.png" alt="BE">';
+
   if (champ.owned) {
-    unlockButton.textContent = "DESBLOQUEADO";
-    unlockButton.style.backgroundColor = "#5e5e5eff";
+    unlockButton.textContent = "Desbloqueado";
+    unlockButton.style.background =
+      "linear-gradient(180deg, #5e5e5eff, #3f3f3fcc)";
     unlockButton.style.cursor = "not-allowed";
+    unlockButton.disabled = true;
     unlockButton.onclick = null;
-  } else if (userBE >= champ.blueEssencePrice) {
-    unlockButton.textContent = `DESBLOQUEAR: BE ${
-      champ.blueEssencePrice || "N/A"
-    }`;
-    unlockButton.style.backgroundColor = "#4a0077ff";
-    unlockButton.style.cursor = "pointer";
-    unlockButton.onclick = () => handleUnlock(champ);
   } else {
-    unlockButton.textContent = `NECESITA BE ${champ.blueEssencePrice}`;
-    unlockButton.style.backgroundColor = "#500000ff";
-    unlockButton.style.cursor = "not-allowed";
-    unlockButton.onclick = null;
+    const cost = champ.blueEssencePrice || 0;
+    const faltante = cost - userBE;
+
+    if (faltante > 0) {
+      unlockButton.innerHTML = `Necesita +${beIcon} ${faltante}`;
+      unlockButton.style.background =
+        "linear-gradient(180deg, #640000f6, #9200006b)";
+      unlockButton.style.cursor = "not-allowed";
+      unlockButton.disabled = true;
+      unlockButton.onclick = null;
+    } else {
+      unlockButton.innerHTML = `Desbloquear (-${beIcon} ${cost})`;
+      unlockButton.style.background =
+        "linear-gradient(180deg, #490077e7, #2a0044c0)";
+      unlockButton.style.cursor = "pointer";
+      unlockButton.disabled = false;
+      unlockButton.onclick = () => handleUnlock(champ);
+    }
   }
 }
 
