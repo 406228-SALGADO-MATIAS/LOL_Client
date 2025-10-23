@@ -57,7 +57,7 @@ async function loadMatches(
     return;
   }
 
-  const animate = forceAnimate || gameType !== lastGameType; // 👈 prioridad al forceAnimate
+  const animate = forceAnimate || gameType !== lastGameType;
   lastGameType = gameType;
 
   try {
@@ -69,6 +69,10 @@ async function loadMatches(
     if (query) {
       filterCardsByChampion(query);
     }
+
+    // 🔹 Reiniciar scroll al inicio
+    const cardsSection = document.querySelector(".cards-section");
+    if (cardsSection) cardsSection.scrollTop = 0;
   } catch (err) {
     console.error("Error cargando matches:", err);
   }

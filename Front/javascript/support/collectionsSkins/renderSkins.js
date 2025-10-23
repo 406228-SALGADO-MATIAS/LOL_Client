@@ -84,16 +84,19 @@ function renderSkinsByOwnership() {
 }
 
 function renderSkinsByRPCost() {
+  const rpIconBig =
+    '<img class="rp-icon-big" src="https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/stats/rp.png" alt="RP" style="width:24px; height:24px; vertical-align:middle; margin-left:4px;">';
+
   renderSkinsByCategory({
     attribute: "rpCost",
     categories: [520, 750, 975, 1350, 1820, 3250],
     formatTitle: (rp) => {
-      if (rp <= 520) return `BUDGET - RP ${rp}`;
-      if (rp <= 750) return `STANDARD - RP ${rp}`;
-      if (rp <= 975) return `DELUXE - RP ${rp}`;
-      if (rp <= 1350) return `EPIC - RP ${rp}`;
-      if (rp <= 1820) return `LEGENDARY - RP ${rp}`;
-      return `MYTHIC - RP ${rp}`;
+      if (rp <= 520) return `BUDGET - ${rpIconBig}${rp}`;
+      if (rp <= 750) return `STANDARD - ${rpIconBig}${rp}`;
+      if (rp <= 975) return `DELUXE - ${rpIconBig}${rp}`;
+      if (rp <= 1350) return `EPIC - ${rpIconBig}${rp}`;
+      if (rp <= 1820) return `LEGENDARY - ${rpIconBig}${rp}`;
+      return `MYTHIC - ${rpIconBig}${rp}`;
     },
     includeEmptyGroup: false,
     ignoreSearch: false, // 🔹 importante

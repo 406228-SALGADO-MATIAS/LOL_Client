@@ -58,3 +58,11 @@ body {
   margin-right: 4px !important;
   margin-bottom: 5px !important;
 }
+
+.rp-icon-big {
+  width: 60px !important;
+  height: 60px !important;
+  vertical-align: middle;
+  margin-right: 4px !important;
+  margin-bottom: 5px !important;
+}

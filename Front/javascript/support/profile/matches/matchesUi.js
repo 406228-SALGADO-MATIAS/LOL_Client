@@ -76,7 +76,6 @@ function animateCards(cards, type = "appear", oldCards = [], newMatches = []) {
   if (!cards || cards.length === 0) return;
 
   if (type === "appear") {
-    // Comparar con las cards antiguas: si los idMatch son exactamente iguales → no animar
     const oldIds = oldCards.map((c) => Number(c.dataset.matchId));
     const newIds = newMatches.map((m) => m.idMatch);
 
@@ -85,17 +84,29 @@ function animateCards(cards, type = "appear", oldCards = [], newMatches = []) {
       oldIds.every((id, i) => id === newIds[i]);
 
     if (isSame) {
-      // Cards iguales → simplemente mostrar sin animación
       cards.forEach((card) => (card.style.opacity = 1));
       return;
     }
 
-    // Escalonado normal si son distintas
-    cards.forEach((card, i) => {
+    // Primeros 10 cards con animación escalonada
+    const firstBatch = cards.slice(0, 7);
+    firstBatch.forEach((card, i) => {
       setTimeout(() => {
         card.classList.add("appear");
       }, i * 100);
     });
+
+    // Resto de las cards: aparecerán al final de la animación de los 10 primeros
+    const restCards = cards.slice(7);
+    if (restCards.length > 0) {
+      // Duración total aproximada de la animación de los primeros 10
+      const delay = 10 * 8
+      setTimeout(() => {
+        restCards.forEach((card) => {
+          card.classList.add("appear");
+        });
+      }, delay);
+    }
   } else if (type === "disappear") {
     let completed = 0;
     cards.forEach((card) => {

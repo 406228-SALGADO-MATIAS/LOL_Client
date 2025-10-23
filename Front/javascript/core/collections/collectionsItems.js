@@ -41,12 +41,16 @@ function applyItemFilter(filter) {
   currentCategoryFilter = filter;
   window.scrollTo({ top: 0, behavior: "smooth" });
 
-  if (filter === "style1") {
-    renderItemsByStyle(); // adentro ya llama getFilteredItems()
-  } else if (filter === "style2") {
-    renderItemsByStyle2();
-  } else {
-    renderItems(); // idem
+  switch (filter) {
+    case "style1":
+      renderItemsByStyle(); // itemType principal
+      break;
+    case "style2":
+      renderItemsByStyle2(); // itemType secundario
+      break;
+    default:
+      renderItems(); // lista plana
+      break;
   }
 }
 

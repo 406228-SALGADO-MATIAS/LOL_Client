@@ -11,6 +11,7 @@ function checkSession() {
 }
 
 // Carga los datos del perfil del usuario de sesión
+// Carga los datos del perfil del usuario de sesión
 async function loadUserProfile() {
   const userId = getSessionUserId();
   if (!userId) return;
@@ -30,9 +31,11 @@ async function loadUserProfile() {
       const match = data.server.match(/\(([^)]+)\)/);
       if (match) serverShort = match[1];
     }
-    nicknameEl.innerHTML = `${
-      data.nickname || "Sin nick"
-    }<span style="font-weight: normal; font-size: 1.3rem">#${serverShort}</span>`;
+
+    nicknameEl.innerHTML = `
+      ${data.nickname || "Sin nick"}
+      <span class="user-server">#${serverShort}</span>
+    `;
 
     // BE y RP
     document.getElementById("userBE").textContent = data.blueEssence ?? 0;
@@ -44,14 +47,11 @@ async function loadUserProfile() {
       data.iconImage && data.iconImage.trim() !== ""
         ? data.iconImage
         : "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true";
+
     userIcon.src = iconSrc;
-    userIcon.style.width = "auto";
-    userIcon.style.height = "100%";
-    userIcon.style.objectFit = "cover";
 
     // ==== ANIMACIÓN DE APARICIÓN ====
     const profileBox = document.getElementById("userProfileBox");
-    // agregamos clase 'visible' después de un pequeño timeout
     setTimeout(() => profileBox.classList.add("visible"), 100);
   } catch (err) {
     console.error("Error cargando perfil:", err);

@@ -166,16 +166,16 @@ function applyFilter(filter) {
 
   switch (filter) {
     case "ownership":
-      renderSkinsByOwnership(); // Ya filtra por posesión en getFilteredSkins
+      renderSkinsByOwnership(); 
       break;
     case "tier":
-      renderSkinsByRPCost(); // Falta implementar
+      renderSkinsByRPCost(); 
       break;
     case "champion":
-      renderSkinsByChampion(); // Falta implementar
+      renderSkinsByChampion();
       break;
     case "availableness":
-      renderSkinsByAvailableness(); // ← nuevo filtro
+      renderSkinsByAvailableness(); 
       break;
     default:
       renderSkins();

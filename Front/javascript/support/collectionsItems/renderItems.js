@@ -16,21 +16,20 @@ function renderItems(items = getFilteredItems()) {
   appendItemRows(collectionsContainer, items);
 }
 
+// 🔹 Render por itemType (PRINCIPAL)
 function renderItemsByStyle() {
   collectionsContainer.innerHTML = "";
   const items = getFilteredItems();
-  const usedIds = new Set(); // 👈 track de items ya mostrados
+  const usedIds = new Set();
 
   ITEM_STYLES.forEach((cat) => {
+    // Filtra solo los que coinciden con el itemType principal
     const group = items.filter(
-      (i) =>
-        (i.itemType === cat.value || i.itemType2 === cat.value) &&
-        !usedIds.has(i.id) // 👈 solo los que no se mostraron
+      (i) => i.itemType === cat.value && !usedIds.has(i.id)
     );
 
     if (!group.length) return;
 
-    // marcar como usados
     group.forEach((i) => usedIds.add(i.id));
 
     const title = document.createElement("h3");
@@ -41,19 +40,53 @@ function renderItemsByStyle() {
     appendItemRows(collectionsContainer, group);
   });
 
-  // grupo "sin categoría"
-  const emptyGroup = items.filter(
+  // 🔸 Grupo “SIN CATEGORÍA” → ítems cuyo itemType no coincide con ningún tipo conocido
+  const noCategory = items.filter(
     (i) =>
-      !ITEM_STYLES.some(
-        (cat) => i.itemType === cat.value || i.itemType2 === cat.value
-      ) && !usedIds.has(i.id)
+      !ITEM_STYLES.some((cat) => i.itemType === cat.value) && !usedIds.has(i.id)
   );
-  if (emptyGroup.length) {
+
+  if (noCategory.length) {
     const title = document.createElement("h3");
     title.innerHTML = `<strong>SIN CATEGORÍA</strong>`;
     title.classList.add("mt-3", "category-title");
     collectionsContainer.appendChild(title);
 
-    appendItemRows(collectionsContainer, emptyGroup);
+    appendItemRows(collectionsContainer, noCategory);
+  }
+}
+
+// 🔹 Render por itemType2 (SECUNDARIO)
+function renderItemsByStyle2() {
+  collectionsContainer.innerHTML = "";
+  const items = getFilteredItems();
+  const usedIds = new Set();
+
+  ITEM_STYLES.forEach((cat) => {
+    const group = items.filter(
+      (i) => i.itemType2 === cat.value && !usedIds.has(i.id)
+    );
+
+    if (!group.length) return;
+
+    group.forEach((i) => usedIds.add(i.id));
+
+    const title = document.createElement("h3");
+    title.innerHTML = `<strong>${cat.label.toUpperCase()}</strong>`;
+    title.classList.add("mt-3", "category-title");
+    collectionsContainer.appendChild(title);
+
+    appendItemRows(collectionsContainer, group);
+  });
+
+  // grupo "sin tipo 2"
+  const noType2 = items.filter((i) => !i.itemType2 && !usedIds.has(i.id));
+  if (noType2.length) {
+    const title = document.createElement("h3");
+    title.innerHTML = `<strong>SIN TIPO 2</strong>`;
+    title.classList.add("mt-3", "category-title");
+    collectionsContainer.appendChild(title);
+
+    appendItemRows(collectionsContainer, noType2);
   }
 }

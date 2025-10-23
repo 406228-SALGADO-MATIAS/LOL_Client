@@ -92,7 +92,15 @@ function getChampionObjectPosition(name) {
   const up15 = ["reksai", "twitch", "katarina"];
   const up20 = ["chogath", "draven", "vi"];
   const up25 = ["rengar"];
-  const up30 = ["karma", "senna", "ornn", "vladimir", "bard", "trundle","jinx"];
+  const up30 = [
+    "karma",
+    "senna",
+    "ornn",
+    "vladimir",
+    "bard",
+    "trundle",
+    "jinx",
+  ];
   const up35 = [
     "zed",
     "braum",
@@ -104,7 +112,15 @@ function getChampionObjectPosition(name) {
     "jarvaniv",
     "xerath",
   ];
-  const up40 = ["kaisa", "milio", "renata", "hecarim", "caitlyn","singed","renekton"];
+  const up40 = [
+    "kaisa",
+    "milio",
+    "renata",
+    "hecarim",
+    "caitlyn",
+    "singed",
+    "renekton",
+  ];
   const up45 = [
     "akali",
     "urgot",
@@ -114,14 +130,14 @@ function getChampionObjectPosition(name) {
     "ivern",
     "shen",
     "aatrox",
-    "r"
-    
+    "drmundo",
   ];
   const up50 = ["aurelionsol"];
 
   const down5 = ["warwick"];
   const down10 = ["khazix"];
-  const down15 = ["zac"];
+  const down15 = ["zac", ""];
+  const down30 = ["skarner"];
 
   if (up5.includes(normalized)) position -= 5;
   else if (up10.includes(normalized)) position -= 10;
@@ -136,6 +152,7 @@ function getChampionObjectPosition(name) {
   else if (down5.includes(normalized)) position += 5;
   else if (down10.includes(normalized)) position += 10;
   else if (down15.includes(normalized)) position += 15;
+  else if (down30.includes(normalized)) position += 30;
 
   return `center ${position}%`;
 }
