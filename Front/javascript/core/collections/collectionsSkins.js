@@ -99,7 +99,7 @@ function updateUnlockButtonSkin(skin, championName) {
 
   // Ícono de RP
   const rpIcon =
-    '<img class="rp-icon" src="https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/stats/rp.png" alt="RP" style="width:16px; height:16px; vertical-align:middle; margin-right:4px;">';
+    '<img class="rp-icon" src="https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/stats/rp.png" alt="RP">';
 
   if (skin.owned) {
     unlockButtonSkin.textContent = "DESBLOQUEADO";

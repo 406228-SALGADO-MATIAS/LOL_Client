@@ -118,111 +118,111 @@ ALTER TABLE CHAMPIONS ALTER COLUMN ID RESTART WITH 50;
 
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/AatroxSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334056/AatroxSquare_wwqmkb.webp'
 WHERE name = 'Aatrox';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/AkaliSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334056/AkaliSquare_mdlg47.webp'
 WHERE name = 'Akali';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/AlistarSquare_old3.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334057/AlistarSquare_old3_ypj9g2.webp'
 WHERE name = 'Alistar';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/AurelionSolSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334056/AurelionSolSquare_fvuq3b.webp'
 WHERE name = 'Aurelion Sol';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/BardSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334057/BardSquare_nkzdxz.webp'
 WHERE name = 'Bardo';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/BraumSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334057/BraumSquare_c2gn9n.webp'
 WHERE name = 'Braum';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/CaitlynSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334058/CaitlynSquare_jx0w50.webp'
 WHERE name = 'Caitlyn';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/ChoGathSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334059/ChoGathSquare_zss3bo.webp'
 WHERE name = 'Cho´Gath';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/DrMundoSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334058/DrMundoSquare_yzcuam.webp'
 WHERE name = 'Dr. Mundo';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/DravenSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334058/DravenSquare_jwrhw0.webp'
 WHERE name = 'Draven';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/FioraSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334058/FioraSquare_hkkzi1.webp'
 WHERE name = 'Fiora';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/FizzSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334056/FizzSquare_wyy2pn.webp'
 WHERE name = 'Fizz';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/GalioSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334056/GalioSquare_b1undf.webp'
 WHERE name = 'Galio';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/GragasSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334057/GragasSquare_apxsaj.webp'
 WHERE name = 'Gragas';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/GravesSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334057/GravesSquare_an5njo.webp'
 WHERE name = 'Graves';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/HecarimSquare_old.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334057/HecarimSquare_old_r6r1mb.webp'
 WHERE name = 'Hecarim';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/IvernSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334058/IvernSquare_wvvwzc.webp'
 WHERE name = 'Ivern';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/JarvanIVSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334058/JarvanIVSquare_nijd6r.webp'
 WHERE name = 'Jarvan IV';
 
 UPDATE champions
-SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/JinxSquare.webp'
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334059/JinxSquare_y5cvqg.webp'
 WHERE name = 'Jinx';
 
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/KaiSaSquare.webp' WHERE name = U&'Kai´Sa';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/KarmaSquare.webp' WHERE name = 'Karma';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/KatarinaSquare.webp' WHERE name = 'Katarina';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/KhaZixSquare.webp' WHERE name = U&'Kha´Zix';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/LucianSquare.webp' WHERE name = 'Lucian';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/MalphiteSquare.webp' WHERE name = 'Malphite';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/MilioSquare.webp' WHERE name = 'Milio';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/MordekaiserSquare.webp' WHERE name = 'Mordekaiser';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/OrnnSquare.webp' WHERE name = 'Ornn';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/RekSaiSquare.webp' WHERE name = U&'Rek´Sai';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/RenataSquare.webp' WHERE name = 'Renata';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/RenektonSquare.webp' WHERE name = 'Renekton';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/RengarSquare.webp' WHERE name = 'Rengar';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/SennaSquare.webp' WHERE name = 'Senna';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/ShenSquare.webp' WHERE name = 'Shen';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/SingedSquare.webp' WHERE name = 'Singed';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/SkarnerSquare.webp' WHERE name = 'Skarner';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/TrundleSquare.webp' WHERE name = 'Trundle';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/TryndamereSquare.webp' WHERE name = 'Tryndamere';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/TwistedFateSquare.webp' WHERE name = 'Twisted Fate';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/TwitchSquare.webp' WHERE name = 'Twitch';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/UrgotSquare.webp' WHERE name = 'Urgot';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/ViSquare.webp' WHERE name = 'Vi';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/VladimirSquare.webp' WHERE name = 'Vladimir';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/WarwickSquare.webp' WHERE name = 'Warwick';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/XerathSquare.webp' WHERE name = 'Xerath';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/ZacSquare.webp' WHERE name = 'Zac';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/ZedSquare.webp' WHERE name = 'Zed';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/ZeriSquare.webp' WHERE name = 'Zeri';
-UPDATE champions SET image_square = 'https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/c37df1d15b9b30094ec4cca46d2aa094aafb64bb/Front/images/championSquares/ZileanSquare.webp' WHERE name = 'Zilean';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334059/KaiSaSquare_olamct.webp' WHERE name = U&'Kai´Sa';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334059/KarmaSquare_b6msz5.webp' WHERE name = 'Karma';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334059/KatarinaSquare_yliggj.webp' WHERE name = 'Katarina';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334059/KhaZixSquare_ltfqce.webp' WHERE name = U&'Kha´Zix';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334060/LucianSquare_tia12c.webp' WHERE name = 'Lucian';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334060/MalphiteSquare_stmvgd.webp' WHERE name = 'Malphite';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334060/MilioSquare_k0dq5h.webp' WHERE name = 'Milio';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334060/MordekaiserSquare_tdamyi.webp' WHERE name = 'Mordekaiser';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334060/OrnnSquare_ae4jpz.webp' WHERE name = 'Ornn';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334061/RekSaiSquare_wjaeta.webp' WHERE name = U&'Rek´Sai';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334061/RenataSquare_tzxay7.webp' WHERE name = 'Renata';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334061/RenektonSquare_c5lvoy.webp' WHERE name = 'Renekton';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334075/RengarSquare_o45bxw.webp' WHERE name = 'Rengar';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334075/SennaSquare_ohyzn0.webp' WHERE name = 'Senna';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334074/ShenSquare_eesgqu.webp' WHERE name = 'Shen';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334075/SingedSquare_jsfy56.webp' WHERE name = 'Singed';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334075/SkarnerSquare_a1iqlq.webp' WHERE name = 'Skarner';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334075/TrundleSquare_rm4ign.webp' WHERE name = 'Trundle';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334075/TryndamereSquare_y6zfh2.webp' WHERE name = 'Tryndamere';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334075/TwistedFateSquare_ffp3lo.webp' WHERE name = 'Twisted Fate';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334076/TwitchSquare_zydq7x.webp' WHERE name = 'Twitch';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334076/UrgotSquare_swphzj.webp' WHERE name = 'Urgot';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334076/ViSquare_qnnwsg.webp' WHERE name = 'Vi';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334077/VladimirSquare_dimob6.webp' WHERE name = 'Vladimir';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334076/WarwickSquare_qk58f6.webp' WHERE name = 'Warwick';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334076/XerathSquare_uhce6f.webp' WHERE name = 'Xerath';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334076/ZacSquare_sacs1f.webp' WHERE name = 'Zac';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334077/ZedSquare_hrsjih.webp' WHERE name = 'Zed';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334077/ZeriSquare_nrybcg.webp' WHERE name = 'Zeri';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334077/ZileanSquare_ybqe82.webp' WHERE name = 'Zilean';
 
 
 
