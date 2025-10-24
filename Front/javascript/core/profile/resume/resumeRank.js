@@ -75,7 +75,7 @@ async function fetchRankTiers() {
         id: 0,
         rank: "Unranked",
         image:
-          "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true",
+          "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339061/Unranked_ydrybu.webp",
         lp: 0,
       },
       ...data,
@@ -88,7 +88,7 @@ async function fetchRankTiers() {
         id: 0,
         rank: "Unranked",
         image:
-          "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true",
+          "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339061/Unranked_ydrybu.webp",
         lp: 0,
       },
     ];

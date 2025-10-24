@@ -122,28 +122,28 @@ function buildMaterialItems(materials) {
     {
       materialName: "Chest",
       imageUrl:
-        "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/lootMaterials/chest.png?raw=true",
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761338999/chest_wr9oib.png",
       quantity: materials.chests,
       type: "chest",
     },
     {
       materialName: "Master Chest",
       imageUrl:
-        "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/lootMaterials/masterChest.png?raw=true",
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339654/masterChest_mmg9n9.webp",
       quantity: materials.masterChests,
       type: "masterChest",
     },
     {
       materialName: "Key",
       imageUrl:
-        "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/lootMaterials/key.png?raw=true",
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761338996/key_uu9ibo.png",
       quantity: materials.keys,
       type: "key",
     },
     {
       materialName: "Orange Essence",
       imageUrl:
-        "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/lootMaterials/orangeEssence.png?raw=true",
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761338997/orangeEssence_esacqj.webp",
       quantity: materials.orangeEssence,
       type: "orangeEssence",
     },

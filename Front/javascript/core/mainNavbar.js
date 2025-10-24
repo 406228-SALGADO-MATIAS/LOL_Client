@@ -46,7 +46,7 @@ async function loadUserProfile() {
     const iconSrc =
       data.iconImage && data.iconImage.trim() !== ""
         ? data.iconImage
-        : "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true";
+        : "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336571/none_ep19ag.jpg";
 
     userIcon.src = iconSrc;
 

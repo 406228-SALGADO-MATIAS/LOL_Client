@@ -20,14 +20,14 @@ function renderUserResult(user) {
   // directamente usamos rankImage y rank del JSON
   const rankImg =
     user.rankImage ||
-    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true";
+    "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339061/Unranked_ydrybu.webp";
   const rankName = user.rank || "Unranked";
 
   item.innerHTML = `
     <div class="d-flex align-items-center">
       <img src="${
         user.iconImage ||
-        "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true"
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336571/none_ep19ag.jpg"
       }" 
       alt="icon" 
       class="rounded-circle me-3" 

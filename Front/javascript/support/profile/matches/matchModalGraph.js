@@ -264,13 +264,13 @@ function createGraphMemberCard(p) {
 // ------------------------------------------
 const STAT_ICON_URLS = {
   kills:
-    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/stats%20kills.png?raw=true",
+    "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339078/stats_kills_lnsttg.png",
   deaths:
-    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/stats%20deaths.png?raw=true",
+    "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339095/stats_deaths_pqh36n.png",
   assists:
-    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/stats%20assists.png?raw=true",
+    "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339093/stats_assists_q3k7dy.png",
   totalFarm:
-    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/minions.png?raw=true",
+    "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339089/minions_ey2qs1.webp",
   totalGold: "https://pngimg.com/d/coin_PNG36939.png",
   totalDamage: "https://cdn-icons-png.flaticon.com/512/7380/7380434.png",
 };

@@ -41,11 +41,21 @@ function renderSkinsByCategory({
     if (!group.length) return;
 
     const title = document.createElement("h3");
-    const displayCat = (formatTitle ? formatTitle(cat) : String(cat)).replace(
-      /´/g,
-      "'"
-    );
-    title.innerHTML = `<strong>${displayCat.toUpperCase()}</strong>`;
+
+    // Generamos el contenido del título sin tocar el HTML de imágenes
+    let displayCat = formatTitle ? formatTitle(cat) : String(cat);
+
+    // Separamos texto de etiquetas <img> para solo aplicar mayúsculas al texto
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = displayCat;
+
+    tempDiv.childNodes.forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        node.textContent = node.textContent.toUpperCase();
+      }
+    });
+
+    title.innerHTML = `<strong>${tempDiv.innerHTML}</strong>`;
     title.classList.add("mt-3", "category-title");
     collectionsContainer.appendChild(title);
 
@@ -84,22 +94,26 @@ function renderSkinsByOwnership() {
 }
 
 function renderSkinsByRPCost() {
-  const rpIconBig =
-    '<img class="rp-icon-big" src="https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/stats/rp.png" alt="RP" style="width:24px; height:24px; vertical-align:middle; margin-left:4px;">';
+  const rpIcon =
+    '<img class="rp-icon-big" src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761340820/rp_avaiqa.png" alt="RP" style="width:24px; height:24px; vertical-align:middle; margin-left:4px;">';
 
   renderSkinsByCategory({
     attribute: "rpCost",
     categories: [520, 750, 975, 1350, 1820, 3250],
     formatTitle: (rp) => {
-      if (rp <= 520) return `BUDGET - ${rpIconBig}${rp}`;
-      if (rp <= 750) return `STANDARD - ${rpIconBig}${rp}`;
-      if (rp <= 975) return `DELUXE - ${rpIconBig}${rp}`;
-      if (rp <= 1350) return `EPIC - ${rpIconBig}${rp}`;
-      if (rp <= 1820) return `LEGENDARY - ${rpIconBig}${rp}`;
-      return `MYTHIC - ${rpIconBig}${rp}`;
+      let tier = "";
+      if (rp <= 520) tier = "BUDGET";
+      else if (rp <= 750) tier = "STANDARD";
+      else if (rp <= 975) tier = "DELUXE";
+      else if (rp <= 1350) tier = "EPIC";
+      else if (rp <= 1820) tier = "LEGENDARY";
+      else tier = "MYTHIC";
+
+      // Retornamos texto + icono + número + tier
+      return `${rpIcon} ${rp} - ${tier}`;
     },
     includeEmptyGroup: false,
-    ignoreSearch: false, // 🔹 importante
+    ignoreSearch: false,
   });
 }
 

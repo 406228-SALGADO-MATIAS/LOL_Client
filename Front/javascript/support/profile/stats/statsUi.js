@@ -90,10 +90,10 @@ async function renderSearchedUserPreview(userId) {
 
     const rankImg =
       user.rankImage ||
-      "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true";
+      "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339061/Unranked_ydrybu.webp";
     const rankName = user.rank || "Unranked";
     const defaultIcon =
-      "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true";
+      "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336571/none_ep19ag.jpg";
 
     // 🔹 Preview con estilos forzados en línea
     searchedUserPreview.innerHTML =

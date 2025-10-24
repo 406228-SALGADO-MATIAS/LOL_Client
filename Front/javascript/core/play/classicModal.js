@@ -29,27 +29,27 @@ const roles = [
   {
     key: "TOP",
     name: "Top",
-    img: "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/top.png",
+    img: "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339120/top_o6nf3d.webp",
   },
   {
     key: "JUNGLE",
     name: "Jungle",
-    img: "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/jg.png",
+    img: "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339123/jg_de9cbc.png",
   },
   {
     key: "MID",
     name: "Mid",
-    img: "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/mid.png",
+    img: "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339125/mid_b7phfo.png",
   },
   {
     key: "ADC",
     name: "AD Carry",
-    img: "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/styles/adc.png",
+    img: "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339916/adc2_qy3qpi.png",
   },
   {
     key: "SUPPORT",
     name: "Support",
-    img: "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/support.png",
+    img: "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339127/support_nuk1pt.png",
   },
 ];
 

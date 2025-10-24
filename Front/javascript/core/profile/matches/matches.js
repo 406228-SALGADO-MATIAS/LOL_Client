@@ -92,7 +92,7 @@ function renderSidebar(data, animate = true) {
     topChamps.push({
       name: "-",
       imageSquare:
-        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/profileIcons/none.jpg",
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336571/none_ep19ag.jpg",
       useRatio: 0,
     });
   }

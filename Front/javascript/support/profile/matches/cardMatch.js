@@ -46,32 +46,32 @@ function createMatchCard(match) {
   switch (match.style) {
     case "Fighter":
       styleImg.src =
-        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/styles/fighter.png";
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339145/fighter_bhcosl.webp";
       styleText.textContent = "Fighter";
       break;
     case "Marksman":
       styleImg.src =
-        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/styles/adc.png";
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339141/adc_zlakei.webp";
       styleText.textContent = "Marksman";
       break;
     case "Mage":
       styleImg.src =
-        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/styles/mage.png";
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339147/mage_hkt581.webp";
       styleText.textContent = "Mage";
       break;
     case "Assassin":
       styleImg.src =
-        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/styles/assassin.png";
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339143/assassin_wyfi0d.webp";
       styleText.textContent = "Assassin";
       break;
     case "Tank":
       styleImg.src =
-        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/styles/tank.png";
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339139/tank_yypoh4.webp";
       styleText.textContent = "Tank";
       break;
     case "Support":
       styleImg.src =
-        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/styles/support.png";
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339148/support_d9qd9q.png";
       styleText.textContent = "Support";
       break;
     default:
@@ -117,9 +117,9 @@ function createMatchCard(match) {
   kdaDiv.classList.add("stat");
   const kdaIcon = document.createElement("img");
   kdaIcon.src =
-    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/kills.png?raw=true";
+    "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339086/kills_gghhmv.png";
   kdaIcon.classList.add("stat-icon");
-  kdaIcon.title = "Kills/Deaths/Assits"
+  kdaIcon.title = "Kills/Deaths/Assits";
   const kdaText = document.createElement("span");
   kdaText.textContent = match.kills + "/" + match.deaths + "/" + match.assists;
   kdaDiv.appendChild(kdaIcon);
@@ -130,9 +130,9 @@ function createMatchCard(match) {
   farmDiv.classList.add("stat");
   const farmIcon = document.createElement("img");
   farmIcon.src =
-    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/minions.png?raw=true";
+    "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339089/minions_ey2qs1.webp";
   farmIcon.classList.add("stat-icon");
-  farmIcon.title = "Creatures killed"
+  farmIcon.title = "Creatures killed";
   const farmText = document.createElement("span");
   farmText.textContent = match.totalFarm;
   farmDiv.appendChild(farmIcon);
@@ -143,9 +143,9 @@ function createMatchCard(match) {
   goldDiv.classList.add("stat");
   const goldIcon = document.createElement("img");
   goldIcon.src =
-    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/stats/coin.png?raw=true";
+    "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339081/coin_nccy7t.png";
   goldIcon.classList.add("stat-icon");
-  goldIcon.title = "Gold"
+  goldIcon.title = "Gold";
   const goldText = document.createElement("span");
   goldText.textContent = match.totalGold;
   goldDiv.appendChild(goldIcon);
@@ -169,32 +169,32 @@ function createMatchCard(match) {
   switch (match.role) {
     case "TOP":
       roleImg.src =
-        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/top.png";
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339120/top_o6nf3d.webp";
       roleImg.title = "Top";
       break;
     case "JUNGLE":
       roleImg.src =
-        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/jg.png";
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339123/jg_de9cbc.png";
       roleImg.title = "Jungle";
       break;
     case "MID":
       roleImg.src =
-        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/mid.png";
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339125/mid_b7phfo.png";
       roleImg.title = "Mid";
       break;
     case "ADC":
       roleImg.src =
-        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/styles/adc.png";
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339916/adc2_qy3qpi.png";
       roleImg.title = "AD Carry";
       break;
     case "SUPPORT":
       roleImg.src =
-        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/support.png";
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339127/support_nuk1pt.png";
       roleImg.title = "Support";
       break;
     default:
       roleImg.src =
-        "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/mid.png";
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339125/mid_b7phfo.png";
       roleImg.title = "ARAM (one lane)";
   }
 

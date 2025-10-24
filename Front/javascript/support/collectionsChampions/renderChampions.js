@@ -24,32 +24,44 @@ function renderChampionsByCategory({
   collectionsContainer.innerHTML = "";
   const champions = getFilteredChampions();
 
-  // Render de cada categoría
   categories.forEach((cat) => {
     let group = champions.filter((c) => c[attribute] === cat);
     if (!group.length) return;
 
     const title = document.createElement("h3");
-    title.innerHTML = `<strong>${(formatTitle
-      ? formatTitle(cat)
-      : cat
-    ).toUpperCase()}</strong>`;
-    title.classList.add("mt-3", "category-title"); 
+
+    // Creamos el contenido sin tocar los <img>
+    let displayCat = formatTitle ? formatTitle(cat) : String(cat);
+
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = displayCat;
+
+    tempDiv.childNodes.forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        node.textContent = node.textContent.toUpperCase();
+      }
+    });
+
+    title.innerHTML = `<strong>${tempDiv.innerHTML}</strong>`;
+    title.classList.add("mt-3", "category-title");
     collectionsContainer.appendChild(title);
 
-    appendChampionRows(collectionsContainer, group); // <- función reutilizada
+    appendChampionRows(collectionsContainer, group);
   });
 
-  // Render del grupo vacío si aplica
   if (includeEmptyGroup) {
     let emptyGroup = champions.filter((c) => !c[attribute]);
     if (emptyGroup.length) {
       const title = document.createElement("h3");
-      title.innerHTML = `<strong>${emptyGroupTitle.toUpperCase()}</strong>`;
-      title.classList.add("mt-3", "category-title"); 
+
+      // Igual, no tocar los <img> si hay
+      const tempDiv = document.createElement("div");
+      tempDiv.textContent = emptyGroupTitle.toUpperCase();
+      title.innerHTML = `<strong>${tempDiv.innerHTML}</strong>`;
+      title.classList.add("mt-3", "category-title");
       collectionsContainer.appendChild(title);
 
-      appendChampionRows(collectionsContainer, emptyGroup); // <- función reutilizada
+      appendChampionRows(collectionsContainer, emptyGroup);
     }
   }
 }
@@ -109,10 +121,13 @@ function renderChampionsByStyle2() {
   });
 }
 function renderChampionsByBlueEssence() {
+  const beImg =
+    '<img class="be-icon-big" src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761338998/blueEssence_m9dbsd.png" alt="BE" style="width:24px; height:24px; vertical-align:middle; margin-right:4px;">';
+
   renderChampionsByCategory({
     attribute: "blueEssencePrice",
     categories: [450, 1350, 3150, 4800, 6300, 7800],
-    formatTitle: (price) => `BE: ${price}`, // le ponemos un prefijo para mostrarlo bonito
+    formatTitle: (price) => `${beImg} ${price}`, // icono + número
     includeEmptyGroup: true,
     emptyGroupTitle: "Sin precio definido",
   });

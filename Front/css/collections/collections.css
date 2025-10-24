@@ -16,12 +16,12 @@ body {
   font-size: 2.2rem; /* más grande  */
   font-weight: 400; /* semi bold, menos tosco */
   text-align: left;
-  color: #eed600ce; 
+  color: #eed600ce;
   margin-top: 1rem;
   margin-bottom: 1rem;
   letter-spacing: 2px;
-  text-shadow: 0 0 5px rgba(0,0,0,0.6);
-  border-bottom: 3px solid rgba(255,255,255,0.2); /* subrayado  */
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.2); /* subrayado  */
   padding-bottom: 0.3rem;
 }
 
@@ -34,7 +34,7 @@ body {
   background: rgb(12, 12, 12);
   opacity: 1; /* empieza visible */
   pointer-events: auto;
-  transition: opacity 0.10s ease;
+  transition: opacity 0.1s ease;
   z-index: 9999;
 }
 
@@ -51,6 +51,16 @@ body {
   margin-bottom: 4px !important;
 }
 
+.be-icon-big {
+  width: 33px;
+  height: 33px;
+  vertical-align: middle;
+  margin-right: -7px !important;
+  margin-left: 4px !important;
+
+  margin-bottom: 7px !important;
+}
+
 .rp-icon {
   width: 20px !important;
   height: 20px !important;
@@ -60,9 +70,9 @@ body {
 }
 
 .rp-icon-big {
-  width: 60px !important;
-  height: 60px !important;
+  width: 32px !important;
+  height: 32px !important;
   vertical-align: middle;
-  margin-right: 4px !important;
-  margin-bottom: 5px !important;
+  margin-right: -4px !important;
+  margin-bottom: 9px !important;
 }

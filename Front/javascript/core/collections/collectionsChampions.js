@@ -81,7 +81,7 @@ function updateUnlockButton(champ) {
 
   // Ícono de esencia azul
   const beIcon =
-    '<img class="be-icon" src="https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/lootMaterials/blueEssence.png" alt="BE">';
+    '<img class="be-icon" src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761338998/blueEssence_m9dbsd.png" alt="BE">';
 
   if (champ.owned) {
     unlockButton.textContent = "Desbloqueado";

@@ -27,7 +27,7 @@ async function loadTopProfile(
         profileIcon.src =
           profile.iconImage && profile.iconImage.trim() !== ""
             ? profile.iconImage
-            : "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true";
+            : "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336571/none_ep19ag.jpg";
         profileIcon.style.width = "auto";
         profileIcon.style.height = "100%";
         profileIcon.style.objectFit = "cover";
@@ -45,7 +45,7 @@ async function loadTopProfile(
         userIcon.src =
           profile.iconImage && profile.iconImage.trim() !== ""
             ? profile.iconImage
-            : "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true";
+            : "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336571/none_ep19ag.jpg";
       }
 
       if (userNickname) userNickname.textContent = profile.nickname || "";
@@ -84,7 +84,7 @@ async function loadTopChampions(userId) {
   }
 
   const placeholderImage =
-    "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true";
+    "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336571/none_ep19ag.jpg";
   const placeholderText = "-";
 
   try {
@@ -125,7 +125,7 @@ async function loadTopChampions(userId) {
     topContainer.innerHTML = ""; // limpiar antes de rellenar
 
     const placeholderImage =
-      "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/profileIcons/none.jpg?raw=true";
+      "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336571/none_ep19ag.jpg";
     const placeholderText = "-";
 
     arrangedTop3.forEach((champ, idx) => {
@@ -212,7 +212,7 @@ async function loadRanks(userId) {
       const rankName = profile.rank || "Unranked";
       const rankImage =
         profile.rankImage ||
-        "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true";
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339061/Unranked_ydrybu.webp";
 
       if (rankImg) rankImg.src = rankImage;
 

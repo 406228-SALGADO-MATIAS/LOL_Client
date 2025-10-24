@@ -555,7 +555,7 @@ public class DTOBuilder
         if (userEntity.getIcon() != null)
             dto.setIconImage(userEntity.getIcon().getImage());
         else
-            dto.setIconImage("https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/profileIcons/none.jpg");
+            dto.setIconImage("https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336571/none_ep19ag.jpg");
 
         dto.setRiotPoints(userEntity.getRiotPoints());
         dto.setNickname(userEntity.getNickname());

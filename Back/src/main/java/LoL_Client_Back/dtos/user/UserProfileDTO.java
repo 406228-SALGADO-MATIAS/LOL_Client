@@ -13,13 +13,13 @@ public class UserProfileDTO {
     private String nickname;
     private String server;
     @Lob
-    private String iconImage = "";
+    private String iconImage = "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336571/none_ep19ag.jpg";
     @Lob
     private String userBackground ="";
     private Integer riotPoints;
     private Integer blueEssence;
     private String rank = "Unranked";
     @Lob
-    private String rankImage = "https://github.com/406228-SALGADO-MATIAS/LOL_Client/blob/main/Front/images/ranks/Unranked.png?raw=true";
+    private String rankImage = "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339061/Unranked_ydrybu.webp";
     private int lp = 0;
 }

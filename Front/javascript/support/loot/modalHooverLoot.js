@@ -235,11 +235,11 @@ function createHoverItemModal(item, type) {
 
   // Imagen de esencia azul (BE)
   const beIcon =
-    '<img class="hbe-icon" src="https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/lootMaterials/blueEssence.png" alt="BE">';
+    '<img class="hbe-icon" src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761338998/blueEssence_m9dbsd.png" alt="BE">';
 
   // Imagen de esencia naranja
   const oeIcon =
-    '<img class="hoe-icon" src="https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/refs/heads/main/Front/images/lootMaterials/orangeEssence.png" alt="OE">';
+    '<img class="hoe-icon" src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761338997/orangeEssence_esacqj.webp" alt="OE">';
 
   if (type === "icon") {
     img.style.maxHeight = "22vh";
