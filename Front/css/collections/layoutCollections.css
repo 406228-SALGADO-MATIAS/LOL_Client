@@ -20,8 +20,7 @@
 
 /* Navbar */
 .navbar-custom {
-  background-color: #071a2d;
-  
+  background: linear-gradient(90deg, #051220, #0b3846);
   height: 45px;
   display: flex;
   align-items: center;
@@ -84,7 +83,6 @@
 .navbar-custom .navbar-brand:hover {
   color: #ff9800 !important;
 }
-
 
 body::-webkit-scrollbar {
   width: 6px;

@@ -41,26 +41,42 @@
 
     <!-- Menú -->
     <div class="collapse navbar-collapse justify-content-end">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav align-items-center">
         <li class="nav-item">
-          <a class="nav-link" href="/pages/loot.html">Loot</a>
+          <a class="btn btn-nav" href="/pages/loot.html">
+            <img
+              src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761386098/treasure_cph4ei.png"
+              class="nav-icon"
+              alt="Loot"
+            />
+            Loot
+          </a>
         </li>
         <li class="nav-item">
           <a
-            class="nav-link"
+            class="btn btn-nav"
             href="/pages/collections/collectionsChampions.html"
-            >Collections</a
           >
+            <img
+              src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761386352/back-pack_tertg5.png"
+              class="nav-icon"
+              alt="Collections"
+            />
+            Collections
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/pages/profile/resume.html">Profile</a>
+          <a class="btn btn-nav" href="/pages/profile/resume.html">
+            <img
+              src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761386471/user_hbjnh0.png"
+              class="nav-icon"
+              alt="Profile"
+            />
+            Profile
+          </a>
         </li>
         <li class="nav-item">
-          <a
-            id="logoutBtn"
-            class="btn btn-primary logout-btn"
-            href="/pages/out/intro.html"
-          >
+          <a id="logoutBtn" class="btn logout-btn" href="/pages/out/intro.html">
             Cerrar Sesión
           </a>
         </li>
@@ -147,7 +163,6 @@
   /* ==== BOTONES ==== */
   .btn-play {
     background: linear-gradient(90deg, #ffb700, #9e7100);
-
     border: 2px solid;
     border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
     border-image-slice: 1;
@@ -163,19 +178,51 @@
     box-shadow: 0 0px 11px rgb(0, 0, 0);
   }
 
+  /* ==== BOTONES DE MENÚ (Loot, Collections, Profile) ==== */
+  .btn-nav {
+    background: linear-gradient(180deg, #330fb4, #1406479c);
+    border: 2px solid;
+    border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
+    border-image-slice: 1;
+    color: white !important;
+    font-weight: bold;
+    font-size: 1.3rem;
+    padding: 0.5rem 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    height: 45px;
+  }
+  .btn-nav:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0px 20px rgb(75, 75, 75);
+  }
+
+  .nav-icon {
+    height: 1.4rem;
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* ==== BOTÓN CERRAR SESIÓN ==== */
   .logout-btn {
     background: linear-gradient(90deg, #ff0000, #9e0000);
-
     border: 2px solid;
     border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
     border-image-slice: 1;
     transition: transform 0.2s;
     border-radius: 8px;
     font-size: 1.4rem;
+    font-weight: bold;
+    color: white !important;
+    margin-left: 10px;
+    padding: 0.5rem 1rem;
+    height: 45px;
   }
   .logout-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0px 20px rgb(0, 0, 0);
+    transform: scale(1.01);
+    box-shadow: 0 0px 20px rgb(75, 75, 75);
   }
 
   /* ==== STATS ==== */
