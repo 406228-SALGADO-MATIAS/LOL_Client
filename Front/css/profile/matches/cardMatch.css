@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(26, 26, 26, 0.377);
+  background: linear-gradient(180deg, #0000009f, #2e2e2eab);
   color: #fff;
   border-radius: 6px;
   padding: 0px;
@@ -19,7 +19,7 @@
 
 .match-card:hover {
   border-color: #ffffff85;
-  background-color: rgba(0, 0, 0, 0.534);
+  background: linear-gradient(180deg, #000000, #000000);
 }
 
 .match-col {

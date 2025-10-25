@@ -85,7 +85,12 @@ function updateIconCounters() {
 // Actualizar botón de desbloqueo de iconos
 // ==========================
 function updateUnlockButtonIcon(icon) {
+  const unlockButtonIcon = document.getElementById("unlockButtonIcon");
   const userBE = parseInt(document.getElementById("userBE").textContent, 10);
+
+  // Ícono de esencia azul
+  const beIcon =
+    '<img class="be-icon" src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761338998/blueEssence_m9dbsd.png" alt="BE">';
 
   if (icon.owned) {
     // Icono ya adquirido
@@ -93,18 +98,23 @@ function updateUnlockButtonIcon(icon) {
     unlockButtonIcon.style.backgroundColor = "#125823ff"; // verde
     unlockButtonIcon.style.cursor = "pointer";
     unlockButtonIcon.onclick = () => handleUseIcon(icon); // función que luego implementes
-  } else if (userBE >= icon.blueEssencePrice) {
-    // Puede comprar
-    unlockButtonIcon.textContent = `DESBLOQUEAR: BE ${icon.blueEssencePrice}`;
-    unlockButtonIcon.style.backgroundColor = "#4a0077ff"; // morado
-    unlockButtonIcon.style.cursor = "pointer";
-    unlockButtonIcon.onclick = () => handleUnlockIcon(icon); // función que luego implementes
   } else {
-    // No tiene BE suficiente
-    unlockButtonIcon.textContent = `NECESITA BE ${icon.blueEssencePrice}`;
-    unlockButtonIcon.style.backgroundColor = "#500000ff"; // gris
-    unlockButtonIcon.style.cursor = "not-allowed";
-    unlockButtonIcon.onclick = null;
+    const cost = icon.blueEssencePrice || 0;
+    const faltante = cost - userBE;
+
+    if (faltante > 0) {
+      // No tiene BE suficiente
+      unlockButtonIcon.innerHTML = `Necesita +${beIcon} ${faltante}`;
+      unlockButtonIcon.style.backgroundColor = "#500000ff"; // gris
+      unlockButtonIcon.style.cursor = "not-allowed";
+      unlockButtonIcon.onclick = null;
+    } else {
+      // Puede comprar
+      unlockButtonIcon.innerHTML = `Desbloquear (-${beIcon} ${cost})`;
+      unlockButtonIcon.style.backgroundColor = "#4a0077ff"; // morado
+      unlockButtonIcon.style.cursor = "pointer";
+      unlockButtonIcon.onclick = () => handleUnlockIcon(icon); // función que luego implementes
+    }
   }
 }
 

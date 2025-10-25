@@ -207,6 +207,9 @@ gameFilter.addEventListener("change", () => {
   lastSelectedChampion = null;
   applySelectionStyles();
 
+  // 🔹 Fondo dinámico según tipo de partida
+  changeBackgroundByGameType(gameFilter.value);
+
   loadStats(uid, gameFilter.value, roleFilter.value, true);
 });
 

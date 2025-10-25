@@ -15,7 +15,7 @@ public class PlayerDTO {
     private String nickName;
     private String role = "Aram - No role";
     @Lob
-    private String roleImg = "https://raw.githubusercontent.com/406228-SALGADO-MATIAS/LOL_Client/8f301d971e2127c121a2fdb794bef529c1dc4b87/Front/images/roles/mid.png";
+    private String roleImg = "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339125/mid_b7phfo.png";
     private List<PlayerMatchItemDTO> items;
     private int kills;
     private int deaths;

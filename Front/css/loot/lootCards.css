@@ -35,7 +35,7 @@
   border-image: linear-gradient(180deg, #553802, #ffae00, #cc8500);
 
   border-image-slice: 1;
-  box-shadow: 800px rgb(255, 255, 255);
+  box-shadow: 0 0px 22px rgb(68, 68, 68);
 }
 
 /* Animación de fade-in sigue intacta */

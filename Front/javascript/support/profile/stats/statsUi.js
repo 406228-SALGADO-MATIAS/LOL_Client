@@ -73,7 +73,7 @@ function formatNumber(value) {
 const searchedUserPreview = document.getElementById("searched-user-preview");
 
 // Llenar preview del usuario buscado
-async function renderSearchedUserPreview(userId) {
+async function renderSearchedUserPreview(userId, gameType = "default") {
   if (!userId) {
     searchedUserPreview.innerHTML = "";
     searchedUserPreview.style.display = "none";
@@ -95,51 +95,60 @@ async function renderSearchedUserPreview(userId) {
     const defaultIcon =
       "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336571/none_ep19ag.jpg";
 
-    // 🔹 Preview con estilos forzados en línea
-    searchedUserPreview.innerHTML =
-      searchedUserPreview.innerHTML =
-      searchedUserPreview.innerHTML =
-        `
-  <div style="
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(108,117,125,0.5);
-    border-radius: 50px;
-    padding: 0.2rem 0.6rem;  /* menos padding vertical y horizontal */
-    max-height: 50px;        
-    overflow: hidden;
-    white-space: nowrap;
-    width: 100%;
-    margin-left: 35px;       /* mantenemos como estaba */
-    margin-top: -5px;        /* elevamos un poco */
-    margin-bottom: -5px;     /* tiramos hacia arriba el contenido siguiente */
-  ">
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <img 
-        src="${user.iconImage || defaultIcon}" 
-        width="36" height="36"
-        alt="icon"
-        style="border-radius: 50%;"
-      />
-      <div style="display: flex; flex-direction: column; line-height: 1;">
-        <span style="font-weight: bold; font-size: 1rem; color: #fff;">
-          ${user.nickname}
-        </span>
-        <span style="font-weight: bold; font-size: 0.85rem; color: #ccc;">
-          ${formatServer(user.server)}
-        </span>
-      </div>
-    </div>
+    // 🔹 Preview con estilos en línea sin fondo hardcodeado
+    searchedUserPreview.innerHTML = `
+      <div class="searched-user-preview-inner" style="
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 0px;
+        border: 3.5px solid transparent;
+        border-image: linear-gradient(180deg, #585858, #e4e4e4a2, #303030);
+        border-image-slice: 1;
+        padding: 0.2rem 0.6rem;
+        max-height: 50px;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 100%;
+        margin-left: 35px;
+        margin-top: -5px;
+        margin-bottom: -5px;
+      ">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <img 
+            src="${user.iconImage || defaultIcon}" 
+            width="36" height="36"
+            alt="icon"
+            style="border-radius: 50%;"
+          />
+          <div style="display: flex; flex-direction: column; line-height: 1;">
+            <span style="font-weight: bold; font-size: 1rem; color: #fff;">
+              ${user.nickname}
+            </span>
+            <span style="font-weight: bold; font-size: 0.85rem; color: #ccc;">
+              ${formatServer(user.server)}
+            </span>
+          </div>
+        </div>
 
-    <img 
-      src="${rankImg}" 
-      width="40" height="40"
-      alt="${rankName}" 
-      title="${rankName}"
-    />
-  </div>
-`;
+        <img 
+          src="${rankImg}" 
+          width="40" height="40"
+          alt="${rankName}" 
+          title="${rankName}"
+        />
+      </div>
+    `;
+
+    // 🔹 Aplicar gradiente dinámico
+    const innerDiv = searchedUserPreview.querySelector(
+      ".searched-user-preview-inner"
+    );
+    if (innerDiv) {
+      innerDiv.style.background =
+        gameType === "aram" ? GRADIENTS.aram : GRADIENTS.default;
+    }
+
     searchedUserPreview.style.display = "block";
   } catch (err) {
     console.error("Error cargando preview del usuario:", err);
@@ -157,19 +166,21 @@ championSearchInput.addEventListener("input", () => {
   const query = championSearchInput.value.replace(/[´']/g, "'").toLowerCase();
   filterChampionCards(query);
 });
-
 function filterChampionCards(query) {
   const cards = document.querySelectorAll(".champion-card");
+  const currentGameType = document.body.dataset.currentGameType || "all";
 
   cards.forEach((card) => {
     const name = card.dataset.champion;
 
     if (name.includes(query)) {
-      // mostrar siempre con animación
       card.style.display = "";
-      card.classList.remove("card-appear"); // reiniciamos animación
-      void card.offsetWidth; // fuerza reflow
+      card.classList.remove("card-appear");
+      void card.offsetWidth;
       card.classList.add("card-appear");
+
+      // 🔹 Reasigna el gradiente correcto a cada card visible
+      applyGradientToElement(card, currentGameType);
 
       card.addEventListener(
         "animationend",
@@ -237,4 +248,78 @@ function animateCardAppear(card) {
   card.classList.remove("card-appear");
   void card.offsetWidth; // fuerza reflow
   card.classList.add("card-appear");
+}
+
+// ===============================
+// CAMBIO DE BACKGROUND POR GAME TYPE
+// ===============================
+
+const GRADIENTS = {
+  aram: "linear-gradient(90deg, rgba(0, 71, 99, 0.55), rgba(0, 23, 43, 0.664))",
+  default:
+    "linear-gradient(90deg, rgba(33, 54, 0, 0.82), rgba(37, 29, 0, 0.65))",
+};
+
+function changeBackgroundByGameType(gameType) {
+  document.body.dataset.currentGameType = gameType; // 🔹 para recordar
+  const body = document.body;
+  const overlay = document.getElementById("bg-overlay");
+  if (!overlay) return;
+
+  // URLs de fondo por tipo de juego
+  const backgrounds = {
+    ranked:
+      "https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700896217.jpg",
+    normal:
+      "https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700896217.jpg",
+    aram: "https://images5.alphacoders.com/887/thumb-1920-887241.jpg",
+    all: "https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700896217.jpg",
+  };
+
+  const newBg = backgrounds[gameType] || backgrounds.all;
+
+  // Evitar cambio innecesario
+  if (body.dataset.currentBg === newBg) return;
+
+  overlay.style.opacity = "0.45";
+
+  setTimeout(() => {
+    body.style.backgroundImage = `url("${newBg}")`;
+    body.dataset.currentBg = newBg;
+
+    changeSectionGradients(gameType);
+    updatePreviewGradient(gameType);
+
+    overlay.style.opacity = "0";
+  }, 100);
+}
+
+// 🔹 Cambia el fondo de stats y cards según el tipo de juego
+function changeSectionGradients(gameType) {
+  const newGradient = gameType === "aram" ? GRADIENTS.aram : GRADIENTS.default;
+
+  document
+    .querySelectorAll(".stats-container, .stats-pill, .champion-card")
+    .forEach((el) => {
+      el.style.transition = "background 0.3s ease";
+      el.style.background = newGradient;
+    });
+}
+
+// 🔹 Aplicar gradiente a un solo elemento
+function applyGradientToElement(el, gameType) {
+  const newGradient = gameType === "aram" ? GRADIENTS.aram : GRADIENTS.default;
+  el.style.background = newGradient;
+}
+
+// 🔹 Actualiza el fondo del preview según el gameType
+function updatePreviewGradient(gameType) {
+  const innerDiv = searchedUserPreview.querySelector(
+    ".searched-user-preview-inner"
+  );
+  if (innerDiv) {
+    innerDiv.style.transition = "background 0.3s ease";
+    innerDiv.style.background =
+      gameType === "aram" ? GRADIENTS.aram : GRADIENTS.default;
+  }
 }
