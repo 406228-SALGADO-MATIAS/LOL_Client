@@ -650,16 +650,16 @@ public class UserServiceImpl implements UserService {
 
 
         if (userRepository.findFirstByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
-            return "The email ("+userDTO.getEmail()+") does already exist.";
+            return "The email ("+userDTO.getEmail()+") is not available.";
         }
 
         if (userRepository.findFirstByUsernameAndServer(userDTO.getUsername(), serverRegion).isPresent()) {
-            return "The username ("+userDTO.getUsername()+") is currently in use on the server ("+serverRegion.getServer()+")";
+            return "The username ("+userDTO.getUsername()+") is currently in use on "+serverRegion.getServer();
         }
 
         if (userRepository.findFirstByNicknameIgnoreCaseAndServer(userDTO.getNickname(), serverRegion).isPresent())
         {
-            return "The nickname ("+userDTO.getNickname()+") is currently in use on the server ("+serverRegion.getServer()+")";
+            return "The nickname ("+userDTO.getNickname()+") is currently in use on "+serverRegion.getServer();
         }
 
         return "No repeated data";
