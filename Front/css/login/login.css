@@ -1,0 +1,389 @@
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  z-index: -1;
+}
+
+#video-overlay {
+  position: fixed;
+
+  inset: 0;
+  background: black;
+  opacity: 0;
+  z-index: 0; /* encima del video, debajo del form */
+  pointer-events: none;
+  transition: opacity 1s ease;
+}
+
+body {
+  background-image: url("https://res.cloudinary.com/dzhyqelnw/image/upload/v1761627630/jinx_vs_vi_uolpt3.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-style: italic;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+#bg-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.5s ease;
+  z-index: 9999;
+}
+
+.page-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.12s ease;
+  z-index: 9999;
+}
+
+.page-transition.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ========================= */
+/* Sidebar izquierdo         */
+/* ========================= */
+.login-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40.85vw;
+  min-width: 33.85vw;
+
+  height: 100%;
+  background: #000e1b00;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrado horizontal */
+  justify-content: center; /* Centrado vertical */
+  padding: 40px 50px;
+  box-sizing: border-box;
+}
+
+/* ========================= */
+/* Logo LoL                  */
+/* ========================= */
+.lol-logo img {
+  width: 100%; /* ocupa todo el ancho disponible del sidebar */
+  max-width: 400px; /* no se agranda más allá de 400px */
+  display: block;
+  margin: 0 auto 2vh auto; /* centrado y margin escalable verticalmente */
+  height: auto; /* mantiene proporción */
+  margin-bottom: 30px;
+}
+
+/* ========================= */
+/* Caja del formulario       */
+/* ========================= */
+.form-box {
+  background: rgba(1, 7, 22, 0.801);
+  padding: 3vh 2.5vw; /* interno escalable */
+  border-radius: 0;
+  border: 2px solid #d8d8d870;
+  border-image: linear-gradient(90deg, #555555, #4d4d4d, #ffffff, #444444);
+  border-image-slice: 1;
+  box-shadow: 0 0 5vh rgb(0, 0, 0);
+  width: 470px;
+  max-width: 500px; /* no se agranda demasiado en pantallas enormes */
+  height: 530px;
+  margin-bottom: 11vh;
+  color: white;
+}
+
+.form-box h4 {
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.form-box hr {
+  border-color: #f1f1f17a;
+  border-image: linear-gradient(90deg, #181818, #ebebeb, #181818);
+  border-image-slice: 1;
+}
+/* ========================= */
+/* Select de servidor        */
+/* ========================= */
+.form-select {
+  width: 100%;
+  padding: 0 10px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: 1px solid #bebebe;
+  border-radius: 4px;
+  outline: none;
+  height: 43px;
+  line-height: 35px;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg fill='%23707070' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.form-select:focus {
+  outline: none;
+}
+
+.form-select option {
+  font-weight: 600;
+  color: #000;
+  font-size: 1rem;
+}
+
+/* ========================= */
+/* Estilo inputs al escribir */
+/* ========================= */
+.form-control {
+  font-size: 1.2rem; /* tamaño base del texto */
+  color: #000000; /* texto visible sobre fondo oscuro */
+  border: 1px solid #888;
+  padding: 8px 12px;
+  font-weight: 600; /* más peso al escribir */
+}
+
+.form-control:focus {
+  font-weight: 600; /* más peso al escribir */
+  color: #000000;
+  border: 1px solid #4aa8ff; /* borde azul al enfocar */
+  outline: none;
+  box-shadow: 0 0 4px 2px rgba(74, 168, 255, 0.4);
+}
+
+/* ========================= */
+/* Inputs pequeños           */
+/* ========================= */
+.small-label {
+  font-size: 1rem;
+  color: #ddd;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+/* ========================= */
+/* Checkbox "Remember username" */
+/* ========================= */
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* espacio entre checkbox y label */
+  margin-bottom: 0.5rem;
+  margin-left: 12px;
+}
+
+.form-check-input {
+  width: 18px;
+  height: 18px;
+  accent-color: #046900; /* color del check */
+  cursor: pointer;
+  border-radius: 8px; /* esquinas suaves */
+  border: 2px solid #ccc;
+  flex-shrink: 0; /* no se encoge */
+}
+
+.form-check-input:focus {
+  outline: none;
+  box-shadow: 0 0 2px 2px rgba(151, 151, 151, 0.5); /* halo azul al enfocar */
+}
+
+.form-check-label {
+  font-size: 1rem;
+  color: #ccc;
+  cursor: pointer;
+  user-select: none; /* evita seleccionar texto accidentalmente */
+  line-height: 1.2;
+  display: inline-block;
+  margin-left: 6px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* ========================= */
+/* Enlace "Sign up"          */
+/* ========================= */
+.signup-text {
+  color: #e0e0e0;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+.signup-link {
+  color: #4aa8ff;
+  text-decoration: none;
+  font-weight: 700;
+  margin-left: 6px;
+}
+.signup-link:hover {
+  text-decoration: underline;
+}
+
+/* ========================= */
+/* Password toggle dentro del input */
+/* ========================= */
+
+.password-group {
+  position: relative;
+}
+
+.password-group input {
+  padding-right: 40px; /* espacio para el toggle */
+}
+
+.password-group .toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 54%;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-group .toggle-password img {
+  width: 20px;
+  object-fit: contain;
+}
+
+/* ========================= */
+/* Botón Log in personalizado */
+/* ========================= */
+.btn-login {
+  border: 1px solid;
+  font-weight: 300;
+  background: linear-gradient(
+    180deg,
+    #ffa600,
+    #d38900,
+    #bd5b00,
+    #bd5b00,
+    #bd5b00
+  );
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: 1px solid black;
+  color: white;
+  width: 120px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  margin-right: 10px;
+  height: 35px;
+}
+
+.btn-login:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+}
+
+.btn-login:focus {
+  outline: none;
+}
+
+/* ========================= */
+/* Footer fijo pegado        */
+/* ========================= */
+.footer-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  z-index: 10;
+  background: transparent;
+  pointer-events: none; /* evita que tape clics del video o fondo */
+  margin-left: 70px;
+}
+
+.footer-fixed .riot-logo {
+  width: 100px;
+  pointer-events: auto; /* vuelve clickeable el logo */
+}
+
+.animated-bg-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #ccc;
+  pointer-events: auto;
+  margin-bottom: 20px;
+}
+
+.animated-bg-toggle input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #046900; /* color del check */
+  cursor: pointer;
+  border-radius: 8px; /* esquinas suaves */
+  border: 2px solid #ccc;
+  flex-shrink: 0; /* no se encoge */
+}
+
+/* ========================= */
+/* Label del checkbox Footer  */
+/* ========================= */
+#disableMenuAnimation + label,
+.animated-bg-toggle label {
+  font-size: 1rem; /* tamaño legible, pero discreto */
+  color: #ccc; /* gris claro sobre fondo oscuro */
+  font-weight: 500; /* ligeramente más marcado */
+  margin-top: 10px;
+  margin-left: 2px;
+}
+
+/* ========================= */
+/* Modal central futuro      */
+/* ========================= */
+.modal-center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid #888;
+  border-radius: 6px;
+  padding: 30px 40px;
+  color: #fff;
+  z-index: 2000;
+}
+
+/* ========================= */
+/* Hover y focus para inputs y select */
+/* ========================= */
+.form-group input:hover,
+.form-group select:hover {
+  box-shadow: 0 0 12px 2px rgba(74, 168, 255, 0.5); /* glow azul suave */
+  border-color: rgba(74, 168, 255, 0.5);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  box-shadow: 0 0 5px 3px rgba(255, 170, 0, 0.534); /* glow naranja fuerte */
+  border-color: rgba(255, 170, 0, 0.548); /* borde naranja al escribir */
+  outline: none;
+}

@@ -26,7 +26,7 @@
 }
 
 body {
-  background-image: url("https://res.cloudinary.com/dzhyqelnw/image/upload/v1761554042/jinx_vs_vi_qhghxm.png");
+  background-image: url("https://res.cloudinary.com/dzhyqelnw/image/upload/v1761627630/jinx_vs_vi_uolpt3.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -112,8 +112,14 @@ body {
   height: 45px;
 }
 
+.form-group input:hover,
+.form-group select:hover {
+  box-shadow: 0px 0px 15px rgb(0, 132, 172);
+}
+
 .form-group input:focus {
-  box-shadow: 0 0px 1px rgba(255, 255, 255, 0.836);
+  box-shadow: 0px 0px 15px rgb(170, 145, 0);
+
   border-color: rgb(26, 26, 26);
 }
 
@@ -277,6 +283,8 @@ body {
 #message {
   font-weight: 500;
   font-size: 0.95rem;
+  margin-top: 29px !important;
+  margin-bottom: -10px !important;
 }
 
 /* ========================= */
@@ -287,10 +295,10 @@ body {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  margin-top: 25px;
+  margin-top: 20px;
   font-size: 14px;
   color: #ccc;
-  margin-bottom: -27px;
+  margin-bottom: -30px;
 }
 
 .animated-bg-toggle input[type="checkbox"] {

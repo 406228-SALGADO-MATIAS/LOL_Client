@@ -159,7 +159,7 @@ function disableBackgroundVideo() {
 
     // Aplica el fondo estático
     document.body.style.background = `
-      url('https://res.cloudinary.com/dzhyqelnw/image/upload/v1761554042/jinx_vs_vi_qhghxm.png')
+      url('https://res.cloudinary.com/dzhyqelnw/image/upload/v1761627630/jinx_vs_vi_uolpt3.png')
       center/cover no-repeat
     `;
 
