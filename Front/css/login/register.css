@@ -85,6 +85,12 @@ body {
   color: #ffffff;
 }
 
+.form-box hr {
+  border-color: #f1f1f17a;
+  border-image: linear-gradient(90deg, #181818, #ebebeb, #181818);
+  border-image-slice: 1;
+}
+
 /* ========================= */
 /* 3. Inputs y selects       */
 /* ========================= */
@@ -128,7 +134,7 @@ body {
   left: 12px;
   top: 26px;
   padding: 0 4px;
-  color: #707070e1;
+  color: #202020e1;
   font-size: 1rem;
   pointer-events: none;
   transition: 0.2s ease all;
@@ -138,7 +144,7 @@ body {
 .form-group.focused label {
   top: 17px;
   left: 8px;
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   color: #000000e1;
   font-weight: 800;
 }
@@ -231,7 +237,7 @@ body {
   display: flex;
   justify-content: space-between;
   gap: 60px;
-  margin-top: 35px;
+  margin-top: 5px;
   margin-bottom: 0px;
   opacity: 0;
   transform: translateY(20px);

@@ -65,11 +65,8 @@ async function loadTopProfile(
 
           imageContainer.style.backgroundImage = `url(${bgUrl})`;
           imageContainer.style.backgroundSize = "cover";
-
           applyChampionBackgroundPosition(imageContainer, bgUrl);
-        } else {
-          imageContainer.style.backgroundImage = "none";
-        }
+        } 
       }
     }
   } catch (err) {

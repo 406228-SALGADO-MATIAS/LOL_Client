@@ -2,9 +2,10 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center 5%; /* valor por defecto */
   z-index: -1;
 }
 
@@ -24,6 +25,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  background-position: center 15%; /* 👈 todas las imágenes un poco más abajo */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -386,4 +388,35 @@ body {
   box-shadow: 0 0 5px 3px rgba(255, 170, 0, 0.534); /* glow naranja fuerte */
   border-color: rgba(255, 170, 0, 0.548); /* borde naranja al escribir */
   outline: none;
+}
+
+/* ========================= */
+/* 9. Animaciones            */
+/* ========================= */
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-box.animate {
+  animation: fadeSlideIn 0.5s ease forwards;
+}
+
+.form-box .form-group,
+.form-box .button-row {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.form-box .form-group.show,
+.form-box .button-row.show {
+  opacity: 1;
+  transform: translateY(0);
 }

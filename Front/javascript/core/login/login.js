@@ -26,6 +26,28 @@ function togglePassword(id, el) {
 }
 
 // -----------------------------
+// Cargar datos recordados
+// -----------------------------
+
+function loadRememberedCredentials() {
+  const savedData = JSON.parse(localStorage.getItem("savedLoginData"));
+  if (!savedData) return;
+
+  const { server, username, password } = savedData;
+
+  if (server) document.getElementById("server").value = server;
+  if (username) document.getElementById("username").value = username;
+  if (password) document.getElementById("password").value = password;
+
+  // marcar el checkbox
+  const rememberCheck = document.getElementById("rememberUsername");
+  if (rememberCheck) rememberCheck.checked = true;
+}
+
+// -----------------------------
+// Función principal de login
+// -----------------------------
+// -----------------------------
 // Función principal de login
 // -----------------------------
 async function handleLogin() {
@@ -60,10 +82,12 @@ async function handleLogin() {
 
     const data = await response.json();
 
+    // ✅ Guardar o borrar credenciales
     if (rememberCheck?.checked) {
-      localStorage.setItem("savedUsername", username);
+      const savedData = { server, username, password };
+      localStorage.setItem("savedLoginData", JSON.stringify(savedData));
     } else {
-      localStorage.removeItem("savedUsername");
+      localStorage.removeItem("savedLoginData");
     }
 
     sessionStorage.setItem("userId", data.userId);
@@ -89,7 +113,44 @@ if (loginBtn) {
   });
 }
 
-// Inicializamos video directamente
 document.addEventListener("DOMContentLoaded", () => {
-  setupBackgroundVideo(); // ahora existe, porque loginUi.js ya cargó
+  // 🔹 Primero cargamos los datos recordados
+  loadRememberedCredentials();
+
+  const toggle = document.getElementById("disableMenuAnimation");
+  const savedPref = localStorage.getItem("bgDisabled") === "true";
+  backgroundEnabled = !savedPref;
+  if (toggle) toggle.checked = savedPref;
+
+  if (backgroundEnabled) {
+    setupBackgroundVideo();
+  } else {
+    disableBackgroundVideo();
+  }
+
+  if (toggle) {
+    toggle.addEventListener("change", (e) => {
+      backgroundEnabled = !e.target.checked;
+
+      if (backgroundEnabled) {
+        const overlay = document.getElementById("video-overlay");
+        if (overlay) overlay.style.opacity = 1;
+
+        setTimeout(() => {
+          setupBackgroundVideo();
+          if (overlay) overlay.style.opacity = 0;
+        }, 600);
+
+        localStorage.setItem("bgDisabled", "false");
+      } else {
+        disableBackgroundVideo();
+        localStorage.setItem("bgDisabled", "true");
+      }
+    });
+  }
+
+  // 🔹 Esperamos un poquito antes de animar el form
+  setTimeout(() => {
+    animateForm();
+  }, 110); // ⬅️ 600ms de delay antes de empezar la animación
 });
