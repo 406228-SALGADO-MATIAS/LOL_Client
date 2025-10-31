@@ -283,3 +283,13 @@ body {
 .fade-element.show {
   opacity: 1;
 }
+
+#launch-btn.disabled {
+  background: linear-gradient(180deg, #ffffff,  #525252 ) !important;
+  color: #4e4e4e !important;
+  cursor: not-allowed !important;
+  filter: brightness(1) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  border-color: white;
+}

@@ -80,7 +80,7 @@ body {
 }
 
 .form-box h2 {
-  margin-bottom: 5px;
+  margin-bottom: -10px;
   font-weight: 600;
   color: #ffffff;
 }
@@ -89,6 +89,7 @@ body {
   border-color: #f1f1f17a;
   border-image: linear-gradient(90deg, #181818, #ebebeb, #181818);
   border-image-slice: 1;
+  margin-bottom: -2px;
 }
 
 /* ========================= */
@@ -237,7 +238,7 @@ body {
   display: flex;
   justify-content: space-between;
   gap: 60px;
-  margin-top: 5px;
+  margin-top: 15px;
   margin-bottom: 0px;
   opacity: 0;
   transform: translateY(20px);
@@ -344,4 +345,29 @@ body {
 .form-box .button-row.show {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Contenedor de ambos toggles */
+.toggles-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin-top: 20px;
+  margin-bottom: -30px;
+}
+
+/* Ajuste visual para mantener alineación */
+.toggles-row .animated-bg-toggle {
+  margin: 0;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.toggles-row .animated-bg-toggle input[type="checkbox"] {
+  accent-color: #22614b;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  margin-top: -4px;
 }

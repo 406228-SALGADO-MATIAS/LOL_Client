@@ -32,12 +32,24 @@ async function createMatch() {
 
   // --- CASO CLASSIC → CUSTOM ---
   if (selectedMode === "classic" && selectedSelection === "Custom") {
+    const launchBtn = document.getElementById("launch-btn");
+    if (launchBtn) {
+      launchBtn.disabled = true; // funcionalmente deshabilitado
+      launchBtn.classList.add("disabled"); // visualmente deshabilitado
+    }
+
     openClassicModal(ranked); // ✅ Modal clásico (ranked o no)
     return;
   }
 
   // --- CASO ARAM → CUSTOM ---
   if (selectedMode === "aram" && selectedSelection === "Custom") {
+    const launchBtn = document.getElementById("launch-btn");
+    if (launchBtn) {
+      launchBtn.disabled = true; // funcionalmente deshabilitado
+      launchBtn.classList.add("disabled"); // visualmente deshabilitado
+    }
+
     openAramModal(); // ✅ Modal ARAM
     return;
   }
@@ -72,9 +84,17 @@ async function createMatch() {
       throw new Error(errorText || "Error al crear la partida");
     }
 
+    // --- DESHABILITAR BOTÓN ---
+    const launchBtn = document.getElementById("launch-btn");
+    if (launchBtn) {
+      launchBtn.disabled = true; // funcionalmente deshabilitado
+      launchBtn.classList.add("disabled"); // visualmente deshabilitado
+    }
+
     const match = await response.json();
     console.log("✅ Partida creada con éxito:", match);
     createResultModal(match);
+
     return match;
   } catch (err) {
     console.error("❌ Error creando partida:", err);

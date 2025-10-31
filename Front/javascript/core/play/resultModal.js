@@ -77,8 +77,8 @@ function renderResultHeader(isWinner) {
 
   const img = document.createElement("img");
   img.src = isWinner
-    ? "https://img.ig-items.com/_/https://assets.ig-items.com/files/PdWJR8Qk9bqJGwvKK5bAgSeAGLwXouRR.png"
-    : "https://i.pinimg.com/originals/fe/76/a4/fe76a4edc1d51b0a041ec8ee101e5fa0.png";
+    ? "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761881310/3120802-middle_mxjsug.png"
+    : "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761881310/fe76a4edc1d51b0a041ec8ee101e5fa0_cypu0t.png";
   img.alt = isWinner ? "Victory" : "Defeat";
 
   section.appendChild(img);
@@ -145,7 +145,17 @@ function renderButtonsSection(matchData) {
   const btnSalir = document.createElement("button");
   btnSalir.textContent = "Salir";
   btnSalir.classList.add("btn-exit");
-  btnSalir.addEventListener("click", closeResultModal);
+  btnSalir.addEventListener("click", () => {
+    // 🔹 Reactivar botón Launch
+    const launchBtn = document.getElementById("launch-btn");
+    if (launchBtn) {
+      launchBtn.disabled = false; // funcionalmente habilitado
+      launchBtn.classList.remove("disabled"); // estilo original
+    }
+
+    // 🔹 Cerrar modal
+    closeResultModal();
+  });
 
   const btnRepetir = document.createElement("button");
   btnRepetir.textContent = "Jugar";

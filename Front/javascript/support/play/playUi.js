@@ -3,17 +3,17 @@
 // --- BACKGROUNDS DEFINIDOS ---
 const backgrounds = {
   // MODO
-  classic: "https://cdn.wallpapersafari.com/31/65/JEdnVm.jpg",
-  aram: "https://gamevigor.wordpress.com/wp-content/uploads/2013/06/original-9.jpg",
+  classic: "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761882144/JEdnVm_o9wsiv.jpg",
+  aram: "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761881919/runeterra-freljord-01_r7ox9p.jpg",
 
   // MAPAS
   "Summoner's Rift":
-    "https://cdn.gameboost.com/article-images/2024-02-27/bb716d85-86e8-4d6d-bea3-cde048aff368.webp",
+    "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761881925/bb716d85-86e8-4d6d-bea3-cde048aff368_zvpk1e.webp",
   "Howling Abyss":
-    "https://i.rutab.net/upload/2020/userfiles/legends-of-runeterra-freljord-1212x610.jpg",
+    "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761881917/c-o-runeterra-freljord-05_cys8pu.jpg",
 
   // TIPOS
-  Ranked: "https://images2.alphacoders.com/499/499385.jpg",
+  Ranked: "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761881962/499385_vjtpcg.jpg",
 };
 
 // --- FADE HELPERS ---

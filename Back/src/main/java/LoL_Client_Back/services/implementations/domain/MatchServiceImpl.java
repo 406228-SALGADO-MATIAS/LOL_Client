@@ -471,7 +471,6 @@ public class MatchServiceImpl implements MatchService {
             }
             matchEntity.setMap(getMap(2L));
             matchEntity.setRanked(false);
-            mirrorChampions = true;
         }
         else if (map.equals("SUMMONERS RIFT")) {
             matchEntity.setMap(getMap(1L));

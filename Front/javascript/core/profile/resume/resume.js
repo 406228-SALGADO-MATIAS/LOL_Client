@@ -273,9 +273,9 @@ function setupRanksCarouselTitle() {
   };
 
   const backgroundsByIndex = {
-    0: 'url("https://cdn.wallpapersafari.com/31/65/JEdnVm.jpg")',
-    1: 'url("https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700896217.jpg")',
-    2: 'url("https://images5.alphacoders.com/887/887241.jpg")',
+    0: 'url("https://res.cloudinary.com/dzhyqelnw/image/upload/v1761882144/JEdnVm_o9wsiv.jpg")',
+    1: 'url("https://res.cloudinary.com/dzhyqelnw/image/upload/v1761893023/rift_h6gd6j.webp")',
+    2: 'url("https://res.cloudinary.com/dzhyqelnw/image/upload/v1761881922/c-o-runeterra-freljord-04_exbcqo.jpg")',
   };
 
   function changeBackground(index) {

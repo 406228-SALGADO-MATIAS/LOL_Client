@@ -269,11 +269,11 @@ function changeBackgroundByGameType(gameType) {
   // URLs de fondo por tipo de juego
   const backgrounds = {
     ranked:
-      "https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700896217.jpg",
+      "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761893023/rift_h6gd6j.webp",
     normal:
-      "https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700896217.jpg",
-    aram: "https://images5.alphacoders.com/887/thumb-1920-887241.jpg",
-    all: "https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700896217.jpg",
+      "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761893023/rift_h6gd6j.webp",
+    aram: "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761881922/c-o-runeterra-freljord-04_exbcqo.jpg",
+    all: "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761893023/rift_h6gd6j.webp",
   };
 
   const newBg = backgrounds[gameType] || backgrounds.all;
