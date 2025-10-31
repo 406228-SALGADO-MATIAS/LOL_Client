@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legacy Client - LoL</title>
+
+    <link rel="stylesheet" href="/css/play/play.css" />
+
+    <link rel="stylesheet" href="/css/play/resultModal.css" />
+    <link rel="stylesheet" href="/css/play/classicModal.css" />
+    <link rel="stylesheet" href="/css/play/aramModal.css" />
+
+    <link rel="stylesheet" href="/css/profile/matches/matchModal.css" />
+    <link rel="stylesheet" href="/css/profile/matches/matchUserModal.css" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- Fondo general -->
+    <div id="bg-overlay"></div>
+    <div class="page-transition"></div>
+
+    <!-- Navbar -->
+    <div id="navbar-container"></div>
+
+    <!-- ===== Layout Principal ===== -->
+    <main class="layout">
+      <div class="client-container">
+        <!-- ===== Sección Superior ===== -->
+        <section class="client-top">
+          <!-- GAME MODE -->
+          <div class="client-category-wrapper">
+            <h4>Game Mode</h4>
+            <div id="game-mode" class="client-category">
+              <ul>
+                <li data-mode="classic">Classic</li>
+                <li data-mode="aram">ARAM</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- GAME MAP -->
+          <div class="client-category-wrapper">
+            <h4>Game Map</h4>
+            <div id="game-map" class="client-category">
+              <ul></ul>
+            </div>
+          </div>
+
+          <!-- GAME TYPE -->
+          <div class="client-category-wrapper">
+            <h4>Game Type</h4>
+            <div id="game-type" class="client-category">
+              <ul></ul>
+            </div>
+          </div>
+
+          <!-- GAME SELECTION -->
+          <div class="client-category-wrapper">
+            <h4>Game Selection</h4>
+            <div id="game-selection" class="client-category">
+              <ul></ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== Sección Inferior (Dinámica) ===== -->
+        <section id="client-bottom" class="client-bottom">
+          <div class="description">
+            <h1 id="desc-mode"></h1>
+            <h4 id="desc-map"></h4>
+            <hr />
+            <p id="desc-p1"></p>
+            <p id="desc-p2"></p>
+            <p id="desc-p3"></p>
+          </div>
+
+          <!-- Contenedor oculto al inicio -->
+          <div class="launch-container fade-element" id="launch-container">
+            <p class="launch-text">Last Step</p>
+            <hr />
+            <div class="launch-btn-wrapper">
+              <button id="launch-btn" class="btn btn-warning">Launch</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!--  JS -->
+
+    <script src="/javascript/core/play/play.js"></script>
+    <script src="/javascript/support/play/playUi.js"></script>
+
+    <script src="/javascript/core/play/resultModal.js"></script>
+
+    <script src="/javascript/core/play/classicModal.js"></script>
+    <script src="/javascript/support/play/classicModalRenders.js"></script>
+    <script src="/javascript/support/play/classicModalUi.js"></script>
+
+    <script src="/javascript/core/play/aramModal.js"></script>
+    <script src="/javascript/support/collectionsChampions/imageRepositionChampions.js"></script>
+    <script src="/javascript/support/collectionsSkins/imageRepositionSkins.js"></script>
+
+    <script src="/javascript/support/profile/matches/matchModalUi.js"></script>
+    <script src="/javascript/support/profile/matches/matchModalGraph.js"></script>
+    <script src="/javascript/support/profile/matches/matchModal.js"></script>
+    <script src="/javascript/support/profile/matches/matchUserModal.js"></script>
+
+    <script>
+      // Navbar dinámico
+      fetch("/pages/mainNavbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          const container = document.getElementById("navbar-container");
+          container.innerHTML = html;
+
+          const mainNav = container.querySelector("nav");
+          mainNav.style.position = "fixed";
+          mainNav.style.top = "0";
+          mainNav.style.left = "0";
+          mainNav.style.width = "100%";
+          mainNav.style.zIndex = "1040";
+
+          const script = document.createElement("script");
+          script.src = "/javascript/core/mainNavbar.js";
+          document.body.appendChild(script);
+        })
+        .catch((err) => console.error(err));
+    </script>
+
+    <script>
+      // Transición
+      function setupPageTransitions() {
+        const transition = document.querySelector(".page-transition");
+
+        // Entrada → al cargar la página
+        window.addEventListener("load", () => {
+          setTimeout(() => transition.classList.add("hidden"), 100);
+        });
+
+        // Salida → al hacer clic en links internos
+        document.querySelectorAll("a").forEach((link) => {
+          if (
+            link.hostname === window.location.hostname &&
+            !link.closest(".carousel") && // Ignorar carousels
+            !link.closest(".sub-navbar") // Ignorar sub-navbar
+          ) {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              const url = link.href;
+
+              transition.classList.remove("hidden");
+              setTimeout(() => (window.location.href = url), 400);
+            });
+          }
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", setupPageTransitions);
+    </script>
+  </body>
+</html>

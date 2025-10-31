@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu Principal</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+
+    <link rel="stylesheet" href="/css/main/menu.css" />
+  </head>
+  <body>
+    <!-- Transición de página -->
+    <div class="page-transition"></div>
+    <!-- Contenedor para el navbar -->
+    <div id="navbar-container"></div>
+
+    <!-- Contenido de la página -->
+    <div class="container text-center mt-5">
+      <h2>Bienvenido al cliente</h2>
+      <p>Selecciona una opción en el menú para comenzar.</p>
+    </div>
+
+    <!-- Incluir navbar de manera dinámica -->
+    <script>
+      fetch("/pages/mainNavbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("navbar-container").innerHTML = html;
+
+          // Ahora cargamos el JS del navbar y lo ejecutamos **inmediatamente**
+          const script = document.createElement("script");
+          script.src = "/javascript/core/mainNavbar.js";
+          document.body.appendChild(script);
+
+          // Si querés, también podés ejecutar manualmente las funciones
+          // loadUserProfile(); checkSession();
+        })
+        .catch((err) => console.error("Error cargando el navbar:", err));
+    </script>
+    <!-- JS interno: transición -->
+    <script>
+      function setupPageTransitions() {
+        const transition = document.querySelector(".page-transition");
+        window.addEventListener("load", () => {
+          setTimeout(() => transition.classList.add("hidden"), 15);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", setupPageTransitions);
+    </script>
+  </body>
+</html>

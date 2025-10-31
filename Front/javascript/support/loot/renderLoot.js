@@ -1,0 +1,151 @@
+function renderLootGrid(
+  containerId,
+  items,
+  type,
+  filterValue = "all",
+  searchValue = ""
+) {
+  closeAllHoverModals();
+  const container = document.getElementById(containerId);
+  container.innerHTML = "";
+
+  const grid = createGrid();
+
+  // 1️⃣ Agrupar items
+  let groupedItems;
+  if (type === "material") {
+    groupedItems = items; // materiales no se agrupan ni filtran
+  } else {
+    groupedItems = groupItems(items, type);
+
+    // 2️⃣ Filtro de estado (select)
+    if (filterValue && filterValue !== "all") {
+      groupedItems = filterItemsByStatus(groupedItems, type, filterValue);
+    }
+  }
+
+  // 3️⃣ Filtro de búsqueda al final
+  if (searchValue.trim()) {
+    groupedItems = filterItemsByName(groupedItems, type, searchValue.trim());
+  }
+
+  // 4️⃣ Render
+  groupedItems.forEach((item, index) => {
+    const resolvedType = type === "material" ? item.type : type;
+    const card = createLootCard(item, resolvedType);
+    card.classList.add("fade-in");
+    card.style.animationDelay = `${index * 0.02}s`;
+
+    attachHoverModal(card, item, resolvedType);
+    attachClickModal(card, item, resolvedType);
+    grid.appendChild(card);
+  });
+
+  container.appendChild(grid);
+}
+
+// render de materiales (chests, keys, esencias, etc.)
+function renderMaterials(materials) {
+  const items = buildMaterialItems(materials).filter(
+    (item) => item.quantity > 0
+  );
+  if (items.length === 0) return; // No renderiza nada si no hay materiales
+  renderLootGrid("materialContainer", items, "material");
+}
+
+function renderBottomBarMaterials(materials) {
+  // Mapeamos los ids de los elementos en la barra con los tipos
+  const idMap = {
+    chest: { img: "chestImg", count: "chestCount" },
+    masterChest: { img: "masterChestImg", count: "masterChestCount" },
+    key: { img: "keyImg", count: "keyCount" },
+    orangeEssence: { img: "essenceImg", count: "essenceCount" },
+  };
+
+  // Generamos los items desde buildMaterialItems
+  const items = buildMaterialItems(materials);
+
+  items.forEach((item) => {
+    const elem = idMap[item.type];
+    if (!elem) return;
+
+    const imgEl = document.getElementById(elem.img);
+    const countEl = document.getElementById(elem.count);
+
+    // Actualizamos imagen y cantidad
+    if (imgEl) imgEl.src = item.imageUrl;
+    if (countEl) countEl.textContent = item.quantity;
+  });
+}
+
+function createGrid() {
+  const grid = document.createElement("div");
+  grid.style.display = "grid";
+  grid.style.gridTemplateColumns = "repeat(4, 1fr)";
+  grid.style.gap = "1rem";
+  return grid;
+}
+
+// Normaliza el objeto a { name, ... }
+function normalizeItem(item, type) {
+  let name;
+  if (type === "champion") name = item.championName;
+  else if (type === "skin") name = item.skinName;
+  else if (type === "icon") name = item.iconName;
+  else if (type === "material") name = item.materialName;
+  else name = "Loot";
+
+  return { ...item, name, type };
+}
+
+// Agrupa por nombre y suma cantidad
+function groupItems(items, type) {
+  const map = new Map();
+
+  items.forEach((rawItem) => {
+    const item = normalizeItem(rawItem, type);
+    const key = item.name;
+
+    if (!map.has(key)) {
+      map.set(key, { ...item, quantity: 1 });
+    } else {
+      map.get(key).quantity++;
+    }
+  });
+
+  return Array.from(map.values());
+}
+
+// Convierte tu objeto DTO de materiales en un array
+function buildMaterialItems(materials) {
+  return [
+    {
+      materialName: "Chest",
+      imageUrl:
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761338999/chest_wr9oib.png",
+      quantity: materials.chests,
+      type: "chest",
+    },
+    {
+      materialName: "Master Chest",
+      imageUrl:
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339654/masterChest_mmg9n9.webp",
+      quantity: materials.masterChests,
+      type: "masterChest",
+    },
+    {
+      materialName: "Key",
+      imageUrl:
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761338996/key_uu9ibo.png",
+      quantity: materials.keys,
+      type: "key",
+    },
+    {
+      materialName: "Orange Essence",
+      imageUrl:
+        "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761338997/orangeEssence_esacqj.webp",
+      quantity: materials.orangeEssence,
+      type: "orangeEssence",
+    },
+  ];
+}

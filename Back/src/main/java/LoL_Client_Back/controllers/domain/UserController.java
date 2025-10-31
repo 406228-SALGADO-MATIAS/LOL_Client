@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("users")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     @Autowired
     UserService userService;
@@ -53,6 +54,12 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(id));
     }
 
+    @GetMapping("/getProfileById/{id}")
+    public ResponseEntity<UserProfileDTO> getUserProfileById(@PathVariable Long id)
+    {
+        return ResponseEntity.ok(userService.getUserProfileById(id));
+    }
+
     @GetMapping("/getAll")
     public ResponseEntity<List<User>> getUsers ()
     {
@@ -67,13 +74,13 @@ public class UserController {
     }
 
     @GetMapping("/findUsers/nickname/{nickname}")
-    public ResponseEntity<List<UserMatchesDTO>> findUsersByNickname(@PathVariable String nickname)
+    public ResponseEntity<List<UserProfileDTO>> findUsersByNickname(@PathVariable String nickname)
     {
         return ResponseEntity.ok(userService.findUsersByNickname(nickname));
     }
 
     @GetMapping("/findUsers/nicknameAndserver")
-    public ResponseEntity<List<UserMatchesDTO>> findUsersByNicknameAndServer
+    public ResponseEntity<List<UserProfileDTO>> findUsersByNicknameAndServer
             (@RequestParam String nickname,
              @RequestParam ServerOption serverOption)
     {
@@ -143,6 +150,25 @@ public class UserController {
         return ResponseEntity.ok((userService.findUsersByServer(option)));
     }
 
+    @GetMapping("/findUsers/nickname/rankTier")
+    public ResponseEntity<List<UserProfileDTO>> findUsersByNicknameAndRank(
+            @RequestParam String nickname,
+            @RequestParam UserRankTier rankTier
+    ) {
+        List<UserProfileDTO> users = userService.findUsersByNickNameAndRank(nickname, rankTier);
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/findUsers/nickname/rankTierAndServer")
+    public ResponseEntity<List<UserProfileDTO>> findUsersByNicknameRankAndServer(
+            @RequestParam String nickname,
+            @RequestParam UserRankTier rankTier,
+            @RequestParam ServerOption server
+    ) {
+        List<UserProfileDTO> users = userService.findUsersByNicknameAndRankAndServer(nickname, rankTier, server);
+        return ResponseEntity.ok(users);
+    }
+
     @PutMapping("/updateUser/{id}")
     public ResponseEntity<UserMatchesDTO> putUser (@PathVariable Long id,
                                                    @RequestBody UserDTO userDTO,
@@ -158,6 +184,13 @@ public class UserController {
         return ResponseEntity.ok(userService.create100ForServer(serverOption));
     }
 
+    @PutMapping("/{idUser}/icon/{idIcon}")
+    public ResponseEntity<UserProfileDTO> updateUserIcon(
+            @PathVariable Long idUser,
+            @PathVariable Long idIcon) {
+        UserProfileDTO updatedUser = userService.updateUserIconImage(idUser, idIcon);
+        return ResponseEntity.ok(updatedUser);
+    }
 
 
 

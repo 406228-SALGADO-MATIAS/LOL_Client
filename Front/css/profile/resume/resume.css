@@ -1,0 +1,159 @@
+/* ============================= */
+/* 1. Ajustes generales del body */
+/* ============================= */
+
+body {
+  background-image: url("https://res.cloudinary.com/dzhyqelnw/image/upload/v1761882144/JEdnVm_o9wsiv.jpg");
+  background-size: cover; /* que cubra toda la pantalla */
+  background-position: center; /* centrado */
+  background-repeat: no-repeat; /* sin mosaico */
+  background-attachment: fixed; /* opcional: efecto fijo al scrollear */
+  font-family: Arial, sans-serif;
+  color: #fff; /* color de texto por defecto */
+}
+
+#bg-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  z-index: 9999; /* por debajo del page-transition si la usás */
+}
+
+.page-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 1; /* empieza visible */
+  pointer-events: auto;
+  transition: opacity 0.12s ease;
+  z-index: 9999;
+}
+
+.page-transition.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ============================= */
+/* 3. Layout principal (resume-container) */
+/* ============================= */
+.resume-container {
+  margin-top: 105px; /* espacio para navbars */
+  padding: 1rem 4rem; /* padding lateral y superior/inferior */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: calc(100vh - 120px); /* ocupar altura restante */
+}
+
+/* ============================= */
+/* 4. Parte superior (top-section) */
+/* ============================= */
+.top-section {
+  display: flex;
+  gap: 1rem;
+  height: 43%; /* altura relativa */
+}
+
+/* ============================= */
+/* 4a. Sidebar (columna izquierda) */
+/* ============================= */
+.sidebar {
+  flex: 0 0 30vw; /* ancho fijo */
+  max-width: 30vw;
+  background: linear-gradient(360deg, #000000c4, #1d1d1dd3);
+  padding: 1rem;
+  border-radius: 6px;
+  border: 6px solid transparent;
+  border-image: linear-gradient(90deg, #141414, #1d1d1d);
+  border-image-slice: 1;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-icon {
+  width: 160px;
+  height: 160px;
+  border-radius: 12px;
+  object-fit: cover; /* mantiene proporción de la imagen */
+}
+
+.user-nickname {
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.user-server {
+  font-size: 1.4rem;
+  color: #ccc;
+}
+/* ============================= */
+/* 4b. Main top / imagen central */
+/* ============================= */
+.main-top {
+  flex: 1;
+  background: linear-gradient(360deg, #000000c4, #1d1d1dd3);
+  border-radius: 8px;
+}
+
+.image-container {
+  flex: 1; /* ocupa el resto del espacio */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(360deg, #000000c4, #1d1d1dd3);
+  border-radius: 6px;
+  border: 6px solid transparent;
+  border-image: linear-gradient(90deg, #141414, #1d1d1d);
+  border-image-slice: 1;
+
+  overflow: hidden;
+  padding: 0.5rem;
+  background-position: 50% 28%; /* X centrado, Y un poco más arriba */
+}
+
+.image-container img.large-image {
+  width: 100%; /* ocupa todo horizontalmente */
+  height: auto; /* mantiene proporción */
+  object-fit: cover; /* recorta si es necesario */
+  border: 6px solid transparent;
+  border-image: linear-gradient(90deg, #141414, #1d1d1d);
+  border-image-slice: 1;
+  transition: all 0.3s ease;
+}
+
+/* ============================= */
+/* 5. Parte inferior (bottom-section) */
+/* ============================= */
+.bottom-section {
+  display: flex;
+  gap: 1rem;
+  height: 55%; /* mitad inferior */
+}
+
+.bottom-column {
+  flex: 1;
+  background: linear-gradient(360deg, #000000a2, #1d1d1da1);
+
+  border-radius: 8px;
+  padding: 1rem;
+  border: 6px solid transparent;
+  border-image: linear-gradient(90deg, #141414, #1d1d1d);
+  border-image-slice: 1;
+}
+
+.section-title {
+  text-align: center;
+}

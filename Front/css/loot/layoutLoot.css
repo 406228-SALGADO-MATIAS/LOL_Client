@@ -1,0 +1,98 @@
+:root {
+  --header-h: 60px; /* ajustá si tu navbar mide distinto */
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.page-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 1; /* empieza visible */
+  pointer-events: auto;
+  transition: opacity 0.12s ease;
+  z-index: 9999;
+}
+
+.page-transition.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#navbar-container nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-h);
+  min-height: var(--header-h);
+  z-index: 1040;
+}
+
+/* Body no scrollea; reservamos espacio del header con padding-top */
+body {
+  margin: 0;
+  padding-top: var(--header-h);
+  height: 100dvh; /* usa viewport real en móviles */
+  overflow: hidden; /* elimina el scroll global */
+
+  background: linear-gradient(180deg, #06292b, #03181a);
+  user-select: none; /* No se puede seleccionar texto */
+}
+
+/* Anula el empuje extra del mt-5 del container que tenés en el HTML */
+.container-fluid.mt-5 {
+  margin-top: 0 !important;
+}
+
+/* El contenedor principal ocupa exactamente lo que queda de pantalla */
+.container-fluid {
+  height: 100%;
+  overflow: visible; /* dejá que los hijos manejen el scroll */
+  position: relative; /* evita que se monte encima */ /* sin scroll aquí */
+}
+
+/* Dentro, el row ocupa todo, y cada zona maneja su propio scroll */
+.container-fluid > .row {
+  height: 100%;
+}
+
+#disenchantModal .modal-content {
+  background-color: #1e1e1e; /* fondo oscuro */
+  color: #f0f0f0; /* texto claro */
+  border-radius: 0.5rem; /* bordes redondeados */
+  border: 1px solid #006a53; /* borde verde como el sidebar */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* sombra extra */
+}
+
+#disenchantModal .modal-header .modal-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+#disenchantModal .modal-footer .btn {
+  min-width: 120px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}
+
+#disenchantModal .modal-footer .btn-danger {
+  background-color: #1e1e1e;
+  border: 1px solid #006a53;
+  color: #f0f0f0;
+}
+
+#disenchantModal .modal-footer .btn-danger:hover {
+  background-color: #222;
+  box-shadow: 0 0 6px #eed600ce;
+}
+
+.modal-backdrop.show {
+  background-color: rgba(0, 0, 0, 0.7); /* más opaco */
+}

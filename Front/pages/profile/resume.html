@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/css/profile/resume/resume.css" />
+    <link rel="stylesheet" href="/css/profile/resume/resumeCarrousels.css" />
+  </head>
+  <body>
+    <div id="bg-overlay"></div>
+    <div class="page-transition"></div>
+    <!-- Main Navbar -->
+    <div id="navbar-container"></div>
+
+    <!-- Contenedor para el sub-navbar -->
+    <div id="sub-navbar-container"></div>
+
+    <!-- Main Content -->
+    <main class="container-fluid resume-container">
+      <!-- Parte superior -->
+      <div class="row top-section">
+        <aside
+          class="col-md-6 sidebar d-flex justify-content-center align-items-center"
+        >
+          <div class="sidebar-content text-center">
+            <img
+              id="topUserIcon"
+              src=""
+              alt="User Icon"
+              class="user-icon mb-3"
+            />
+            <div id="topUserNickname" class="user-nickname mb-1">
+              NicknameUsuario
+            </div>
+            <div id="topUserServer" class="user-server">#Servidor</div>
+          </div>
+        </aside>
+        <div
+          class="col-md-9 image-container d-flex justify-content-center align-items-center"
+        >
+          <!-- La imagen se agregará dinámicamente vía JS -->
+        </div>
+      </div>
+
+      <!-- Parte inferior -->
+      <div class="row bottom-section">
+        <!-- Columna izquierda: Top Champions -->
+        <div class="col-md-6 bottom-column">
+          <h2 id="championsTitle" class="section-title">Top Champions</h2>
+
+          <div class="champions-container">
+            <div
+              id="championsCarousel"
+              class="carousel slide"
+              data-interval="false"
+            >
+              <!-- Indicadores -->
+              <ol class="carousel-indicators fixed-indicators">
+                <li
+                  data-target="#championsCarousel"
+                  data-slide-to="0"
+                  class="active"
+                ></li>
+                <li data-target="#championsCarousel" data-slide-to="1"></li>
+              </ol>
+
+              <div class="carousel-inner text-center">
+                <!-- Slide 1: Top Champions -->
+                <div class="carousel-item active champions-3">
+                  <div class="champion-wrapper">
+                    <img src="" class="champion-small" />
+                    <div class="champion-name">Ahri</div>
+                  </div>
+
+                  <div class="champion-wrapper">
+                    <img src="" class="champion-big" />
+                    <div class="champion-name">Yasuo</div>
+                  </div>
+
+                  <div class="champion-wrapper">
+                    <img src="" class="champion-small" />
+                    <div class="champion-name">Lux</div>
+                  </div>
+                </div>
+
+                <!-- Slide 2: Others -->
+                <div class="carousel-item text-center">
+                  <div class="d-inline-block text-center">
+                    <div class="row justify-content-center text-center mb-2">
+                      <div class="col-2 text-center">
+                        <img src="" class="champion-small img-fluid" />
+                        <div class="champion-name-small">Zed</div>
+                      </div>
+                      <div class="col-2 text-center">
+                        <img src="" class="champion-small img-fluid" />
+                        <div class="champion-name-small">Ezreal</div>
+                      </div>
+                      <div class="col-2 text-center">
+                        <img src="" class="champion-small img-fluid" />
+                        <div class="champion-name-small">Morgana</div>
+                      </div>
+                      <div class="col-2 text-center">
+                        <img src="" class="champion-small img-fluid" />
+                        <div class="champion-name-small">Katarina</div>
+                      </div>
+                    </div>
+                    <div class="row justify-content-center text-center mb-2">
+                      <div class="col-2 text-center">
+                        <img src="" class="champion-small img-fluid" />
+                        <div class="champion-name-small">Lee Sin</div>
+                      </div>
+                      <div class="col-2 text-center">
+                        <img src="" class="champion-small img-fluid" />
+                        <div class="champion-name-small">Jinx</div>
+                      </div>
+                      <div class="col-2 text-center">
+                        <img src="" class="champion-small img-fluid" />
+                        <div class="champion-name-small">Garen</div>
+                      </div>
+                      <div class="col-2 text-center">
+                        <img src="" class="champion-small img-fluid" />
+                        <div class="champion-name-small">Ashe</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Controles -->
+              <a
+                class="carousel-control-prev"
+                href="#championsCarousel"
+                role="button"
+                data-slide="prev"
+              >
+                <span class="carousel-control-prev-icon"></span>
+              </a>
+              <a
+                class="carousel-control-next"
+                href="#championsCarousel"
+                role="button"
+                data-slide="next"
+              >
+                <span class="carousel-control-next-icon"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna derecha: Rank Tiers -->
+        <div class="col-md-6 bottom-column ranks-container">
+          <h2 id="ranksTitle" class="section-title">Ranked</h2>
+
+          <div id="ranksCarousel" class="carousel slide" data-interval="false">
+            <!-- Indicadores dentro del carousel, separados con margin -->
+            <ol class="carousel-indicators fixed-indicators">
+              <li
+                data-target="#ranksCarousel"
+                data-slide-to="0"
+                class="active"
+              ></li>
+              <li data-target="#ranksCarousel" data-slide-to="1"></li>
+              <li data-target="#ranksCarousel" data-slide-to="2"></li>
+            </ol>
+
+            <div class="carousel-inner text-center">
+              <!-- Slide 1: RANKED - solo imagen grande -->
+              <div class="carousel-item active rank-slide-single text-center">
+                <div class="stat-block">
+                  <img src="" class="rank-img rank-img-big" />
+                  <div class="rank-text large-text"></div>
+                  <div class="rank-text small-text-number">LP:</div>
+                </div>
+              </div>
+
+              <!-- Slide 2: NORMAL -->
+              <div class="carousel-item rank-slide-three text-center">
+                <div class="stat-block">
+                  <img src="" class="rank-img-small" />
+                  <div class="rank-text small-text">TAKEDOWNS</div>
+                  <div class="rank-text small-text-number">123</div>
+                </div>
+
+                <div class="stat-block">
+                  <img src="" class="rank-img" />
+                  <div class="rank-text large-text">WINS</div>
+                  <div class="rank-text small-text-number">45</div>
+                </div>
+
+                <div class="stat-block">
+                  <img src="" class="rank-img-small" />
+                  <div class="rank-text small-text">CREEP SCORE</div>
+                  <div class="rank-text small-text-number">6789</div>
+                </div>
+              </div>
+
+              <!-- Slide 3: ARAM -->
+              <div class="carousel-item rank-slide-three text-center">
+                <div class="stat-block">
+                  <img src="" class="rank-img-small" />
+                  <div class="rank-text small-text">TAKEDOWNS</div>
+                  <div class="rank-text small-text-number">321</div>
+                </div>
+
+                <div class="stat-block">
+                  <img src="" class="rank-img" />
+                  <div class="rank-text large-text">WINS</div>
+                  <div class="rank-text small-text-number">54</div>
+                </div>
+
+                <div class="stat-block">
+                  <img src="" class="rank-img-small" />
+                  <div class="rank-text small-text">CREEP SCORE</div>
+                  <div class="rank-text small-text-number">9876</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Controles -->
+            <a
+              class="carousel-control-prev"
+              href="#ranksCarousel"
+              role="button"
+              data-slide="prev"
+            >
+              <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a
+              class="carousel-control-next"
+              href="#ranksCarousel"
+              role="button"
+              data-slide="next"
+            >
+              <span class="carousel-control-next-icon"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/javascript/core/profile//resume/resumeRank.js"></script>
+    <script src="/javascript/core/profile/resume/resume.js"></script>
+    <script src="/javascript/support/profile/resume/imageReposition.js"></script>
+
+    <script>
+      // Navbar dinámico
+      fetch("/pages/mainNavbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          const container = document.getElementById("navbar-container");
+          container.innerHTML = html;
+
+          const mainNav = container.querySelector("nav");
+          mainNav.style.position = "fixed";
+          mainNav.style.top = "0";
+          mainNav.style.left = "0";
+          mainNav.style.width = "100%";
+          mainNav.style.zIndex = "1040";
+
+          const script = document.createElement("script");
+          script.src = "/javascript/core/mainNavbar.js";
+          document.body.appendChild(script);
+        })
+        .catch((err) => console.error(err));
+    </script>
+    <script>
+      // Subnavbar
+      fetch("/pages/profile/subNavbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          const container = document.getElementById("sub-navbar-container");
+          container.innerHTML = html;
+
+          // Normalizar y pintar link activo
+          const links = container.querySelectorAll(".nav-link");
+
+          const paintActiveLink = () => {
+            const currentPage = window.location.pathname
+              .split("/")
+              .pop()
+              .replace(".html", ""); // solo nombre
+            links.forEach((link) => {
+              link.classList.remove("active");
+              link.style.color = "#a6a6a6"; // gris oscuro por defecto
+              const linkPage = link
+                .getAttribute("href")
+                ?.split("/")
+                .pop()
+                .replace(".html", "");
+              if (
+                linkPage === currentPage ||
+                (!currentPage && linkPage === "resume")
+              ) {
+                link.classList.add("active");
+                link.style.color = "#fff"; // activo
+              }
+            });
+          };
+
+          // Pintar al cargar
+          paintActiveLink();
+
+          // Pintar al hacer click
+          links.forEach((link) => {
+            link.addEventListener("click", () => {
+              links.forEach((l) => {
+                l.classList.remove("active");
+                l.style.color = "#a6a6a6";
+              });
+              link.classList.add("active");
+              link.style.color = "#fff";
+            });
+          });
+
+          // Cargar JS adicional
+          const script = document.createElement("script");
+          script.src = "/javascript/support/profile/searchUser.js";
+          document.body.appendChild(script);
+        })
+        .catch((err) => console.error("Error cargando sub-navbar:", err));
+    </script>
+    <script>
+      //Transicion
+      function setupPageTransitions() {
+        const transition = document.querySelector(".page-transition");
+
+        // Entrada → al cargar la página
+        window.addEventListener("load", () => {
+          setTimeout(() => transition.classList.add("hidden"), 100);
+        });
+
+        // Salida → al hacer clic en links internos
+        document.querySelectorAll("a").forEach((link) => {
+          if (
+            link.hostname === window.location.hostname &&
+            !link.closest(".carousel") && // Ignorar carousels
+            !link.closest(".sub-navbar") // Ignorar sub-navbar
+          ) {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              const url = link.href;
+
+              transition.classList.remove("hidden");
+              setTimeout(() => (window.location.href = url), 400);
+            });
+          }
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", setupPageTransitions);
+    </script>
+  </body>
+</html>

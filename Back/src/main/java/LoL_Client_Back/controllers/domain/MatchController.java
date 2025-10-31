@@ -3,6 +3,9 @@ package LoL_Client_Back.controllers.domain;
 import LoL_Client_Back.dtos.enums.ServerOption;
 import LoL_Client_Back.dtos.enums.UserRankTier;
 import LoL_Client_Back.dtos.match.MatchDTO;
+import LoL_Client_Back.dtos.match.playerHistory.PlayerHistoryDTO;
+import LoL_Client_Back.dtos.match.playerHistory.PlayerMatchDTO;
+import LoL_Client_Back.dtos.match.playerMatch.UserMatchDTO;
 import LoL_Client_Back.services.interfaces.domain.MatchService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("matches")
+@CrossOrigin(origins = "http://localhost:3000")
 public class MatchController
 {
     @Autowired
@@ -46,6 +50,29 @@ public class MatchController
 
         List<MatchDTO> matches = matchService.findMatchesByUserId(userId, showChampionImg, showItemImg);
         return ResponseEntity.ok(matches);
+    }
+
+    @GetMapping("/getUserHistory/{userId}")
+    public ResponseEntity<PlayerHistoryDTO> getUserMatchesHistory(
+            @PathVariable Long userId,
+            @RequestParam(required = false)
+            @Parameter(schema = @Schema(allowableValues = {"RANKED", "NORMAL", "ARAM"}))
+            String gameType,
+            @RequestParam(required = false)
+            @Parameter(schema = @Schema(allowableValues = {"TOP", "JUNGLE", "MID", "ADC", "SUPPORT"}))
+            String optionalRole,
+            @RequestParam(required = false)
+            @Parameter(schema = @Schema(allowableValues = {"Fighter", "Marksman", "Mage", "Assassin", "Tank", "Support"}))
+            String optionalStyle
+    ) {
+        PlayerHistoryDTO history = matchService.getUserMatchesHistory(userId, gameType, optionalRole, optionalStyle);
+        return ResponseEntity.ok(history);
+    }
+
+    @GetMapping("/getUserMatch/{idMatch}/{idUser}")
+    public ResponseEntity<UserMatchDTO> getUserMatch(@PathVariable Long idMatch, @PathVariable Long idUser)
+    {
+        return ResponseEntity.ok(matchService.getUserMatch(idUser,idMatch));
     }
 
     @PostMapping("/createMatch")
@@ -86,6 +113,34 @@ public class MatchController
         MatchDTO match = matchService.createMatchForUserAndRole(userId, role, gameMode, showChampion, showItem);
         return ResponseEntity.ok(match);
     }
+
+    @PostMapping("/createMatch/userRoleAndChampion/{userId}")
+    public ResponseEntity<MatchDTO> createMatchForUserRoleAndChampion(
+            @PathVariable Long userId,
+            @RequestParam @Parameter(schema = @Schema(allowableValues = {"TOP", "JUNGLE", "MID", "ADC", "SUPPORT"}))
+            String role,
+            @RequestParam Long championId, // NUEVO: id del campeón elegido
+            @RequestParam @Parameter(schema = @Schema(allowableValues = {"RANKED", "NORMAL"}))
+            String gameMode,
+            @RequestParam(defaultValue = "false") boolean showChampion,
+            @RequestParam(defaultValue = "false") boolean showItem
+    ) {
+        MatchDTO match = matchService.createMatchForUserRoleAndChampion(userId, role, championId, gameMode, showChampion, showItem);
+        return ResponseEntity.ok(match);
+    }
+
+    @PostMapping("/createMatch/ARAM/userAndChampion/{userId}")
+    public ResponseEntity<MatchDTO> createMatchARAMForUserAndChampion(
+            @PathVariable Long userId,
+            @RequestParam Long championId,
+            @RequestParam(defaultValue = "false") boolean showChampion,
+            @RequestParam(defaultValue = "false") boolean showItem
+    ) {
+        MatchDTO match = matchService.createMatchARAMForUserAndChampion(userId, championId, showChampion, showItem);
+        return ResponseEntity.ok(match);
+    }
+
+
 
     @PutMapping("/{matchId}")
     public ResponseEntity<MatchDTO> updateMatch(@PathVariable Long matchId,

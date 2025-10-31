@@ -1,5 +1,6 @@
 package LoL_Client_Back.dtos.match;
 
+import LoL_Client_Back.dtos.match.playerMatch.RewardDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
@@ -28,5 +29,7 @@ public class PlayerMatchDetailDTO {
     private String imageUrlChampion;
     private Integer creaturesKilled;
     private Integer totalGold;
+    private Integer totalDamage;
     private List<PlayerMatchItemDTO> items;
+    private RewardDTO rewards;
 }

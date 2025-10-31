@@ -1,6 +1,7 @@
 package LoL_Client_Back.services.implementations.association;
 
 import LoL_Client_Back.dtos.DTOBuilder;
+import LoL_Client_Back.dtos.UpdateStatementDTO;
 import LoL_Client_Back.dtos.association.UserXChampionDTO;
 import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.association.UserXSkinEntity;
@@ -11,6 +12,8 @@ import LoL_Client_Back.repositories.association.UserXChampionRepository;
 import LoL_Client_Back.repositories.domain.ChampionRepository;
 import LoL_Client_Back.repositories.domain.UserRepository;
 import LoL_Client_Back.services.interfaces.assocation.UserXChampionService;
+import jakarta.transaction.Transactional;
+import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,10 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class UserXChampionServiceImpl implements UserXChampionService {
@@ -225,6 +225,87 @@ public class UserXChampionServiceImpl implements UserXChampionService {
         return "Champions were assigned to " + usersWithoutChampions.size() + " users.";
 
     }
+
+    @Transactional
+    @Override
+    public UserXChampionDTO unlockChampion(Long idUser, Long idChampion) {
+        UserEntity user = userRepository.findById(idUser)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Did not find user with id " + idUser));
+
+        ChampionEntity champion = championRepository.findById(idChampion)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Did not find champion with id " + idChampion));
+
+        verifyExistingRegister(user, champion);
+
+        int championCost = champion.getPrice().getBlueEssenceCost();
+        int userBlueEssence = user.getBlueEssence();
+
+        if (userBlueEssence < championCost) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "The user does not have enough blue essence to buy this champion");
+        }
+
+        user.setBlueEssence(userBlueEssence - championCost);
+        userRepository.save(user);
+
+        UserXChampionEntity userXChampion = new UserXChampionEntity();
+        userXChampion.setUser(user);
+        userXChampion.setChampion(champion);
+        userXChampion.setMasteryLevel(0);
+        userXChampion.setAdquisitionDate(LocalDateTime.now());
+
+        return dtoBuilder.buildUserXChampionDTO(userXChampionRepository.save(userXChampion));
+    }
+
+    @Override
+    public List<UpdateStatementDTO> updateUserProfiles() {
+        List<UserEntity> userEntities = userRepository.findAll();
+        if (userEntities.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"There are no users in the db");
+        }
+        List<UpdateStatementDTO> dtos = new ArrayList<>();
+        for (UserEntity user : userEntities)
+        {
+            List<UserXChampionEntity> userXChampionEntities =
+                    userXChampionRepository.findByUser_Id(user.getId());
+
+            Collections.shuffle(userXChampionEntities);
+            ChampionEntity champion = userXChampionEntities.get(0).getChampion();
+
+            String imageUrl = champion.getImage().replace("'", "''");
+            String sql = "UPDATE users SET background_image = '" + imageUrl + "' WHERE id = " + user.getId();
+
+            UpdateStatementDTO dto = new UpdateStatementDTO();
+            dto.setStatement(sql);
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+    @Override
+    public void unlockAllChampions(Long idUser) {
+
+        Optional<UserEntity> optionalUser = userRepository.findById(idUser);
+        if (optionalUser.isEmpty())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User id "+idUser + " does not exists");
+        List<UserXChampionEntity> userXChampionEntities = userXChampionRepository.findByUser_Id(idUser);
+        List<Long> championsOwnedIds = new ArrayList<>();
+        for (UserXChampionEntity x : userXChampionEntities)
+        {
+            championsOwnedIds.add(x.getChampion().getId());
+        }
+        List<ChampionEntity> championsToUnlock = championRepository.findByIdNotIn(championsOwnedIds);
+        for (ChampionEntity c : championsToUnlock)
+        {
+            UserXChampionEntity x = new UserXChampionEntity();
+            x.setUser(optionalUser.get());
+            x.setChampion(c);
+            userXChampionRepository.save(x);
+        }
+    }
+
 
     private ChampionEntity randomFrom(List<ChampionEntity> list, Random random) {
         return list.get(random.nextInt(list.size()));

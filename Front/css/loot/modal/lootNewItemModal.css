@@ -1,0 +1,116 @@
+/* Archivo: lootNewItemModal.css */
+
+/* Overlay del modal */
+.newitem-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2500;
+  animation: fadeInNewItemOverlay 0.3s ease forwards;
+}
+
+/* Animación fade para overlay */
+@keyframes fadeInNewItemOverlay {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.421);
+  }
+}
+
+/* Contenedor del modal */
+.newitem-modal {
+  background-color: transparent;
+  padding: 3vh 3vw;
+  border-radius: 1.2rem;
+  text-align: center;
+  max-width: 58vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  color: #fff;
+  /* animación con delay */
+  animation: scaleUpModal 0.15s ease 0.55s forwards; /* <--- delay de 0.75s */
+  opacity: 0;
+  transform: scale(0.95);
+  margin-top: 40px;
+}
+
+/* Animación de aparición del modal */
+@keyframes scaleUpModal {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Imagen dentro del modal */
+.newitem-modal img {
+  max-width: 55vw; /* 25% menos de ancho que antes (antes 60vw → ahora 55vw) */
+  max-height: 70vh; /* un poco más alta que antes (antes 60vh → ahora 70vh) */
+  width: auto; /* que respete su tamaño natural */
+  height: auto;
+  object-fit: contain; /* que nunca corte la imagen, la ajusta entera */
+  border-radius: 1rem;
+  margin-bottom: 2vh;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  filter: brightness(0.95) contrast(1.05);
+}
+
+/* Nombre del ítem */
+.newitem-modal-name {
+  font-size: 3.3vh; /* más grande */
+  font-weight: 750; /* bold máximo soportado por CSS */
+
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6); /* opcional para destacarlo */
+}
+
+/* Botón "Añadir" */
+.newitem-btn {
+  padding: 2vh 4vw;
+  font-size: 2.8vh;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(90deg, #1800a0, #0e005c);
+
+  border: 2px solid;
+  border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.25s ease, opacity 0.25s ease;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  max-width: 8vw;
+  max-height: 8vh;
+  min-width: 8vw;
+  min-height: 4vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.newitem-btn:hover {
+  transform: scale(1.02);
+  filter: brightness(1.15);
+}
+
+.newitem-btn:disabled {
+  background-color: #5f5f5f;
+  cursor: not-allowed;
+  transform: none;
+  filter: none;
+  box-shadow: none;
+}

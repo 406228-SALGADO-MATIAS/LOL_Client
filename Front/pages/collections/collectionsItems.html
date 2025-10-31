@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collections</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+
+    <link rel="stylesheet" href="/css/collections/collections.css" />
+    <link rel="stylesheet" href="/css/collections/layoutCollections.css" />
+    <link rel="stylesheet" href="/css/collections/modalCollections.css" />
+    <link rel="stylesheet" href="/css/collections/sidebarCollections.css" />
+    <link rel="stylesheet" href="/css/collections/cards.css" />
+  </head>
+
+  <body>
+    <div class="page-transition"></div>
+    <!-- Main Navbar -->
+    <div id="navbar-container"></div>
+
+    <!-- Segundo navbar -->
+    <nav class="navbar navbar-custom fixed-top">
+      <div
+        class="container-fluid d-flex justify-content-between align-items-center"
+      >
+        <a class="navbar-brand text-white" href="/pages/menu.html">Volver</a>
+        <ul class="navbar-nav mx-auto d-flex flex-row">
+          <li class="nav-item">
+            <a class="nav-link" href="collectionsChampions.html">Champions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="collectionsSkins.html">Skins</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="collectionsIcons.html">Icons</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#">Items</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Contenido central -->
+    <div class="container-fluid mt-5">
+      <!-- Sidebar fijo -->
+      <div class="sidebar">
+        <!-- Contador de campeones -->
+        <div class="counter-box">
+          <div id="counter-total" class="number-large">0</div>
+          <div class="label">TOTAL</div>
+        </div>
+
+        <!-- Buscador -->
+        <input
+          type="text"
+          class="champ-search"
+          id="searchItem"
+          placeholder="Buscar item..."
+        />
+        <!-- Dropdown -->
+        <select id="filterItems" class="form-select custom-select">
+          <option value="all">Todos</option>
+          <option value="style1">Tipo</option>
+          <option value="style2">Tipo 2</option>
+        </select>
+
+        <!-- Dropdown de ordenar -->
+        <label for="sortItems" class="sidebar-label">Ordenar por</label>
+        <select id="sortItems" class="form-select custom-select">
+          <option value="">Ninguno</option>
+          <option value="attackDamage">Attack Damage</option>
+          <option value="armor">Armor</option>
+          <option value="health">Health</option>
+          <option value="abilityPower">Ability Power</option>
+          <option value="magicResistance">Magic Resistance</option>
+          <option value="cost">Coste</option>
+        </select>
+      </div>
+
+      <!-- Contenido principal -->
+      <div class="main-content">
+        <div id="collectionsContainer">
+          <!-- Aquí se cargan dinámicamente los campeones -->
+        </div>
+      </div>
+    </div>
+    <!-- Modal para items -->
+    <div id="itemModal" class="modal-overlay">
+      <div class="modal-content-small">
+        <div
+          id="itemModalImageContainer"
+          style="
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <img id="itemModalImage" src="" alt="Item" />
+        </div>
+        <div
+          id="itemModalInfo"
+          style="
+            flex: 1;
+            padding-left: 1rem;
+            color: white;
+            overflow-y: auto;
+            max-height: 80vh;
+          "
+        >
+          <!-- Aquí se inyectarán stats y descripción -->
+        </div>
+        <div id="itemModalClose">&times;</div>
+      </div>
+    </div>
+
+    <script src="/javascript/core/collections/collectionsItems.js"></script>
+    <script src="/javascript/support/collectionsItems/filterItems.js"></script>
+    <script src="/javascript/support/visualsDom/itemModal.js"></script>
+    <script src="/javascript/support/visualsDom/cardSmall.js"></script>
+    <script src="/javascript/support/collectionsItems/renderItems.js"></script>
+
+    <script>
+      fetch("/pages/mainNavbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          const container = document.getElementById("navbar-container");
+          container.innerHTML = html;
+
+          const mainNav = container.querySelector("nav");
+          mainNav.style.position = "fixed";
+          mainNav.style.top = "0";
+          mainNav.style.left = "0";
+          mainNav.style.width = "100%";
+          mainNav.style.zIndex = "1040";
+
+          const script = document.createElement("script");
+          script.src = "/javascript/core/mainNavbar.js";
+          document.body.appendChild(script);
+        })
+        .catch((err) => console.error(err));
+    </script>
+    <script>
+      //Transicion
+      function setupPageTransitions() {
+        const transition = document.querySelector(".page-transition");
+
+        // Entrada → al cargar la página
+        window.addEventListener("load", () => {
+          setTimeout(() => transition.classList.add("hidden"), 15);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", setupPageTransitions);
+    </script>
+  </body>
+</html>

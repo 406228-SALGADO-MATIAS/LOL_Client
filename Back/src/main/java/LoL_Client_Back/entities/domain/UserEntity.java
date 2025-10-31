@@ -1,4 +1,5 @@
 package LoL_Client_Back.entities.domain;
+import LoL_Client_Back.entities.reference.ProfileIconEntity;
 import LoL_Client_Back.entities.reference.RankTierEntity;
 import LoL_Client_Back.entities.reference.ServerRegionEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -30,11 +31,21 @@ public class UserEntity {
     private Integer blueEssence;
     @Column(name = "riot_points")
     private Integer riotPoints;
+    @Lob
+    @Column(name = "background_image")
+    private String backgroundImage;
     @JoinColumn
     @ManyToOne
     private RankTierEntity rank;
     @JoinColumn
     @ManyToOne
     private ServerRegionEntity server;
+    @JoinColumn(nullable = true)
+    @ManyToOne
+    private ProfileIconEntity icon;
+    @Column (nullable = true, name = "rank_lp")
+    private Integer rankLp = 0;
+
+
 
 }

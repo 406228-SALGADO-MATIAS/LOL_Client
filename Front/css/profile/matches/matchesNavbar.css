@@ -1,0 +1,128 @@
+/* ================================================
+   NAVBAR
+================================================ */
+.matches-navbar {
+  background: #1a1a1ad2;
+  border: 7px solid #00000060;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Lista de tabs */
+.matches-tabs {
+  cursor: pointer;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 2rem;
+  color: #ccc;
+}
+
+.matches-tabs li {
+  display: flex;
+  align-items: center;
+}
+
+.matches-tabs li a {
+  text-decoration: none;
+  color: #ccc;
+  font-weight: bold;
+  font-size: 1.5rem;
+  padding: 0.4rem 0.6rem;
+  font-family: Arial, sans-serif;
+  transition: color 0.2s ease-in-out;
+}
+
+.matches-tabs li a:hover,
+.matches-tabs li a.active {
+  color: #fff;
+}
+
+/* ================================================
+   NAVBAR CONTROLES
+   (Selects + Buscador)
+================================================ */
+.navbar-filters {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 4.3rem;
+}
+
+.navbar-filters select,
+.navbar-filters #searchChampion {
+  height: 36px;
+  padding: 0 0.8rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  border-radius: 3px;
+  border: 2px solid #555;
+  background-color: #1a1a1a;
+  color: #fff;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+#searchChampion {
+  width: 180px;
+}
+
+.navbar-filters select:hover,
+.navbar-filters #searchChampion:hover {
+  border-color: #f0c040;
+  background-color: #222;
+}
+
+.navbar-filters select:focus,
+.navbar-filters #searchChampion:focus {
+  border-color: #f0c040;
+  box-shadow: 0 0 5px #f0c040;
+}
+
+#searchChampion::placeholder {
+  color: #aaa;
+}
+
+.matches-tabs li a {
+  position: relative;
+  text-decoration: none;
+  color: #ccc;
+  font-weight: bold;
+  font-size: 1.5rem;
+  padding: 0.4rem 0.6rem;
+  font-family: Arial, sans-serif;
+  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+/* Hover con "vidita" */
+.matches-tabs li a:hover {
+  color: #fff;
+}
+
+/* Active más destacado */
+.matches-tabs li a.active {
+  color: #f0c040; /* dorado */
+}
+
+/* Subrayado animado */
+.matches-tabs li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0;
+  height: 3px;
+  background: #f0c040;
+  transition: width 0.15s ease-in-out;
+}
+
+.matches-tabs li a:hover::after,
+.matches-tabs li a.active::after {
+  width: 100%;
+}

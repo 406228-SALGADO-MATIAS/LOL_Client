@@ -4,6 +4,7 @@ import LoL_Client_Back.dtos.enums.MatchType;
 import LoL_Client_Back.dtos.enums.ServerOption;
 import LoL_Client_Back.dtos.enums.UserRankTier;
 import LoL_Client_Back.models.domain.User;
+import jakarta.persistence.Lob;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,8 +18,8 @@ public interface UserService {
     UserLootMatchesDTO createUser(UserDTO userDTO, ServerOption serverOption);
     UserMatchesDTO findByEmail (String email);
     List<UserMatchesDTO> findUsersByEmail(String email);
-    List<UserMatchesDTO> findUsersByNickname(String nickname);
-    List<UserMatchesDTO> findUsersByNicknameAndServer(String nickname, ServerOption serverOptions);
+    List<UserProfileDTO> findUsersByNickname(String nickname);
+    List<UserProfileDTO> findUsersByNicknameAndServer(String nickname, ServerOption serverOptions);
     List<UserMatchesDTO> findUsersByUsername(String username);
     UserMatchesDTO updateUser (Long id, UserDTO userDTO, ServerOption serverOption, UserRankTier rankTier);
     List<UserMatchesDTO> findUsersByRanktier(UserRankTier rankTier);
@@ -30,4 +31,8 @@ public interface UserService {
     LoginResponseDTO login (ServerOption serverOption, String username, String password);
     String delete (Long id);
     List<UserLootMatchesDTO> create100ForServer(ServerOption serverOption);
+    UserProfileDTO getUserProfileById (Long id);
+    UserProfileDTO updateUserIconImage (Long idUser, Long idIcon);
+    List<UserProfileDTO> findUsersByNickNameAndRank(String nickname, UserRankTier rankTier);
+    List<UserProfileDTO> findUsersByNicknameAndRankAndServer(String nickname, UserRankTier rankTier,  ServerOption serverOptions);
 }

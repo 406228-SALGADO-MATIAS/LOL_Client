@@ -1,5 +1,6 @@
 package LoL_Client_Back.controllers.transaction;
 
+import LoL_Client_Back.dtos.loot.NewItemDTO;
 import LoL_Client_Back.dtos.loot.UserLootDTO;
 import LoL_Client_Back.services.interfaces.transaction.UserLootService;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/userLoot")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserLootController {
     @Autowired
     private UserLootService userLootService;
@@ -48,11 +50,25 @@ public class UserLootController {
     public ResponseEntity<UserLootDTO> openChests(@PathVariable Long idUser,
                                                   @RequestParam(required = false) Integer chestsToOpen,
                                                   @RequestParam(required = false) Integer masterChestsToOpen,
-                                                  @RequestParam (defaultValue = "true") boolean showInactives)
+                                                  @RequestParam (defaultValue = "true") boolean showInactives
+                                                 )
     {
-        UserLootDTO updatedLoot = userLootService.openChests(idUser, chestsToOpen, masterChestsToOpen, showInactives);
+        UserLootDTO updatedLoot = userLootService.openChests(idUser, chestsToOpen, masterChestsToOpen,showInactives);
         return ResponseEntity.ok(updatedLoot);
     }
+
+    @PutMapping("/openChests/normal/{idUser}")
+    public ResponseEntity<NewItemDTO> openNormalChest(@PathVariable Long idUser) {
+        NewItemDTO reward = userLootService.openNormalChest(idUser);
+        return ResponseEntity.ok(reward);
+    }
+
+    @PutMapping("/openChests/master/{idUser}")
+    public ResponseEntity<NewItemDTO> openMasterChest(@PathVariable Long idUser) {
+        NewItemDTO reward = userLootService.openMasterChest(idUser);
+        return ResponseEntity.ok(reward);
+    }
+
     @PutMapping("")
     public ResponseEntity<UserLootDTO> updateUserLoot(@RequestParam Long idUser,
                                                       @RequestParam(required = false) Integer chests,
@@ -66,59 +82,53 @@ public class UserLootController {
         return ResponseEntity.ok(updated);
     }
     @PutMapping("/unlockOrRefund/champion/{idLootChampion}")
-    public ResponseEntity<UserLootDTO> unlockOrRefundChampionLoot(@PathVariable Long idLootChampion,
-                                                                  @RequestParam (defaultValue = "true") boolean enchant,
-                                                                  @RequestParam(defaultValue = "true") boolean showInactives)
+    public ResponseEntity<NewItemDTO> unlockOrRefundChampionLoot(@PathVariable Long idLootChampion,
+                                                                 @RequestParam (defaultValue = "true") boolean enchant)
     {
-        UserLootDTO result = userLootService.unlockOrRefundChampionLoot(idLootChampion, enchant, showInactives);
+        NewItemDTO result = userLootService.unlockOrRefundChampionLoot(idLootChampion, enchant);
         return ResponseEntity.ok(result);
     }
 
     @PutMapping("/unlockOrRefund/skin/{idLootSkin}")
-    public ResponseEntity<UserLootDTO> unlockOrRefundSkinLoot(@PathVariable Long idLootSkin,
-                                                                  @RequestParam (defaultValue = "true")boolean enchant,
-                                                                  @RequestParam(defaultValue = "true") boolean showInactives)
+    public ResponseEntity<NewItemDTO> unlockOrRefundSkinLoot(@PathVariable Long idLootSkin,
+                                                                  @RequestParam (defaultValue = "true")boolean enchant)
     {
-        UserLootDTO result = userLootService.unlockOrRefundSkinLoot(idLootSkin, enchant, showInactives);
+        NewItemDTO result = userLootService.unlockOrRefundSkinLoot(idLootSkin, enchant);
         return ResponseEntity.ok(result);
     }
 
     @PutMapping("/unlockOrRefund/icon/{idLootIcon}")
-    public ResponseEntity<UserLootDTO> unlockOrRefundIconLoot(@PathVariable Long idLootIcon,
-                                                                  @RequestParam (defaultValue = "true") boolean enchant,
-                                                                  @RequestParam(defaultValue = "true") boolean showInactives)
+    public ResponseEntity<NewItemDTO> unlockOrRefundIconLoot(@PathVariable Long idLootIcon,
+                                                                  @RequestParam (defaultValue = "true") boolean enchant)
     {
-        UserLootDTO result = userLootService.unlockOrRefundIconLoot(idLootIcon, enchant, showInactives);
+        NewItemDTO result = userLootService.unlockOrRefundIconLoot(idLootIcon, enchant);
         return ResponseEntity.ok(result);
     }
     @PutMapping("/reRoll/champions")
-    public ResponseEntity<UserLootDTO> reRollChampionsLoot(@RequestParam Long idLootChampion1,
+    public ResponseEntity<NewItemDTO> reRollChampionsLoot(@RequestParam Long idLootChampion1,
                                                            @RequestParam Long idLootChampion2,
-                                                           @RequestParam Long idLootChampion3,
-                                                           @RequestParam(defaultValue = "true") boolean showInactives)
+                                                           @RequestParam Long idLootChampion3)
     {
-        UserLootDTO result = userLootService.
-                reRollChampionsLoot(idLootChampion1, idLootChampion2, idLootChampion3, showInactives);
+        NewItemDTO result = userLootService.
+                reRollChampionsLoot(idLootChampion1, idLootChampion2, idLootChampion3);
         return ResponseEntity.ok(result);
     }
     @PutMapping("/reRoll/skins")
-    public ResponseEntity<UserLootDTO> reRollSkinsLoot(@RequestParam Long idLootSkin1,
+    public ResponseEntity<NewItemDTO> reRollSkinsLoot(@RequestParam Long idLootSkin1,
                                                            @RequestParam Long idLootSkin2,
-                                                           @RequestParam Long idLootSkin3,
-                                                           @RequestParam(defaultValue = "true") boolean showInactives)
+                                                           @RequestParam Long idLootSkin3)
     {
-        UserLootDTO result = userLootService.
-                reRollSkinsLoot(idLootSkin1, idLootSkin2, idLootSkin3, showInactives);
+        NewItemDTO result = userLootService.
+                reRollSkinsLoot(idLootSkin1, idLootSkin2, idLootSkin3);
         return ResponseEntity.ok(result);
     }
     @PutMapping("/reRoll/icons")
-    public ResponseEntity<UserLootDTO> reRollIconsLoot(@RequestParam Long idLootIcon1,
+    public ResponseEntity<NewItemDTO> reRollIconsLoot(@RequestParam Long idLootIcon1,
                                                            @RequestParam Long idLootIcon2,
-                                                           @RequestParam Long idLootIcon3,
-                                                           @RequestParam(defaultValue = "true") boolean showInactives)
+                                                           @RequestParam Long idLootIcon3)
     {
-        UserLootDTO result = userLootService.
-                reRollIconsLoot(idLootIcon1, idLootIcon2, idLootIcon3, showInactives);
+        NewItemDTO result = userLootService.
+                reRollIconsLoot(idLootIcon1, idLootIcon2, idLootIcon3);
         return ResponseEntity.ok(result);
     }
     @PutMapping("/disenchantAll")
@@ -129,6 +139,16 @@ public class UserLootController {
     {
         return ResponseEntity.ok(userLootService.disenchantAll(idUser,lootType,showInactives));
     }
+
+    @PutMapping("/disenchantOwnedItems")
+    public ResponseEntity<UserLootDTO> disenchantOwnedItems(
+            @RequestParam Long idUser,
+            @RequestParam(defaultValue = "true") boolean showInactives) {
+
+        UserLootDTO result = userLootService.disenchantOwnedItems(idUser, showInactives);
+        return ResponseEntity.ok(result);
+    }
+
     @GetMapping("/getById/{id}")
     public ResponseEntity<UserLootDTO> findById (@PathVariable Long id,
                                                  @RequestParam(defaultValue = "true") boolean showInactives)

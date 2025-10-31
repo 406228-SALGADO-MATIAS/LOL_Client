@@ -29,6 +29,9 @@ public class ChampionEntity {
     private Double winrate;
     @Lob
     private String image;
+    @Column(name = "image_square")
+    @Lob
+    private String imageSquare;
     @JoinColumn
     @ManyToOne
     private RoleEntity role;

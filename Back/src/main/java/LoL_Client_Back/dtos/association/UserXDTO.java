@@ -1,6 +1,7 @@
 package LoL_Client_Back.dtos.association;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,5 +19,6 @@ public class UserXDTO {
     private String nickname;
     private String server;
     private String rank;
-
+    @Lob
+    private String image;
 }

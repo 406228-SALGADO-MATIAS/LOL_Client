@@ -1,0 +1,53 @@
+.card-loot {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* cuadrado automático */
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid #444;
+  border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #111;
+  transition: transform 0.15s ease-in-out;
+  user-select: none; /* Evita que se seleccione texto */
+  outline: none; /* Quita el borde/cursor de foco */
+}
+
+/* Wrapper: la card no cambia tamaño, la imagen hace mini zoom */
+.card-loot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+/* Hover: zoom chiquito y borde iluminado */
+.card-loot:hover img {
+  transform: scale(1.05); /* mini zoom */
+}
+
+/* Hover: borde iluminado de la card */
+.card-loot:hover {
+  border: 3px solid;
+  border-image: linear-gradient(180deg, #553802, #ffae00, #cc8500);
+
+  border-image-slice: 1;
+  box-shadow: 0 0px 22px rgb(68, 68, 68);
+}
+
+/* Animación de fade-in sigue intacta */
+.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.35s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

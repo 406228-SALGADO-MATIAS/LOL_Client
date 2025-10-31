@@ -15,4 +15,7 @@ public class RankTierEntity {
     @Column(name = "id", nullable = false)
     private Long id;
     private String rank;
+    @Lob
+    private String image;
+    private int lp;
 }

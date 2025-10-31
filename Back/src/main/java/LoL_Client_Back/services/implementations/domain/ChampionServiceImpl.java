@@ -74,6 +74,8 @@ public class ChampionServiceImpl implements ChampionService {
     PlayerMatchDetailRepository matchDetailRepository;
     @Autowired
     DTOBuilder dtoBuilder;
+    @Autowired
+    PlayerMatchDetailRepository playerMatchDetailRepository;
 
 
     @Override
@@ -353,11 +355,20 @@ public class ChampionServiceImpl implements ChampionService {
             for (UserXChampionEntity u : championBelongings) {
                championsOwnedIds.add(u.getChampion().getId());
             }
-        }
-        return dtoBuilder.buildChampionDTOList(championRepository.findByIdNotIn(championsOwnedIds),
-                "The user has all the champions, " +
-                        "there are no champions available for acquisition");
 
+            List<ChampionEntity> championsNotOwned =
+                    championRepository.findByIdNotIn(championsOwnedIds);
+
+            List<ChampionDTO> dtoList = new ArrayList<>();
+            for (ChampionEntity  c : championsNotOwned)
+            {
+                dtoList.add(dtoBuilder.buildChampionDTO(c));
+            }
+            return dtoList;
+
+        }
+        return dtoBuilder.buildChampionDTOList
+                (championRepository.findAll(),"There are no champions");
     }
 
     private ChampionTierPriceEntity getPriceOrThrow(Integer price) {
@@ -398,6 +409,8 @@ public class ChampionServiceImpl implements ChampionService {
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find difficulty "+difficulty);
     }
+
+
 
 
 }

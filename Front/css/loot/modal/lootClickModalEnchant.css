@@ -1,0 +1,155 @@
+/* Archivo: lootClickModalEnchant.css */
+
+/* Animación de apertura */
+@keyframes modalOpen {
+  0% {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.68);
+    opacity: 1;
+  }
+}
+
+/* Animación de cierre */
+@keyframes modalClose {
+  0% {
+    transform: translate(-50%, -50%) scale(0.68);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* Contenedor del modal de ítem (flotante, centrado, sin overlay) */
+.item-modal {
+  position: absolute; /* flotante sobre la página */
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%) scale(0.68);
+  background: linear-gradient(90deg, #1a1a1a, #141414);
+  padding: 1.5rem; /* reducido proporcionalmente */
+  border: 4px solid;
+  border-image: linear-gradient(180deg, #3f3600da, #00724675, #001f139d);
+  border-image-slice: 1;
+  border-radius: 0.67rem;
+  text-align: center;
+  max-width: 64vw; /* reducido */
+  max-height: 94vh; /* reducido */
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8px 40px rgb(0, 0, 0);
+  opacity: 1; /* visible desde el inicio */
+  z-index: 999; /* debajo del modal */
+
+  animation: modalOpen 0.15s ease forwards; /* animación rápida de apertura */
+}
+
+/* Imagen dentro del modal */
+.item-modal img {
+  max-width: 60vw;
+  max-height: 75vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.53rem;
+  margin-bottom: 0.1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  filter: brightness(0.95) contrast(1.05);
+}
+
+/* --- BOTONES BASE --- */
+
+.item-btn {
+  padding: 0.3rem 0.3em; /* más grandes que antes */
+  font-size: 3vh; /* fuente más visible */
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(180deg, #00630ca2, #00350686);
+  border: 1px solid rgb(121, 121, 121);
+  border-radius: 1px; /* mantenemos redondeo actual */
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35); /* sombra un poco más marcada */
+  width: 100%;
+  margin-bottom: 4px;
+  margin-top: 4px;
+}
+
+/* sin efectos automaticos al clickear */
+.item-btn:focus,
+.item-btn:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.be-icon {
+  width: 31px !important; /* mismo tamaño que la fuente actual */
+  height: 31px !important; /* mantiene proporción */
+  vertical-align: middle; /* centra el iconito con el texto */
+  margin-right: -5px !important;
+  margin-bottom: 4px !important;
+}
+
+.oe-icon {
+  width: 5px !important;
+  height: 5px !important;
+  vertical-align: middle;
+  margin-right: 6px !important;
+  margin-left: 6px !important;
+
+  margin-bottom: 4px !important;
+
+  /* 🔥 “Zoom” real sin deformar */
+  transform: scale(15) !important;
+  transform-origin: center;
+
+  /* Hace que no se vuelva borroso */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.item-btn:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 12px rgba(248, 248, 248, 0.35); /* sombra un poco más marcada */
+}
+
+.item-btn:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+  transform: none;
+  filter: none;
+  box-shadow: none;
+}
+
+.item-modal-close {
+  position: absolute !important;
+  top: 0rem !important;
+  right: 0.5rem !important;
+  border: none !important;
+  color: #ffdd00 !important;
+  font-size: 3.8rem !important;
+  font-weight: bold !important;
+  cursor: pointer !important;
+  z-index: 1100 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  transition: transform 0.2s ease, color 0.2s ease !important;
+}
+
+.item-modal-close:focus,
+.item-modal-close:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.item-modal-close:hover {
+  color: #ffffff !important;
+  transform: scale(1.1) !important;
+}

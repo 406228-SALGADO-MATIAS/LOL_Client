@@ -1,0 +1,79 @@
+.nick-hover-modal {
+  position: fixed; /* siempre por encima */
+  z-index: 20000; /* seguro que queda delante */
+  background: rgb(20, 20, 20);
+  border: 1px solid rgba(255, 255, 255, 0.259);
+  border-radius: 8px;
+  padding: 10px;
+  color: white;
+  width: 180px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: opacity 0.1s ease, transform 0.05s ease; /* más rápida */
+}
+
+.nick-hover-modal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nick-hover-modal .modal-content {
+  display: flex;
+  flex-direction: row; /* fila */
+  justify-content: center; /* centramos las secciones */
+  align-items: center;
+  gap: 10px; /* espacio entre secciones */
+  background: rgba(255, 255, 255, 0.026);
+  padding: 8px;
+}
+
+.modal-section {
+  display: flex;
+  flex-direction: column; /* imagen arriba, texto debajo */
+  align-items: center;
+  gap: 1px;
+}
+
+.modal-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+.modal-rank {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.modal-nickname,
+.modal-server,
+.modal-rank-name,
+.modal-rank-lp {
+  text-align: center;
+  font-size: 13px;
+}
+
+.modal-nickname {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.modal-server {
+  opacity: 0.85;
+}
+
+.modal-rank-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.modal-rank-lp {
+  opacity: 0.85;
+}

@@ -1,0 +1,449 @@
+/* ===============================
+   MODAL OVERLAY
+=============================== */
+.mm-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000; /* Más alto que bg-overlay o page-transition */
+  margin-top: 35px;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* ===============================
+   MODAL BASE
+=============================== */
+.mm-modal {
+  width: 90vw;
+  max-height: 90vh;
+  background: #0f1620f9;
+  border-radius: 1rem;
+  overflow-y: auto;
+  padding: 1rem 2rem;
+  color: #f0f0f0;
+  position: relative;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.mm-close {
+  position: absolute;
+  top: -10px;
+  right: 8px;
+  font-size: 2.5rem;
+  cursor: pointer;
+  color: #bbb;
+}
+.mm-close:hover {
+  color: #fff;
+}
+
+/* ===============================
+   ANIMACIÓN DE MODAL
+=============================== */
+
+.mm-overlay {
+  opacity: 1;
+  transform: scale(0.85);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: center center;
+}
+
+.mm-overlay.show {
+  transform: scale(1);
+}
+
+.mm-overlay.hide {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.25s ease;
+}
+
+/* ===============================
+   HEADER
+=============================== */
+.mm-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #252b33a1;
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  border: 2px solid #000000;
+}
+
+.mm-result {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 0.8rem;
+}
+.mm-result.win {
+  color: #4cd137;
+}
+.mm-result.lose {
+  color: #e84118;
+}
+
+/* Fila inferior (mapa + datos) */
+.mm-header-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 1.2rem;
+  color: #f0f0f0;
+}
+
+.mm-separator {
+  opacity: 0.5;
+  margin: 0 4px;
+}
+
+.mm-detail {
+  opacity: 0.85;
+  font-weight: 600;
+}
+
+.mm-map {
+  opacity: 0.85;
+  font-weight: 600;
+}
+/* ===============================
+   NAVBAR
+=============================== */
+.mm-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.mm-nav button {
+  background: #2f3640;
+  color: #f5f6fa;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.mm-nav button.active {
+  background: #718093;
+}
+
+.mm-nav button:hover {
+  background: #636e72;
+}
+
+/* ===============================
+   MAIN CONTENT
+=============================== */
+.mm-main {
+  padding: 1rem 0;
+}
+
+.mm-teams {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.mm-team {
+  flex: 1;
+  background: #25252588;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.mm-team-header h3 {
+  margin: 0;
+}
+
+.mm-team-stats span {
+  margin-left: 1rem;
+}
+
+/* ============================================
+   TEAM HEADER
+============================================ */
+.mm-team-header {
+  display: flex;
+  justify-content: center; /* Centra todo horizontalmente */
+  align-items: center;
+  background: #252b33a1;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  border: 2px solid #000000a1;
+  margin-bottom: 0.6rem;
+  text-align: center;
+}
+
+.mm-team-info {
+  display: flex;
+  align-items: center;
+  gap: 3rem; /* Espacio entre elementos */
+}
+
+.mm-team-info h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.mm-team-stats {
+  display: flex;
+  align-items: center;
+  gap: 2rem; /* separa 🗡️ 🐉 💰 */
+}
+
+.mm-team-stats span {
+  font-size: 1.3rem;
+}
+
+/* ===============================
+   MEMBERS (EQUIPO)
+=============================== */
+.mm-members {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+/* --- Miembro individual --- */
+.mm-member {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr; /* izquierda / centro / derecha */
+  align-items: center;
+  background-color: rgba(17, 17, 17, 0.5);
+  border-radius: 4px;
+  border: 1px solid #424c5aa1;
+
+  padding: 6px 10px;
+}
+
+.mm-member:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* --- Izquierda: campeón + nick + rol --- */
+.mm-member-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.mm-champ-square {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  margin-right: 0.4rem;
+  object-fit: cover;
+}
+
+.mm-member-id {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mm-nick {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #e0e0e0; /* color base */
+  transition: all 0.2s ease;
+}
+
+.mm-nick:hover {
+  text-decoration: underline;
+  color: #ffbb00; /* dorado sutil */
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.mm-role-icon {
+  width: 25px;
+  height: 25px;
+  margin-left: 8px;
+}
+
+/* ===============================
+   CENTRO: ÍTEMS (con slots visibles)
+=============================== */
+.mm-member-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 22px;
+}
+
+.mm-items-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.mm-item-slot {
+  width: 35px;
+  height: 35px;
+  background: #333;
+  border-radius: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.mm-item-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* ===============================
+   DERECHA: ESTADÍSTICAS
+=============================== */
+.mm-member-right {
+  flex: 1;
+  text-align: right;
+}
+
+.mm-stats-row {
+  margin-top: 2px;
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.mm-stat {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  font-size: 17px;
+}
+
+/* ===============================
+   EQUIPOS DIFERENCIADOS
+=============================== */
+.mm-team.blue {
+  border: 2px solid #002d4b;
+  box-shadow: 0 0 10px rgba(41, 128, 185, 0.4);
+}
+
+.mm-team.red {
+  border: 2px solid #330a00;
+  box-shadow: 0 0 10px rgba(180, 33, 0, 0.4);
+}
+
+/* ===============================
+   (TAB GRÁFICOS)
+=============================== */
+.mm-coming-soon {
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 2rem;
+  color: #ccc;
+}
+
+.mm-graphs-header {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 8px;
+}
+
+.mm-graph-option {
+  font-size: 1.1rem;
+  color: #cccccc;
+  cursor: pointer;
+}
+
+.mm-graph-option input {
+  margin-right: 4px;
+}
+
+/* ===============================
+   GRÁFICOS HORIZONTALES
+================================== */
+
+.mm-member {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 6px 10px;
+  margin-bottom: 5px;
+}
+
+.mm-member-left {
+  display: flex;
+  align-items: center;
+  min-width: 180px;
+  gap: 0.6rem;
+}
+
+.mm-member-id {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --- barra horizontal --- */
+.mm-graph-bar-wrapper {
+  width: 55%;
+  display: flex;
+  align-items: center;
+  margin-left: 1.2rem; /* separación mayor del rol */
+  margin-right: 1.2rem; /* espacio antes del valor */
+  height: 25px;
+}
+
+.mm-graph-bar {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 1px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.mm-graph-fill {
+  background: linear-gradient(90deg, rgb(2, 98, 187), rgb(21, 239, 255));
+
+  height: 100%;
+  width: 0%;
+  transition: width 0.2s ease;
+  border-radius: 0px;
+}
+
+/* --- bloque de valor + icono a la derecha --- */
+.mm-stat-display {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  width: 40px;
+  margin-right: 45px;
+}
+
+.mm-stat-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  opacity: 0.9;
+}
+
+.mm-stat-value {
+  font-weight: 600;
+  color: #eee;
+  font-size: 1.1rem;
+  min-width: 24px;
+  text-align: right;
+}

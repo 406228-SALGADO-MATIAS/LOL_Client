@@ -1,0 +1,283 @@
+/* ================================================
+   BASE / GLOBAL
+================================================ */
+body {
+  background-image: url("https://res.cloudinary.com/dzhyqelnw/image/upload/v1761893324/aram_yai9gl.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ================================================
+   OVERLAYS & TRANSITIONS
+================================================ */
+#bg-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  z-index: 9999;
+}
+
+.page-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.12s ease;
+  z-index: 9999;
+}
+
+.page-transition.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ================================================
+   LAYOUT PRINCIPAL
+================================================ */
+.matches-main {
+  margin-top: 105px; /* espacio para navbars superiores */
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: calc(100vh - 120px);
+}
+
+/* ================================================
+   CONTENEDORES PRINCIPALES
+================================================ */
+
+/* Contenedor general en dos columnas */
+.matches-content {
+  flex: 1;
+  display: flex;
+  gap: 0rem;
+  overflow: hidden; /* evita scroll global */
+}
+
+/* Columna izquierda: cards */
+.cards-section {
+  flex: 1;
+  background: #1a1a1ad2;
+  border-radius: 1px;
+  border: 3px solid #00000060;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+/* Sidebar derecha */
+.sidebar {
+  flex: 0 0 30vw;
+  max-width: 30vw;
+  background: #1a1a1ad2;
+  border-radius: 1px;
+  border: 3px solid #00000060;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem;
+  max-height: calc(100vh - 120px); /* mismo alto que .matches-main */
+  overflow-y: auto; /* scroll vertical si se pasa */
+}
+
+/* Bloques dentro del sidebar */
+.sidebar-block {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+
+/* ================================================
+   TOP 3 CHAMPIONS
+================================================ */
+.top-champions {
+  background-color: rgba(26, 26, 26, 0.377);
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 4px solid #00000080;
+  margin-top: -1px;
+}
+
+.top-champions h3,
+.top-champions h4 {
+  text-align: center;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  font-weight: bold;
+}
+
+.champions-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.champion {
+  flex: 1;
+  text-align: center;
+}
+
+.champion img {
+  width: 100%;
+  max-width: 110px;
+  height: 120px;
+  border-radius: 6px;
+  border: 2px solid #00000090;
+
+  /* Inicialmente oscuro y transparente */
+  filter: brightness(0);
+  opacity: 0;
+  transition: filter 0.4s ease, opacity 0.05s ease;
+}
+
+.champion img.show {
+  filter: brightness(1);
+  opacity: 1;
+}
+.champion p {
+  margin-bottom: 0px;
+  font-weight: bold;
+  margin-top: 0.35rem;
+  margin-bottom: 0.1rem;
+}
+
+.champion span {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #e0b700;
+}
+
+.extra-info {
+  margin-top: 0.2rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #aaa;
+  font-weight: bold;
+  margin-bottom: -1px;
+}
+
+/* ================================================
+   ACTIVIDAD RECIENTE
+================================================ */
+.recent-activity {
+  background-color: rgba(26, 26, 26, 0.377);
+  padding: 0.2rem;
+  border-radius: 6px;
+  border: 4px solid #00000080;
+  margin-top: 8px;
+}
+
+.recent-activity h3,
+.recent-activity h4 {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+  font-weight: bold;
+  margin-top: 0.2rem;
+}
+
+.ratios-group {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  gap: 0rem;
+
+  margin-bottom: 0.8rem;
+}
+
+/* Grupos de barras (Roles y Styles) */
+.roles-bars,
+.styles-bars {
+  height: 90px; /* altura máxima de las barras */
+}
+
+.bar {
+  position: relative;
+  width: 14px;
+  height: 100%; /* altura total visible */
+  background: linear-gradient(
+    to top,
+    #1f1f1f,
+    #464646
+  ); /* color del restante */
+  border-radius: 2px;
+  border: 2px solid #00000080;
+  overflow: hidden;
+}
+
+.bar .fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0; /* arranca vacía */
+  background: linear-gradient(
+    to top,
+    #c4a704,
+    #ffe6c0
+  ); /* color del completado */
+  transition: height 0.3s ease;
+}
+
+/* Fila de imágenes */
+.roles-imgs img,
+.styles-imgs img {
+  width: 32px;
+  height: 32px;
+  border-radius: 2px;
+  border: 1px solid #00000080;
+  margin-top: -4px;
+}
+
+/* ================================================
+   CUSTOM SCROLLBARS PARA CARDS SECTION
+================================================ */
+.cards-section::-webkit-scrollbar {
+  width: 6px; /* vertical scrollbar */
+}
+
+.cards-section::-webkit-scrollbar-thumb {
+  background-color: #ffd500cc;
+  border-radius: 2px;
+}
+
+.cards-section::-webkit-scrollbar-thumb:hover {
+  background-color: #ffe96a;
+}
+
+.cards-section::-webkit-scrollbar-track {
+  background-color: #071a2d;
+}
+
+/* ================================================
+   CUSTOM SCROLLBARS PARA SIDEBAR
+================================================ */
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #ffd500cc;
+  border-radius: 2px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background-color: #ffe96a;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background-color: #071a2d;
+}

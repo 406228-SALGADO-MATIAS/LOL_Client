@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <!-- Metadatos y título -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create User</title>
+
+    <!-- CSS externos -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/css/login/register.css" />
+  </head>
+
+  <body>
+    <!-- Video de fondo dinámico -->
+    <video autoplay muted loop id="bg-video"></video>
+
+    <!-- Overlay para el fade oscuro -->
+    <div id="video-overlay"></div>
+
+    <!-- Transición de página -->
+    <div class="page-transition"></div>
+
+    <!-- Caja del formulario -->
+    <div class="form-box">
+      <h2>Create User</h2>
+      <hr />
+
+      <!-- Formulario -->
+      <form id="createForm">
+        <!-- Campo Email -->
+        <div class="form-group">
+          <div id="emailMsg" class="input-msg"></div>
+          <input type="email" id="email" required />
+          <label for="email">Email</label>
+        </div>
+
+        <!-- Campo Username -->
+        <div class="form-group">
+          <div id="usernameMsg" class="input-msg"></div>
+          <input type="text" id="username" required />
+          <label for="username">Username</label>
+        </div>
+
+        <!-- Campo Password -->
+        <div class="form-group password-group">
+          <div id="passwordMsg" class="input-msg"></div>
+          <input type="password" id="password" required />
+          <label for="password">Password</label>
+          <span
+            class="toggle-password"
+            onclick="togglePassword('password', this)"
+          >
+            <img
+              src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761530005/eye-crossed_xuubre.png"
+              alt="toggle"
+            />
+          </span>
+        </div>
+
+        <!-- Campo Confirm Password -->
+        <div class="form-group password-group">
+          <div id="confirmPasswordMsg" class="input-msg"></div>
+          <input type="password" id="confirmPassword" required />
+          <label for="confirmPassword">Confirm Password</label>
+          <span
+            class="toggle-password"
+            onclick="togglePassword('confirmPassword', this)"
+          >
+            <img
+              src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761530005/eye-crossed_xuubre.png"
+              alt="toggle"
+            />
+          </span>
+        </div>
+
+        <!-- Campo Nickname -->
+        <div class="form-group">
+          <div id="nicknameMsg" class="input-msg"></div>
+          <input type="text" id="nickname" required />
+          <label for="nickname">Nickname</label>
+        </div>
+
+        <!-- Campo Server -->
+        <div class="form-group">
+          <div id="serverMsg" class="input-msg"></div>
+          <select id="server" required>
+            <option value="LAS" selected>Latin America South (LAS)</option>
+            <option value="LAN">Latin America North (LAN)</option>
+            <option value="BR">Brazil (BR)</option>
+            <option value="NA">North America (NA)</option>
+          </select>
+          <label for="server">Server</label>
+        </div>
+
+        <hr />
+
+        <!-- Botones -->
+        <div class="button-row">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            onclick="window.location.href='/pages/out/login.html'"
+          >
+            Go to Login
+          </button>
+          <button type="submit" class="btn btn-success">Sign up</button>
+        </div>
+
+        <!-- Toggles agrupados -->
+        <div class="toggles-row">
+          <div class="animated-bg-toggle">
+            <input type="checkbox" id="toggle-bg" checked />
+            <label for="toggle-bg">Animated Background</label>
+          </div>
+
+          <div class="animated-bg-toggle">
+            <input type="checkbox" id="remember-info" />
+            <label for="remember-info">Remember data</label>
+          </div>
+        </div>
+      </form>
+
+      <!-- Mensaje de estado -->
+      <div id="message" class="mt-3 text-center"></div>
+    </div>
+
+    <!-- JS externo -->
+    <script src="/javascript/core/login/register.js"></script>
+
+    <script src="/javascript/core/login/registerValidations.js"></script>
+    <script src="/javascript/support/login/registerUi.js"></script>
+
+    <!-- JS interno: transición -->
+    <script>
+      function setupPageTransitions() {
+        const transition = document.querySelector(".page-transition");
+        window.addEventListener("load", () => {
+          setTimeout(() => transition.classList.add("hidden"), 15);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", setupPageTransitions);
+    </script>
+  </body>
+</html>

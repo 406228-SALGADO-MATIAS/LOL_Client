@@ -1,0 +1,217 @@
+/* ======== OVERLAY ======== */
+.aram-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.644);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.aram-modal-overlay.closing {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+/* ======== CONTAINER ======== */
+.aram-modal-container {
+  width: 90%;
+  width: 1200px;
+  height: 650px;
+  background-color: #14141400;
+  border-radius: 6rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  margin-top: 50px;
+  
+}
+
+
+/* ======== GRID ======== */
+.aram-champion-grid {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* ======== CARD ======== */
+
+.aram-champion-card {
+  position: relative;
+  background-color: rgb(20, 20, 20);
+  border: 4px solid black;
+  border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 340px;
+  opacity: 0;
+}
+
+.aram-champion-card:hover {
+  box-shadow: 0 0 50px rgb(0, 117, 133);
+}
+
+.aram-champion-card.selected {
+  box-shadow: 0 0 50px rgb(252, 252, 252);
+}
+
+/* Contenido inicialmente invisible */
+.aram-champion-image,
+.aram-champion-name,
+.aram-arrow {
+  opacity: 0;
+}
+
+/* Clase para hacer aparecer */
+.fade-in-content {
+  opacity: 1;
+}
+
+/* ======== IMAGE ======== */
+.aram-champion-image-container {
+  position: relative;
+  width: 100%;
+  height: 430px;
+  width: 340px;
+  overflow: hidden;
+}
+
+.aram-champion-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+/* ======== NAME ======== */
+.aram-champion-name {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+  padding: 1rem 0;
+  background: linear-gradient(180deg, #050620, #09182c);
+  border-top: 4px solid black;
+  border-image: linear-gradient(90deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+}
+
+/* ======== CONFIRM BUTTON ======== */
+.aram-confirm-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55px;
+  width: 180px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border: 2px solid rgb(0, 0, 0);
+  border-image: linear-gradient(90deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(180deg, #022ebe81, #00103fa4);
+  transition: all 0.2s ease;
+  border-radius: 4px; /* esquinas un poco más redondeadas */
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7); /* X offset, Y offset, blur, color */
+}
+
+.aram-confirm-btn:hover {
+  background: linear-gradient(180deg, rgba(2, 50, 207, 0.623), #00103fb2);
+  box-shadow: 0 0 4px rgba(204, 204, 204, 0.7);
+  transform: scale(1.04);
+}
+
+/* Botón inicialmente oculto */
+.aram-confirm-btn.hidden {
+  opacity: 0;
+  pointer-events: none; /* no clickeable mientras está oculto */
+  transition: opacity 0.4s ease;
+}
+
+/* Clase para mostrar el botón con fade-in */
+.aram-confirm-btn.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ======== ARROWS ======== */
+.aram-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.76);
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.aram-arrow:hover {
+  background-color: rgba(0, 0, 0, 0.849);
+  color: rgb(206, 159, 5);
+}
+.aram-arrow.left {
+  left: 0px; /* antes 10px → negativo para traerla más al centro */
+}
+
+.aram-arrow.right {
+  right: 8px; /* igual que la izquierda para mantener simetría */
+}
+
+/* ======== ANIMATIONS ======== */
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-200px) scale(0.93);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stats</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/profile/stats/stats.css" />
+    <link rel="stylesheet" href="/css/profile/stats/squareChampionCards.css" />
+  </head>
+  <body class="bg-dark text-light">
+    <div id="bg-overlay"></div>
+    <div class="page-transition"></div>
+
+    <!-- Main Navbar -->
+    <div id="navbar-container"></div>
+
+    <!-- Sub Navbar -->
+    <div id="sub-navbar-container"></div>
+
+    <!-- Main Content -->
+    <main class="container-fluid main-layout-vertical">
+      <!-- Contenedor grande (70%) -->
+      <div class="card stats-card shadow-lg rounded-3">
+        <!-- Centrado absoluto del pill -->
+
+        <div
+          class="d-flex align-items-center mb-4 flex-wrap win-filter-container"
+        >
+          <!-- Contenedor de usuario buscado -->
+          <div
+            id="searched-user-preview"
+            class="d-flex align-items-center justify-content-between mb-2"
+            style="display: none"
+          >
+            <!-- Se llenará dinámicamente con JS -->
+          </div>
+
+          <!-- Won / Lost / Win Ratio + Filtros -->
+          <div class="flex-grow-1 text-center my-2">
+            <div class="stats-pill" id="win-stats">
+              <span class="mx-3 stat-label">
+                Won: <strong id="won-count" class="stat-value">0</strong>
+              </span>
+              <span class="mx-3 stat-label">
+                Lost: <strong id="lost-count" class="stat-value">0</strong>
+              </span>
+              <span class="mx-3 stat-label">
+                Win Ratio: <strong id="win-ratio" class="stat-value">0%</strong>
+              </span>
+            </div>
+          </div>
+
+          <!-- Dropdown a la derecha, mantiene flujo normal -->
+          <div class="my-2">
+            <select
+              class="form-select bg-dark text-light border-secondary"
+              id="role-filter"
+            >
+              <option value="all">All Roles</option>
+              <option value="TOP">TOP</option>
+              <option value="JUNGLE">JUNGLE</option>
+              <option value="MID">MID</option>
+              <option value="ADC">ADC</option>
+              <option value="SUPPORT">SUPPORT</option>
+            </select>
+          </div>
+
+          <!-- Dropdown a la derecha, mantiene flujo normal -->
+          <div class="my-2">
+            <select
+              class="form-select bg-dark text-light border-secondary"
+              id="game-filter"
+            >
+              <option value="all">All Games</option>
+              <option value="ranked">Ranked</option>
+              <option value="normal">Normal</option>
+              <option value="aram">Aram</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- CONTENEDORES -->
+        <div class="row text-center mb-4 g-3">
+          <!-- Contenedor 1: Total -->
+          <div class="col-md-4">
+            <div class="stats-container shadow-sm">
+              <h5 class="stats-title">Total Stats</h5>
+              <hr class="stats-separator" />
+              <div class="kda-row" id="total-kda">
+                <img
+                  src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339078/stats_kills_lnsttg.png"
+                  class="kda-img"
+                />
+                <span id="total-kills" class="kda-value">0</span>
+                <img
+                  src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339095/stats_deaths_pqh36n.png"
+                  class="kda-img"
+                />
+                <span id="total-deaths" class="kda-value">0</span>
+                <img
+                  src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339093/stats_assists_q3k7dy.png"
+                  class="kda-img"
+                />
+                <span id="total-assists" class="kda-value">0</span>
+              </div>
+              <hr class="stats-separator" />
+
+              <p class="stat-label">
+                Total Farm:
+                <span class="stat-value">
+                  <img
+                    src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339089/minions_ey2qs1.webp"
+                    class="kda-img"
+                  />
+                  <span id="total-farm">0</span>
+                </span>
+              </p>
+
+              <p class="stat-label">
+                Total Gold:
+                <span class="stat-value">
+                  <img
+                    src="https://pngimg.com/d/coin_PNG36939.png"
+                    class="kda-img"
+                  />
+                  <span id="total-gold">0</span>
+                </span>
+              </p>
+
+              <p class="stat-label">
+                Total Damage:
+                <span class="stat-value">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/7380/7380434.png"
+                    class="kda-img"
+                  />
+                  <span id="total-damage">0</span>
+                </span>
+              </p>
+
+              <p class="stat-label">
+                Total Time Played:
+                <span class="stat-value">
+                  <img
+                    src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761383341/sand-clock_qkq8n4.png"
+                    class="kda-img"
+                  />
+                  <span id="total-time">0</span>
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <!-- Contenedor 2: Max -->
+          <div class="col-md-4">
+            <div class="stats-container shadow-sm">
+              <h5 class="stats-title">Max Stats</h5>
+              <hr class="stats-separator" />
+              <div class="kda-row" id="max-kda">
+                <img
+                  src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339078/stats_kills_lnsttg.png"
+                  class="kda-img"
+                />
+                <span id="max-kills" class="kda-value">0</span>
+                <img
+                  src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339095/stats_deaths_pqh36n.png"
+                  class="kda-img"
+                />
+                <span id="max-deaths" class="kda-value">0</span>
+                <img
+                  src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339093/stats_assists_q3k7dy.png"
+                  class="kda-img"
+                />
+                <span id="max-assists" class="kda-value">0</span>
+              </div>
+              <hr class="stats-separator" />
+
+              <p class="stat-label">
+                Max Farm:
+                <span class="stat-value">
+                  <img
+                    src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339089/minions_ey2qs1.webp"
+                    class="kda-img"
+                  />
+                  <span id="max-farm">0</span>
+                </span>
+              </p>
+
+              <p class="stat-label">
+                Max Gold:
+                <span class="stat-value">
+                  <img
+                    src="https://pngimg.com/d/coin_PNG36939.png"
+                    class="kda-img"
+                  />
+                  <span id="max-gold">0</span>
+                </span>
+              </p>
+
+              <p class="stat-label">
+                Max Damage:
+                <span class="stat-value">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/7380/7380434.png"
+                    class="kda-img"
+                  />
+                  <span id="max-damage">0</span>
+                </span>
+              </p>
+
+              <p class="stat-label">
+                Longest Game:
+                <span class="stat-value">
+                  <img
+                    src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761383341/sand-clock_qkq8n4.png"
+                    class="kda-img"
+                  />
+                  <span id="max-time">0</span>
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <!-- Contenedor 3: Avg -->
+          <div class="col-md-4">
+            <div class="stats-container shadow-sm">
+              <h5 class="stats-title">Average Stats</h5>
+              <hr class="stats-separator" />
+              <div class="kda-row" id="avg-kda">
+                <img
+                  src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339078/stats_kills_lnsttg.png"
+                  class="kda-img"
+                />
+                <span id="avg-kills" class="kda-value">0</span>
+                <img
+                  src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339095/stats_deaths_pqh36n.png"
+                  class="kda-img"
+                />
+                <span id="avg-deaths" class="kda-value">0</span>
+                <img
+                  src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339093/stats_assists_q3k7dy.png"
+                  class="kda-img"
+                />
+                <span id="avg-assists" class="kda-value">0</span>
+              </div>
+              <hr class="stats-separator" />
+
+              <p class="stat-label">
+                Average Farm:
+                <span class="stat-value">
+                  <img
+                    src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339089/minions_ey2qs1.webp"
+                    class="kda-img"
+                  />
+                  <span id="avg-farm">0</span>
+                </span>
+              </p>
+
+              <p class="stat-label">
+                Average Gold:
+                <span class="stat-value">
+                  <img
+                    src="https://pngimg.com/d/coin_PNG36939.png"
+                    class="kda-img"
+                  />
+                  <span id="avg-gold">0</span>
+                </span>
+              </p>
+
+              <p class="stat-label">
+                Average Damage:
+                <span class="stat-value">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/7380/7380434.png"
+                    class="kda-img"
+                  />
+                  <span id="avg-damage">0</span>
+                </span>
+              </p>
+
+              <p class="stat-label">
+                Average Duration:
+                <span class="stat-value">
+                  <img
+                    src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761383341/sand-clock_qkq8n4.png"
+                    class="kda-img"
+                  />
+                  <span id="avg-time">0</span>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Most Used Champions (30%) -->
+      <div
+        class="champions-card bg-dark rounded shadow-lg p-3 position-relative"
+      >
+        <!-- Título centrado absolutamente -->
+        <div
+          class="champions-title-center position-absolute w-100 top-0 start-50 translate-middle-x text-center"
+        >
+          <h5 class="stats-title mb-0">Champions Used</h5>
+        </div>
+
+        <!-- Search a la derecha -->
+        <div
+          class="d-flex align-items-center justify-content-end mb-2 search-container"
+        >
+          <div
+            class="position-relative"
+            style="min-width: 200px; max-width: 250px"
+          >
+            <input
+              id="championSearch"
+              type="search"
+              class="form-control form-control-sm"
+              placeholder="Buscar campeón..."
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <!-- Contenedor de campeones -->
+        <div class="champion-list-wrapper d-flex align-items-center">
+          <div class="d-flex overflow-auto pb-2" id="champion-list">
+            <!-- JS mete los <img> o las champion-card -->
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="/javascript/core/profile/stats/stats.js"></script>
+    <script src="/javascript/support/profile/stats/statsUi.js"></script>
+    <script src="/javascript/support/profile/stats/squareChampionCard.js"></script>
+
+    <!-- Scripts -->
+    <script>
+      fetch("/pages/mainNavbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("navbar-container").innerHTML = html;
+          const nav = document.querySelector("#navbar-container nav");
+          nav.style.position = "fixed";
+          nav.style.top = "0";
+          nav.style.width = "100%";
+          nav.style.zIndex = "1040";
+          const script = document.createElement("script");
+          script.src = "/javascript/core/mainNavbar.js";
+          document.body.appendChild(script);
+        });
+      fetch("/pages/profile/subNavbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          const container = document.getElementById("sub-navbar-container");
+          container.innerHTML = html;
+
+          // Normalizar y pintar link activo
+          const links = container.querySelectorAll(".nav-link");
+
+          const paintActiveLink = () => {
+            const currentPage = window.location.pathname
+              .split("/")
+              .pop()
+              .replace(".html", ""); // solo nombre
+            links.forEach((link) => {
+              link.classList.remove("active");
+              link.style.color = "#a6a6a6"; // gris por defecto
+
+              const linkPage = link
+                .getAttribute("href")
+                ?.split("/")
+                .pop()
+                .replace(".html", "");
+              if (
+                linkPage === currentPage ||
+                (!currentPage && linkPage === "resume")
+              ) {
+                link.classList.add("active");
+                link.style.color = "#fff"; // activo
+              }
+            });
+          };
+
+          // Pintar al cargar
+          paintActiveLink();
+
+          // Pintar al hacer click
+          links.forEach((link) => {
+            link.addEventListener("click", () => {
+              links.forEach((l) => {
+                l.classList.remove("active");
+                l.style.color = "#a6a6a6";
+              });
+              link.classList.add("active");
+              link.style.color = "#fff";
+            });
+          });
+
+          // Cargar JS adicional
+          const script = document.createElement("script");
+          script.src = "/javascript/support/profile/searchUser.js";
+          document.body.appendChild(script);
+        })
+        .catch((err) => console.error("Error cargando sub-navbar:", err));
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const transition = document.querySelector(".page-transition");
+        window.addEventListener("load", () => {
+          setTimeout(() => transition.classList.add("hidden"), 15);
+        });
+      });
+    </script>
+  </body>
+</html>

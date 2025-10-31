@@ -11,6 +11,7 @@ import LoL_Client_Back.entities.association.UserXSkinEntity;
 import LoL_Client_Back.entities.domain.MatchEntity;
 import LoL_Client_Back.entities.domain.UserEntity;
 import LoL_Client_Back.entities.domain.UserMatchesEntity;
+import LoL_Client_Back.entities.reference.ProfileIconEntity;
 import LoL_Client_Back.entities.reference.RankTierEntity;
 import LoL_Client_Back.entities.reference.ServerRegionEntity;
 import LoL_Client_Back.entities.transaction.UserLootEntity;
@@ -24,9 +25,12 @@ import LoL_Client_Back.repositories.domain.MatchRepository;
 import LoL_Client_Back.repositories.domain.PlayerMatchDetailRepository;
 import LoL_Client_Back.repositories.domain.UserMatchesRepository;
 import LoL_Client_Back.repositories.domain.UserRepository;
+import LoL_Client_Back.repositories.reference.ProfileIconRepository;
 import LoL_Client_Back.repositories.reference.RankTierRepository;
 import LoL_Client_Back.repositories.reference.ServerRegionRepository;
 import LoL_Client_Back.repositories.transaction.UserLootRepository;
+import LoL_Client_Back.services.interfaces.assocation.UserXChampionService;
+import LoL_Client_Back.services.interfaces.assocation.UserXSkinService;
 import LoL_Client_Back.services.interfaces.domain.UserMatchesService;
 import LoL_Client_Back.services.interfaces.domain.UserService;
 import LoL_Client_Back.services.interfaces.transaction.UserLootService;
@@ -38,6 +42,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -72,7 +77,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserLootRepository userLootRepository;
     @Autowired
+    ProfileIconRepository profileIconRepository;
+    @Autowired
     DTOBuilder dtoBuilder;
+    @Autowired
+    UserXChampionService userXChampionService;
+    @Autowired
+    UserXSkinService userXSkinService;
 
     @Override
     public UserMatchesDTO findById(Long id) {
@@ -110,7 +121,7 @@ public class UserServiceImpl implements UserService {
                 getServerByName(serverName);
 
         //Check existing user data
-        Optional<UserEntity> optionalUserEntity =
+        List <UserEntity> optionalUserEntity =
                 userRepository.findExistingUserData
                         (email, serverRegionEntity, username, nickname);
 
@@ -126,6 +137,20 @@ public class UserServiceImpl implements UserService {
             UserMatches matches = userMatchesService.createUserMatches(userEntitySaved);
             UserLoot loot = userLootService.createUserLoot(userEntitySaved);
             User userSaved = modelMapper.map(userEntitySaved,User.class);
+
+            userXChampionService.giveChampionsToUsersWithNoChampions();
+            userXSkinService.giveSkinsToUsersWithout();
+            Optional<ProfileIconEntity> optional =
+                    profileIconRepository.findById(48L);
+            if (optional.isPresent())
+            {
+                UserXIconEntity userXIcon = new UserXIconEntity();
+                userXIcon.setAdquisitionDate(LocalDateTime.now());
+                userXIcon.setIcon(optional.get());
+                userXIcon.setUser(userEntitySaved);
+                userXIconRepository.save(userXIcon);
+            }
+
             return dtoBuilder.buildUserLootMatchesDTO(userSaved,loot,matches);
 
         } else {
@@ -139,7 +164,7 @@ public class UserServiceImpl implements UserService {
     public UserMatchesDTO findByEmail(String email) {
 
         Optional<UserEntity> optionalUserEntity
-                = userRepository.findByEmailIgnoreCase(email);
+                = userRepository.findFirstByEmailIgnoreCase(email);
 
         if (optionalUserEntity.isPresent())
         {
@@ -160,26 +185,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserMatchesDTO> findUsersByNickname(String nickname) {
+    public List<UserProfileDTO> findUsersByNickname(String nickname) {
 
         List<UserEntity> usersEntity = userRepository.findByNicknameIgnoreCaseContaining(nickname);
+        List<UserProfileDTO> dtos = new ArrayList<>();
+        for (UserEntity user : usersEntity)
+        {
+            dtos.add(dtoBuilder.buildUserProfileDTO(user));
+        }
+        return  dtos;
 
-        return dtoBuilder.buildUserMatchesDTOList
-                (usersEntity, "Did not find users with nickname: "+nickname);
     }
 
     @Override
-    public List<UserMatchesDTO> findUsersByNicknameAndServer(String nickname, ServerOption serverOptions) {
+    public List<UserProfileDTO> findUsersByNicknameAndServer(String nickname, ServerOption serverOptions) {
 
         ServerRegionEntity serverRegion =
                 getServerByName(serverOptions.getFullName());
 
         List<UserEntity> usersEntity = userRepository.
                 findByNicknameIgnoreCaseContainingAndServer(nickname,serverRegion);
+        List<UserProfileDTO> dtos = new ArrayList<>();
+        for (UserEntity user : usersEntity){
+            dtos.add(dtoBuilder.buildUserProfileDTO(user));
+        }
 
-        return dtoBuilder.buildUserMatchesDTOList
-                (usersEntity,"Did not find users with nickname: "+nickname+
-                " and server: "+serverOptions.getFullName());
+        return dtos;
+
     }
 
     @Override
@@ -434,6 +466,85 @@ public class UserServiceImpl implements UserService {
         return returnList;
     }
 
+    @Override
+    public UserProfileDTO getUserProfileById(Long id) {
+        Optional<UserEntity> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user with id "+id);
+        return dtoBuilder.buildUserProfileDTO(optionalUser.get());
+    }
+
+    @Override
+    public UserProfileDTO updateUserIconImage(Long idUser, Long idIcon) {
+        Optional<UserEntity> optionalUser = userRepository.findById(idUser);
+        if (optionalUser.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find user with id "+idUser);
+
+        Optional<ProfileIconEntity> optional = profileIconRepository.findById(idIcon);
+        if (optional.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Did not find icon with id "+idIcon);
+
+        UserEntity updatedUser = optionalUser.get();
+        updatedUser.setIcon(optional.get());
+
+        return dtoBuilder.buildUserProfileDTO(userRepository.save(updatedUser));
+
+    }
+
+    @Override
+    public List<UserProfileDTO> findUsersByNickNameAndRank(String nickname, UserRankTier rankTier) {
+        List<UserEntity> users;
+
+        if (rankTier == UserRankTier.Unranked) {
+            // Usuarios sin rank
+            users = userRepository.findByRankIsNull().stream()
+                    .filter(u -> u.getNickname() != null && u.getNickname().toLowerCase().contains(nickname.toLowerCase()))
+                    .toList();
+        } else {
+            // Usuarios con rank
+            RankTierEntity rank = getRankByName(rankTier.name());
+            users = userRepository.findByRank(rank).stream()
+                    .filter(u -> u.getNickname() != null && u.getNickname().toLowerCase().contains(nickname.toLowerCase()))
+                    .toList();
+        }
+
+        if (users.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return users.stream()
+                .map(dtoBuilder::buildUserProfileDTO)
+                .toList();
+    }
+
+    @Override
+    public List<UserProfileDTO> findUsersByNicknameAndRankAndServer(String nickname, UserRankTier rankTier, ServerOption serverOption) {
+        ServerRegionEntity server = getServerByName(serverOption.getFullName());
+        List<UserEntity> users;
+
+        if (rankTier == UserRankTier.Unranked) {
+            // Usuarios sin rank, filtrados por server
+            users = userRepository.findByRankIsNullAndServer(server).stream()
+                    .filter(u -> u.getNickname() != null && u.getNickname().toLowerCase().contains(nickname.toLowerCase()))
+                    .toList();
+        } else {
+            // Usuarios con rank, filtrados por server
+            RankTierEntity rank = getRankByName(rankTier.name());
+            users = userRepository.findByRankAndServer(rank, server).stream()
+                    .filter(u -> u.getNickname() != null && u.getNickname().toLowerCase().contains(nickname.toLowerCase()))
+                    .toList();
+        }
+
+        if (users.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return users.stream()
+                .map(dtoBuilder::buildUserProfileDTO)
+                .toList();
+    }
+
+
     private RankTierEntity getRankByName(String rankname)
     {
         Optional<RankTierEntity> optionalRankTier =
@@ -528,8 +639,9 @@ public class UserServiceImpl implements UserService {
         userEntity.setPassword(userDTO.getPassword());
         userEntity.setEmail(userDTO.getEmail());
         userEntity.setRegistrationDate(LocalDateTime.now());
-        userEntity.setBlueEssence(6300);
-        userEntity.setRiotPoints(300);
+        // for testing purposes:
+        userEntity.setBlueEssence(18000);
+        userEntity.setRiotPoints(4000);
         userEntity.setServer(server);
         return userEntity;
     }
@@ -537,17 +649,17 @@ public class UserServiceImpl implements UserService {
     private String checkRepeatedUserData(UserDTO userDTO, ServerRegionEntity serverRegion) {
 
 
-        if (userRepository.findByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
-            return "The email ("+userDTO.getEmail()+") does already exist.";
+        if (userRepository.findFirstByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
+            return "The email ("+userDTO.getEmail()+") is not available.";
         }
 
-        if (userRepository.findByUsernameAndServer(userDTO.getUsername(), serverRegion).isPresent()) {
-            return "The username ("+userDTO.getUsername()+") is currently in use on the server ("+serverRegion.getServer()+")";
+        if (userRepository.findFirstByUsernameAndServer(userDTO.getUsername(), serverRegion).isPresent()) {
+            return "The username ("+userDTO.getUsername()+") is currently in use on "+serverRegion.getServer();
         }
 
-        if (userRepository.findByNicknameIgnoreCaseAndServer(userDTO.getNickname(), serverRegion).isPresent())
+        if (userRepository.findFirstByNicknameIgnoreCaseAndServer(userDTO.getNickname(), serverRegion).isPresent())
         {
-            return "The nickanem ("+userDTO.getNickname()+") is currently in use on the server ("+serverRegion.getServer()+")";
+            return "The nickname ("+userDTO.getNickname()+") is currently in use on "+serverRegion.getServer();
         }
 
         return "No repeated data";

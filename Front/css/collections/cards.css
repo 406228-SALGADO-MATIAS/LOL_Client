@@ -1,0 +1,69 @@
+.card-appear {
+  opacity: 0;
+  animation: fadeIn 0.35s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Estilo base para todas las cards */
+.card {
+  border-radius: 8px;
+  background: linear-gradient(90deg, #161616, #2c2c2c);
+  box-shadow: 0 8px 22px rgb(0, 0, 0);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  border: 3.5px solid transparent;
+  border-image: linear-gradient(180deg, #1a1a1a, #000000, #303030);
+  border-image-slice: 1;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 8px 22px rgb(68, 68, 68);
+  filter: brightness(1.1) saturate(1.1);
+  border-image: linear-gradient(90deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+}
+
+/* Cards que contienen imágenes */
+.card img {
+  border-radius: 6px;
+}
+
+/* Nombre / footer de la card */
+.card .card-body {
+  color: #fff; /* texto blanco */
+  font-family: "Roboto", sans-serif; /* tipografía general */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Cards deshabilitadas (no owned) */
+.card img[style*="grayscale"] {
+  filter: grayscale(95%);
+  opacity: 0.7;
+}
+
+/* Colores específicos para botones dentro de cards si los hubiera */
+.card button {
+  background-color: #ff9800;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 0.4rem 0.8rem;
+  font-weight: bold;
+}
+
+.card button:hover {
+  background-color: darkorange;
+}
+
+/* Opcional: sombras internas para un efecto "profundidad" */
+.card .card-body {
+  background: rgba(0, 0, 0, 0.25);
+  padding: 0.3rem;
+  border-radius: 4px;
+}

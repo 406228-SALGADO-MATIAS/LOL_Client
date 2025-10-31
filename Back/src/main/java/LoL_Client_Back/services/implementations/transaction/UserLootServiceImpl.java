@@ -1,17 +1,15 @@
 package LoL_Client_Back.services.implementations.transaction;
 
 import LoL_Client_Back.dtos.DTOBuilder;
-import LoL_Client_Back.dtos.loot.LootInventoryChampionDTO;
-import LoL_Client_Back.dtos.loot.LootInventoryIconDTO;
-import LoL_Client_Back.dtos.loot.LootInventorySkinDTO;
-import LoL_Client_Back.dtos.loot.UserLootDTO;
+import LoL_Client_Back.dtos.loot.*;
+import LoL_Client_Back.dtos.match.MatchDTO;
+import LoL_Client_Back.dtos.match.playerMatch.RewardDTO;
 import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.association.UserXIconEntity;
 import LoL_Client_Back.entities.association.UserXSkinEntity;
-import LoL_Client_Back.entities.domain.ChampionEntity;
-import LoL_Client_Back.entities.domain.SkinEntity;
-import LoL_Client_Back.entities.domain.UserEntity;
+import LoL_Client_Back.entities.domain.*;
 import LoL_Client_Back.entities.reference.ProfileIconEntity;
+import LoL_Client_Back.entities.reference.TeamEntity;
 import LoL_Client_Back.entities.transaction.LootInventoryChampionsEntity;
 import LoL_Client_Back.entities.transaction.LootInventoryIconsEntity;
 import LoL_Client_Back.entities.transaction.LootInventorySkinsEntity;
@@ -39,6 +37,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserLootServiceImpl implements UserLootService {
@@ -180,26 +179,49 @@ public class UserLootServiceImpl implements UserLootService {
     @Override
     public UserLootDTO findByUserId(Long idUser, boolean showInactives) {
         Optional<UserEntity> optional = userRepository.findById(idUser);
-        if (optional.isPresent())
-        {
+        if (optional.isPresent()) {
             Optional<UserLootEntity> optionalUserLoot =
                     userLootRepository.findByUser_Id(idUser);
 
-            if (optionalUserLoot.isPresent())  //THE USER HAS LOOT
-            {
-                return dtoBuilder.buildUserLootDTO(optionalUserLoot.get(),showInactives);
-            }
-            else //USERS DOES NOT HAVE LOOT -> create
-            {
+            UserLootDTO dto;
+
+            if (optionalUserLoot.isPresent()) {
+                dto = dtoBuilder.buildUserLootDTO(optionalUserLoot.get(), showInactives);
+            } else {
                 UserLootEntity userLootEntity = new UserLootEntity();
                 userLootEntity.setUser(optional.get());
-
-                return dtoBuilder.buildUserLootDTO(
-                        userLootRepository.save(userLootEntity),showInactives);
+                dto = dtoBuilder.buildUserLootDTO(
+                        userLootRepository.save(userLootEntity), showInactives);
             }
+
+            // ✅ Ordenamos las listas antes del return
+            if (dto.getChampionsInventory() != null) {
+                dto.getChampionsInventory().sort(
+                        Comparator.comparing(LootInventoryChampionDTO::getBlueEssenceCost,
+                                Comparator.nullsLast(Integer::compareTo))
+                );
+            }
+
+            if (dto.getSkinsInventory() != null) {
+                dto.getSkinsInventory().sort(
+                        Comparator.comparing(LootInventorySkinDTO::getOrangeEssenceCost,
+                                Comparator.nullsLast(Integer::compareTo))
+                );
+            }
+
+            if (dto.getIconsInventory() != null) {
+                dto.getIconsInventory().sort(
+                        Comparator.comparing(LootInventoryIconDTO::getBlueEssenceCost,
+                                Comparator.nullsLast(Integer::compareTo))
+                );
+            }
+
+            return dto;
         }
+
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find user with id " + idUser);
     }
+
 
     @Override
     public UserLootDTO updateUserLoot(Long idUser, Integer chests, Integer masterChests, Integer keys, Integer orangeEssence, boolean showInactives)
@@ -290,12 +312,81 @@ public class UserLootServiceImpl implements UserLootService {
                 loot.addLootChampion(champEntity);
             }
         }
-
         return dtoBuilder.buildUserLootDTO(userLootRepository.save(loot),showInactives);
     }
 
     @Override
-    public UserLootDTO unlockOrRefundChampionLoot(Long idLootChampion, boolean unlock, boolean showInactives)
+    public NewItemDTO openNormalChest(Long idUser) {
+        UserLootDTO userLootDTO = findByUserId(idUser, true);
+        UserLootEntity loot = userLootRepository.findById(userLootDTO.getId())
+                .orElseThrow(() -> new RuntimeException("The user does not have loot"));
+
+        if (loot.getChests() < 1) {
+            throw new RuntimeException("The user does not have enough normal chests");
+        }
+        if (loot.getKeys() < 1) {
+            throw new RuntimeException("The user does not have enough keys");
+        }
+
+        loot.setChests(loot.getChests() - 1);
+        loot.setKeys(loot.getKeys() - 1);
+
+        Object lootEntity;
+        Object reward = getRandomReward(false);
+
+        if (reward instanceof SkinEntity skin) {
+            LootInventorySkinsEntity skinEntity = buildNewLootSkinEntity(skin, loot);
+            loot.addLootSkin(skinEntity);
+            lootEntity = skinEntity;
+        } else if (reward instanceof ProfileIconEntity icon) {
+            LootInventoryIconsEntity iconEntity = buildNewLootIconEntity(icon, loot);
+            loot.addLootIcon(iconEntity);
+            lootEntity = iconEntity;
+        } else if (reward instanceof ChampionEntity champion) {
+            LootInventoryChampionsEntity champEntity = buildNewLootChampionEntity(champion, loot);
+            loot.addLootChampion(champEntity);
+            lootEntity = champEntity;
+        } else {
+            throw new RuntimeException("Invalid reward type");
+        }
+
+        userLootRepository.save(loot);
+        return dtoBuilder.buildNewItemDTO(lootEntity);
+    }
+
+    @Override
+    public NewItemDTO openMasterChest(Long idUser) {
+        UserLootDTO userLootDTO = findByUserId(idUser, true);
+        UserLootEntity loot = userLootRepository.findById(userLootDTO.getId())
+                .orElseThrow(() -> new RuntimeException("The user does not have loot"));
+
+        if (loot.getMasterChests() < 1) {
+            throw new RuntimeException("The user does not have enough master chests");
+        }
+        if (loot.getKeys() < 1) {
+            throw new RuntimeException("The user does not have enough keys");
+        }
+
+        loot.setMasterChests(loot.getMasterChests() - 1);
+        loot.setKeys(loot.getKeys() - 1);
+
+        Object reward = getRandomReward(true);
+        if (!(reward instanceof SkinEntity skin)) {
+            throw new RuntimeException("Master chest must always give a skin");
+        }
+
+        LootInventorySkinsEntity skinEntity = buildNewLootSkinEntity(skin, loot);
+        loot.addLootSkin(skinEntity);
+
+        userLootRepository.save(loot);
+        return dtoBuilder.buildNewItemDTO(skinEntity);
+    }
+
+
+
+
+    @Override
+    public NewItemDTO unlockOrRefundChampionLoot(Long idLootChampion, boolean unlock)
     {
         Optional<LootInventoryChampionsEntity> optional =
                 lootInventoryChampionsRepository.findById(idLootChampion);
@@ -344,7 +435,7 @@ public class UserLootServiceImpl implements UserLootService {
 
                     userXChampionRepository.save(userXChampion);
 
-                    return dtoBuilder.buildUserLootDTO(userLoot,showInactives);
+                    return dtoBuilder.buildNewItemDTO(inventory);
                 }
                 else throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         "The user does not have enough blue essence : "+userBlueEssence + " < "+enchantPrice);
@@ -363,12 +454,12 @@ public class UserLootServiceImpl implements UserLootService {
             userEntity.setBlueEssence(userBlueEssence);
             userRepository.save(userEntity); // update user
 
-            return dtoBuilder.buildUserLootDTO(userLoot,showInactives);
+            return dtoBuilder.buildNewItemDTO(inventory);
         }
     }
 
     @Override
-    public UserLootDTO unlockOrRefundSkinLoot(Long idLootSkin, boolean unlock, boolean showInactives)
+    public NewItemDTO unlockOrRefundSkinLoot(Long idLootSkin, boolean unlock)
     {
         Optional<LootInventorySkinsEntity> optional =
                 lootInventorySkinsRepository.findById(idLootSkin);
@@ -424,7 +515,7 @@ public class UserLootServiceImpl implements UserLootService {
 
                         userXSkinRepository.save(userXSkin);
 
-                        return dtoBuilder.buildUserLootDTO(userLoot,showInactives);
+                        return dtoBuilder.buildNewItemDTO(inventory);
                     }
                     else throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                             "The user does not have enough orange essence : "+userOrangeEssence + " < "+enchantPrice);
@@ -447,12 +538,12 @@ public class UserLootServiceImpl implements UserLootService {
             userLoot.setOrangeEssence(userOrangeEssence);
             userLootRepository.save(userLoot); //update user orange essence
 
-            return dtoBuilder.buildUserLootDTO(userLoot,showInactives);
+            return dtoBuilder.buildNewItemDTO(inventory);
         }
     }
 
     @Override
-    public UserLootDTO unlockOrRefundIconLoot(Long idLootIcon, boolean unlock, boolean showInactives) {
+    public NewItemDTO unlockOrRefundIconLoot(Long idLootIcon, boolean unlock) {
         Optional<LootInventoryIconsEntity> optional =
                 lootInventoryIconsRepository.findById(idLootIcon);
         if (optional.isEmpty())
@@ -499,7 +590,7 @@ public class UserLootServiceImpl implements UserLootService {
 
                     userXIconRepository.save(userXIcon);
 
-                    return dtoBuilder.buildUserLootDTO(userLoot,showInactives);
+                    return dtoBuilder.buildNewItemDTO(inventory);
                 }
                 else throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         "The user does not have enough blue essence : "+userBlueEssence + " < "+enchantPrice);
@@ -518,12 +609,12 @@ public class UserLootServiceImpl implements UserLootService {
             userEntity.setBlueEssence(userBlueEssence);
             userRepository.save(userEntity); // update user
 
-            return dtoBuilder.buildUserLootDTO(userLoot,showInactives);
+            return dtoBuilder.buildNewItemDTO(inventory);
         }
     }
 
     @Override
-    public UserLootDTO reRollChampionsLoot(Long idLootChampion1, Long idLootChampion2, Long idLootChampion3, boolean showInactives)
+    public NewItemDTO reRollChampionsLoot(Long idLootChampion1, Long idLootChampion2, Long idLootChampion3)
     {
         List<Long> idsLootChampion =
                 List.of(idLootChampion1, idLootChampion2, idLootChampion3);
@@ -569,11 +660,11 @@ public class UserLootServiceImpl implements UserLootService {
 
         userLoot.addLootChampion(newLoot);
         userLootRepository.save(userLoot);
-        return dtoBuilder.buildUserLootDTO(userLoot,showInactives);
+        return dtoBuilder.buildNewItemDTO(newLoot);
     }
 
     @Override
-    public UserLootDTO reRollSkinsLoot(Long idLootSkin1, Long idLootSkin2, Long idLootSkin3, boolean showInactives)
+    public NewItemDTO reRollSkinsLoot(Long idLootSkin1, Long idLootSkin2, Long idLootSkin3)
     {
         List<Long> idsLootSkin = List.of(idLootSkin1, idLootSkin2, idLootSkin3);
 
@@ -619,11 +710,11 @@ public class UserLootServiceImpl implements UserLootService {
         userLoot.addLootSkin(newLoot);
         userLootRepository.save(userLoot);
 
-        return dtoBuilder.buildUserLootDTO(userLoot, showInactives);
+        return dtoBuilder.buildNewItemDTO(newLoot);
     }
 
     @Override
-    public UserLootDTO reRollIconsLoot(Long idLootIcon1, Long idLootIcon2, Long idLootIcon3, boolean showInactives)
+    public NewItemDTO reRollIconsLoot(Long idLootIcon1, Long idLootIcon2, Long idLootIcon3)
     {
         List<Long> idsLootIcon = List.of(idLootIcon1, idLootIcon2, idLootIcon3);
 
@@ -669,7 +760,7 @@ public class UserLootServiceImpl implements UserLootService {
         userLoot.addLootIcon(newLoot);
         userLootRepository.save(userLoot);
 
-        return dtoBuilder.buildUserLootDTO(userLoot, showInactives);
+        return dtoBuilder.buildNewItemDTO(newLoot);
     }
 
     @Override
@@ -693,7 +784,7 @@ public class UserLootServiceImpl implements UserLootService {
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                             "This user loot has no skins active in it. Id user: " + idUser);
                 for (LootInventorySkinsEntity lootSkin : listLootSkins) {
-                    unlockOrRefundSkinLoot(lootSkin.getId(), false, showInactives);
+                    unlockOrRefundSkinLoot(lootSkin.getId(), false);
                 }
                 break;
 
@@ -704,7 +795,7 @@ public class UserLootServiceImpl implements UserLootService {
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                             "This user loot has no champions active in it. Id user: " + idUser);
                 for (LootInventoryChampionsEntity lootChampion : listLootChampions) {
-                    unlockOrRefundChampionLoot(lootChampion.getId(), false, showInactives);
+                    unlockOrRefundChampionLoot(lootChampion.getId(), false);
                 }
                 break;
 
@@ -715,7 +806,7 @@ public class UserLootServiceImpl implements UserLootService {
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                             "This user loot has no icons active in it. Id user: " + idUser);
                 for (LootInventoryIconsEntity lootIcon : listLootIcons) {
-                    unlockOrRefundIconLoot(lootIcon.getId(), false, showInactives);
+                    unlockOrRefundIconLoot(lootIcon.getId(), false);
                 }
                 break;
 
@@ -724,6 +815,124 @@ public class UserLootServiceImpl implements UserLootService {
         }
 
         return dtoBuilder.buildUserLootDTO(userLoot, showInactives);
+    }
+
+    @Override
+    public UserLootDTO disenchantOwnedItems(Long idUser, boolean showInactives) {
+        Optional<UserEntity> optionalUser = userRepository.findById(idUser);
+        if (optionalUser.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find user with id " + idUser);
+        }
+        UserEntity user = optionalUser.get();
+
+        Optional<UserLootEntity> optionalLoot = userLootRepository.findByUser_Id(idUser);
+        if (optionalLoot.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find loot for user with id " + idUser);
+        }
+        UserLootEntity userLoot = optionalLoot.get();
+
+        disenchantDuplicateLoot(userLoot);
+
+        // Listas para agregar los loot ya adquiridos
+        List<LootInventorySkinsEntity> acquiredSkins = new ArrayList<>();
+        List<LootInventoryChampionsEntity> acquiredChampions = new ArrayList<>();
+        List<LootInventoryIconsEntity> acquiredIcons = new ArrayList<>();
+
+        // --- Champions ---
+        List<LootInventoryChampionsEntity> lootChampions =
+                lootInventoryChampionsRepository.findByLootAndIsActiveTrue(userLoot);
+        for (LootInventoryChampionsEntity lootChampion : lootChampions) {
+            Optional<UserXChampionEntity> ownedChampion =
+                    userXChampionRepository.findByUserAndChampion(user, lootChampion.getChampion());
+            if (ownedChampion.isPresent()) {
+                acquiredChampions.add(lootChampion);
+            }
+        }
+
+        // --- Skins ---
+        List<LootInventorySkinsEntity> lootSkins =
+                lootInventorySkinsRepository.findByLootAndIsActiveTrue(userLoot);
+        for (LootInventorySkinsEntity lootSkin : lootSkins) {
+            Optional<UserXSkinEntity> ownedSkin =
+                    userXSkinRepository.findByUserAndSkin(user, lootSkin.getSkin());
+            if (ownedSkin.isPresent()) {
+                acquiredSkins.add(lootSkin);
+            }
+        }
+
+        // --- Icons ---
+        List<LootInventoryIconsEntity> lootIcons =
+                lootInventoryIconsRepository.findByLootAndIsActiveTrue(userLoot);
+        for (LootInventoryIconsEntity lootIcon : lootIcons) {
+            Optional<UserXIconEntity> ownedIcon =
+                    userXIconRepository.findByUserAndIcon(user, lootIcon.getIcon());
+            if (ownedIcon.isPresent()) {
+                acquiredIcons.add(lootIcon);
+            }
+        }
+
+        // --- Disenchant champions adquiridos ---
+        for (LootInventoryChampionsEntity lootChampion : acquiredChampions) {
+            unlockOrRefundChampionLoot(lootChampion.getId(), false);
+        }
+
+        // --- Disenchant skins adquiridos ---
+        for (LootInventorySkinsEntity lootSkin : acquiredSkins) {
+            unlockOrRefundSkinLoot(lootSkin.getId(), false);
+        }
+
+        // --- Disenchant icons adquiridos ---
+        for (LootInventoryIconsEntity lootIcon : acquiredIcons) {
+            unlockOrRefundIconLoot(lootIcon.getId(), false);
+        }
+
+        Optional<UserLootEntity> optionalLoot2 = userLootRepository.findByUser_Id(idUser);
+        if (optionalLoot2.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Did not find loot for user with id " + idUser);
+        }
+        return dtoBuilder.buildUserLootDTO(optionalLoot2.get(),false);
+    }
+
+    private void disenchantDuplicateLoot(UserLootEntity userLoot) {
+        // --- Champions duplicados ---
+        List<LootInventoryChampionsEntity> lootChampions =
+                lootInventoryChampionsRepository.findByLootAndIsActiveTrue(userLoot);
+        Map<ChampionEntity, List<LootInventoryChampionsEntity>> groupedChampions = lootChampions.stream()
+                .collect(Collectors.groupingBy(LootInventoryChampionsEntity::getChampion));
+        for (List<LootInventoryChampionsEntity> duplicates : groupedChampions.values()) {
+            if (duplicates.size() > 1) {
+                // eliminar todos excepto el primero
+                for (int i = 1; i < duplicates.size(); i++) {
+                    unlockOrRefundChampionLoot(duplicates.get(i).getId(), false);
+                }
+            }
+        }
+
+        // --- Skins duplicados ---
+        List<LootInventorySkinsEntity> lootSkins =
+                lootInventorySkinsRepository.findByLootAndIsActiveTrue(userLoot);
+        Map<SkinEntity, List<LootInventorySkinsEntity>> groupedSkins = lootSkins.stream()
+                .collect(Collectors.groupingBy(LootInventorySkinsEntity::getSkin));
+        for (List<LootInventorySkinsEntity> duplicates : groupedSkins.values()) {
+            if (duplicates.size() > 1) {
+                for (int i = 1; i < duplicates.size(); i++) {
+                    unlockOrRefundSkinLoot(duplicates.get(i).getId(), false);
+                }
+            }
+        }
+
+        // --- Icons duplicados ---
+        List<LootInventoryIconsEntity> lootIcons =
+                lootInventoryIconsRepository.findByLootAndIsActiveTrue(userLoot);
+        Map<ProfileIconEntity, List<LootInventoryIconsEntity>> groupedIcons = lootIcons.stream()
+                .collect(Collectors.groupingBy(LootInventoryIconsEntity::getIcon));
+        for (List<LootInventoryIconsEntity> duplicates : groupedIcons.values()) {
+            if (duplicates.size() > 1) {
+                for (int i = 1; i < duplicates.size(); i++) {
+                    unlockOrRefundIconLoot(duplicates.get(i).getId(), false);
+                }
+            }
+        }
     }
 
     @Override
@@ -961,35 +1170,122 @@ public class UserLootServiceImpl implements UserLootService {
         Random random = new Random();
 
         if (isMasterChest) {
-            // Solo skins de RP >= 1350
-            List<SkinEntity> highTierSkins = skinRepository
-                    .findByTier_RpCostGreaterThanEqualOrderByTier_RpCostAsc(1820);
-            if (highTierSkins.isEmpty()) return null;
-            return getRandomElement(highTierSkins, random);
+            // Generate a number between 1 and 10
+            int randNum = random.nextInt(10) + 1;
+
+            List<SkinEntity> selectedList;
+
+            if (randNum <= 6) {
+                // 1-6 → pick from 975 RP+ skins
+                selectedList = skinRepository.findByTier_RpCostGreaterThanEqualOrderByTier_RpCostAsc(975);
+            } else if (randNum <= 9) {
+                // 7-9 → pick from 1350 RP+ skins
+                selectedList = skinRepository.findByTier_RpCostGreaterThanEqualOrderByTier_RpCostAsc(1350);
+            } else {
+                // 10 → pick from 1820 RP+ skins
+                selectedList = skinRepository.findByTier_RpCostGreaterThanEqualOrderByTier_RpCostAsc(1820);
+            }
+
+            if (selectedList.isEmpty()) return null;
+            Collections.shuffle(selectedList);
+
+            return getRandomElement(selectedList, random);
         }
+
 
         int roll = random.nextInt(100); // [0,99]
 
-        if (roll < 40) {
-            // 40% Champion
+        if (roll < 50) {
+            // 50% Champion
             List<ChampionEntity> champions = championRepository.findAll();
             if (champions.isEmpty()) return null;
 
             return getRandomElement(champions, random);
-        } else if (roll < 70) {
-            // 30% Skin
+        } else if (roll < 85) {
+            // 35% Skin
             List<SkinEntity> skins = skinRepository.findAll();
             if (skins.isEmpty()) return null;
 
             return getRandomElement(skins, random);
         } else {
-            // 30% Icon
+            // 15% Icon
             List<ProfileIconEntity> icons = iconRepository.findAll();
             if (icons.isEmpty()) return null;
 
             return getRandomElement(icons, random);
         }
     }
+
+    public void giveRewardsToPlayersFromMatch(MatchEntity match, MatchDTO matchDTO) {
+        TeamEntity winnerTeam = match.getWinnerTeam();
+        Random random = new Random();
+
+        for (PlayerMatchDetailEntity playerDetail : match.getPlayerDetails()) {
+
+            Optional<UserLootEntity> optional =
+                    userLootRepository.findByUser_Id(playerDetail.getUser().getId());
+
+            if (optional.isEmpty())
+                throw new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Did not find user loot for the user with id " + playerDetail.getUser().getId()
+                );
+
+            UserLootEntity updatedLoot = optional.get();
+
+            boolean isWinner = playerDetail.getTeam().equals(winnerTeam);
+            boolean isRanked = Boolean.TRUE.equals(match.getRanked());
+
+            int numRolls = 0;
+            if (isRanked) {
+                numRolls = isWinner ? 4 : 2; // ranked win = 4, ranked loss = 2
+            } else {
+                numRolls = isWinner ? 2 : 0; // normal win = 2, normal loss = 0
+            }
+
+            int totalChests = updatedLoot.getChests() + updatedLoot.getMasterChests();
+            int totalKeys = updatedLoot.getKeys();
+
+            boolean hasChestOverflow = (totalChests - totalKeys) >= 4;
+
+            // --- Nuevo: inicializamos un contador local ---
+            RewardDTO rewardDTO = new RewardDTO();
+
+            if (hasChestOverflow) {
+                updatedLoot.setKeys(updatedLoot.getKeys() + 1);
+                rewardDTO.setKeys(1);
+            } else {
+                for (int i = 0; i < numRolls; i++) {
+                    int roll = random.nextInt(100) + 1; // 1-100
+
+                    if (roll <= 35) {
+                        updatedLoot.setChests(updatedLoot.getChests() + 1);
+                        rewardDTO.setChests(rewardDTO.getChests() + 1);
+                    } else if (roll <= 80) {
+                        updatedLoot.setKeys(updatedLoot.getKeys() + 1);
+                        rewardDTO.setKeys(rewardDTO.getKeys() + 1);
+                    } else if (roll <= 95) {
+                        updatedLoot.setMasterChests(updatedLoot.getMasterChests() + 1);
+                        rewardDTO.setMasterChests(rewardDTO.getMasterChests() + 1);
+                    } else {
+                        updatedLoot.setOrangeEssence(updatedLoot.getOrangeEssence() + 150);
+                        rewardDTO.setOrangeEssence(rewardDTO.getOrangeEssence() + 150);
+                    }
+                }
+            }
+
+            userLootRepository.save(updatedLoot);
+
+            // --- Asociar el RewardDTO al PlayerMatchDetailDTO correspondiente ---
+            matchDTO.getPlayers().stream()
+                    .filter(p -> p.getIdUser().equals(playerDetail.getUser().getId()))
+                    .findFirst()
+                    .ifPresent(p -> p.setRewards(rewardDTO));
+        }
+    }
+
+
+
 
     private <T> T getRandomElement(List<T> list, Random random) {
         return list.get(random.nextInt(list.size()));

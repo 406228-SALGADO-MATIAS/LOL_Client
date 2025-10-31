@@ -1,0 +1,78 @@
+/* collections.css */
+body {
+  padding-top: 105px;
+  background: linear-gradient(90deg, #051220, #0b3846);
+  margin: 0;
+  user-select: none; /* No se puede seleccionar texto */
+}
+/* Placeholder */
+.placeholder {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #343a40;
+}
+
+.category-title {
+  font-size: 2.2rem; /* más grande  */
+  font-weight: 400; /* semi bold, menos tosco */
+  text-align: left;
+  color: #eed600ce;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.2); /* subrayado  */
+  padding-bottom: 0.3rem;
+}
+
+.page-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(12, 12, 12);
+  opacity: 1; /* empieza visible */
+  pointer-events: auto;
+  transition: opacity 0.1s ease;
+  z-index: 9999;
+}
+
+.page-transition.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.be-icon {
+  width: 22px !important; /* mismo tamaño que la fuente actual */
+  height: 22px !important; /* mantiene proporción */
+  vertical-align: middle; /* centra el iconito con el texto */
+  margin-right: -5px !important;
+  margin-bottom: 4px !important;
+}
+
+.be-icon-big {
+  width: 33px;
+  height: 33px;
+  vertical-align: middle;
+  margin-right: -7px !important;
+  margin-left: 4px !important;
+
+  margin-bottom: 7px !important;
+}
+
+.rp-icon {
+  width: 20px !important;
+  height: 20px !important;
+  vertical-align: middle;
+  margin-right: 4px !important;
+  margin-bottom: 5px !important;
+}
+
+.rp-icon-big {
+  width: 32px !important;
+  height: 32px !important;
+  vertical-align: middle;
+  margin-right: -4px !important;
+  margin-bottom: 9px !important;
+}

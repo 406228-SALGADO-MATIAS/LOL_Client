@@ -1,0 +1,203 @@
+/* ===========================================
+   OVERLAY & CONTAINER
+=========================================== */
+.result-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.767);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.result-modal {
+  background: rgba(6, 6, 9, 0);
+  border-radius: 16px;
+  width: 580px;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+/* ===========================================
+   SECCIÓN RESULTADO (IMAGEN)
+=========================================== */
+.result-header img {
+  width: 80%;
+  width: 480px;
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+/* ===========================================
+   SECCIÓN RECOMPENSAS
+=========================================== */
+.rewards-section h3 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: #c58402;
+  text-transform: uppercase;
+  margin-top: -10px;
+  font-weight: 500;
+  font-style: oblique;
+  -webkit-text-stroke: 0.5px #facf78; /* grosor y color del borde */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* X offset, Y offset, blur, color */
+  opacity: 0;
+}
+
+.rewards-grid {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.reward-card {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  background: rgba(0, 0, 0, 0.705);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-image: linear-gradient(90deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reward-card img {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+}
+
+.reward-qty {
+  position: absolute;
+  bottom: 6px;
+  right: 8px;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 0 5px black;
+  font-size: 0.9rem;
+}
+
+/* ===========================================
+   SECCIÓN BOTONES
+=========================================== */
+.buttons-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 0px;
+}
+
+.buttons-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* --- BOTONES BASE --- */
+.buttons-wrapper button {
+  flex: 1;
+  display: flex; /* 🔹 Hace que el texto se centre */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  height: 40px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1 px solid gray;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  text-transform: uppercase;
+  border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7); /* X offset, Y offset, blur, color */
+}
+
+/* --- Animación hover común --- */
+.buttons-wrapper button:hover {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.705);
+  opacity: 0.95;
+  transform: scale(1.03);
+}
+
+/* --- BOTÓN SALIR (rojo) --- */
+.btn-exit {
+  background: linear-gradient(180deg, #ff000086, #c5020236);
+}
+
+/* --- BOTÓN JUGAR (azul) --- */
+.btn-replay {
+  background: linear-gradient(180deg, #00750ec2, #00430886);
+}
+
+/* --- BOTÓN ESTADÍSTICAS (violeta) --- */
+.btn-stats {
+  background: linear-gradient(180deg, #1f3dffde, #000c58a8);
+}
+
+/* ===========================================
+   ANIMACIONES DE APARICIÓN / DESAPARICIÓN
+=========================================== */
+.result-modal-overlay {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.result-modal-overlay.show {
+  opacity: 1;
+}
+
+.result-modal-overlay.hide {
+  opacity: 0;
+}
+
+.result-modal {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.result-modal.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.result-modal.hide {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+/* ===========================================
+   ANIMACIÓN DE APARICIÓN DE RECOMPENSAS
+=========================================== */
+@keyframes rewardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.reward-appear {
+  opacity: 0;
+  animation: rewardFadeIn 0.4s ease forwards;
+}

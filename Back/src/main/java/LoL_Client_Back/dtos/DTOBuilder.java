@@ -6,10 +6,7 @@ import LoL_Client_Back.dtos.association.UserXSkinDTO;
 import LoL_Client_Back.dtos.champion.ChampionDTO;
 import LoL_Client_Back.dtos.enums.MatchType;
 import LoL_Client_Back.dtos.item.ItemDTO;
-import LoL_Client_Back.dtos.loot.LootInventoryChampionDTO;
-import LoL_Client_Back.dtos.loot.LootInventoryIconDTO;
-import LoL_Client_Back.dtos.loot.LootInventorySkinDTO;
-import LoL_Client_Back.dtos.loot.UserLootDTO;
+import LoL_Client_Back.dtos.loot.*;
 import LoL_Client_Back.dtos.match.MatchDTO;
 import LoL_Client_Back.dtos.match.PlayerMatchDetailDTO;
 import LoL_Client_Back.dtos.match.PlayerMatchItemDTO;
@@ -18,6 +15,7 @@ import LoL_Client_Back.dtos.skin.SkinDTO;
 import LoL_Client_Back.dtos.user.UserLootMatchesDTO;
 import LoL_Client_Back.dtos.user.UserMatchesDTO;
 import LoL_Client_Back.dtos.user.UserMatchesWinrateDTO;
+import LoL_Client_Back.dtos.user.UserProfileDTO;
 import LoL_Client_Back.entities.association.UserXChampionEntity;
 import LoL_Client_Back.entities.association.UserXIconEntity;
 import LoL_Client_Back.entities.association.UserXSkinEntity;
@@ -105,7 +103,7 @@ public class DTOBuilder
                 dto.setElo(detail.getUser().getRank().getRank());
 
             if (showChampion)
-                dto.setImageUrlChampion(detail.getChampion().getImage());
+                dto.setImageUrlChampion(detail.getChampion().getImageSquare());
 
             dto.setItems(buildPlayerMatchItemsDTOList(detail.getItems(), showItem));
 
@@ -188,6 +186,8 @@ public class DTOBuilder
         if (c.getStyle2() != null && c.getStyle2().getStyle() != null) {
             dto.setStyle2(c.getStyle2().getStyle());
         }
+
+        dto.setSquareImageUrl(c.getImageSquare());
 
         return dto;
     }
@@ -354,6 +354,7 @@ public class DTOBuilder
 
         dto.setChampionId(entity.getChampion().getId());
         dto.setChampionName(entity.getChampion().getName());
+        dto.setImage(entity.getChampion().getImage());
 
         return dto;
     }
@@ -373,19 +374,19 @@ public class DTOBuilder
         if (entity.getUser().getRank() != null) {
             dto.setRank(entity.getUser().getRank().getRank());
         }
+        dto.setImage(entity.getIcon().getImage());
 
         return dto;
     }
 
     public List<UserXIconDTO> buildListUserXIconDTO(List<UserXIconEntity> list, String errorMsg) {
+        List<UserXIconDTO> dtoList = new ArrayList<>();
         if (!list.isEmpty()) {
-            List<UserXIconDTO> dtoList = new ArrayList<>();
             for (UserXIconEntity u : list) {
                 dtoList.add(buildUserXIconDTO(u));
             }
-            return dtoList;
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, errorMsg);
+        return dtoList;
     }
 
     public UserXSkinDTO buildUserXSkinDTO(UserXSkinEntity entity) {
@@ -409,6 +410,7 @@ public class DTOBuilder
         {
             dto.setRpPrice(entity.getSkin().getTier().getRpCost());
         }
+        dto.setImage(entity.getSkin().getImage());
         return dto;
     }
 
@@ -459,7 +461,7 @@ public class DTOBuilder
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,notFoundMsg);
     }
 
-    public List<ProfileIconDTO> buildDtoList (List<ProfileIconEntity> list, String errorMsg) {
+    public List<ProfileIconDTO> buildIconDtoList(List<ProfileIconEntity> list, String errorMsg) {
         if (!list.isEmpty()) {
             List<ProfileIconDTO> dtoList = new ArrayList<>();
             for (ProfileIconEntity i : list)
@@ -537,7 +539,80 @@ public class DTOBuilder
         List<UserXIconEntity> x =
                 userXIconRepository.findByUser_Id(idUser);
         if (x.isEmpty())
-            return "";
-        return x.get(0).getIcon().getImage();
+            return "";  //does not have icons
+        if (x.get(0).getUser().getIcon() == null) // if he has no icon assigned
+            return x.get(0).getIcon().getImage(); // get his first
+        return x.get(0).getUser().getIcon().getImage(); // show icon assigned
+    }
+
+    public UserProfileDTO buildUserProfileDTO (UserEntity userEntity)
+    {
+        UserProfileDTO dto = new UserProfileDTO();
+        dto.setId(userEntity.getId());
+        dto.setServer(userEntity.getServer().getServer());
+        dto.setBlueEssence(userEntity.getBlueEssence());
+
+        if (userEntity.getIcon() != null)
+            dto.setIconImage(userEntity.getIcon().getImage());
+        else
+            dto.setIconImage("https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336571/none_ep19ag.jpg");
+
+        dto.setRiotPoints(userEntity.getRiotPoints());
+        dto.setNickname(userEntity.getNickname());
+        dto.setUserBackground(userEntity.getBackgroundImage());
+        if (userEntity.getRank() != null)
+        {
+            dto.setRank(userEntity.getRank().getRank());
+            dto.setRankImage(userEntity.getRank().getImage());
+        }
+        if (userEntity.getRankLp() != null)
+            dto.setLp(userEntity.getRankLp());
+        return  dto;
+    }
+
+    public List<UpdateStatementDTO> buildUpdateStatementDTOs (List<UserEntity> users)
+    {
+        List <UpdateStatementDTO> updateList = new ArrayList<>();
+        for (UserEntity user : users)
+        {
+            List<UserXIconEntity> iconEntities =
+                    userXIconRepository.findByUser_Id(user.getId());
+
+            if (iconEntities.isEmpty())
+                throw new ResponseStatusException
+                        (HttpStatus.NOT_FOUND,"The user with id "+ user.getId() +
+                                " does not have any icon to give him");
+
+            UpdateStatementDTO dto = new UpdateStatementDTO();
+            String sentence = "UPDATE users SET icon_id = "
+                    + iconEntities.get(0).getIcon().getId()
+                    + " WHERE id = "+ user.getId() + ";";
+            dto.setStatement(sentence);
+            updateList.add(dto);
+        }
+        return updateList;
+    }
+
+    public NewItemDTO buildNewItemDTO(Object obj) {
+        if (obj instanceof LootInventoryChampionsEntity champInv) {
+            return new NewItemDTO(
+                    champInv.getChampion().getImage(),
+                    champInv.getChampion().getName(),
+                    champInv.getIsActive() != null && champInv.getIsActive()
+            );
+        } else if (obj instanceof LootInventoryIconsEntity iconInv) {
+            return new NewItemDTO(
+                    iconInv.getIcon().getImage(),
+                    iconInv.getIcon().getIcon(),
+                    iconInv.getIsActive() != null && iconInv.getIsActive()
+            );
+        } else if (obj instanceof LootInventorySkinsEntity skinInv) {
+            return new NewItemDTO(
+                    skinInv.getSkin().getImage(),
+                    skinInv.getSkin().getName(),
+                    skinInv.getIsActive() != null && skinInv.getIsActive()
+            );
+        }
+        throw new IllegalArgumentException("Unsupported object type: " + obj.getClass());
     }
 }

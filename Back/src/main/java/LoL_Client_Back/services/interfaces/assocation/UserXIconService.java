@@ -1,5 +1,6 @@
 package LoL_Client_Back.services.interfaces.assocation;
 
+import LoL_Client_Back.dtos.UpdateStatementDTO;
 import LoL_Client_Back.dtos.association.UserXIconDTO;
 import org.springframework.stereotype.Service;
 
@@ -16,4 +17,7 @@ public interface UserXIconService {
     UserXIconDTO createIconBelonging(Long idUser, Long idIcon);
     UserXIconDTO updateIconBelonging(Long idBelonging, Long idUser, Long idIcon);
     String giveIconsToAllUsers();
+    UserXIconDTO unlockIcon (Long idUser, Long idIcon);
+    List<UpdateStatementDTO> getUpdateUsers ();
+    void unlockAllIcons (Long idUser);
 }

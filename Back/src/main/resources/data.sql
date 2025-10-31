@@ -30,23 +30,24 @@ INSERT INTO champions_tier_prices VALUES
 (5, 6300, 1260, 3150, 880),
 (6, 7800, 1560, 3900, 975);
 
-INSERT INTO rank_tiers VALUES
-(1, 'Bronze'),
-(2, 'Silver'),
-(3, 'Gold'),
-(4, 'Platinum'),
-(5, 'Emerald'),
-(6, 'Diamond'),
-(7, 'Master'),
-(8, 'Grandmaster'),
-(9, 'Challenger');
+INSERT INTO rank_tiers (id, image, rank, lp) VALUES
+(1, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339063/Bronze_mkasyv.webp', 'Bronze', 0),
+(2, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339060/Silver_e2yrko.webp', 'Silver', 100),
+(3, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339053/Gold_lhbl4r.webp', 'Gold', 225),
+(4, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339058/Platinum_gbbcya.webp', 'Platinum', 365),
+(5, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339052/Emerald_keqlbh.webp', 'Emerald', 520),
+(6, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339050/Diamond_dzuf1y.webp', 'Diamond', 690),
+(7, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339056/Master_kh9m4z.webp', 'Master', 875),
+(8, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339055/Grandmaster_kfuhtf.webp', 'Grandmaster', 1075),
+(9, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339064/Challenger_p5hdkp.webp', 'Challenger', 1290);
 
-INSERT INTO roles VALUES
-(1, 'TOP'),
-(2, 'JUNGLE'),
-(3, 'MID'),
-(4, 'ADC'),
-(5, 'SUPPORT');
+
+INSERT INTO roles (id, role, role_img) VALUES
+(1, 'TOP', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339120/top_o6nf3d.webp'),
+(2, 'JUNGLE', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339123/jg_de9cbc.png'),
+(3, 'MID', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339125/mid_b7phfo.png'),
+(4, 'ADC','https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339916/adc2_qy3qpi.png'),
+(5, 'SUPPORT', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761339127/support_nuk1pt.png');
 
 INSERT INTO server_regions VALUES
 (1, 'North America (NA)'),
@@ -59,66 +60,179 @@ INSERT INTO skin_tiers VALUES
 (2, 150, 450, 750, 'Standard'),
 (3, 195, 675, 975, 'Deluxe'),
 (4, 270, 1050, 1350, 'Epic'),
-(5, 400, 1300, 1820, 'Legendary'),
-(6, 600, 1800, 3250, 'Mythic');
+(5, 400, 1520, 1820, 'Legendary'),
+(6, 600, 2100, 3250, 'Definitive');
 
-INSERT INTO champions VALUES
-(1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_0.jpg&w=1200&q=75', 'Lucian', DATE '2013-08-27', 50.5, 2, 4, 4, 3, 2, NULL),
-(2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75', 'Draven', DATE '2012-06-06', 51.3, 3, 4, 4, 3, 2, NULL),
-(3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZed_0.jpg&w=1200&q=75', 'Zed', DATE '2012-11-13', 49.7, 3, 5, 3, 2, 4, NULL),
-(4, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_0.jpg&w=1200&q=75', 'Zac', DATE '2013-03-29', 52.1, 2, 5, 2, 1, 5, 3),
-(5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75', 'Zilean', DATE '2009-04-18', 51.0, 2, 2, 5, 3, 6, 3),
-(6, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_0.jpg&w=1200&q=75', 'Jinx', DATE '2013-10-10', 50.8, 2, 5, 4, NULL, 2, NULL),
-(7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGraves_0.jpg&w=1200&q=75', 'Graves', DATE '2011-10-13', 51.5, 2, 4, 2, 1, 1, NULL),
-(8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75', 'Karma', DATE '2011-02-01', 49.8, 2, 3, 5, 3, 6, 3),
-(9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75', 'Twitch', DATE '2009-05-01', 50.0, 2, 3, 4, 2, 2, 3),
-(10, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwistedFate_0.jpg&w=1200&q=75', 'Twisted Fate', DATE '2009-02-21', 48.7, 2, 2, 3, 1, 3, 2),
-(11, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FXerath_0.jpg&w=1200&q=75', 'Xerath', DATE '2011-01-07', 49.0, 2, 3, 3, 5, 3, NULL),
-(12, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75', 'Katarina', DATE '2010-06-11', 51.2, 2, 3, 3, NULL, 4, 5),
-(13, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKhazix_0.jpg&w=1200&q=75', U&'Kha\00b4Zix', DATE '2012-09-27', 52.3, 3, 4, 2, NULL, 4, NULL),
-(14, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75', 'Fizz', DATE '2011-11-15', 50.8, 2, 4, 3, NULL, 3, NULL),
-(15, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75', 'Rengar', DATE '2012-08-21', 51.5, 3, 4, 2, NULL, 4, NULL),
-(16, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFiora_0.jpg&w=1200&q=75', 'Fiora', DATE '2012-02-29', 50.9, 3, 4, 1, NULL, 1, NULL),
-(17, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FHecarim_0.jpg&w=1200&q=75', 'Hecarim', DATE '2012-04-18', 52.1, 2, 4, 2, NULL, 1, 5),
-(18, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75', 'Vladimir', DATE '2010-02-27', 50.3, 2, 3, 3, 1, 3, NULL),
-(19, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAurelionSol_0.jpg&w=1200&q=75', 'Aurelion Sol', DATE '2016-03-24', 49.8, 3, 5, 3, NULL, 3, NULL),
-(20, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75', U&'Kai\00b4Sa', DATE '2018-03-07', 50.7, 2, 5, 4, NULL, 2, 3),
-(21, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FUrgot_0.jpg&w=1200&q=75', 'Urgot', DATE '2010-08-24', 49.5, 1, 3, 1, NULL, 1, NULL),
-(22, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenekton_0.jpg&w=1200&q=75', 'Renekton', DATE '2011-01-18', 50.4, 2, 4, 1, NULL, 1, NULL),
-(23, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75', 'Zeri', DATE '2022-01-20', 48.9, 2, 5, 4, NULL, 2, NULL),
-(24, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSinged_0.jpg&w=1200&q=75', 'Singed', DATE '2009-04-18', 51.3, 2, 2, 1, 3, 5, 3),
-(25, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRekSai_0.jpg&w=1200&q=75', U&'Rek\00b4Sai', DATE '2014-12-11', 49.7, 2, 4, 2, NULL, 1, NULL),
-(26, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTrundle_0.jpg&w=1200&q=75', 'Trundle', DATE '2010-05-01', 51.0, 2, 4, 1, NULL, 1, NULL),
-(27, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAatrox_0.jpg&w=1200&q=75', 'Aatrox', DATE '2013-06-13', 47.8, 2, 5, 1, NULL, 1, NULL),
-(28, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAlistar_0.jpg&w=1200&q=75', 'Alistar', DATE '2009-02-21', 50.2, 1, 2, 5, NULL, 5, NULL),
-(29, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAkali_0.jpg&w=1200&q=75', 'Akali', DATE '2010-05-11', 48.7, 3, 3, 3, 1, 4, NULL),
-(30, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FOrnn_0.jpg&w=1200&q=75', 'Ornn', DATE '2017-08-23', 51.0, 2, 4, 1, NULL, 5, NULL),
-(31, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75', 'Galio', DATE '2010-08-10', 50.9, 2, 3, 3, 5, 5, 3),
-(32, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75', 'Jarvan IV', DATE '2011-03-01', 49.8, 2, 4, 2, NULL, 1, 4),
-(33, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMilio_0.jpg&w=1200&q=75', 'Milio', DATE '2023-03-22', 52.1, 1, 5, 5, NULL, 6, 3),
-(34, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenata_0.jpg&w=1200&q=75', 'Renata', DATE '2022-02-17', 49.3, 2, 5, 5, NULL, 6, NULL),
-(35, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FShen_0.jpg&w=1200&q=75', 'Shen', DATE '2010-03-24', 51.5, 2, 3, 1, 5, 5, NULL),
-(36, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSkarner_0.jpg&w=1200&q=75', 'Skarner', DATE '2011-08-09', 47.6, 2, 4, 2, 1, 5, NULL),
-(37, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75', 'Warwick', DATE '2009-06-11', 51.8, 1, 2, 2, 1, 1, NULL),
-(38, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FCaitlyn_0.jpg&w=1200&q=75', 'Caitlyn', DATE '2011-01-04', 51.1, 2, 4, 4, NULL, 2, NULL),
-(39, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FChogath_0.jpg&w=1200&q=75', U&'Cho\00b4Gath', DATE '2009-06-26', 50.2, 1, 2, 1, 3, 5, 3),
-(40, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMalphite_0.jpg&w=1200&q=75', 'Malphite', DATE '2009-11-02', 51.0, 1, 2, 1, 3, 5, 3),
-(41, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGragas_0.jpg&w=1200&q=75', 'Gragas', DATE '2010-02-02', 49.7, 2, 3, 2, 1, 3, 5),
-(42, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVi_0.jpg&w=1200&q=75', 'Vi', DATE '2012-12-19', 51.4, 2, 4, 2, NULL, 1, 4),
-(43, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75', 'Braum', DATE '2014-05-14', 50.5, 1, 2, 5, NULL, 5, NULL),
-(44, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMordekaiser_0.jpg&w=1200&q=75', 'Mordekaiser', DATE '2010-02-24', 50.2, 2, 3, 1, NULL, 5, 3),
-(45, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBard_0.jpg&w=1200&q=75', 'Bardo', DATE '2015-03-12', 50.1, 3, 5, 5, NULL, 6, 5),
-(46, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75', 'Senna', DATE '2019-11-10', 49.0, 3, 5, 4, 5, 2, 6),
-(47, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDrMundo_0.jpg&w=1200&q=75', 'Dr. Mundo', DATE '2009-09-02', 49.8, 1, 1, 1, 2, 5, NULL),
-(48, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_0.jpg&w=1200&q=75', 'Tryndamere', DATE '2009-05-01', 48.9, 1, 2, 1, NULL, 2, 1),
-(49, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FIvern_0.jpg&w=1200&q=75', 'Ivern', DATE '2016-10-05', 49.9, 3, 4, 2, 5, 6, 3);
+INSERT INTO champions (id, image, name, release_date, winrate, difficulty_id, price_id, role_id, role2_id, style_id, style2_id)
+VALUES
+(1, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888474/lucian_nn0nti.jpg', 'Lucian', DATE '2013-08-27', 50.5, 2, 4, 4, 3, 2, NULL),
+(2, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888472/Draven_0_tkwwhv.webp', 'Draven', DATE '2012-06-06', 51.3, 3, 4, 4, 3, 2, NULL),
+(3, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888485/zed_fwdtrm.jpg', 'Zed', DATE '2012-11-13', 49.7, 3, 5, 3, 2, 4, NULL),
+(4, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888484/zac_ejnup2.jpg', 'Zac', DATE '2013-03-29', 52.1, 2, 5, 2, 1, 5, 3),
+(5, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888485/Zilean_0_nzrxvz.webp', 'Zilean', DATE '2009-04-18', 51.0, 2, 2, 5, 3, 6, 3),
+(6, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888473/Jinx_0_cvbxgz.webp', 'Jinx', DATE '2013-10-10', 50.8, 2, 5, 4, NULL, 2, NULL),
+(7, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888473/Graves_0_uqsxmv.webp', 'Graves', DATE '2011-10-13', 51.5, 2, 4, 2, 1, 1, 4),
+(8, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888473/Karma_0_dydwnp.webp', 'Karma', DATE '2011-02-01', 49.8, 2, 3, 5, 3, 6, 3),
+(9, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888481/Twitch_0_opfp9a.webp', 'Twitch', DATE '2009-05-01', 50.0, 2, 3, 4, 2, 2, 3),
+(10, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888481/twisted_fate_tsqbij.jpg', 'Twisted Fate', DATE '2009-02-21', 48.7, 2, 2, 3, 1, 3, 2),
+(11, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888484/Xerath_0_g3eyr0.webp', 'Xerath', DATE '2011-01-07', 49.0, 2, 3, 3, 5, 3, NULL),
+(12, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888474/katarina_mgrfp8.jpg', 'Katarina', DATE '2010-06-11', 51.2, 2, 3, 3, NULL, 3, 5),
+(13, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888474/kha_zix_z9emlf.jpg', U&'Kha\00b4Zix', DATE '2012-09-27', 52.3, 3, 4, 2, NULL, 4, NULL),
+(14, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888472/Fizz_0_ns2grc.jpg', 'Fizz', DATE '2011-11-15', 50.8, 2, 4, 3, NULL, 3, NULL),
+(15, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888478/Rengar_0_iccbax.webp', 'Rengar', DATE '2012-08-21', 51.5, 3, 4, 2, 1, 4, NULL),
+(16, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888472/fiora_nmzxlg.jpg', 'Fiora', DATE '2012-02-29', 50.9, 3, 4, 1, NULL, 1, NULL),
+(17, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888473/Hecarim_0_v2rujb.webp', 'Hecarim', DATE '2012-04-18', 52.1, 2, 4, 2, NULL, 1, 5),
+(18, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888482/vladimir_gv7wrr.jpg', 'Vladimir', DATE '2010-02-27', 50.3, 2, 3, 3, 1, 3, NULL),
+(19, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888488/AurelionSol_0_vsw3oj.webp', 'Aurelion Sol', DATE '2016-03-24', 49.8, 3, 5, 3, NULL, 3, NULL),
+(20, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888473/kaisa_wbgsec.jpg', U&'Kai\00b4Sa', DATE '2018-03-07', 50.7, 2, 5, 4, NULL, 2, 3),
+(21, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888482/urgot_wv70wp.jpg', 'Urgot', DATE '2010-08-24', 49.5, 1, 3, 1, NULL, 1, NULL),
+(22, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888478/Renekton_0_kjmu1d.webp', 'Renekton', DATE '2011-01-18', 50.4, 2, 4, 1, NULL, 1, NULL),
+(23, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888485/Zeri_0_ijttig.webp', 'Zeri', DATE '2022-01-20', 48.9, 2, 5, 4, 3, 2, 3),
+(24, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888479/Singed_0_kyofxe.webp', 'Singed', DATE '2009-04-18', 51.3, 2, 2, 1, 3, 5, 3),
+(25, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888474/RekSai_0_ut9gpq.webp', U&'Rek\00b4Sai', DATE '2014-12-11', 49.7, 2, 4, 2, 1, 1, NULL),
+(26, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888481/trundle_yfbxel.jpg', 'Trundle', DATE '2010-05-01', 51.0, 2, 4, 1, NULL, 1, NULL),
+(27, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888486/Aatrox_0_fv47bj.webp', 'Aatrox', DATE '2013-06-13', 47.8, 2, 5, 1, NULL, 1, NULL),
+(28, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888488/Alistar_0_k4jouq.webp', 'Alistar', DATE '2009-02-21', 50.2, 1, 2, 5, 1, 5, 3),
+(29, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888488/Akali_0_fs9njt.webp', 'Akali', DATE '2010-05-11', 48.7, 3, 3, 3, 1, 3, NULL),
+(30, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888474/Ornn_0_wtjp97.webp', 'Ornn', DATE '2017-08-23', 51.0, 2, 4, 1, NULL, 5, NULL),
+(31, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888472/Galio_0_lplpkb.webp', 'Galio', DATE '2010-08-10', 50.9, 2, 3, 3, 5, 5, 3),
+(32, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888473/JarvanIV_0_wqsfne.webp', 'Jarvan IV', DATE '2011-03-01', 49.8, 2, 4, 2, 1, 1, 4),
+(33, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888474/Milio_0_gkagsp.webp', 'Milio', DATE '2023-03-22', 52.1, 1, 5, 5, NULL, 6, 3),
+(34, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888475/Renata_0_jjfcca.webp', 'Renata', DATE '2022-02-17', 49.3, 2, 5, 5, NULL, 6, NULL),
+(35, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888479/Shen_0_rexozf.webp', 'Shen', DATE '2010-03-24', 51.5, 2, 3, 1, 5, 5, NULL),
+(36, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888480/Skarner_0_nx51nj.webp', 'Skarner', DATE '2011-08-09', 47.6, 2, 4, 2, 1, 5, NULL),
+(37, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888484/Warwick_0_ew1hla.webp', 'Warwick', DATE '2009-06-11', 51.8, 1, 2, 2, 1, 1, NULL),
+(38, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888489/caitlyn_dgbeov.jpg', 'Caitlyn', DATE '2011-01-04', 51.1, 2, 4, 4, NULL, 2, NULL),
+(39, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888472/ChoGath_kwmckx.avif', U&'Cho\00b4Gath', DATE '2009-06-26', 50.2, 1, 2, 1, 3, 5, 3),
+(40, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888474/Malphite_0_oxh5fg.webp', 'Malphite', DATE '2009-11-02', 51.0, 1, 2, 1, 3, 5, 3),
+(41, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888473/Gragas_0_jfcwbd.webp', 'Gragas', DATE '2010-02-02', 49.7, 2, 3, 2, 1, 3, 5),
+(42, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888482/vi_vbno3i.jpg', 'Vi', DATE '2012-12-19', 51.4, 2, 4, 2, 1, 1, 4),
+(43, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888488/Braum_0_ouf31i.jpg', 'Braum', DATE '2014-05-14', 50.5, 1, 2, 5, NULL, 5, NULL),
+(44, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888474/Mordekaiser_ychoxt.jpg', 'Mordekaiser', DATE '2010-02-24', 50.2, 2, 3, 1, 3, 5, 3),
+(45, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888489/Bard_0_xztjib.jpg', 'Bardo', DATE '2015-03-12', 50.1, 3, 5, 5, NULL, 6, 5),
+(46, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888478/senna_bqoiwn.jpg', 'Senna', DATE '2019-11-10', 49.0, 3, 5, 4, 5, 2, 6),
+(47, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888472/dr_mundo_kvsjm6.jpg', 'Dr. Mundo', DATE '2009-09-02', 49.8, 1, 1, 1, 2, 5, NULL),
+(48, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888481/trynda_y6eyl6.jpg', 'Tryndamere', DATE '2009-05-01', 48.9, 1, 2, 1, 2, 2, 1),
+(49, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888473/Ivern_0_mz8qyv.webp', 'Ivern', DATE '2016-10-05', 49.9, 3, 4, 2, 5, 6, 3);
+
 
 ALTER TABLE CHAMPIONS ALTER COLUMN ID RESTART WITH 50;
+
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334056/AatroxSquare_wwqmkb.webp'
+WHERE name = 'Aatrox';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334056/AkaliSquare_mdlg47.webp'
+WHERE name = 'Akali';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334057/AlistarSquare_old3_ypj9g2.webp'
+WHERE name = 'Alistar';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334056/AurelionSolSquare_fvuq3b.webp'
+WHERE name = 'Aurelion Sol';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334057/BardSquare_nkzdxz.webp'
+WHERE name = 'Bardo';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334057/BraumSquare_c2gn9n.webp'
+WHERE name = 'Braum';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334058/CaitlynSquare_jx0w50.webp'
+WHERE name = 'Caitlyn';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334059/ChoGathSquare_zss3bo.webp'
+WHERE name = 'Cho´Gath';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334058/DrMundoSquare_yzcuam.webp'
+WHERE name = 'Dr. Mundo';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334058/DravenSquare_jwrhw0.webp'
+WHERE name = 'Draven';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334058/FioraSquare_hkkzi1.webp'
+WHERE name = 'Fiora';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334056/FizzSquare_wyy2pn.webp'
+WHERE name = 'Fizz';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334056/GalioSquare_b1undf.webp'
+WHERE name = 'Galio';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334057/GragasSquare_apxsaj.webp'
+WHERE name = 'Gragas';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334057/GravesSquare_an5njo.webp'
+WHERE name = 'Graves';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334057/HecarimSquare_old_r6r1mb.webp'
+WHERE name = 'Hecarim';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334058/IvernSquare_wvvwzc.webp'
+WHERE name = 'Ivern';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334058/JarvanIVSquare_nijd6r.webp'
+WHERE name = 'Jarvan IV';
+
+UPDATE champions
+SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334059/JinxSquare_y5cvqg.webp'
+WHERE name = 'Jinx';
+
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334059/KaiSaSquare_olamct.webp' WHERE name = U&'Kai´Sa';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334059/KarmaSquare_b6msz5.webp' WHERE name = 'Karma';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334059/KatarinaSquare_yliggj.webp' WHERE name = 'Katarina';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334059/KhaZixSquare_ltfqce.webp' WHERE name = U&'Kha´Zix';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334060/LucianSquare_tia12c.webp' WHERE name = 'Lucian';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334060/MalphiteSquare_stmvgd.webp' WHERE name = 'Malphite';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334060/MilioSquare_k0dq5h.webp' WHERE name = 'Milio';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334060/MordekaiserSquare_tdamyi.webp' WHERE name = 'Mordekaiser';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334060/OrnnSquare_ae4jpz.webp' WHERE name = 'Ornn';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334061/RekSaiSquare_wjaeta.webp' WHERE name = U&'Rek´Sai';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334061/RenataSquare_tzxay7.webp' WHERE name = 'Renata';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334061/RenektonSquare_c5lvoy.webp' WHERE name = 'Renekton';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334075/RengarSquare_o45bxw.webp' WHERE name = 'Rengar';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334075/SennaSquare_ohyzn0.webp' WHERE name = 'Senna';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334074/ShenSquare_eesgqu.webp' WHERE name = 'Shen';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334075/SingedSquare_jsfy56.webp' WHERE name = 'Singed';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334075/SkarnerSquare_a1iqlq.webp' WHERE name = 'Skarner';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334075/TrundleSquare_rm4ign.webp' WHERE name = 'Trundle';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334075/TryndamereSquare_y6zfh2.webp' WHERE name = 'Tryndamere';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334075/TwistedFateSquare_ffp3lo.webp' WHERE name = 'Twisted Fate';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334076/TwitchSquare_zydq7x.webp' WHERE name = 'Twitch';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334076/UrgotSquare_swphzj.webp' WHERE name = 'Urgot';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334076/ViSquare_qnnwsg.webp' WHERE name = 'Vi';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334077/VladimirSquare_dimob6.webp' WHERE name = 'Vladimir';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334076/WarwickSquare_qk58f6.webp' WHERE name = 'Warwick';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334076/XerathSquare_uhce6f.webp' WHERE name = 'Xerath';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334076/ZacSquare_sacs1f.webp' WHERE name = 'Zac';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334077/ZedSquare_hrsjih.webp' WHERE name = 'Zed';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334077/ZeriSquare_nrybcg.webp' WHERE name = 'Zeri';
+UPDATE champions SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334077/ZileanSquare_ybqe82.webp' WHERE name = 'Zilean';
+
+
+
 
 INSERT INTO items VALUES
 (1, 0, 0, '0%', 70, '0%', 0, 3600, '25%', 'Increases critical damage and basic attack damage. Grants bonus critical strike chance.', '0%', 0, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3031.png', 0, '0%', '0%', 0, 0, '0%', '0%', 'Infinity Edge', '0%', 2, NULL),
 (2, 0, 0, '0%', 36, '30%', 15, 3333, '0%', 'Enchanted Sword: \nAfter using an ability, your next attack deals bonus physical damage on impact. \nHasten: \nAttacking grants you 20 Movement Speed for 2 seconds.', '0%', 333, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3078.png', 0, '0%', '0%', 0, 0, '0%', '0%', 'Trinity Force', '0%', 2, 1),
-(3, 105, 50, '0%', 0, '0%', 0, 3250, '0%', 'Active: \nBecomes invulnerable and untargetable for 2.5 seconds, but cannot move or act during this time.', '0%', 0, '0%', 'https://u.gg/lol/items/zhonyas-hourglass', 0, '0%', '0%', 0, 0, '0%', '0%', U&'Zhonya\00b4s Hourglass', '0%', 3, NULL),
+(3, 105, 50, '0%', 0, '0%', 0, 3250, '0%', 'Active: \nBecomes invulnerable and untargetable for 2.5 seconds, but cannot move or act during this time.', '0%', 0, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/15.16.1/img/item/3157.png', 0, '0%', '0%', 0, 0, '0%', '0%', U&'Zhonya\00b4s Hourglass', '0%', 3, NULL),
 (4, 0, 25, '0%', 0, '0%', 10, 2200, '0%', 'Active:\n Join an allied champion. When your ally damages an enemy champion, both you and your ally deal additional magic damage for 3 seconds.', '0%', 300, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3050.png', 0, '0%', '0%', 25, 0, '0%', '0%', U&'Zeke\00b4s Convergence', '0%', 5, 6),
 (5, 0, 0, '0%', 50, '25%', 0, 3000, '0%', 'More Practice, More Lethality:\n On attack, you gain 20% Critical Strike Chance permanently, up to a maximum of 25%.\n Burst:\n Attacking an enemy champion grants you 30% Attack Speed for 4 seconds (40 second cooldown). Attacks reduce this cooldown by 1 second, which increases to 2 seconds if you land a critical strike.', '0%', 0, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3032.png', 0, '0%', '0%', 0, 0, '0%', '0%', 'Yun Tal Wildarrows', '0%', 2, NULL),
 (6, 0, 0, '0%', 55, '0%', 0, 2800, '0%', 'Pursuit: \nYou gain 20 Movement Speed when out of combat.\n Spectral Step:\n You gain movement speed and become Ghosted for 6 seconds.', '0%', 0, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3142.png', 0, '0%', '0%', 0, 0, '0%', '4%', U&'Youmuu\00b4s Ghostblade', '0%', 4, NULL),
@@ -130,7 +244,7 @@ INSERT INTO items VALUES
 (12, 0, 60, '0%', 0, '0%', 10, 2800, '0%', 'Deals magic damage to nearby enemies every 5 seconds in combat against champions and heals you for 250% of the damage dealt.', '0%', 350, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/2502.png', 0, '0%', '0%', 0, 0, '0%', '0%', 'Unending Despair', '0%', 5, NULL);
 INSERT INTO items VALUES
 (13, 0, 0, '0%', 50, '0%', 10, 2600, '0%', 'Blackout:\n When you are near enemy Stealth Wards and traps, reveal them for 8 seconds. \nExtinguish:\n Attacks do bonus damage to Wards.', '0%', 0, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3179.png', 15, '0%', '0%', 0, 0, '0%', '0%', 'Umbral Glaive', '0%', 4, NULL),
-(14, 0, 0, '0%', 40, '0%', 0, 3300, '0%', 'Cleave:\n Attacks deal physical damage on-hit and to enemies behind the target. \nTitanic Crescent:\n Empower your next Cleave to deal bonus physical damage On-Hit and deal bonus physical damage to enemies behind the target.', '0%', 600, '0%', 'https://u.gg/lol/items/titanic-hydra', 0, '0%', '0%', 0, 0, '0%', '0%', 'Titanic Hydra', '0%', 5, NULL),
+(14, 0, 0, '0%', 40, '0%', 0, 3300, '0%', 'Cleave:\n Attacks deal physical damage on-hit and to enemies behind the target. \nTitanic Crescent:\n Empower your next Cleave to deal bonus physical damage On-Hit and deal bonus physical damage to enemies behind the target.', '0%', 600, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/15.16.1/img/item/3748.png', 0, '0%', '0%', 0, 0, '0%', '0%', 'Titanic Hydra', '0%', 5, NULL),
 (15, 0, 75, '0%', 0, '0%', 0, 2450, '0%', 'Thorns:\n When struck by an Attack, deal magic damage to the attacker and apply 40% Wounds for 3 seconds if they are a champion.', '0%', 150, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3075.png', 0, '0%', '0%', 0, 0, '0%', '0%', 'Thornmail', '0%', 5, NULL),
 (16, 0, 0, '0%', 50, '0%', 0, 2950, '25%', 'Death: \nYour damage executes champions that are below 5% Health. \nTaxes:\n Champion kills grant 25 bonus gold.', '0%', 0, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6676.png', 10, '0%', '0%', 0, 0, '0%', '0%', 'The Collector', '0%', 4, 2),
 (17, 0, 50, '0%', 0, '0%', 10, 2700, '0%', 'Immolate:\n After taking or dealing damage, deal magic damage per second to nearby enemies for 3 seconds.', '0%', 350, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3068.png', 0, '0%', '0%', 0, 0, '0%', '0%', 'Sunfire Aegis', '0%', 5, NULL),
@@ -165,7 +279,7 @@ INSERT INTO items VALUES
 (44, 0, 0, '30%', 35, '0%', 0, 3200, '25%', 'Grievous Wounds\n Dealing physical damage applies 40% Wounds to enemy champions for 3 seconds.', '0%', 0, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3033.png', 0, '0%', '0%', 0, 0, '0%', '0%', 'Mortal Reminder', '0%', 2, 1),
 (45, 75, 0, '0%', 0, '0%', 15, 2950, '0%', 'Grievous Wounds\n Dealing magic damage to champions applies 40% Wounds for 3 seconds.', '0%', 350, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3165.png', 0, '0%', '0%', 0, 0, '0%', '0%', 'Morellonomicon', '0%', 3, NULL),
 (46, 25, 0, '0%', 0, '0%', 20, 2200, '0%', 'Starlit Grace\n Healing or shielding an ally chains the effect to another ally (excluding yourself), healing 30% or shielding 35% of the original amount.', '0%', 200, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6617.png', 0, '0%', '0%', 0, 0, '125%', '0%', 'Moonstone Renewer', '0%', 6, NULL),
-(47, 0, 0, '0%', 0, '0%', 15, 2300, '0%', 'Purify\n Remove all crowd control debuffs (excluding Airborne and Suppression) from an ally champion and restore 100 - 250 Health.', '12%', 250, '0%', 'https://u.gg/lol/items/mikaels-blessing', 0, '0%', '0%', 0, 0, '100%', '0%', U&'Mikael\00b4s Blessing', '0%', 6, NULL),
+(47, 0, 0, '0%', 0, '0%', 15, 2300, '0%', 'Purify\n Remove all crowd control debuffs (excluding Airborne and Suppression) from an ally champion and restore 100 - 250 Health.', '12%', 250, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/15.16.1/img/item/3222.png', 0, '0%', '0%', 0, 0, '100%', '0%', U&'Mikael\00b4s Blessing', '0%', 6, NULL),
 (48, 0, 0, '0%', 60, '0%', 15, 3100, '0%', 'Lifeline\n Taking magic damage that would reduce your Health below 30% grants a magic damage Shield for 3 seconds and 10% Omnivamp until end of combat.', '0%', 0, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3156.png', 0, '0%', '0%', 40, 0, '0%', '0%', 'Maw of Malmortius', '0%', 1, 4),
 (49, 85, 0, '0%', 0, '0%', 15, 2700, '0%', 'Scorn\n Gain 20 Ultimate Ability Haste. Hatefog\n Damaging a champion with your Ultimate burns the ground beneath them for 3s, dealing magic damage per second and reducing their Magic Resist.', '0%', 0, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/3118.png', 0, '0%', '0%', 0, 600, '0%', '0%', 'Malignance', '0%', 3, NULL);
 INSERT INTO items VALUES
@@ -179,7 +293,7 @@ INSERT INTO items VALUES
 (57, 0, 80, '0%', 0, '0%', 0, 2900, '0%', 'Magebane\nAfter not taking magic damage for 15 seconds, gain a magic shield.', '0%', 400, '100%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/2504.png', 0, '0%', '0%', 0, 0, '0%', '0%', 'Kaenic Rookern', '0%', 5, NULL),
 (58, 0, 45, '0%', 0, '0%', 0, 3200, '0%', 'Voidborn Resilience\nAfter 5 seconds of champion combat, increase your bonus Armor and Magic Resist by 30% until end of combat.', '0%', 350, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6665.png', 0, '0%', '0%', 45, 0, '0%', '0%', U&'Jak\00b4Sho, The Protean', '0%', 5, NULL),
 (59, 40, 0, '0%', 0, '0%', 20, 2250, '0%', 'Coordinated Fire (30s per target)\nSlowing or Immobilizing an enemy champion marks them for 5 seconds. Ally champion damage detonates the mark, dealing magic damage equal to 10% of current health.', '0%', 200, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/4005.png', 0, '0%', '0%', 0, 0, '100%', '0%', 'Imperial Mandate', '0%', 6, NULL),
-(60, 0, 0, '0%', 55, '0%', 0, 3000, '25%', 'Lifeline\nTaking damage that would reduce your Health below 30% grants a Shield for 3 seconds.', '0%', 0, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6673.png', 0, '0%', '0%', 0, 0, '0%', '0%', 'Immortal Shieldbow', '0%', 6, NULL),
+(60, 0, 0, '0%', 55, '0%', 0, 3000, '25%', 'Lifeline\nTaking damage that would reduce your Health below 30% grants a Shield for 3 seconds.', '0%', 0, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6673.png', 0, '0%', '0%', 0, 0, '0%', '0%', 'Immortal Shieldbow', '0%', 2, NULL),
 (61, 0, 50, '0%', 0, '0%', 15, 2900, '0%', 'Spellblade\nAfter using an Ability, your next Attack deals bonus physical damage On-Hit and creates a frost field for 2s that Slows.', '0%', 300, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6662.png', 0, '0%', '0%', 0, 0, '0%', '0%', 'Iceborn Gauntlet', '0%', 5, 1),
 (62, 0, 0, '0%', 60, '0%', 10, 3000, '0%', 'Eminence\nWhen a champion that you damaged within 3 seconds dies, gain 15 Attack Damage plus 2 per champion killed for 90 seconds.', '0%', 0, '0%', 'https://static.bigbrain.gg/assets/lol/riot_static/14.22.1/img/item/6697.png', 18, '0%', '0%', 0, 0, '0%', '0%', 'Hubris', '0%', 4, 2);
 INSERT INTO items VALUES
@@ -217,7 +331,8 @@ INSERT INTO items VALUES
 
 ALTER TABLE ITEMS ALTER COLUMN ID RESTART WITH 92;
 
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (1, 2800, 'matias.romero@gmail.com', 'Matix', 'pw_matias1', TIMESTAMP '2021-05-10 13:22:00', 520, 'matias.romero', 1, 3),
 (2, 1500, 'luciano.soto@yahoo.com', 'Lucs', 'pw_luciano2', TIMESTAMP '2022-07-08 15:45:20', 0, 'luciano.soto', 1, 3),
 (3, 3200, 'diego.sal@gmail.com', 'Diegorl', 'pw_diego3', TIMESTAMP '2023-03-17 10:05:45', 750, 'diego.salinas', 1, 3),
@@ -252,7 +367,8 @@ INSERT INTO users VALUES
 (32, 3900, 'german.roldan@gmail.com', 'Gerox', 'pw_german2', TIMESTAMP '2022-06-22 16:00:00', 750, 'german.roldan', 4, 3),
 (33, 4300, 'leo.mansilla@gmail.com', 'Leobas', 'pw_leo3', TIMESTAMP '2023-05-13 10:30:00', 400, 'leo.mansilla', 4, 3),
 (34, 3700, 'daniel.q@gmail.com', 'DaniKDA', 'pw_dani4', TIMESTAMP '2022-01-19 09:10:00', 1350, 'daniel.quiroga', 4, 3);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (35, 2900, 'julianrey@gmail.com', 'Julvyn', 'pw_julian5', TIMESTAMP '2020-10-07 20:00:00', 520, 'julian.rey', 4, 3),
 (36, 3200, 'bruno.espinoza@gmail.com', 'Brunex', 'pw_bruno6', TIMESTAMP '2021-11-28 17:45:00', 975, 'bruno.espinoza', 4, 3),
 (37, 4100, 'mauricio.diaz@gmail.com', 'Mauuu', 'pw_mau7', TIMESTAMP '2023-03-02 19:55:10', 0, 'mauricio.diaz', 4, 3),
@@ -287,7 +403,8 @@ INSERT INTO users VALUES
 (66, 5900, 'rodrigo.bustos@gmail.com', 'Rodrixx', 'pw_rodri6', TIMESTAMP '2021-06-28 20:00:00', 400, 'rodrigo.bustos', 7, 3),
 (67, 6300, 'fede.gomez@gmail.com', 'F3de', 'pw_fede7', TIMESTAMP '2022-03-19 11:10:00', 1820, 'federico.gomez', 7, 3),
 (68, 6200, 'maxi.vera@gmail.com', 'MaxV', 'pw_maxi8', TIMESTAMP '2021-09-13 08:50:00', 750, 'maximiliano.vera', 7, 3);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (69, 6100, 'cristian.araya@gmail.com', 'CrisA', 'pw_cris9', TIMESTAMP '2020-10-03 12:30:00', 1350, 'cristian.araya', 7, 3),
 (70, 5800, 'agostina.lopez@gmail.com', 'Agos', 'pw_ago10', TIMESTAMP '2022-01-07 17:45:00', 975, 'agostina.lopez', 7, 3),
 (71, 6700, 'manuel.castro@gmail.com', 'Manucas', 'pw_manu1', TIMESTAMP '2023-03-01 16:20:00', 1820, 'manuel.castro', 8, 3),
@@ -321,7 +438,8 @@ INSERT INTO users VALUES
 (99, 2000, 'esteban.silva@hotmail.com', 'Est3ban', 'pw_esteban19', TIMESTAMP '2020-07-05 21:35:27', 720, 'esteban.silva', NULL, 3),
 (100, 2500, 'rocio.perez@gmail.com', 'Rochi', 'pw_rocio20', TIMESTAMP '2023-05-09 10:10:10', 1100, 'rocio.perez', NULL, 3),
 (101, 4676, 'zhonyaboy@mail.com', 'DeadlyCombo', 'ganknow123', TIMESTAMP '2024-12-28 20:14:23.257564', 1353, 'ClashChad', 1, 2);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+ VALUES
 (102, 4668, 'truedamage@mail.com', 'PeelPro', 'dominionmain', TIMESTAMP '2024-10-28 20:14:23.258563', 1082, 'UltWhiffer', 1, 2),
 (103, 2433, 'teemoslayer@mail.com', 'TankCarry', 'outscale88', TIMESTAMP '2025-04-15 20:14:23.258563', 1936, 'LaneLord', 1, 2),
 (104, 3010, 'petcollector@mail.com', 'HextechAddict', 'league4ever', TIMESTAMP '2025-07-23 20:14:23.258563', 637, 'BaronMaster', 1, 2),
@@ -354,7 +472,7 @@ INSERT INTO users VALUES
 (131, 4576, 'supportcarry@mail.com', 'SpiritWalker', 'outdrafted', TIMESTAMP '2025-04-04 20:14:23.259565', 695, 'MapMute', 4, 2),
 (132, 3661, 'redsmite@mail.com', 'AFKSupport', 'supportcarry', TIMESTAMP '2024-09-30 20:14:23.259565', 967, 'MidGap', 4, 2),
 (133, 4662, 'elderstealer@mail.com', 'SupportMain', 'farmordie', TIMESTAMP '2025-04-22 20:14:23.259565', 695, 'SilenceCaster', 4, 2);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)VALUES
 (134, 3505, 'luluheals@mail.com', 'LastHitGod', 'macroplay', TIMESTAMP '2025-03-17 20:14:23.259565', 775, 'ArcaneBlitz', 4, 2),
 (135, 3055, 'ultwhiffer@mail.com', 'FlameMaster', '1trickpony', TIMESTAMP '2025-08-01 20:14:23.259565', 1000, 'SoloBaron', 4, 2),
 (136, 2471, 'objectiveboi@mail.com', 'LoLGuru', 'riftOP', TIMESTAMP '2024-09-29 20:14:23.259565', 1642, 'MapReader', 4, 2),
@@ -387,7 +505,8 @@ INSERT INTO users VALUES
 (163, 4937, 'csking@mail.com', 'EarlyDominate', 'trollking23', TIMESTAMP '2025-07-09 20:14:23.259565', 680, 'WomboCombo', 7, 2),
 (164, 2779, 'divegod@mail.com', 'ShieldQueen', 'sidelanegod', TIMESTAMP '2025-07-18 20:14:23.259565', 1873, 'BackdoorPro', 7, 2),
 (165, 2763, 'fastrecall@mail.com', 'SmiteStealer', 'pentaReady', TIMESTAMP '2025-02-16 20:14:23.259565', 1627, 'StunTrain', 7, 2);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (166, 3096, 'splitpusher@mail.com', 'CannonStealer', 'qwer1234', TIMESTAMP '2025-07-14 20:14:23.259565', 1941, 'EarlyRoam', 7, 2),
 (167, 3346, 'earlyroam@mail.com', 'CheeseWizard', 'ggezwp', TIMESTAMP '2024-11-17 20:14:23.259565', 1044, 'TeemoSlayer', 7, 2),
 (168, 3193, 'outplaygenius@mail.com', 'BaronCaller', 'matchmakerbad', TIMESTAMP '2024-11-28 20:14:23.259565', 960, 'YasuoMain', 7, 2),
@@ -420,7 +539,8 @@ INSERT INTO users VALUES
 (195, 1955, 'pinkward@mail.com', 'HealsOP', 'qhitbox', TIMESTAMP '2024-09-10 20:14:23.261079', 1730, 'LuluHeals', NULL, 2),
 (196, 2831, 'pentakilljoe@mail.com', 'TeleportChad', 'justoutplayed', TIMESTAMP '2025-01-21 20:14:23.261079', 1719, 'QSpamLord', NULL, 2),
 (197, 3770, 'afkmaster@mail.com', 'SoulHunter', 'wardabuser', TIMESTAMP '2024-11-08 20:14:23.261079', 1963, 'VoidRunner', NULL, 2);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (198, 3375, 'yasumain@mail.com', 'TheSionMain', 'bronze4life', TIMESTAMP '2024-09-09 20:14:23.261079', 1479, 'TurboTank', NULL, 2),
 (199, 2634, 'crimsonblade@mail.com', 'StompMachine', 'intbutcute', TIMESTAMP '2025-05-13 20:14:23.261079', 1815, 'DragonDrake', NULL, 2),
 (200, 1879, 'macrogamer@mail.com', 'JungleSniper', 'carrymeplz', TIMESTAMP '2025-07-26 20:14:23.261079', 1748, 'MetaBreaker', NULL, 2),
@@ -453,7 +573,8 @@ INSERT INTO users VALUES
 (227, 4291, 'csking@mail.com', 'NextGenADC', 'matchmakerbad', TIMESTAMP '2025-03-30 20:14:33.584148', 1700, 'PentakillJoe', 3, 4),
 (228, 4926, 'lategamecarry@mail.com', 'DiveMePls', 'pentaReady', TIMESTAMP '2024-10-04 20:14:33.584148', 1110, 'SoloBaron', 3, 4),
 (229, 2568, 'xpthief@mail.com', 'EarlyDominate', 'boostedape', TIMESTAMP '2025-03-11 20:14:33.584148', 1244, 'TiltProof', 3, 4);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (230, 3334, 'elderstealer@mail.com', 'TheZedHead', 'dontintme', TIMESTAMP '2025-05-01 20:14:33.584148', 1105, 'DodgeMaster', 3, 4),
 (231, 3217, 'skillshothit@mail.com', 'ChampMaster', 'ganknow123', TIMESTAMP '2025-03-28 20:14:33.584148', 764, 'MetaBreaker', 4, 4),
 (232, 3785, 'threshhook@mail.com', 'DeadlyCombo', 'goldlead', TIMESTAMP '2025-03-28 20:14:33.584148', 849, 'ThreshHook', 4, 4),
@@ -486,7 +607,8 @@ INSERT INTO users VALUES
 (259, 1225, 'quickgank@mail.com', 'BanMeZed', 'macroplay', TIMESTAMP '2024-09-30 20:14:33.584148', 1272, 'BlueSmite', 6, 4),
 (260, 1086, 'honor4life@mail.com', 'FakerClone', 'password987', TIMESTAMP '2025-02-21 20:14:33.584148', 1297, 'EarlyRoam', 6, 4),
 (261, 2855, 'sneakyfox@mail.com', 'SkillZoner', 'ggnoob', TIMESTAMP '2024-12-14 20:14:33.584148', 1359, 'MapMute', 7, 4);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (262, 3968, 'intdetector@mail.com', 'AFKSupport', 'rankreset', TIMESTAMP '2025-02-20 20:14:33.584148', 991, 'ElderCaller', 7, 4),
 (263, 1192, 'smitemachine@mail.com', 'StompMachine', 'bronze4life', TIMESTAMP '2025-05-08 20:14:33.584148', 1650, 'ClutchSaver', 7, 4),
 (264, 2975, 'mapmute@mail.com', 'YuumiOnTop', 'pass123', TIMESTAMP '2024-12-06 20:14:33.584148', 1603, 'SplitPusher', 7, 4),
@@ -519,7 +641,8 @@ INSERT INTO users VALUES
 (291, 3372, 'divegod@mail.com', 'ClutchFiddles', 'blueessence', TIMESTAMP '2025-05-04 20:14:33.584148', 963, 'ZhonyaBoy', NULL, 4),
 (292, 2718, 'ultwhiffer@mail.com', 'SoloQStar', 'carrymeplz', TIMESTAMP '2025-03-27 20:14:33.584148', 1134, 'MapReader', NULL, 4),
 (293, 1445, 'objectiveboi@mail.com', 'AutoCrit', 'goldrush', TIMESTAMP '2025-08-04 20:14:33.584148', 1208, 'FastRecall', NULL, 4);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (294, 2333, 'ghostchaser@mail.com', 'SupportMain', 'wardpls13', TIMESTAMP '2024-10-25 20:14:33.584148', 1519, 'SkillshotHit', NULL, 4),
 (295, 3751, 'stuntrain@mail.com', 'CarryLord', 'newmeta23', TIMESTAMP '2025-08-06 20:14:33.584148', 1457, 'ArcaneBlitz', NULL, 4),
 (296, 2631, 'exodiateam@mail.com', 'GhostedMid', 'intbutcute', TIMESTAMP '2025-05-16 20:14:33.584148', 532, 'CSKing', NULL, 4),
@@ -552,7 +675,8 @@ INSERT INTO users VALUES
 (323, 3581, 'goldfunnel@mail.com', 'PeelPro', 'elotilt', TIMESTAMP '2024-11-12 20:14:41.208685', 878, 'MacroGamer', 3, 1),
 (324, 3144, 'divegod@mail.com', 'JungleSniper', 'redsmite22', TIMESTAMP '2024-11-11 20:14:41.208685', 812, 'LuluHeals', 3, 1),
 (325, 4727, 'voidlingspam@mail.com', 'PassiveBeast', 'xpeke2025', TIMESTAMP '2025-06-29 20:14:41.208685', 1612, 'ZhonyaBoy', 3, 1);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (326, 2976, 'elderstealer@mail.com', 'ADC4Life', 'ffplz', TIMESTAMP '2024-10-30 20:14:41.208685', 1147, 'BlueSmite', 3, 1),
 (327, 3407, 'eldercaller@mail.com', 'AramOnly', 'clutchking', TIMESTAMP '2025-01-27 20:14:41.208685', 1919, 'LoLFiesta', 3, 1),
 (328, 1198, 'ffvoteno@mail.com', 'OutscaleChamp', 'luxqhit', TIMESTAMP '2024-12-26 20:14:41.208685', 1094, 'BlueNexus', 3, 1),
@@ -585,7 +709,8 @@ INSERT INTO users VALUES
 (355, 4308, 'riftwalker@mail.com', 'DeadlyCombo', 'rankgod99', TIMESTAMP '2024-10-30 20:14:41.208685', 1556, 'StunTrain', 6, 1),
 (356, 4526, 'unkillable@mail.com', 'WavePunisher', 'supportcarry', TIMESTAMP '2024-08-28 20:14:41.208685', 1589, 'SoloBaron', 6, 1),
 (357, 1983, 'oldrunesguy@mail.com', 'OPShaco', 'shadowLOL', TIMESTAMP '2025-01-03 20:14:41.208685', 1032, 'BackdoorPro', 6, 1);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (358, 4699, 'roamingwolf@mail.com', 'SnowballSolo', 'goldlead', TIMESTAMP '2024-11-30 20:14:41.208685', 1357, 'ThreshHook', 6, 1),
 (359, 3104, 'truedamage@mail.com', 'SpiritWalker', 'griefgamer', TIMESTAMP '2024-12-22 20:14:41.208685', 583, 'QSpamLord', 6, 1),
 (360, 1085, 'cooldownking@mail.com', 'UltForStyle', 'drake123', TIMESTAMP '2024-08-22 20:14:41.208685', 1566, 'CSKing', 6, 1),
@@ -618,7 +743,8 @@ INSERT INTO users VALUES
 (387, 3608, 'macrogamer@mail.com', 'MetaGhost', 'hunter2', TIMESTAMP '2025-01-26 20:14:41.208685', 894, 'OutplayGenius', 9, 1),
 (388, 1071, 'lanerlost@mail.com', 'DiveMePls', 'safefarm', TIMESTAMP '2024-10-29 20:14:41.208685', 1936, 'GarenSmash', 9, 1),
 (389, 3772, 'outplaygenius@mail.com', 'TheSionMain', 'inhibdance', TIMESTAMP '2025-03-30 20:14:41.208685', 785, 'RiftWalker', 9, 1);
-INSERT INTO users VALUES
+INSERT INTO users (id, blue_essence, email, nickname, username, registration_date, riot_points, password, rank_id, server_id)
+VALUES
 (390, 2205, 'crimsonblade@mail.com', 'JukeMachine', 'goredrinker', TIMESTAMP '2025-05-02 20:14:41.208685', 879, 'ExodiaTeam', 9, 1),
 (391, 1816, 'yasumain@mail.com', 'HealsOP', 'pentaReady', TIMESTAMP '2025-03-25 20:14:41.208685', 1609, 'WomboCombo', NULL, 1),
 (392, 2296, 'arcaneblitz@mail.com', 'BanMeZed', 'kill2win', TIMESTAMP '2025-02-12 20:14:41.208685', 1712, 'ZedTheDead', NULL, 1),
@@ -633,164 +759,565 @@ INSERT INTO users VALUES
 
 ALTER TABLE USERS ALTER COLUMN ID RESTART WITH 401;
 
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75' WHERE id = 1;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75' WHERE id = 2;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSinged_0.jpg&w=1200&q=75' WHERE id = 3;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75' WHERE id = 4;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75' WHERE id = 5;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75' WHERE id = 6;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FChogath_0.jpg&w=1200&q=75' WHERE id = 7;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAurelionSol_0.jpg&w=1200&q=75' WHERE id = 8;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FUrgot_0.jpg&w=1200&q=75' WHERE id = 9;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75' WHERE id = 10;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75' WHERE id = 11;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FUrgot_0.jpg&w=1200&q=75' WHERE id = 12;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenekton_0.jpg&w=1200&q=75' WHERE id = 13;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75' WHERE id = 14;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75' WHERE id = 15;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAatrox_0.jpg&w=1200&q=75' WHERE id = 16;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSkarner_0.jpg&w=1200&q=75' WHERE id = 17;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenata_0.jpg&w=1200&q=75' WHERE id = 18;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75' WHERE id = 19;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75' WHERE id = 20;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75' WHERE id = 21;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75' WHERE id = 22;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMilio_0.jpg&w=1200&q=75' WHERE id = 23;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75' WHERE id = 24;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAatrox_0.jpg&w=1200&q=75' WHERE id = 25;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75' WHERE id = 26;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75' WHERE id = 27;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_0.jpg&w=1200&q=75' WHERE id = 28;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAurelionSol_0.jpg&w=1200&q=75' WHERE id = 29;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSkarner_0.jpg&w=1200&q=75' WHERE id = 30;
+UPDATE users SET background_image = 'https://eskipaper.com/images/league-of-legends-wallpaper-15.jpg' WHERE id = 31;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFiora_0.jpg&w=1200&q=75' WHERE id = 32;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75' WHERE id = 33;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75' WHERE id = 34;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75' WHERE id = 35;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRekSai_0.jpg&w=1200&q=75' WHERE id = 36;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAkali_0.jpg&w=1200&q=75' WHERE id = 37;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_0.jpg&w=1200&q=75' WHERE id = 38;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75' WHERE id = 39;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTrundle_0.jpg&w=1200&q=75' WHERE id = 40;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwistedFate_0.jpg&w=1200&q=75' WHERE id = 41;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenekton_0.jpg&w=1200&q=75' WHERE id = 42;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75' WHERE id = 43;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75' WHERE id = 44;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75' WHERE id = 45;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75' WHERE id = 46;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75' WHERE id = 47;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FChogath_0.jpg&w=1200&q=75' WHERE id = 48;
+UPDATE users SET background_image = 'https://eskipaper.com/images/league-of-legends-wallpaper-15.jpg' WHERE id = 49;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwistedFate_0.jpg&w=1200&q=75' WHERE id = 50;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FIvern_0.jpg&w=1200&q=75' WHERE id = 51;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75' WHERE id = 52;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75' WHERE id = 53;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FUrgot_0.jpg&w=1200&q=75' WHERE id = 54;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAurelionSol_0.jpg&w=1200&q=75' WHERE id = 55;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_0.jpg&w=1200&q=75' WHERE id = 56;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRekSai_0.jpg&w=1200&q=75' WHERE id = 57;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75' WHERE id = 58;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwistedFate_0.jpg&w=1200&q=75' WHERE id = 59;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FShen_0.jpg&w=1200&q=75' WHERE id = 60;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FChogath_0.jpg&w=1200&q=75' WHERE id = 61;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75' WHERE id = 62;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75' WHERE id = 63;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_0.jpg&w=1200&q=75' WHERE id = 64;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_0.jpg&w=1200&q=75' WHERE id = 65;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKhazix_0.jpg&w=1200&q=75' WHERE id = 66;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75' WHERE id = 67;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenekton_0.jpg&w=1200&q=75' WHERE id = 68;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FXerath_0.jpg&w=1200&q=75' WHERE id = 69;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75' WHERE id = 70;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75' WHERE id = 71;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75' WHERE id = 72;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75' WHERE id = 73;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_0.jpg&w=1200&q=75' WHERE id = 74;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75' WHERE id = 75;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75' WHERE id = 76;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDrMundo_0.jpg&w=1200&q=75' WHERE id = 77;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKhazix_0.jpg&w=1200&q=75' WHERE id = 78;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75' WHERE id = 79;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FUrgot_0.jpg&w=1200&q=75' WHERE id = 80;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75' WHERE id = 81;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAurelionSol_0.jpg&w=1200&q=75' WHERE id = 82;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75' WHERE id = 83;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75' WHERE id = 84;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FOrnn_0.jpg&w=1200&q=75' WHERE id = 85;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVi_0.jpg&w=1200&q=75' WHERE id = 86;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75' WHERE id = 87;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBard_0.jpg&w=1200&q=75' WHERE id = 88;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75' WHERE id = 89;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75' WHERE id = 90;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FCaitlyn_0.jpg&w=1200&q=75' WHERE id = 91;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMilio_0.jpg&w=1200&q=75' WHERE id = 92;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75' WHERE id = 93;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_0.jpg&w=1200&q=75' WHERE id = 94;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAurelionSol_0.jpg&w=1200&q=75' WHERE id = 95;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75' WHERE id = 96;
+UPDATE users SET background_image = 'https://eskipaper.com/images/league-of-legends-wallpaper-15.jpg' WHERE id = 97;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTrundle_0.jpg&w=1200&q=75' WHERE id = 98;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSkarner_0.jpg&w=1200&q=75' WHERE id = 99;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKhazix_0.jpg&w=1200&q=75' WHERE id = 100;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFiora_0.jpg&w=1200&q=75' WHERE id = 101;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_0.jpg&w=1200&q=75' WHERE id = 102;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75' WHERE id = 103;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMilio_0.jpg&w=1200&q=75' WHERE id = 104;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75' WHERE id = 105;
+UPDATE users SET background_image = 'https://eskipaper.com/images/league-of-legends-wallpaper-15.jpg' WHERE id = 106;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75' WHERE id = 107;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75' WHERE id = 108;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75' WHERE id = 109;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FUrgot_0.jpg&w=1200&q=75' WHERE id = 110;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75' WHERE id = 111;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FUrgot_0.jpg&w=1200&q=75' WHERE id = 112;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75' WHERE id = 113;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAurelionSol_0.jpg&w=1200&q=75' WHERE id = 114;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75' WHERE id = 115;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75' WHERE id = 116;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FXerath_0.jpg&w=1200&q=75' WHERE id = 117;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FChogath_0.jpg&w=1200&q=75' WHERE id = 118;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75' WHERE id = 119;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_0.jpg&w=1200&q=75' WHERE id = 120;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBard_0.jpg&w=1200&q=75' WHERE id = 121;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75' WHERE id = 122;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75' WHERE id = 123;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75' WHERE id = 124;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75' WHERE id = 125;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75' WHERE id = 126;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75' WHERE id = 127;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75' WHERE id = 128;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75' WHERE id = 129;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVi_0.jpg&w=1200&q=75' WHERE id = 130;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFiora_0.jpg&w=1200&q=75' WHERE id = 131;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75' WHERE id = 132;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75' WHERE id = 133;
+UPDATE users SET background_image = 'https://eskipaper.com/images/league-of-legends-wallpaper-15.jpg' WHERE id = 134;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDrMundo_0.jpg&w=1200&q=75' WHERE id = 135;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBard_0.jpg&w=1200&q=75' WHERE id = 136;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBard_0.jpg&w=1200&q=75' WHERE id = 137;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75' WHERE id = 138;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMilio_0.jpg&w=1200&q=75' WHERE id = 139;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGragas_0.jpg&w=1200&q=75' WHERE id = 140;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwistedFate_0.jpg&w=1200&q=75' WHERE id = 141;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75' WHERE id = 142;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenata_0.jpg&w=1200&q=75' WHERE id = 143;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_0.jpg&w=1200&q=75' WHERE id = 144;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKhazix_0.jpg&w=1200&q=75' WHERE id = 145;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_0.jpg&w=1200&q=75' WHERE id = 146;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75' WHERE id = 147;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75' WHERE id = 148;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75' WHERE id = 149;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75' WHERE id = 150;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75' WHERE id = 151;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_0.jpg&w=1200&q=75' WHERE id = 152;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenata_0.jpg&w=1200&q=75' WHERE id = 153;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMilio_0.jpg&w=1200&q=75' WHERE id = 154;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FShen_0.jpg&w=1200&q=75' WHERE id = 155;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FCaitlyn_0.jpg&w=1200&q=75' WHERE id = 156;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVi_0.jpg&w=1200&q=75' WHERE id = 157;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAlistar_0.jpg&w=1200&q=75' WHERE id = 158;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75' WHERE id = 159;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75' WHERE id = 160;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAkali_0.jpg&w=1200&q=75' WHERE id = 161;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75' WHERE id = 162;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75' WHERE id = 163;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75' WHERE id = 164;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75' WHERE id = 165;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FXerath_0.jpg&w=1200&q=75' WHERE id = 166;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwistedFate_0.jpg&w=1200&q=75' WHERE id = 167;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMalphite_0.jpg&w=1200&q=75' WHERE id = 168;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAkali_0.jpg&w=1200&q=75' WHERE id = 169;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FHecarim_0.jpg&w=1200&q=75' WHERE id = 170;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75' WHERE id = 171;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSkarner_0.jpg&w=1200&q=75' WHERE id = 172;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_0.jpg&w=1200&q=75' WHERE id = 173;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBard_0.jpg&w=1200&q=75' WHERE id = 174;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75' WHERE id = 175;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75' WHERE id = 176;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75' WHERE id = 177;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSinged_0.jpg&w=1200&q=75' WHERE id = 178;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75' WHERE id = 179;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FCaitlyn_0.jpg&w=1200&q=75' WHERE id = 180;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75' WHERE id = 181;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFiora_0.jpg&w=1200&q=75' WHERE id = 182;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGragas_0.jpg&w=1200&q=75' WHERE id = 183;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRekSai_0.jpg&w=1200&q=75' WHERE id = 184;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAatrox_0.jpg&w=1200&q=75' WHERE id = 185;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_0.jpg&w=1200&q=75' WHERE id = 186;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75' WHERE id = 187;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMalphite_0.jpg&w=1200&q=75' WHERE id = 188;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwistedFate_0.jpg&w=1200&q=75' WHERE id = 189;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75' WHERE id = 190;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75' WHERE id = 191;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FShen_0.jpg&w=1200&q=75' WHERE id = 192;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_0.jpg&w=1200&q=75' WHERE id = 193;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75' WHERE id = 194;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAlistar_0.jpg&w=1200&q=75' WHERE id = 195;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75' WHERE id = 196;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75' WHERE id = 197;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenekton_0.jpg&w=1200&q=75' WHERE id = 198;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75' WHERE id = 199;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBard_0.jpg&w=1200&q=75' WHERE id = 200;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FChogath_0.jpg&w=1200&q=75' WHERE id = 201;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKhazix_0.jpg&w=1200&q=75' WHERE id = 202;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75' WHERE id = 203;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75' WHERE id = 204;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75' WHERE id = 205;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75' WHERE id = 206;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FHecarim_0.jpg&w=1200&q=75' WHERE id = 207;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVi_0.jpg&w=1200&q=75' WHERE id = 208;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75' WHERE id = 209;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75' WHERE id = 210;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75' WHERE id = 211;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenekton_0.jpg&w=1200&q=75' WHERE id = 212;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75' WHERE id = 213;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75' WHERE id = 214;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75' WHERE id = 215;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FXerath_0.jpg&w=1200&q=75' WHERE id = 216;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FShen_0.jpg&w=1200&q=75' WHERE id = 217;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFiora_0.jpg&w=1200&q=75' WHERE id = 218;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_0.jpg&w=1200&q=75' WHERE id = 219;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75' WHERE id = 220;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_0.jpg&w=1200&q=75' WHERE id = 221;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_0.jpg&w=1200&q=75' WHERE id = 222;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVi_0.jpg&w=1200&q=75' WHERE id = 223;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75' WHERE id = 224;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_0.jpg&w=1200&q=75' WHERE id = 225;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75' WHERE id = 226;
+UPDATE users SET background_image = 'https://eskipaper.com/images/league-of-legends-wallpaper-15.jpg' WHERE id = 227;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenata_0.jpg&w=1200&q=75' WHERE id = 228;
+UPDATE users SET background_image = 'https://eskipaper.com/images/league-of-legends-wallpaper-15.jpg' WHERE id = 229;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FShen_0.jpg&w=1200&q=75' WHERE id = 230;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSkarner_0.jpg&w=1200&q=75' WHERE id = 231;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAkali_0.jpg&w=1200&q=75' WHERE id = 232;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75' WHERE id = 233;
+UPDATE users SET background_image = 'https://eskipaper.com/images/league-of-legends-wallpaper-15.jpg' WHERE id = 234;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75' WHERE id = 235;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75' WHERE id = 236;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75' WHERE id = 237;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMordekaiser_0.jpg&w=1200&q=75' WHERE id = 238;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75' WHERE id = 239;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_0.jpg&w=1200&q=75' WHERE id = 240;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_0.jpg&w=1200&q=75' WHERE id = 241;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FXerath_0.jpg&w=1200&q=75' WHERE id = 242;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGragas_0.jpg&w=1200&q=75' WHERE id = 243;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMalphite_0.jpg&w=1200&q=75' WHERE id = 244;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenata_0.jpg&w=1200&q=75' WHERE id = 245;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTrundle_0.jpg&w=1200&q=75' WHERE id = 246;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_0.jpg&w=1200&q=75' WHERE id = 247;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75' WHERE id = 248;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75' WHERE id = 249;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75' WHERE id = 250;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75' WHERE id = 251;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75' WHERE id = 252;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75' WHERE id = 253;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75' WHERE id = 254;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwistedFate_0.jpg&w=1200&q=75' WHERE id = 255;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSkarner_0.jpg&w=1200&q=75' WHERE id = 256;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMilio_0.jpg&w=1200&q=75' WHERE id = 257;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75' WHERE id = 258;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMordekaiser_0.jpg&w=1200&q=75' WHERE id = 259;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75' WHERE id = 260;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRekSai_0.jpg&w=1200&q=75' WHERE id = 261;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75' WHERE id = 262;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75' WHERE id = 263;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75' WHERE id = 264;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75' WHERE id = 265;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAlistar_0.jpg&w=1200&q=75' WHERE id = 266;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMalphite_0.jpg&w=1200&q=75' WHERE id = 267;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenekton_0.jpg&w=1200&q=75' WHERE id = 268;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMalphite_0.jpg&w=1200&q=75' WHERE id = 269;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75' WHERE id = 270;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFiora_0.jpg&w=1200&q=75' WHERE id = 271;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75' WHERE id = 272;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAatrox_0.jpg&w=1200&q=75' WHERE id = 273;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenata_0.jpg&w=1200&q=75' WHERE id = 274;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75' WHERE id = 275;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVi_0.jpg&w=1200&q=75' WHERE id = 276;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FIvern_0.jpg&w=1200&q=75' WHERE id = 277;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75' WHERE id = 278;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75' WHERE id = 279;
+UPDATE users SET background_image = 'https://eskipaper.com/images/league-of-legends-wallpaper-15.jpg' WHERE id = 280;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_0.jpg&w=1200&q=75' WHERE id = 281;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FHecarim_0.jpg&w=1200&q=75' WHERE id = 282;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FUrgot_0.jpg&w=1200&q=75' WHERE id = 283;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FShen_0.jpg&w=1200&q=75' WHERE id = 284;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75' WHERE id = 285;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDrMundo_0.jpg&w=1200&q=75' WHERE id = 286;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75' WHERE id = 287;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FChogath_0.jpg&w=1200&q=75' WHERE id = 288;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75' WHERE id = 289;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75' WHERE id = 290;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_0.jpg&w=1200&q=75' WHERE id = 291;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75' WHERE id = 292;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenata_0.jpg&w=1200&q=75' WHERE id = 293;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_0.jpg&w=1200&q=75' WHERE id = 294;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FChogath_0.jpg&w=1200&q=75' WHERE id = 295;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FCaitlyn_0.jpg&w=1200&q=75' WHERE id = 296;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSkarner_0.jpg&w=1200&q=75' WHERE id = 297;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTrundle_0.jpg&w=1200&q=75' WHERE id = 298;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FHecarim_0.jpg&w=1200&q=75' WHERE id = 299;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75' WHERE id = 300;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFiora_0.jpg&w=1200&q=75' WHERE id = 301;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBard_0.jpg&w=1200&q=75' WHERE id = 302;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAurelionSol_0.jpg&w=1200&q=75' WHERE id = 303;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAurelionSol_0.jpg&w=1200&q=75' WHERE id = 304;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRekSai_0.jpg&w=1200&q=75' WHERE id = 305;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75' WHERE id = 306;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75' WHERE id = 307;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75' WHERE id = 308;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75' WHERE id = 309;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAkali_0.jpg&w=1200&q=75' WHERE id = 310;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMalphite_0.jpg&w=1200&q=75' WHERE id = 311;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSkarner_0.jpg&w=1200&q=75' WHERE id = 312;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAatrox_0.jpg&w=1200&q=75' WHERE id = 313;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwistedFate_0.jpg&w=1200&q=75' WHERE id = 314;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75' WHERE id = 315;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenata_0.jpg&w=1200&q=75' WHERE id = 316;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75' WHERE id = 317;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75' WHERE id = 318;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_0.jpg&w=1200&q=75' WHERE id = 319;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75' WHERE id = 320;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75' WHERE id = 321;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRekSai_0.jpg&w=1200&q=75' WHERE id = 322;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75' WHERE id = 323;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75' WHERE id = 324;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAurelionSol_0.jpg&w=1200&q=75' WHERE id = 325;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwistedFate_0.jpg&w=1200&q=75' WHERE id = 326;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75' WHERE id = 327;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMilio_0.jpg&w=1200&q=75' WHERE id = 328;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSinged_0.jpg&w=1200&q=75' WHERE id = 329;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75' WHERE id = 330;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75' WHERE id = 331;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSinged_0.jpg&w=1200&q=75' WHERE id = 332;
+UPDATE users SET background_image = 'https://eskipaper.com/images/league-of-legends-wallpaper-15.jpg' WHERE id = 333;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75' WHERE id = 334;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKaisa_0.jpg&w=1200&q=75' WHERE id = 335;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMalphite_0.jpg&w=1200&q=75' WHERE id = 336;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMordekaiser_0.jpg&w=1200&q=75' WHERE id = 337;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSinged_0.jpg&w=1200&q=75' WHERE id = 338;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75' WHERE id = 339;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FIvern_0.jpg&w=1200&q=75' WHERE id = 340;
+UPDATE users SET background_image = 'https://eskipaper.com/images/league-of-legends-wallpaper-15.jpg' WHERE id = 341;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75' WHERE id = 342;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenekton_0.jpg&w=1200&q=75' WHERE id = 343;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRekSai_0.jpg&w=1200&q=75' WHERE id = 344;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTrundle_0.jpg&w=1200&q=75' WHERE id = 345;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75' WHERE id = 346;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAkali_0.jpg&w=1200&q=75' WHERE id = 347;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMilio_0.jpg&w=1200&q=75' WHERE id = 348;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75' WHERE id = 349;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTrundle_0.jpg&w=1200&q=75' WHERE id = 350;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVi_0.jpg&w=1200&q=75' WHERE id = 351;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVi_0.jpg&w=1200&q=75' WHERE id = 352;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FXerath_0.jpg&w=1200&q=75' WHERE id = 353;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FShen_0.jpg&w=1200&q=75' WHERE id = 354;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FXerath_0.jpg&w=1200&q=75' WHERE id = 355;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75' WHERE id = 356;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_0.jpg&w=1200&q=75' WHERE id = 357;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75' WHERE id = 358;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKhazix_0.jpg&w=1200&q=75' WHERE id = 359;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75' WHERE id = 360;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFizz_0.jpg&w=1200&q=75' WHERE id = 361;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAlistar_0.jpg&w=1200&q=75' WHERE id = 362;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGraves_0.jpg&w=1200&q=75' WHERE id = 363;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_0.jpg&w=1200&q=75' WHERE id = 364;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_0.jpg&w=1200&q=75' WHERE id = 365;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FMilio_0.jpg&w=1200&q=75' WHERE id = 366;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRenata_0.jpg&w=1200&q=75' WHERE id = 367;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75' WHERE id = 368;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSkarner_0.jpg&w=1200&q=75' WHERE id = 369;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FSenna_0.jpg&w=1200&q=75' WHERE id = 370;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FVladimir_0.jpg&w=1200&q=75' WHERE id = 371;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FCaitlyn_0.jpg&w=1200&q=75' WHERE id = 372;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FChogath_0.jpg&w=1200&q=75' WHERE id = 373;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJarvanIV_0.jpg&w=1200&q=75' WHERE id = 374;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_0.jpg&w=1200&q=75' WHERE id = 375;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGalio_0.jpg&w=1200&q=75' WHERE id = 376;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAlistar_0.jpg&w=1200&q=75' WHERE id = 377;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75' WHERE id = 378;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75' WHERE id = 379;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRekSai_0.jpg&w=1200&q=75' WHERE id = 380;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75' WHERE id = 381;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKatarina_0.jpg&w=1200&q=75' WHERE id = 382;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75' WHERE id = 383;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_0.jpg&w=1200&q=75' WHERE id = 384;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDrMundo_0.jpg&w=1200&q=75' WHERE id = 385;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_0.jpg&w=1200&q=75' WHERE id = 386;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZeri_0.jpg&w=1200&q=75' WHERE id = 387;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBraum_0.jpg&w=1200&q=75' WHERE id = 388;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FRengar_0.jpg&w=1200&q=75' WHERE id = 389;
+UPDATE users SET background_image = 'https://eskipaper.com/images/league-of-legends-wallpaper-15.jpg' WHERE id = 390;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_0.jpg&w=1200&q=75' WHERE id = 391;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FCaitlyn_0.jpg&w=1200&q=75' WHERE id = 392;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FFiora_0.jpg&w=1200&q=75' WHERE id = 393;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FAatrox_0.jpg&w=1200&q=75' WHERE id = 394;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FChogath_0.jpg&w=1200&q=75' WHERE id = 395;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGraves_0.jpg&w=1200&q=75' WHERE id = 396;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_0.jpg&w=1200&q=75' WHERE id = 397;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_0.jpg&w=1200&q=75' WHERE id = 398;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FWarwick_0.jpg&w=1200&q=75' WHERE id = 399;
+UPDATE users SET background_image = 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FBard_0.jpg&w=1200&q=75' WHERE id = 400;
+
 INSERT INTO profile_icons VALUES
-(1, 'Ocean Week Nautilus', 'https://static.wikia.nocookie.net/leagueoflegends/images/9/9f/Ocean_Week_Nautilus_profileicon.png/revision/latest?cb=20170504230042', 1),
-(2, 'Ocean Week Fizz', 'https://static.wikia.nocookie.net/leagueoflegends/images/5/54/Ocean_Week_Fizz_profileicon.png/revision/latest?cb=20170504215037', 1),
-(3, 'Nightblade', 'https://static.wikia.nocookie.net/leagueoflegends/images/e/e1/Nightblade_profileicon.png/revision/latest?cb=20170601013122', 1),
-(4, 'Mark of the Betrayer', 'https://static.wikia.nocookie.net/leagueoflegends/images/a/ac/Mark_of_the_Betrayer_profileicon.png/revision/latest?cb=20170504222602', 1),
-(5, 'Little Devil Teemo', 'https://static.wikia.nocookie.net/leagueoflegends/images/3/39/Little_Devil_Teemo_profileicon.png/revision/latest?cb=20170505004408', 1),
-(6, 'Lifebead', 'https://static.wikia.nocookie.net/leagueoflegends/images/0/05/Lifebead_profileicon.png/revision/latest?cb=20180911214252', 1),
-(7, 'Super Galaxy Wolf', 'https://static.wikia.nocookie.net/leagueoflegends/images/6/62/Super_Galaxy_Wolf_profileicon.png/revision/latest?cb=20170505003837', 1),
-(8, 'El Macho', 'https://static.wikia.nocookie.net/leagueoflegends/images/8/88/El_Macho_profileicon.png/revision/latest?cb=20170504223921', 1),
-(9, 'Oblivion', 'https://static.wikia.nocookie.net/leagueoflegends/images/1/12/Oblivion_profileicon.png/revision/latest?cb=20170505004431', 1),
-(10, 'Blood Moon Rising', 'https://static.wikia.nocookie.net/leagueoflegends/images/8/89/Blood_Moon_Rising_profileicon.png/revision/latest?cb=20170505013323', 1),
-(11, 'Seeing Hat', 'https://static.wikia.nocookie.net/leagueoflegends/images/8/87/Seeing_Hat_profileicon.png/revision/latest?cb=20170505020507', 1),
-(12, 'God Fist', 'https://static.wikia.nocookie.net/leagueoflegends/images/8/87/Seeing_Hat_profileicon.png/revision/latest?cb=20170505020507', 1),
-(13, 'Pentakill Karthus', 'https://static.wikia.nocookie.net/leagueoflegends/images/3/38/Pentakill_Karthus_profileicon.png/revision/latest?cb=20170728190547', 1),
-(14, 'Battle Boss Ziggs', 'https://static.wikia.nocookie.net/leagueoflegends/images/d/d6/Battle_Boss_Ziggs_profileicon.png/revision/latest?cb=20170726002151', 1),
-(15, 'Pentakill Olaf', 'https://static.wikia.nocookie.net/leagueoflegends/images/9/93/Pentakill_Olaf_profileicon.png/revision/latest?cb=20170728190551', 1),
-(16, 'Pentakill II', 'https://static.wikia.nocookie.net/leagueoflegends/images/e/ea/Pentakill_II_profileicon.png/revision/latest?cb=20170801201912', 1),
-(17, 'Pentakill Yorick', 'https://static.wikia.nocookie.net/leagueoflegends/images/3/36/Pentakill_Yorick_profileicon.png/revision/latest?cb=20170728190553', 1),
-(18, 'Super Galaxy Elise', 'https://static.wikia.nocookie.net/leagueoflegends/images/6/69/Super_Galaxy_Elise_profileicon.png/revision/latest?cb=20171003201423', 1),
-(19, 'Transcendent', 'https://static.wikia.nocookie.net/leagueoflegends/images/9/9d/Transcendent_profileicon.png/revision/latest?cb=20170915210019', 1),
-(20, 'Resist', 'https://static.wikia.nocookie.net/leagueoflegends/images/5/57/Resist_profileicon.png/revision/latest?cb=20180617163451', 1),
-(21, 'Birdio', 'https://static.wikia.nocookie.net/leagueoflegends/images/7/70/Birdio_profileicon.png/revision/latest?cb=20180617163629', 1),
-(22, 'Dark Waters Diana', 'https://static.wikia.nocookie.net/leagueoflegends/images/8/88/Dark_Waters_Diana_profileicon.png/revision/latest?cb=20180617163849', 1),
-(23, 'Dark Waters Vladimir', 'https://static.wikia.nocookie.net/leagueoflegends/images/6/60/Dark_Waters_Vladimir_profileicon.png/revision/latest?cb=20180617163403', 1),
-(24, 'Wolf Banner', 'https://static.wikia.nocookie.net/leagueoflegends/images/6/6c/Wolf_Banner_profileicon.png/revision/latest?cb=20180618200635', 1),
-(25, 'Turret Jr', 'https://static.wikia.nocookie.net/leagueoflegends/images/b/b1/Turret_Jr._profileicon.png/revision/latest?cb=20180926020420', 1),
-(26, 'KDA Ahri', 'https://static.wikia.nocookie.net/leagueoflegends/images/b/b6/KDA_Ahri_profileicon.jpg/revision/latest?cb=20230201133527', 1),
-(27, 'Blood Moon Aatrox', 'https://static.wikia.nocookie.net/leagueoflegends/images/5/55/Blood_Moon_Aatrox_profileicon.png/revision/latest?cb=20190109010935', 1);
-INSERT INTO profile_icons VALUES
-(28, 'Blood Moon Pyke', 'https://static.wikia.nocookie.net/leagueoflegends/images/7/7d/Blood_Moon_Pyke_profileicon.png/revision/latest?cb=20190109011240', 1),
-(29, 'Battlecast Poro', 'https://static.wikia.nocookie.net/leagueoflegends/images/2/29/Battlecast_Poro_profileicon.png/revision/latest?cb=20170504221354', 1),
-(30, 'Icy Minion', 'https://static.wikia.nocookie.net/leagueoflegends/images/e/e4/Icy_Minion_profileicon.png/revision/latest?cb=20170504221633', 1),
-(31, 'Bundled Minion', 'https://static.wikia.nocookie.net/leagueoflegends/images/2/23/Bundled_Minion_profileicon.png/revision/latest?cb=20170504221648', 1),
-(32, 'Lovely', 'https://static.wikia.nocookie.net/leagueoflegends/images/f/f8/Lovely_profileicon.png/revision/latest?cb=20170504223425', 1),
-(33, 'Snowblower', 'https://static.wikia.nocookie.net/leagueoflegends/images/9/9d/Snowblower_profileicon.png/revision/latest?cb=20170505024651', 1),
-(34, 'Jade Demon', 'https://static.wikia.nocookie.net/leagueoflegends/images/d/db/Jade_Demon_profileicon.png/revision/latest?cb=20170504194433', 1),
-(35, 'Original Tibbers', 'https://static.wikia.nocookie.net/leagueoflegends/images/f/fb/Original_Tibbers_profileicon.png/revision/latest?cb=20180617164412', 1),
-(36, 'Ashes, Ashes', 'https://static.wikia.nocookie.net/leagueoflegends/images/6/6a/Ashes%2C_Ashes_profileicon.png/revision/latest?cb=20180617164340', 1),
-(37, 'Space Day Nautilus', 'https://static.wikia.nocookie.net/leagueoflegends/images/a/a5/Space_Day_Nautilus_profileicon.png/revision/latest?cb=20180617163911', 1),
-(38, 'LEC 2021 Spring', 'https://static.wikia.nocookie.net/leagueoflegends/images/f/fe/LEC_2021_Spring_profileicon.jpg/revision/latest?cb=20230102034704', 1),
-(39, 'Rift Scuttler', 'https://static.wikia.nocookie.net/leagueoflegends/images/9/91/Rift_Scuttler_profileicon.png/revision/latest?cb=20170504213258', 1),
-(40, 'Ancient Krug', 'https://static.wikia.nocookie.net/leagueoflegends/images/c/c4/Ancient_Krug_profileicon.png/revision/latest?cb=20170504205357', 1),
-(41, 'Battlecast', 'https://static.wikia.nocookie.net/leagueoflegends/images/f/f9/Battlecast_profileicon.png/revision/latest?cb=20170504223843', 1),
-(42, 'Act 2 Taking a Dive', 'https://static.wikia.nocookie.net/leagueoflegends/images/5/5a/Act_2_Taking_a_Dive_profileicon.png/revision/latest?cb=20170504235303', 1),
-(43, 'Runeterra Map', 'https://static.wikia.nocookie.net/leagueoflegends/images/2/2a/Runeterra_Map_profileicon.png/revision/latest?cb=20180706201411', 1),
-(44, 'Odyssey Veteran', 'https://static.wikia.nocookie.net/leagueoflegends/images/7/7b/Odyssey_Veteran_profileicon.png/revision/latest?cb=20180911222121', 1),
-(45, 'BAWK BAWK', 'https://static.wikia.nocookie.net/leagueoflegends/images/0/02/BAWK_BAWK_profileicon.png/revision/latest?cb=20180617163557', 1),
-(46, 'Champie Twitch', 'https://static.wikia.nocookie.net/leagueoflegends/images/f/fe/Champie_Twitch_profileicon.png/revision/latest?cb=20180617163536', 1),
-(47, 'Champie Urgot', 'https://static.wikia.nocookie.net/leagueoflegends/images/a/a9/Champie_Urgot_profileicon.png/revision/latest?cb=20191105212440', 1),
-(48, 'Doomed Minion', 'https://static.wikia.nocookie.net/leagueoflegends/images/6/61/Doomed_Minion_profileicon.png/revision/latest?cb=20170505013534', 1),
-(49, 'Gingerbread Man', 'https://static.wikia.nocookie.net/leagueoflegends/images/5/51/Gingerbread_Man_profileicon.png/revision/latest?cb=20170505021416', 1),
-(50, 'Odyssey Zenith', 'https://static.wikia.nocookie.net/leagueoflegends/images/d/df/Odyssey_Zenith_profileicon.png/revision/latest?cb=20180911221127', 1);
+(1, 'Ocean Week Nautilus', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336572/1_Ocean_Week_Nautilus_profileicon_tduxsc.webp', 1),
+(2, 'Ocean Week Fizz', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336572/2_Ocean_Week_Fizz_profileicon_ckkbvi.webp', 1),
+(3, 'Nightblade', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336574/3_Nightblade_profileicon_lnpl4b.webp', 1),
+(4, 'Mark of the Betrayer', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336575/4_Mark_of_the_Betrayer_profileicon_ii95qy.webp', 1),
+(5, 'Little Devil Teemo', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336576/5_Little_Devil_Teemo_profileicon_whdabr.webp', 1),
+(6, 'Lifebead', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336577/6_Lifebead_profileicon_j2pg7e.webp', 1),
+(7, 'Super Galaxy Wolf', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336578/7_Super_Galaxy_Wolf_profileicon_exwu0r.webp', 1),
+(8, 'El Macho', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336579/8_El_Macho_profileicon_r8nwhf.webp', 1),
+(9, 'Oblivion', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336581/9_Oblivion_profileicon_wf8ajv.webp', 1),
+(10, 'Blood Moon Rising', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336581/10_Blood_Moon_Rising_profileicon_kfhrex.webp', 1),
+(11, 'Seeing Hat', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336582/11_Seeing_Hat_profileicon_ppmyaf.webp', 1),
+(12, 'God Fist', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336583/12_god_fist_x1wjxg.jpg', 1),
+(13, 'Pentakill Karthus', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336585/13_Pentakill_Karthus_profileicon_vzji7p.webp', 1),
+(14, 'Battle Boss Ziggs', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336585/14_Battle_Boss_Ziggs_profileicon_nsti96.webp', 1),
+(15, 'Pentakill Olaf', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336587/15_Pentakill_Olaf_profileicon_oj3wdw.webp', 1),
+(16, 'Pentakill II', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336588/16_Pentakill_II_profileicon_pyblp9.webp', 1),
+(17, 'Pentakill Yorick', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336589/17_Pentakill_Yorick_profileicon_u5csqj.webp', 1),
+(18, 'Super Galaxy Elise', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336590/18_Super_Galaxy_Elise_profileicon_qkwnis.webp', 1),
+(19, 'Transcendent', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336592/19_Transcendent_profileicon_pzsudt.webp', 1),
+(20, 'Resist', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336593/20_Resist_profileicon_akn91q.webp', 1),
+(21, 'Birdio', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336595/21_Birdio_profileicon_eqdqdu.webp', 1),
+(22, 'Dark Waters Diana', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336596/22_Dark_Waters_Diana_profileicon_xnjxh2.webp', 1),
+(23, 'Dark Waters Vladimir', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336599/23_Dark_Waters_Vladimir_profileicon_zmttnw.webp', 1),
+(24, 'Wolf Banner', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336600/24_Wolf_Banner_profileicon_ibxhsl.webp', 1),
+(25, 'Turret Jr', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336601/25_Turret_Jr._profileicon_ammu36.webp', 1),
+(26, 'KDA Ahri', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336603/26_KDA_Ahri_profileicon_fua68a.webp', 1),
+(27, 'Blood Moon Aatrox', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336604/27_Blood_Moon_Aatrox_profileicon_dzkbyq.webp', 1),
+(28, 'Blood Moon Pyke', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336607/28_Blood_Moon_Pyke_profileicon_gifhii.webp', 1),
+(29, 'Battlecast Poro', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336608/29_Battlecast_Poro_profileicon_vyb3si.webp', 1),
+(30, 'Icy Minion', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336609/30_Icy_Minion_profileicon_rxzesd.webp', 1),
+(31, 'Bundled Minion', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336611/31_Bundled_Minion_profileicon_g12xbt.webp', 1),
+(32, 'Lovely', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336612/32_Lovely_profileicon_ngkw2d.webp', 1),
+(33, 'Snowblower', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336614/33_Snowblower_profileicon_ovaqrd.webp', 1),
+(34, 'Jade Demon', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336615/34_Jade_Demon_profileicon_hmlr31.webp', 1),
+(35, 'Original Tibbers', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336617/35_Original_Tibbers_profileicon_diqgmd.webp', 1),
+(36, 'Ashes, Ashes', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336619/36_Ashes_2C_Ashes_profileicon_qfbncg.webp', 1),
+(37, 'Space Day Nautilus', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336620/37_Space_Day_Nautilus_profileicon_rukt0k.webp', 1),
+(38, 'LEC 2021 Spring', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336623/38_LEC_2021_Spring_profileicon_jtcllb.webp', 1),
+(39, 'Rift Scuttler', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336624/39_Rift_Scuttler_profileicon_nbrquc.webp', 1),
+(40, 'Ancient Krug', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336627/40_Ancient_Krug_profileicon_k8qs1r.webp', 1),
+(41, 'Battlecast', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336628/41_Battlecast_profileicon_b1n2tk.webp', 1),
+(42, 'Act 2 Taking a Dive', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336630/42_Act_2_Taking_a_Dive_profileicon_osltcz.webp', 1),
+(43, 'Runeterra Map', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336632/43_Runeterra_Map_profileicon_arlsy4.webp', 1),
+(44, 'Odyssey Veteran', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336633/44_Odyssey_Veteran_profileicon_jdkcrt.webp', 1),
+(45, 'BAWK BAWK', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336636/45_BAWK_BAWK_profileicon_tidti5.webp', 1),
+(46, 'Champie Twitch', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336637/46_Champie_Twitch_profileicon_y9sjzv.webp', 1),
+(47, 'Champie Urgot', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336639/47_Champie_Urgot_profileicon_g3ozrr.webp', 1),
+(48, 'Doomed Minion', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336641/48_Doomed_Minion_profileicon_jtb1t8.webp', 1),
+(49, 'Gingerbread Man', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336642/49_Gingerbread_Man_profileicon_eutjyi.webp', 1),
+(50, 'Odyssey Zenith', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761336645/50_Odyssey_Zenith_profileicon_yvo0hc.webp', 1);
+
 
 ALTER TABLE PROFILE_ICONS ALTER COLUMN ID RESTART WITH 51;
 
 INSERT INTO skins VALUES
-(1, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_8.jpg&w=1200&q=75', 'High Noon Lucian', DATE '2018-08-30', 1, 5),
-(2, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FLucian_6.jpg&w=1200&q=75', 'PROJECT Lucian', DATE '2015-09-08', 1, 4),
-(3, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_1.jpg&w=1200&q=75', 'Soul Reaver Draven', DATE '2012-06-06', 2, 4),
-(4, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDraven_3.jpg&w=1200&q=75', 'Primetime Draven', DATE '2014-06-21', 2, 3),
-(5, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZed_1.jpg&w=1200&q=75', 'Shockblade Zed', DATE '2012-11-13', 3, 3),
-(6, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZed_38.jpg&w=1200&q=75', 'Empyrean Zed', DATE '2024-05-01', 3, 4),
-(7, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_14.jpg&w=1200&q=75', 'Empyrean Zac', DATE '2022-11-03', 4, 4),
-(8, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZac_1.jpg&w=1200&q=75', 'Special Weapon Zac', DATE '2013-03-29', 4, 3),
-(9, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_4.jpg&w=1200&q=75', 'Time Machine Zilean', DATE '2011-04-12', 5, 1),
-(10, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FZilean_6.jpg&w=1200&q=75', 'Sugar Rush Zilean', DATE '2019-12-17', 5, 4),
-(11, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_13.jpg&w=1200&q=75', 'Odyssey Jinx', DATE '2018-09-12', 6, 4),
-(12, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FJinx_38.jpg&w=1200&q=75', 'Battle Cat Jinx', DATE '2022-03-31', 6, 4),
-(13, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGraves_4.jpg&w=1200&q=75', 'Riot Graves', DATE '2012-08-16', 7, 3),
-(14, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FGraves_5.jpg&w=1200&q=75', 'Pool Party Graves', DATE '2013-09-11', 7, 4),
-(15, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_3.jpg&w=1200&q=75', 'Traditional Karma', DATE '2013-03-29', 8, 3),
-(16, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FKarma_44.jpg&w=1200&q=75', 'Tranquility Dragon Karma', DATE '2021-10-20', 8, 4),
-(17, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_4.jpg&w=1200&q=75', 'Crime City Twitch', DATE '2010-10-13', 9, 3),
-(18, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTwitch_36.jpg&w=1200&q=75', 'Dragonslayer Twitch', DATE '2021-04-15', 9, 4),
-(19, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/TwistedFate_3.jpg', 'The Magnificent Twisted Fate', DATE '2010-05-18', 10, 5),
-(20, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/TwistedFate_7.jpg', 'Underworld Twisted Fate', DATE '2012-10-26', 10, 3),
-(21, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Xerath_3.jpg', 'Scorched Earth Xerath', DATE '2012-07-13', 11, 4),
-(22, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Xerath_12.jpg', 'Arcana Xerath', DATE '2021-05-12', 11, 4),
-(23, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Katarina_7.jpg', 'Slay Belle Katarina', DATE '2012-12-14', 12, 3);
+(1, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889106/High_Noon_Lucian_yzu9un.webp', 'High Noon Lucian', DATE '2018-08-30', 1, 5),
+(2, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889106/Project_Lucian_bzireo.webp', 'PROJECT Lucian', DATE '2015-09-08', 1, 4),
+(3, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889277/Soul_Reaver_Draven_kutuap.webp', 'Soul Reaver Draven', DATE '2012-06-06', 2, 4),
+(4, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889279/Prime_Time_Draven_uhxff6.webp', 'Primetime Draven', DATE '2014-06-21', 2, 3),
+(5, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889057/shockblade_zed_ktotvj.webp', 'Shockblade Zed', DATE '2012-11-13', 3, 3),
+(6, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889058/empyrean_zed_itcrym.webp', 'Empyrean Zed', DATE '2024-05-01', 3, 4),
+(7, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889059/empyrean_zac_f5exdo.webp', 'Empyrean Zac', DATE '2022-11-03', 4, 4),
+(8, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889059/special_weapon_zac_duayvs.webp', 'Special Weapon Zac', DATE '2013-03-29', 4, 3),
+(9, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889055/time_machine_zilean_z8jjo7.webp', 'Time Machine Zilean', DATE '2011-04-12', 5, 1),
+(10, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889055/sugar_rush_zilean_vcbkho.webp', 'Sugar Rush Zilean', DATE '2019-12-17', 5, 4),
+(11, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889159/Odyssey_Jinx_dqbg6q.webp', 'Odyssey Jinx', DATE '2018-09-12', 6, 4),
+(12, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889158/Battle_Cat_Jinx_jhwwa4.webp', 'Battle Cat Jinx', DATE '2022-03-31', 6, 4),
+(13, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889237/Riot_Graves_ap03ya.webp', 'Riot Graves', DATE '2012-08-16', 7, 3),
+(14, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889238/Pool_Party_Graves_rlzg8i.webp', 'Pool Party Graves', DATE '2013-09-11', 7, 4),
+(15, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889155/Traditional_Karma_tezluf.webp', 'Traditional Karma', DATE '2013-03-29', 8, 3),
+(16, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889155/Tranquility_Dragon_Karma_vsydo5.webp', 'Tranquility Dragon Karma', DATE '2021-10-20', 8, 4),
+(17, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889071/Crime_City_Twitch_eqfpql.webp', 'Crime City Twitch', DATE '2010-10-13', 9, 3),
+(18, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889070/Dragonslayer_Twtich_udamya.webp', 'Dragonslayer Twitch', DATE '2021-04-15', 9, 4),
+(19, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889073/The_Magnificent_Twisted_Fate_iuhjmd.jpg', 'The Magnificent Twisted Fate', DATE '2010-05-18', 10, 5),
+(20, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889073/Underworld_Twisted_Fate_edjy5i.jpg', 'Underworld Twisted Fate', DATE '2012-10-26', 10, 3),
+(21, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889060/scorched_earth_xerath_hgdfbp.jpg', 'Scorched Earth Xerath', DATE '2012-07-13', 11, 4),
+(22, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889061/arcana_xerath_jdv9y3.jpg', 'Arcana Xerath', DATE '2021-05-12', 11, 4),
+(23, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889151/Slay_Belle_Katarina_lbyunn.jpg', 'Slay Belle Katarina', DATE '2012-12-14', 12, 3);
 INSERT INTO skins VALUES
-(24, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Katarina_4.jpg', 'Kitty Cat Katarina', DATE '2010-10-18', 12, 3),
-(25, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Khazix_1.jpg', U&'Mecha Kha\00b4Zix', DATE '2012-09-27', 13, 3),
-(26, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Khazix_4.jpg', U&'Dark Star Kha\00b4Zix', DATE '2017-02-05', 13, 3),
-(27, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fizz_3.jpg', 'Fisherman Fizz', DATE '2012-04-01', 14, 3),
-(28, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fizz_2.jpg', 'Tundra Fizz', DATE '2011-11-15', 14, 2),
-(29, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Rengar_1.jpg', 'Headhunter Rengar', DATE '2012-08-21', 15, 3),
-(30, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Rengar_2.jpg', 'Night Hunter Rengar', DATE '2014-05-20', 15, 3),
-(31, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiora_3.jpg', 'Headmistress Fiora', DATE '2012-10-25', 16, 3),
-(32, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiora_22.jpg', 'Soaring Sword Fiora', DATE '2017-09-28', 16, 4),
-(33, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Hecarim_4.jpg', 'Arcade Hecarim', DATE '2013-08-22', 17, 4),
-(34, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Hecarim_5.jpg', 'Elderwood Hecarim', DATE '2015-11-25', 17, 4),
-(35, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vladimir_5.jpg', 'Blood Lord Vladimir', DATE '2011-11-21', 18, 5),
-(36, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vladimir_6.jpg', 'Soulstealer Vladimir', DATE '2014-07-10', 18, 4),
-(37, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/AurelionSol_1.jpg', 'Ashen Lord Aurelion Sol', DATE '2016-03-24', 19, 4),
-(38, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/AurelionSol_2.jpg', 'Mecha Aurelion Sol', DATE '2018-08-15', 19, 4),
-(39, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kaisa_17.jpg', U&'Arcade Kai\00b4Sa', DATE '2019-06-28', 20, 4),
-(40, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kaisa_59.jpg', U&'Heavenscale Kai\00b4Sa', DATE '2024-02-07', 20, 4),
-(41, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Urgot_1.jpg', 'Giant Enemy Crabgot', DATE '2010-08-24', 21, 2),
-(42, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Urgot_3.jpg', 'Battlecast Urgot', DATE '2012-03-05', 21, 4),
-(43, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Renekton_2.jpg', 'Outback Renekton', DATE '2011-01-18', 22, 2),
-(44, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Renekton_6.jpg', 'Pool Party Renekton', DATE '2013-09-09', 22, 3),
-(45, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_1.jpg', 'Withered Rose Zeri', DATE '2022-01-20', 23, 3),
-(46, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zeri_10.jpg', 'Ocean Song Zeri', DATE '2022-06-09', 23, 3),
-(47, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Singed_3.jpg', 'Surfer Singed', DATE '2010-12-06', 24, 3),
-(48, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Singed_5.jpg', 'Augmented Singed', DATE '2012-07-09', 24, 3),
-(49, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/RekSai_1.jpg', U&'Eternum Rek\00b4Sai', DATE '2014-12-11', 25, 4),
-(50, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/RekSai_1.jpg', U&'Blackfrost Rek\00b4Sai', DATE '2020-03-05', 25, 4),
-(51, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Trundle_3.jpg', 'Traditional Trundle', DATE '2013-04-30', 26, 3),
-(52, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Trundle_4.jpg', 'Constable Trundle', DATE '2014-11-28', 26, 2),
-(53, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_2.jpg', 'Mecha Aatrox', DATE '2014-07-24', 27, 4),
-(54, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_7.jpg', 'Blood Moon Aatrox', DATE '2019-01-10', 27, 4),
-(55, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Alistar_4.jpg', 'Longhorn Alistar', DATE '2011-02-16', 28, 1);
+(24, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889155/Kitty_Cat_Katarina_e4fgpx.jpg', 'Kitty Cat Katarina', DATE '2010-10-18', 12, 3),
+(25, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889149/Mecha_KhaZix_eqas6x.jpg', U&'Mecha Kha\00b4Zix', DATE '2012-09-27', 13, 3),
+(26, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889105/Dark_Star_KhaZix_gy9qlh.jpg', U&'Dark Star Kha\00b4Zix', DATE '2017-02-05', 13, 3),
+(27, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889272/Fisherman_Fizz_eem559.jpg', 'Fisherman Fizz', DATE '2012-04-01', 14, 3),
+(28, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889482/tundra_fizz_oliui1.jpg', 'Tundra Fizz', DATE '2011-11-15', 14, 2),
+(29, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889088/Headhunter_Rengar_rty1bv.jpg', 'Headhunter Rengar', DATE '2012-08-21', 15, 3),
+(30, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889087/Night_Hunter_Rengar_yfr6jg.jpg', 'Night Hunter Rengar', DATE '2014-05-20', 15, 3),
+(31, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889277/HeadMistress_Fiora_fzwvub.jpg', 'Headmistress Fiora', DATE '2012-10-25', 16, 3),
+(32, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889274/Soaring_Sword_Fiora_iteg9q.jpg', 'Soaring Sword Fiora', DATE '2017-09-28', 16, 4),
+(33, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889233/Arcade_Hecarim_df6vth.jpg', 'Arcade Hecarim', DATE '2013-08-22', 17, 4),
+(34, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889232/Elderwood_Hecarim_fp1ih3.jpg', 'Elderwood Hecarim', DATE '2015-11-25', 17, 4),
+(35, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889064/Blood_Lord_Vladimir_oabkfh.jpg', 'Blood Lord Vladimir', DATE '2011-11-21', 18, 5),
+(36, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889064/soulstealer_vladimir_hboljl.jpg', 'Soulstealer Vladimir', DATE '2014-07-10', 18, 4),
+(37, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889293/Ashen_Lord_Aurelion_Sol_alvupo.jpg', 'Ashen Lord Aurelion Sol', DATE '2016-03-24', 19, 4),
+(38, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889292/AurelionSol_mecha_mmd8jc.jpg', 'Mecha Aurelion Sol', DATE '2018-08-15', 19, 4),
+(39, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889158/Arcade_Kaisa_ojg7kv.jpg', U&'Arcade Kai\00b4Sa', DATE '2019-06-28', 20, 4),
+(40, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889158/Heavenscale_Kaisa_pv6bnd.jpg', U&'Heavenscale Kai\00b4Sa', DATE '2024-02-07', 20, 4),
+(41, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889067/Giant_Enemy_Crabgot_qsisve.jpg', 'Giant Enemy Crabgot', DATE '2010-08-24', 21, 2),
+(42, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889068/Battlecast_Urgot_wioh5t.jpg', 'Battlecast Urgot', DATE '2012-03-05', 21, 4),
+(43, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889091/Outback_Renekton_jxactw.jpg', 'Outback Renekton', DATE '2011-01-18', 22, 2),
+(44, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889089/Pool_Party_Renekton_xg7vvo.jpg', 'Pool Party Renekton', DATE '2013-09-09', 22, 3),
+(45, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889056/withered_rose_zeri_xppcbp.jpg', 'Withered Rose Zeri', DATE '2022-01-20', 23, 3),
+(46, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889057/ocean_song_zeri_qq2izu.jpg', 'Ocean Song Zeri', DATE '2022-06-09', 23, 3),
+(47, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889081/Surfer_Singed_okfpvy.jpg', 'Surfer Singed', DATE '2010-12-06', 24, 3),
+(48, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889082/Augmented_Singed_oern2i.jpg', 'Augmented Singed', DATE '2012-07-09', 24, 3),
+(49, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889092/Eternum_Rek_Sai_q8zovk.jpg', U&'Eternum Rek\00b4Sai', DATE '2014-12-11', 25, 4),
+(50, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889095/Black_Frost_Rek_Sai_rlqj7j.webp', U&'Blackfrost Rek\00b4Sai', DATE '2020-03-05', 25, 4),
+(51, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889076/Traditional_Trundle_cqsqjz.jpg', 'Traditional Trundle', DATE '2013-04-30', 26, 3),
+(52, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889077/Constable_Trundle_qol3wk.jpg', 'Constable Trundle', DATE '2014-11-28', 26, 2),
+(53, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889055/Mecha_Aatrox_fchlif.jpg', 'Mecha Aatrox', DATE '2014-07-24', 27, 4),
+(54, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889054/Blood_Moon_Aatrox__je7slf.jpg', 'Blood Moon Aatrox', DATE '2019-01-10', 27, 4),
+(55, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889295/LongHorn_Alistar_zmnvpy.jpg', 'Longhorn Alistar', DATE '2011-02-16', 28, 1);
 INSERT INTO skins VALUES
-(56, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Alistar_10.jpg', 'Moo Cow Alistar', DATE '2017-03-30', 28, 3),
-(57, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Akali_1.jpg', 'Stinger Akali', DATE '2010-05-10', 29, 1),
-(58, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Akali_4.jpg', 'Nurse Akali', DATE '2011-01-04', 29, 3),
-(59, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ornn_2.jpg', 'Elderwood Ornn', DATE '2020-12-10', 30, 4),
-(60, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ornn_20.jpg', 'Choo-Choo Ornn', DATE '2024-03-31', 30, 4),
-(61, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Galio_3.jpg', 'Commando Galio', DATE '2011-01-18', 31, 1),
-(62, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Galio_4.jpg', 'Gatekeeper Galio', DATE '2012-04-23', 31, 5),
-(63, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/JarvanIV_3.jpg', 'Darkforge Jarvan IV', DATE '2011-07-26', 32, 3),
-(64, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/JarvanIV_5.jpg', 'Warring Kingdoms Jarvan IV', DATE '2013-02-08', 32, 4),
-(65, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Milio_1.jpg', 'Faerie Court Milio', DATE '2023-03-23', 33, 4),
-(66, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Milio_11.jpg', 'Rain Shepherd Milio', DATE '2024-06-26', 33, 4),
-(67, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Renata_1.jpg', 'Admiral Glasc', DATE '2022-02-17', 34, 4),
-(68, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Renata_21.jpg', U&'Prestige La Ilusi\00f3n Renata Glasc', DATE '2023-09-26', 34, 5),
-(69, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Shen_2.jpg', 'Yellow Jacket Shen', DATE '2010-03-24', 35, 1),
-(70, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Shen_5.jpg', 'Warlord Shen', DATE '2012-04-17', 35, 3),
-(71, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Skarner_1.jpg', 'Sandscourge Skarner', DATE '2011-08-09', 36, 3),
-(72, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Skarner_3.jpg', 'Battlecast Alpha Skarner', DATE '2014-11-25', 36, 4),
-(73, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Warwick_7.jpg', 'Hyena Warwick', DATE '2011-12-05', 37, 3),
-(74, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Warwick_4.jpg', 'Tundra Hunter Warwick', DATE '2010-08-16', 37, 2),
-(75, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_28.jpg', 'Arcane Caitlyn', DATE '2021-11-22', 38, 4),
-(76, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_2.jpg', 'Sheriff Caitlyn', DATE '2011-01-04', 38, 1),
-(77, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Chogath_2.jpg', U&'Gentleman Cho\00b4Gath', DATE '2010-05-11', 39, 5),
-(78, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Chogath_4.jpg', U&'Jurassic Cho\00b4Gath', DATE '2011-11-01', 39, 1),
-(79, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Malphite_2.jpg', 'Coral Reef Malphite', DATE '2010-11-08', 40, 2),
-(80, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Malphite_5.jpg', 'Glacial Malphite', DATE '2012-07-11', 40, 3),
-(81, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Gragas_2.jpg', 'Hillbilly Gragas', DATE '2010-08-02', 41, 2),
-(82, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Gragas_4.jpg', 'Gragas, Esq.', DATE '2011-04-12', 41, 3),
-(83, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vi_1.jpg', 'Neon Strike Vi', DATE '2012-12-19', 42, 2),
-(84, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vi_11.jpg', 'PROJECT: Vi', DATE '2017-11-22', 42, 3),
-(85, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Braum_1.jpg', 'Dragonslayer Braum', DATE '2014-05-12', 43, 2),
-(86, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Braum_10.jpg', 'Santa Braum', DATE '2016-12-14', 43, 3),
-(87, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Mordekaiser_4.jpg', 'Lord Mordekaiser', DATE '2011-05-10', 44, 2);
+(56, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889294/moo_cow_alistar_znf2bx.jpg', 'Moo Cow Alistar', DATE '2017-03-30', 28, 3),
+(57, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889297/Stinker_Akali_iawkkz.jpg', 'Stinger Akali', DATE '2010-05-10', 29, 1),
+(58, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889298/Nurse_Akali_bf6rke.jpg', 'Nurse Akali', DATE '2011-01-04', 29, 3),
+(59, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889095/Elderwood_Ornn_ilbpnc.jpg', 'Elderwood Ornn', DATE '2020-12-10', 30, 4),
+(60, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889096/Choo_Choo_Ornn_ef66wx.jpg', 'Choo-Choo Ornn', DATE '2024-03-31', 30, 4),
+(61, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889271/Commando_Galio_czzzil.jpg', 'Commando Galio', DATE '2011-01-18', 31, 1),
+(62, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889270/Gatekeeper_Galio_gri2eu.jpg', 'Gatekeeper Galio', DATE '2012-04-23', 31, 5),
+(63, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889162/DarkForge_JarvanIV_iekqhw.jpg', 'Darkforge Jarvan IV', DATE '2011-07-26', 32, 3),
+(64, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889161/Warring_Kingdoms_Jarvan_Iv_l8dg8a.jpg', 'Warring Kingdoms Jarvan IV', DATE '2013-02-08', 32, 4),
+(65, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889103/Faerie_Court_Milio_dg2ayy.jpg', 'Faerie Court Milio', DATE '2023-03-23', 33, 4),
+(66, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889100/Rain_Shepherd_Milio_widxij.jpg', 'Rain Shepherd Milio', DATE '2024-06-26', 33, 4),
+(67, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889092/Admiral_Glasc_ma2rsj.jpg', 'Admiral Glasc', DATE '2022-02-17', 34, 4),
+(68, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889091/Prestige_La_Ilusi%C3%B3n_Renata_Glasc_hg9ocm.jpg', U&'Prestige La Ilusi\00f3n Renata Glasc', DATE '2023-09-26', 34, 5),
+(69, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889083/Yellow_Jacket_Shen_wmxyol.jpg', 'Yellow Jacket Shen', DATE '2010-03-24', 35, 1),
+(70, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889084/Warlord_Shen_btd2ar.jpg', 'Warlord Shen', DATE '2012-04-17', 35, 3),
+(71, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889079/Sandscourge_Skarner_szzhai.jpg', 'Sandscourge Skarner', DATE '2011-08-09', 36, 3),
+(72, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889079/Battlecast_Alpha_Skarner_lv7rd3.jpg', 'Battlecast Alpha Skarner', DATE '2014-11-25', 36, 4),
+(73, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889063/hyena_warwick_dwu9mg.jpg', 'Hyena Warwick', DATE '2011-12-05', 37, 3),
+(74, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889062/tundra_hunter_warwick_eeha7u.jpg', 'Tundra Hunter Warwick', DATE '2010-08-16', 37, 2),
+(75, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889286/Arcane_Caitlyn_ax6bob.jpg', 'Arcane Caitlyn', DATE '2021-11-22', 38, 4),
+(76, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889286/Sheriff_caitlyn_sji7vm.jpg', 'Sheriff Caitlyn', DATE '2011-01-04', 38, 1),
+(77, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889285/Gentleman_Cho_gath_zc4mjw.jpg', U&'Gentleman Cho\00b4Gath', DATE '2010-05-11', 39, 5),
+(78, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889283/Jurassic_Cho_gath_wdugj2.jpg', U&'Jurassic Cho\00b4Gath', DATE '2011-11-01', 39, 1),
+(79, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889105/Coral_Reef_Malphite_jw60dv.jpg', 'Coral Reef Malphite', DATE '2010-11-08', 40, 2),
+(80, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889103/Glacial_Malphite_5_ndwddt.jpg', 'Glacial Malphite', DATE '2012-07-11', 40, 3),
+(81, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889241/Hilibily_Gragas_ndokgy.jpg', 'Hillbilly Gragas', DATE '2010-08-02', 41, 2),
+(82, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889242/Gragas_esq_jjajga.jpg', 'Gragas, Esq.', DATE '2011-04-12', 41, 3),
+(83, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889067/neon_strike_vi_fxlhmw.jpg', 'Neon Strike Vi', DATE '2012-12-19', 42, 2),
+(84, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889066/PROJECT_Vi_ykeujs.jpg', 'PROJECT: Vi', DATE '2017-11-22', 42, 3),
+(85, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889289/dragon_slayer_braum_hexjln.jpg', 'Dragonslayer Braum', DATE '2014-05-12', 43, 2),
+(86, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889288/Santa_braum_g90nhj.jpg', 'Santa Braum', DATE '2016-12-14', 43, 3),
+(87, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889099/Lord_Mordekaiser_ugjfde.jpg', 'Lord Mordekaiser', DATE '2011-05-10', 44, 2);
 INSERT INTO skins VALUES
-(88, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Mordekaiser_13.jpg', 'PROJECT: Mordekaiser', DATE '2021-05-27', 44, 5),
-(89, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Bard_5.jpg', 'Snow Day Bard', DATE '2015-12-10', 45, 3),
-(90, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Bard_8.jpg', 'Astronaut Bard', DATE '2020-05-28', 45, 3),
-(91, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Senna_9.jpg', 'Prestige True Damage Senna', DATE '2020-02-06', 46, 5),
-(92, 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Senna_10.jpg', 'High Noon Senna', DATE '2020-06-18', 46, 5),
-(93, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDrMundo_3.jpg&w=1200&q=75', 'Corporate Mundo', DATE '2010-09-13', 47, 5),
-(94, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FDrMundo_8.jpg&w=1200&q=75', 'Pool Party Mundo', DATE '2015-06-26', 47, 4),
-(95, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_4.jpg&w=1200&q=75', 'Demonblade Tryndamere', DATE '2011-08-02', 48, 5),
-(96, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FTryndamere_6.jpg&w=1200&q=75', 'Warring Kingdoms Tryndamere', DATE '2014-01-28', 48, 3),
-(97, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FIvern_1.jpg&w=1200&q=75', 'Candy King Ivern', DATE '2016-10-05', 49, 4),
-(98, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FIvern_2.jpg&w=1200&q=75', 'Dunkmaster Ivern', DATE '2019-04-04', 49, 4),
-(99, 'https://www.lolvvv.com/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fsplash%2FIvern_20.jpg&w=1200&q=75', 'Astronaut Ivern', DATE '2023-02-24', 49, 4);
+(88, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889099/Project_Mordekaiser_jzhydz.jpg', 'PROJECT: Mordekaiser', DATE '2021-05-27', 44, 5),
+(89, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889290/Snow_day_Bard_dwzhso.jpg', 'Snow Day Bard', DATE '2015-12-10', 45, 3),
+(90, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889291/Astronaut_bard_ejpmao.jpg', 'Astronaut Bard', DATE '2020-05-28', 45, 3),
+(91, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889085/Prestige_True_Damage_Senna_ct7po3.jpg', 'Prestige True Damage Senna', DATE '2020-02-06', 46, 5),
+(92, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889086/High_Noon_Senna_dt0ars.jpg', 'High Noon Senna', DATE '2020-06-18', 46, 5),
+(93, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889281/Corporate_Mundo_tixffj.webp', 'Corporate Mundo', DATE '2010-09-13', 47, 5),
+(94, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889280/Pool_party_mundo_igk6ul.webp', 'Pool Party Mundo', DATE '2015-06-26', 47, 4),
+(95, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889075/Demonblade_Tryndamere_f0teec.webp', 'Demonblade Tryndamere', DATE '2011-08-02', 48, 5),
+(96, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889074/Warring_Kingdoms_Tryndamere_hxsjtq.webp', 'Warring Kingdoms Tryndamere', DATE '2014-01-28', 48, 3),
+(97, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889208/Candy_King_ivern_deme6v.webp', 'Candy King Ivern', DATE '2016-10-05', 49, 4),
+(98, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889164/DunkMaster_ivern_gd6lmr.webp', 'Dunkmaster Ivern', DATE '2019-04-04', 49, 4),
+(99, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761889232/Astronaut_Ivern_unblll.webp', 'Astronaut Ivern', DATE '2023-02-24', 49, 4);
 
 ALTER TABLE SKINS ALTER COLUMN ID RESTART WITH 100;
 
@@ -14937,3 +15464,404 @@ INSERT INTO user_matches VALUES
 (400, 0, 0, 0, 0, 2, 4, 400);
 
 ALTER TABLE USER_MATCHES ALTER COLUMN ID RESTART WITH 401;
+
+UPDATE users SET icon_id = 1 WHERE id = 1;
+UPDATE users SET icon_id = 3 WHERE id = 2;
+UPDATE users SET icon_id = 5 WHERE id = 3;
+UPDATE users SET icon_id = 7 WHERE id = 4;
+UPDATE users SET icon_id = 9 WHERE id = 5;
+UPDATE users SET icon_id = 11 WHERE id = 6;
+UPDATE users SET icon_id = 13 WHERE id = 7;
+UPDATE users SET icon_id = 15 WHERE id = 8;
+UPDATE users SET icon_id = 17 WHERE id = 9;
+UPDATE users SET icon_id = 19 WHERE id = 10;
+UPDATE users SET icon_id = 44 WHERE id = 11;
+UPDATE users SET icon_id = 13 WHERE id = 12;
+UPDATE users SET icon_id = 3 WHERE id = 13;
+UPDATE users SET icon_id = 42 WHERE id = 14;
+UPDATE users SET icon_id = 31 WHERE id = 15;
+UPDATE users SET icon_id = 7 WHERE id = 16;
+UPDATE users SET icon_id = 1 WHERE id = 17;
+UPDATE users SET icon_id = 46 WHERE id = 18;
+UPDATE users SET icon_id = 31 WHERE id = 19;
+UPDATE users SET icon_id = 21 WHERE id = 20;
+UPDATE users SET icon_id = 15 WHERE id = 21;
+UPDATE users SET icon_id = 41 WHERE id = 22;
+UPDATE users SET icon_id = 44 WHERE id = 23;
+UPDATE users SET icon_id = 33 WHERE id = 24;
+UPDATE users SET icon_id = 28 WHERE id = 25;
+UPDATE users SET icon_id = 14 WHERE id = 26;
+UPDATE users SET icon_id = 11 WHERE id = 27;
+UPDATE users SET icon_id = 23 WHERE id = 28;
+UPDATE users SET icon_id = 28 WHERE id = 29;
+UPDATE users SET icon_id = 34 WHERE id = 30;
+UPDATE users SET icon_id = 49 WHERE id = 31;
+UPDATE users SET icon_id = 41 WHERE id = 32;
+UPDATE users SET icon_id = 16 WHERE id = 33;
+UPDATE users SET icon_id = 48 WHERE id = 34;
+UPDATE users SET icon_id = 4 WHERE id = 35;
+UPDATE users SET icon_id = 14 WHERE id = 36;
+UPDATE users SET icon_id = 48 WHERE id = 37;
+UPDATE users SET icon_id = 39 WHERE id = 38;
+UPDATE users SET icon_id = 35 WHERE id = 39;
+UPDATE users SET icon_id = 1 WHERE id = 40;
+UPDATE users SET icon_id = 10 WHERE id = 41;
+UPDATE users SET icon_id = 28 WHERE id = 42;
+UPDATE users SET icon_id = 22 WHERE id = 43;
+UPDATE users SET icon_id = 18 WHERE id = 44;
+UPDATE users SET icon_id = 8 WHERE id = 45;
+UPDATE users SET icon_id = 35 WHERE id = 46;
+UPDATE users SET icon_id = 4 WHERE id = 47;
+UPDATE users SET icon_id = 48 WHERE id = 48;
+UPDATE users SET icon_id = 9 WHERE id = 49;
+UPDATE users SET icon_id = 48 WHERE id = 50;
+UPDATE users SET icon_id = 32 WHERE id = 51;
+UPDATE users SET icon_id = 44 WHERE id = 52;
+UPDATE users SET icon_id = 15 WHERE id = 53;
+UPDATE users SET icon_id = 22 WHERE id = 54;
+UPDATE users SET icon_id = 33 WHERE id = 55;
+UPDATE users SET icon_id = 26 WHERE id = 56;
+UPDATE users SET icon_id = 4 WHERE id = 57;
+UPDATE users SET icon_id = 48 WHERE id = 58;
+UPDATE users SET icon_id = 38 WHERE id = 59;
+UPDATE users SET icon_id = 26 WHERE id = 60;
+UPDATE users SET icon_id = 8 WHERE id = 61;
+UPDATE users SET icon_id = 13 WHERE id = 62;
+UPDATE users SET icon_id = 3 WHERE id = 63;
+UPDATE users SET icon_id = 49 WHERE id = 64;
+UPDATE users SET icon_id = 15 WHERE id = 65;
+UPDATE users SET icon_id = 4 WHERE id = 66;
+UPDATE users SET icon_id = 46 WHERE id = 67;
+UPDATE users SET icon_id = 9 WHERE id = 68;
+UPDATE users SET icon_id = 23 WHERE id = 69;
+UPDATE users SET icon_id = 42 WHERE id = 70;
+UPDATE users SET icon_id = 28 WHERE id = 71;
+UPDATE users SET icon_id = 10 WHERE id = 72;
+UPDATE users SET icon_id = 26 WHERE id = 73;
+UPDATE users SET icon_id = 43 WHERE id = 74;
+UPDATE users SET icon_id = 12 WHERE id = 75;
+UPDATE users SET icon_id = 6 WHERE id = 76;
+UPDATE users SET icon_id = 5 WHERE id = 77;
+UPDATE users SET icon_id = 46 WHERE id = 78;
+UPDATE users SET icon_id = 40 WHERE id = 79;
+UPDATE users SET icon_id = 39 WHERE id = 80;
+UPDATE users SET icon_id = 38 WHERE id = 81;
+UPDATE users SET icon_id = 47 WHERE id = 82;
+UPDATE users SET icon_id = 6 WHERE id = 83;
+UPDATE users SET icon_id = 7 WHERE id = 84;
+UPDATE users SET icon_id = 21 WHERE id = 85;
+UPDATE users SET icon_id = 49 WHERE id = 86;
+UPDATE users SET icon_id = 42 WHERE id = 87;
+UPDATE users SET icon_id = 44 WHERE id = 88;
+UPDATE users SET icon_id = 41 WHERE id = 89;
+UPDATE users SET icon_id = 49 WHERE id = 90;
+UPDATE users SET icon_id = 10 WHERE id = 91;
+UPDATE users SET icon_id = 27 WHERE id = 92;
+UPDATE users SET icon_id = 44 WHERE id = 93;
+UPDATE users SET icon_id = 14 WHERE id = 94;
+UPDATE users SET icon_id = 18 WHERE id = 95;
+UPDATE users SET icon_id = 41 WHERE id = 96;
+UPDATE users SET icon_id = 25 WHERE id = 97;
+UPDATE users SET icon_id = 18 WHERE id = 98;
+UPDATE users SET icon_id = 6 WHERE id = 99;
+UPDATE users SET icon_id = 7 WHERE id = 100;
+UPDATE users SET icon_id = 9 WHERE id = 101;
+UPDATE users SET icon_id = 25 WHERE id = 102;
+UPDATE users SET icon_id = 48 WHERE id = 103;
+UPDATE users SET icon_id = 40 WHERE id = 104;
+UPDATE users SET icon_id = 23 WHERE id = 105;
+UPDATE users SET icon_id = 25 WHERE id = 106;
+UPDATE users SET icon_id = 5 WHERE id = 107;
+UPDATE users SET icon_id = 27 WHERE id = 108;
+UPDATE users SET icon_id = 26 WHERE id = 109;
+UPDATE users SET icon_id = 48 WHERE id = 110;
+UPDATE users SET icon_id = 42 WHERE id = 111;
+UPDATE users SET icon_id = 28 WHERE id = 112;
+UPDATE users SET icon_id = 38 WHERE id = 113;
+UPDATE users SET icon_id = 28 WHERE id = 114;
+UPDATE users SET icon_id = 14 WHERE id = 115;
+UPDATE users SET icon_id = 25 WHERE id = 116;
+UPDATE users SET icon_id = 35 WHERE id = 117;
+UPDATE users SET icon_id = 14 WHERE id = 118;
+UPDATE users SET icon_id = 26 WHERE id = 119;
+UPDATE users SET icon_id = 44 WHERE id = 120;
+UPDATE users SET icon_id = 24 WHERE id = 121;
+UPDATE users SET icon_id = 39 WHERE id = 122;
+UPDATE users SET icon_id = 12 WHERE id = 123;
+UPDATE users SET icon_id = 43 WHERE id = 124;
+UPDATE users SET icon_id = 46 WHERE id = 125;
+UPDATE users SET icon_id = 20 WHERE id = 126;
+UPDATE users SET icon_id = 17 WHERE id = 127;
+UPDATE users SET icon_id = 1 WHERE id = 128;
+UPDATE users SET icon_id = 33 WHERE id = 129;
+UPDATE users SET icon_id = 36 WHERE id = 130;
+UPDATE users SET icon_id = 14 WHERE id = 131;
+UPDATE users SET icon_id = 24 WHERE id = 132;
+UPDATE users SET icon_id = 15 WHERE id = 133;
+UPDATE users SET icon_id = 4 WHERE id = 134;
+UPDATE users SET icon_id = 3 WHERE id = 135;
+UPDATE users SET icon_id = 45 WHERE id = 136;
+UPDATE users SET icon_id = 38 WHERE id = 137;
+UPDATE users SET icon_id = 41 WHERE id = 138;
+UPDATE users SET icon_id = 33 WHERE id = 139;
+UPDATE users SET icon_id = 42 WHERE id = 140;
+UPDATE users SET icon_id = 7 WHERE id = 141;
+UPDATE users SET icon_id = 28 WHERE id = 142;
+UPDATE users SET icon_id = 11 WHERE id = 143;
+UPDATE users SET icon_id = 49 WHERE id = 144;
+UPDATE users SET icon_id = 45 WHERE id = 145;
+UPDATE users SET icon_id = 36 WHERE id = 146;
+UPDATE users SET icon_id = 16 WHERE id = 147;
+UPDATE users SET icon_id = 27 WHERE id = 148;
+UPDATE users SET icon_id = 27 WHERE id = 149;
+UPDATE users SET icon_id = 39 WHERE id = 150;
+UPDATE users SET icon_id = 21 WHERE id = 151;
+UPDATE users SET icon_id = 43 WHERE id = 152;
+UPDATE users SET icon_id = 7 WHERE id = 153;
+UPDATE users SET icon_id = 14 WHERE id = 154;
+UPDATE users SET icon_id = 19 WHERE id = 155;
+UPDATE users SET icon_id = 5 WHERE id = 156;
+UPDATE users SET icon_id = 14 WHERE id = 157;
+UPDATE users SET icon_id = 9 WHERE id = 158;
+UPDATE users SET icon_id = 2 WHERE id = 159;
+UPDATE users SET icon_id = 18 WHERE id = 160;
+UPDATE users SET icon_id = 9 WHERE id = 161;
+UPDATE users SET icon_id = 43 WHERE id = 162;
+UPDATE users SET icon_id = 24 WHERE id = 163;
+UPDATE users SET icon_id = 21 WHERE id = 164;
+UPDATE users SET icon_id = 33 WHERE id = 165;
+UPDATE users SET icon_id = 21 WHERE id = 166;
+UPDATE users SET icon_id = 38 WHERE id = 167;
+UPDATE users SET icon_id = 42 WHERE id = 168;
+UPDATE users SET icon_id = 47 WHERE id = 169;
+UPDATE users SET icon_id = 45 WHERE id = 170;
+UPDATE users SET icon_id = 50 WHERE id = 171;
+UPDATE users SET icon_id = 9 WHERE id = 172;
+UPDATE users SET icon_id = 35 WHERE id = 173;
+UPDATE users SET icon_id = 6 WHERE id = 174;
+UPDATE users SET icon_id = 22 WHERE id = 175;
+UPDATE users SET icon_id = 48 WHERE id = 176;
+UPDATE users SET icon_id = 48 WHERE id = 177;
+UPDATE users SET icon_id = 4 WHERE id = 178;
+UPDATE users SET icon_id = 27 WHERE id = 179;
+UPDATE users SET icon_id = 9 WHERE id = 180;
+UPDATE users SET icon_id = 4 WHERE id = 181;
+UPDATE users SET icon_id = 21 WHERE id = 182;
+UPDATE users SET icon_id = 18 WHERE id = 183;
+UPDATE users SET icon_id = 43 WHERE id = 184;
+UPDATE users SET icon_id = 39 WHERE id = 185;
+UPDATE users SET icon_id = 2 WHERE id = 186;
+UPDATE users SET icon_id = 29 WHERE id = 187;
+UPDATE users SET icon_id = 31 WHERE id = 188;
+UPDATE users SET icon_id = 30 WHERE id = 189;
+UPDATE users SET icon_id = 26 WHERE id = 190;
+UPDATE users SET icon_id = 9 WHERE id = 191;
+UPDATE users SET icon_id = 38 WHERE id = 192;
+UPDATE users SET icon_id = 22 WHERE id = 193;
+UPDATE users SET icon_id = 47 WHERE id = 194;
+UPDATE users SET icon_id = 2 WHERE id = 195;
+UPDATE users SET icon_id = 35 WHERE id = 196;
+UPDATE users SET icon_id = 35 WHERE id = 197;
+UPDATE users SET icon_id = 17 WHERE id = 198;
+UPDATE users SET icon_id = 45 WHERE id = 199;
+UPDATE users SET icon_id = 17 WHERE id = 200;
+UPDATE users SET icon_id = 8 WHERE id = 201;
+UPDATE users SET icon_id = 3 WHERE id = 202;
+UPDATE users SET icon_id = 14 WHERE id = 203;
+UPDATE users SET icon_id = 37 WHERE id = 204;
+UPDATE users SET icon_id = 16 WHERE id = 205;
+UPDATE users SET icon_id = 48 WHERE id = 206;
+UPDATE users SET icon_id = 7 WHERE id = 207;
+UPDATE users SET icon_id = 5 WHERE id = 208;
+UPDATE users SET icon_id = 11 WHERE id = 209;
+UPDATE users SET icon_id = 26 WHERE id = 210;
+UPDATE users SET icon_id = 10 WHERE id = 211;
+UPDATE users SET icon_id = 40 WHERE id = 212;
+UPDATE users SET icon_id = 21 WHERE id = 213;
+UPDATE users SET icon_id = 14 WHERE id = 214;
+UPDATE users SET icon_id = 3 WHERE id = 215;
+UPDATE users SET icon_id = 18 WHERE id = 216;
+UPDATE users SET icon_id = 33 WHERE id = 217;
+UPDATE users SET icon_id = 33 WHERE id = 218;
+UPDATE users SET icon_id = 1 WHERE id = 219;
+UPDATE users SET icon_id = 11 WHERE id = 220;
+UPDATE users SET icon_id = 46 WHERE id = 221;
+UPDATE users SET icon_id = 3 WHERE id = 222;
+UPDATE users SET icon_id = 12 WHERE id = 223;
+UPDATE users SET icon_id = 34 WHERE id = 224;
+UPDATE users SET icon_id = 4 WHERE id = 225;
+UPDATE users SET icon_id = 10 WHERE id = 226;
+UPDATE users SET icon_id = 7 WHERE id = 227;
+UPDATE users SET icon_id = 47 WHERE id = 228;
+UPDATE users SET icon_id = 21 WHERE id = 229;
+UPDATE users SET icon_id = 20 WHERE id = 230;
+UPDATE users SET icon_id = 20 WHERE id = 231;
+UPDATE users SET icon_id = 46 WHERE id = 232;
+UPDATE users SET icon_id = 2 WHERE id = 233;
+UPDATE users SET icon_id = 25 WHERE id = 234;
+UPDATE users SET icon_id = 24 WHERE id = 235;
+UPDATE users SET icon_id = 28 WHERE id = 236;
+UPDATE users SET icon_id = 19 WHERE id = 237;
+UPDATE users SET icon_id = 9 WHERE id = 238;
+UPDATE users SET icon_id = 3 WHERE id = 239;
+UPDATE users SET icon_id = 34 WHERE id = 240;
+UPDATE users SET icon_id = 11 WHERE id = 241;
+UPDATE users SET icon_id = 49 WHERE id = 242;
+UPDATE users SET icon_id = 44 WHERE id = 243;
+UPDATE users SET icon_id = 38 WHERE id = 244;
+UPDATE users SET icon_id = 27 WHERE id = 245;
+UPDATE users SET icon_id = 13 WHERE id = 246;
+UPDATE users SET icon_id = 23 WHERE id = 247;
+UPDATE users SET icon_id = 36 WHERE id = 248;
+UPDATE users SET icon_id = 19 WHERE id = 249;
+UPDATE users SET icon_id = 15 WHERE id = 250;
+UPDATE users SET icon_id = 25 WHERE id = 251;
+UPDATE users SET icon_id = 32 WHERE id = 252;
+UPDATE users SET icon_id = 11 WHERE id = 253;
+UPDATE users SET icon_id = 29 WHERE id = 254;
+UPDATE users SET icon_id = 38 WHERE id = 255;
+UPDATE users SET icon_id = 38 WHERE id = 256;
+UPDATE users SET icon_id = 42 WHERE id = 257;
+UPDATE users SET icon_id = 14 WHERE id = 258;
+UPDATE users SET icon_id = 1 WHERE id = 259;
+UPDATE users SET icon_id = 26 WHERE id = 260;
+UPDATE users SET icon_id = 11 WHERE id = 261;
+UPDATE users SET icon_id = 11 WHERE id = 262;
+UPDATE users SET icon_id = 48 WHERE id = 263;
+UPDATE users SET icon_id = 22 WHERE id = 264;
+UPDATE users SET icon_id = 20 WHERE id = 265;
+UPDATE users SET icon_id = 9 WHERE id = 266;
+UPDATE users SET icon_id = 30 WHERE id = 267;
+UPDATE users SET icon_id = 35 WHERE id = 268;
+UPDATE users SET icon_id = 22 WHERE id = 269;
+UPDATE users SET icon_id = 17 WHERE id = 270;
+UPDATE users SET icon_id = 9 WHERE id = 271;
+UPDATE users SET icon_id = 13 WHERE id = 272;
+UPDATE users SET icon_id = 18 WHERE id = 273;
+UPDATE users SET icon_id = 12 WHERE id = 274;
+UPDATE users SET icon_id = 21 WHERE id = 275;
+UPDATE users SET icon_id = 16 WHERE id = 276;
+UPDATE users SET icon_id = 26 WHERE id = 277;
+UPDATE users SET icon_id = 16 WHERE id = 278;
+UPDATE users SET icon_id = 34 WHERE id = 279;
+UPDATE users SET icon_id = 21 WHERE id = 280;
+UPDATE users SET icon_id = 4 WHERE id = 281;
+UPDATE users SET icon_id = 36 WHERE id = 282;
+UPDATE users SET icon_id = 38 WHERE id = 283;
+UPDATE users SET icon_id = 23 WHERE id = 284;
+UPDATE users SET icon_id = 13 WHERE id = 285;
+UPDATE users SET icon_id = 37 WHERE id = 286;
+UPDATE users SET icon_id = 5 WHERE id = 287;
+UPDATE users SET icon_id = 14 WHERE id = 288;
+UPDATE users SET icon_id = 48 WHERE id = 289;
+UPDATE users SET icon_id = 42 WHERE id = 290;
+UPDATE users SET icon_id = 41 WHERE id = 291;
+UPDATE users SET icon_id = 46 WHERE id = 292;
+UPDATE users SET icon_id = 15 WHERE id = 293;
+UPDATE users SET icon_id = 8 WHERE id = 294;
+UPDATE users SET icon_id = 46 WHERE id = 295;
+UPDATE users SET icon_id = 8 WHERE id = 296;
+UPDATE users SET icon_id = 36 WHERE id = 297;
+UPDATE users SET icon_id = 38 WHERE id = 298;
+UPDATE users SET icon_id = 13 WHERE id = 299;
+UPDATE users SET icon_id = 23 WHERE id = 300;
+UPDATE users SET icon_id = 2 WHERE id = 301;
+UPDATE users SET icon_id = 26 WHERE id = 302;
+UPDATE users SET icon_id = 30 WHERE id = 303;
+UPDATE users SET icon_id = 45 WHERE id = 304;
+UPDATE users SET icon_id = 34 WHERE id = 305;
+UPDATE users SET icon_id = 42 WHERE id = 306;
+UPDATE users SET icon_id = 18 WHERE id = 307;
+UPDATE users SET icon_id = 23 WHERE id = 308;
+UPDATE users SET icon_id = 26 WHERE id = 309;
+UPDATE users SET icon_id = 29 WHERE id = 310;
+UPDATE users SET icon_id = 24 WHERE id = 311;
+UPDATE users SET icon_id = 48 WHERE id = 312;
+UPDATE users SET icon_id = 9 WHERE id = 313;
+UPDATE users SET icon_id = 30 WHERE id = 314;
+UPDATE users SET icon_id = 22 WHERE id = 315;
+UPDATE users SET icon_id = 40 WHERE id = 316;
+UPDATE users SET icon_id = 4 WHERE id = 317;
+UPDATE users SET icon_id = 36 WHERE id = 318;
+UPDATE users SET icon_id = 39 WHERE id = 319;
+UPDATE users SET icon_id = 27 WHERE id = 320;
+UPDATE users SET icon_id = 4 WHERE id = 321;
+UPDATE users SET icon_id = 5 WHERE id = 322;
+UPDATE users SET icon_id = 22 WHERE id = 323;
+UPDATE users SET icon_id = 34 WHERE id = 324;
+UPDATE users SET icon_id = 41 WHERE id = 325;
+UPDATE users SET icon_id = 32 WHERE id = 326;
+UPDATE users SET icon_id = 23 WHERE id = 327;
+UPDATE users SET icon_id = 8 WHERE id = 328;
+UPDATE users SET icon_id = 5 WHERE id = 329;
+UPDATE users SET icon_id = 35 WHERE id = 330;
+UPDATE users SET icon_id = 8 WHERE id = 331;
+UPDATE users SET icon_id = 35 WHERE id = 332;
+UPDATE users SET icon_id = 36 WHERE id = 333;
+UPDATE users SET icon_id = 21 WHERE id = 334;
+UPDATE users SET icon_id = 39 WHERE id = 335;
+UPDATE users SET icon_id = 22 WHERE id = 336;
+UPDATE users SET icon_id = 40 WHERE id = 337;
+UPDATE users SET icon_id = 49 WHERE id = 338;
+UPDATE users SET icon_id = 21 WHERE id = 339;
+UPDATE users SET icon_id = 47 WHERE id = 340;
+UPDATE users SET icon_id = 6 WHERE id = 341;
+UPDATE users SET icon_id = 43 WHERE id = 342;
+UPDATE users SET icon_id = 1 WHERE id = 343;
+UPDATE users SET icon_id = 9 WHERE id = 344;
+UPDATE users SET icon_id = 38 WHERE id = 345;
+UPDATE users SET icon_id = 50 WHERE id = 346;
+UPDATE users SET icon_id = 50 WHERE id = 347;
+UPDATE users SET icon_id = 25 WHERE id = 348;
+UPDATE users SET icon_id = 30 WHERE id = 349;
+UPDATE users SET icon_id = 37 WHERE id = 350;
+UPDATE users SET icon_id = 2 WHERE id = 351;
+UPDATE users SET icon_id = 5 WHERE id = 352;
+UPDATE users SET icon_id = 17 WHERE id = 353;
+UPDATE users SET icon_id = 41 WHERE id = 354;
+UPDATE users SET icon_id = 1 WHERE id = 355;
+UPDATE users SET icon_id = 23 WHERE id = 356;
+UPDATE users SET icon_id = 2 WHERE id = 357;
+UPDATE users SET icon_id = 44 WHERE id = 358;
+UPDATE users SET icon_id = 40 WHERE id = 359;
+UPDATE users SET icon_id = 49 WHERE id = 360;
+UPDATE users SET icon_id = 38 WHERE id = 361;
+UPDATE users SET icon_id = 16 WHERE id = 362;
+UPDATE users SET icon_id = 22 WHERE id = 363;
+UPDATE users SET icon_id = 49 WHERE id = 364;
+UPDATE users SET icon_id = 29 WHERE id = 365;
+UPDATE users SET icon_id = 48 WHERE id = 366;
+UPDATE users SET icon_id = 22 WHERE id = 367;
+UPDATE users SET icon_id = 25 WHERE id = 368;
+UPDATE users SET icon_id = 1 WHERE id = 369;
+UPDATE users SET icon_id = 37 WHERE id = 370;
+UPDATE users SET icon_id = 8 WHERE id = 371;
+UPDATE users SET icon_id = 12 WHERE id = 372;
+UPDATE users SET icon_id = 10 WHERE id = 373;
+UPDATE users SET icon_id = 37 WHERE id = 374;
+UPDATE users SET icon_id = 49 WHERE id = 375;
+UPDATE users SET icon_id = 24 WHERE id = 376;
+UPDATE users SET icon_id = 33 WHERE id = 377;
+UPDATE users SET icon_id = 7 WHERE id = 378;
+UPDATE users SET icon_id = 27 WHERE id = 379;
+UPDATE users SET icon_id = 27 WHERE id = 380;
+UPDATE users SET icon_id = 15 WHERE id = 381;
+UPDATE users SET icon_id = 17 WHERE id = 382;
+UPDATE users SET icon_id = 29 WHERE id = 383;
+UPDATE users SET icon_id = 8 WHERE id = 384;
+UPDATE users SET icon_id = 9 WHERE id = 385;
+UPDATE users SET icon_id = 32 WHERE id = 386;
+UPDATE users SET icon_id = 37 WHERE id = 387;
+UPDATE users SET icon_id = 11 WHERE id = 388;
+UPDATE users SET icon_id = 16 WHERE id = 389;
+UPDATE users SET icon_id = 1 WHERE id = 390;
+UPDATE users SET icon_id = 22 WHERE id = 391;
+UPDATE users SET icon_id = 45 WHERE id = 392;
+UPDATE users SET icon_id = 16 WHERE id = 393;
+UPDATE users SET icon_id = 3 WHERE id = 394;
+UPDATE users SET icon_id = 7 WHERE id = 395;
+UPDATE users SET icon_id = 23 WHERE id = 396;
+UPDATE users SET icon_id = 27 WHERE id = 397;
+UPDATE users SET icon_id = 46 WHERE id = 398;
+UPDATE users SET icon_id = 4 WHERE id = 399;
+UPDATE users SET icon_id = 31 WHERE id = 400;

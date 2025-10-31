@@ -1,0 +1,373 @@
+/* ========================= */
+/* 1. Fondo general          */
+/* ========================= */
+
+/* ========================= */
+/* Video de fondo            */
+/* ========================= */
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+#video-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  opacity: 0;
+  z-index: 0; /* encima del video, debajo del form */
+  pointer-events: none;
+  transition: opacity 1s ease;
+}
+
+body {
+  background-image: url("https://res.cloudinary.com/dzhyqelnw/image/upload/v1761627630/jinx_vs_vi_uolpt3.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-style: italic;
+}
+
+#bg-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  z-index: 9999;
+}
+
+.page-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.12s ease;
+  z-index: 9999;
+}
+
+.page-transition.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ========================= */
+/* 2. Caja del formulario    */
+/* ========================= */
+.form-box {
+  background: #000e1bd0;
+  padding: 30px 40px;
+  border-radius: 0px;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.836);
+  border: 1px solid #d8d8d870;
+  width: 100%;
+  max-width: 470px;
+  text-align: center;
+}
+
+.form-box h2 {
+  margin-bottom: -10px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.form-box hr {
+  border-color: #f1f1f17a;
+  border-image: linear-gradient(90deg, #181818, #ebebeb, #181818);
+  border-image-slice: 1;
+  margin-bottom: -2px;
+}
+
+/* ========================= */
+/* 3. Inputs y selects       */
+/* ========================= */
+.form-box .form-control,
+.form-box .form-select {
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 3px solid #bebebe;
+  background: none;
+  outline: none;
+  background-color: white;
+  height: 45px;
+}
+
+.form-group input:hover,
+.form-group select:hover {
+  box-shadow: 0px 0px 15px rgb(0, 132, 172);
+}
+
+.form-group input:focus {
+  box-shadow: 0px 0px 15px rgb(170, 145, 0);
+
+  border-color: rgb(26, 26, 26);
+}
+
+.form-group label {
+  position: absolute;
+  left: 12px;
+  top: 26px;
+  padding: 0 4px;
+  color: #202020e1;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: 0.2s ease all;
+  font-weight: 500;
+}
+
+.form-group.focused label {
+  top: 17px;
+  left: 8px;
+  font-size: 0.6rem;
+  color: #000000e1;
+  font-weight: 800;
+}
+
+.form-group select {
+  width: 100%;
+  padding: 0 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  border: 3px solid #bebebe;
+  background-color: white;
+  outline: none;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg fill='%23707070' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px 16px;
+}
+
+.form-group select option {
+  font-weight: 700;
+  color: #000;
+}
+
+/* ========================= */
+/* 4. Password toggle        */
+/* ========================= */
+.password-group {
+  position: relative;
+}
+
+.password-group .toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 65%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #707070e1;
+  font-size: 1.1rem;
+  user-select: none;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.toggle-password img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  margin-bottom: 9px;
+  margin-right: 10px;
+}
+
+/* ========================= */
+/* 5. Mensajes de validación */
+/* ========================= */
+.input-msg {
+  height: 16px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: transparent;
+  transition: color 0.2s ease;
+  text-shadow: black;
+}
+
+.input-msg.error {
+  color: #ff4c4c;
+  border-color: #ff4c4c;
+}
+
+.input-msg.warning {
+  color: #ffcc00;
+}
+
+/* ========================= */
+/* 6. Botones                */
+/* ========================= */
+.form-box .button-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 60px;
+  margin-top: 15px;
+  margin-bottom: 0px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.form-box .button-row.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.form-box .button-row button {
+  flex: 1;
+  text-align: center;
+}
+
+.form-box .btn-success {
+  border: 1px solid;
+  font-weight: 500;
+  background: linear-gradient(180deg, #00750ec2, #00220486);
+  transition: all 0.2s ease;
+  border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7);
+}
+
+.form-box .btn-success:hover {
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+  transform: scale(1.01);
+}
+
+.form-box .btn-secondary {
+  border: 1px solid;
+  font-weight: 500;
+  background: linear-gradient(180deg, #ffc31fde, #583c00a8);
+  border-image: linear-gradient(180deg, #4d4d4d, #c2c2c2, #4e4e4e);
+  border-image-slice: 1;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7);
+}
+
+.form-box .btn-secondary:hover {
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+  transform: scale(1.01);
+}
+
+/* ========================= */
+/* 7. Mensaje de estado      */
+/* ========================= */
+#message {
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-top: 29px !important;
+  margin-bottom: -10px !important;
+}
+
+/* ========================= */
+/* 8. Animated Background Toggle */
+/* ========================= */
+.animated-bg-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: -30px;
+}
+
+.animated-bg-toggle input[type="checkbox"] {
+  accent-color: #22614b;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  margin-top: -6px;
+}
+
+/* ========================= */
+/* 9. Animaciones            */
+/* ========================= */
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-box.animate {
+  animation: fadeSlideIn 0.5s ease forwards;
+}
+
+.form-box .form-group,
+.form-box .button-row {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.form-box .form-group.show,
+.form-box .button-row.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Contenedor de ambos toggles */
+.toggles-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin-top: 20px;
+  margin-bottom: -30px;
+}
+
+/* Ajuste visual para mantener alineación */
+.toggles-row .animated-bg-toggle {
+  margin: 0;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.toggles-row .animated-bg-toggle input[type="checkbox"] {
+  accent-color: #22614b;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  margin-top: -4px;
+}

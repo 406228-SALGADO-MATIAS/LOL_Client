@@ -15,4 +15,6 @@ public class RoleEntity {
     @Column(name = "id", nullable = false)
     private Long id;
     private String role;
+    @Column(name = "role_img", nullable = false)
+    private String roleImg;
 }

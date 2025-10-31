@@ -1,0 +1,370 @@
+/* ================================================
+   BASE / GLOBAL
+================================================ */
+body {
+  background-image: url("https://res.cloudinary.com/dzhyqelnw/image/upload/v1761893023/rift_h6gd6j.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: Arial, sans-serif;
+  color: #fff;
+}
+
+/* ================================================
+   OVERLAYS & TRANSITIONS
+================================================ */
+#bg-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  z-index: 9999;
+}
+
+.page-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.12s ease;
+  z-index: 9999;
+}
+
+.page-transition.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ================================================
+   LAYOUT PRINCIPAL
+================================================ */
+.main-layout-vertical {
+  margin-top: 105px;
+  padding: 1rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: calc(100vh - 120px);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ================================================
+   TARJETAS PRINCIPALES
+================================================ */
+.stats-card {
+  flex: 6.8;
+  background: linear-gradient(90deg, #000000a6, #1d1d1dc4);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 3px solid;
+  border-image: linear-gradient(90deg, #1f1f1f, #4d4d4d, #202020);
+  border-image-slice: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+}
+
+.stats-card .row {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  padding: 0 1rem;
+  justify-content: space-between;
+  margin-bottom: 0 !important;
+}
+
+.stats-card .row .col-md-4 {
+  flex: 1;
+  max-width: 33%;
+}
+
+.stats-container {
+  background: linear-gradient(
+    90deg,
+    rgba(33, 54, 0, 0.82),
+    rgba(37, 29, 0, 0.65)
+  );
+  border: 3.5px solid transparent;
+  border-image: linear-gradient(180deg, #585858, #e4e4e4a2, #303030);
+  border-image-slice: 1;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.champions-card {
+  flex: 3.2;
+  background: linear-gradient(90deg, #000000a6, #1d1d1dc4) !important;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 3px solid;
+  border-image: linear-gradient(90deg, #1f1f1f, #4d4d4d, #202020);
+  border-image-slice: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+/* ================================================
+   WIN FILTER / PILL
+================================================ */
+.win-filter-container {
+  position: relative;
+}
+
+#win-stats {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -1px;
+}
+
+.stats-pill {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(
+    90deg,
+    rgba(33, 54, 0, 0.82),
+    rgba(37, 29, 0, 0.65)
+  );
+  border: 3.5px solid transparent;
+  border-image: linear-gradient(180deg, #585858, #e4e4e4a2, #303030);
+  border-image-slice: 1;
+}
+
+.stats-pill .stat-label {
+  color: #ddd;
+}
+
+.stats-pill .stat-value {
+  color: #fff;
+}
+
+/* ================================================
+   FILTROS DE JUEGO / ROL
+================================================ */
+#game-filter,
+#role-filter {
+  position: relative;
+  left: -50px;
+  height: 35px;
+  padding: 0 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(90deg, #1a1a1a, #2c2c2c);
+  border: 2px solid #555;
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  z-index: 10;
+  margin-right: 10px;
+}
+
+#game-filter:hover {
+  border-color: #f0c040;
+  background-color: #222;
+}
+
+#game-filter:focus {
+  border-color: #f0c040;
+  box-shadow: 0 0 5px #f0c040;
+  background-color: #222;
+}
+
+/* ================================================
+   TITULOS & SEPARADORES
+================================================ */
+.stats-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #f1f1f1;
+  text-align: center;
+}
+
+.stats-separator {
+  border: none;
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
+  margin: 0.5rem 0 1rem;
+}
+
+/* Ajustes dentro de champions-card */
+.champions-card .stats-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.1rem;
+}
+
+.champions-card .stats-separator {
+  margin: 0.25rem 0 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Centra verticalmente la lista de campeones */
+.champion-list-wrapper {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+/* ================================================
+   KDA ROW
+================================================ */
+.kda-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+}
+
+.kda-img {
+  width: 29px;
+  height: 29px;
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.7));
+}
+
+.kda-value {
+  font-weight: bold;
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+/* ================================================
+   STATS (labels y valores)
+================================================ */
+.stat-label {
+  margin: 0.25rem 0;
+  font-size: 1.3rem;
+  color: #bbb;
+}
+
+.stat-value {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #fff;
+  margin-left: 3px;
+}
+
+/* Aplica solo dentro de los contenedores principales */
+.stats-container .stat-label {
+  display: flex;
+  justify-content: space-between; /* texto a la izq, valor a la der */
+  align-items: center;
+  margin: 0.25rem 0;
+  font-size: 1.3rem;
+  color: #bbb;
+  margin-left: 80px;
+}
+
+/* Asegura que el valor no se desplace raro */
+.stats-container .stat-value {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #fff;
+  margin-left: 8px; /* un poco más de espacio visual */
+  text-align: right;
+  min-width: 60px; /* opcional, para alineado más prolijo */
+  margin-right: 80px;
+}
+
+/* ================================================
+   SEARCH / CHAMPIONS CARD
+================================================ */
+.champions-card .champion-list-wrapper {
+  height: 160px;
+  min-height: 100px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.champions-card .search-container {
+  height: 36px;
+  flex: 0 0 auto;
+  margin-bottom: 0.5rem;
+  margin-top: -0.3rem !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-right: 5px;
+}
+
+.champions-card .search-container input#championSearch {
+  width: 100%;
+  min-width: 200px;
+  max-width: 250px;
+  height: 36px;
+  padding: 0 0.8rem;
+  font-size: 0.95rem;
+  border: 2px solid #757575;
+  border-radius: 1px;
+  background: linear-gradient(90deg, #000000, #2c2c2c) !important;
+  color: #fff;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.champions-card .search-container input#championSearch:focus {
+  border-color: #f0c040;
+  box-shadow: 0 0 5px #f0c040;
+  background-color: #222;
+}
+
+/* ================================================
+   ANIMATIONS
+================================================ */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animated-number {
+  display: inline-block;
+  animation: pulse 0.2s ease;
+}
+
+/* ================================================
+   CUSTOM SCROLLBARS
+================================================ */
+#champion-list::-webkit-scrollbar {
+  height: 6px;
+}
+
+#champion-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #c7c7c7cc, #ffffff);
+  border-radius: 0px;
+}
+
+#champion-list::-webkit-scrollbar-thumb:hover {
+  background-color: #ffffff;
+}
+
+#champion-list::-webkit-scrollbar-track {
+  background-color: #00232e;
+}

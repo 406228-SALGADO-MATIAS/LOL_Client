@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account Login</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/css/login/login.css" />
+  </head>
+  <body>
+    <!-- =============================== -->
+    <!-- Fondo de video -->
+    <!-- =============================== -->
+    <video autoplay muted loop id="bg-video"></video>
+    <div id="video-overlay"></div>
+    <div class="page-transition"></div>
+
+    <!-- =============================== -->
+    <!-- Contenedor general sin scroll -->
+    <!-- =============================== -->
+    <div class="login-layout">
+      <!-- Sidebar con logo + form -->
+      <div class="login-sidebar">
+        <!-- Logo League of Legends centrado -->
+        <div class="lol-logo">
+          <img
+            src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761628613/lol_logo_dxls3a.png"
+            alt="League of Legends Logo"
+          />
+        </div>
+
+        <!-- Caja de Login -->
+        <div class="form-box">
+          <h4>Account Login</h4>
+          <hr />
+          <form id="loginForm">
+            <div class="form-group text-left">
+              <label for="server" class="small-label">Server</label>
+              <select id="server" class="form-select" required>
+                <option value="LAS" selected>Latin America South (LAS)</option>
+                <option value="LAN">Latin America North (LAN)</option>
+                <option value="BR">Brazil (BR)</option>
+                <option value="NA">North America (NA)</option>
+              </select>
+            </div>
+
+            <!-- Campo Username -->
+
+            <div class="form-group text-left">
+              <label for="username" class="small-label">Username</label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                placeholder="Enter your username"
+                required
+              />
+            </div>
+
+            <!-- Campo Password -->
+            <div class="form-group password-group text-left">
+              <label for="password" class="small-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="Enter your password"
+                required
+              />
+              <span
+                class="toggle-password"
+                onclick="togglePassword('password', this)"
+              >
+                <img
+                  src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761530005/eye-crossed_xuubre.png"
+                  alt="toggle"
+                />
+              </span>
+            </div>
+
+            <div
+              class="form-row align-items-center justify-content-between mt-3"
+            >
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="rememberUsername"
+                />
+                <label class="form-check-label small" for="rememberUsername">
+                  Remember login info
+                </label>
+              </div>
+              <button type="submit" class="btn-login">Log in</button>
+            </div>
+          </form>
+
+          <hr />
+
+          <div class="signup-text mt-2">
+            Don’t have an account?
+            <a href="/pages/out/register.html" class="signup-link">Sign up</a>
+          </div>
+
+          <div id="loginMessage" class="message mt-3"></div>
+        </div>
+      </div>
+
+      <!-- Footer con Riot logo y toggle fuera del sidebar -->
+      <div class="footer-fixed">
+        <img
+          src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761628929/riot-games-logo_qsc5ot.png"
+          alt="Riot Games Logo"
+          class="riot-logo"
+        />
+        <div class="animated-bg-toggle">
+          <input type="checkbox" id="disableMenuAnimation" />
+          <label for="disableMenuAnimation">Disable Menu Animation</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal central de estado (placeholder futuro) -->
+
+    <div id="loginStatusModal" class="modal-center" style="display: none">
+      <!-- Aquí se insertará dinámicamente el estado del login -->
+    </div>
+
+    <script src="/javascript/core/login/login.js"></script>
+    <script src="/javascript/support/login/loginUi.js"></script>
+
+    <!-- JS interno: transición -->
+    <script>
+      function setupPageTransitions() {
+        const transition = document.querySelector(".page-transition");
+        window.addEventListener("load", () => {
+          setTimeout(() => transition.classList.add("hidden"), 150);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", setupPageTransitions);
+    </script>
+  </body>
+</html>

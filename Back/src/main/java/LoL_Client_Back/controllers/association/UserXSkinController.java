@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("UserXSkin")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserXSkinController {
     @Autowired
     UserXSkinService service;
@@ -66,5 +67,16 @@ public class UserXSkinController {
     public ResponseEntity<String> giveSkinsToUsersWithout() {
         String result = service.giveSkinsToUsersWithout();
         return ResponseEntity.ok(result);
+    }
+    @PostMapping("/unlockSkin")
+    public ResponseEntity<UserXSkinDTO> unlockSkin(@RequestParam Long idUser,
+                                                   @RequestParam Long idSkin) {
+        UserXSkinDTO dto = service.unlockSkin(idUser, idSkin);
+        return ResponseEntity.ok(dto);
+    }
+    @PostMapping("/unlockAllSkin/{idUser}")
+    public ResponseEntity<UserXSkinDTO> unlockAllSkins(@PathVariable Long idUser) {
+        service.unlockAllSkins(idUser);
+        return ResponseEntity.noContent().build();
     }
 }

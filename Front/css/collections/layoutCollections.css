@@ -1,0 +1,102 @@
+/* layout.css */
+.navbar-custom .navbar-nav {
+  display: flex !important;
+  gap: 2rem;
+  align-items: center !important; /* esto fuerza verticalidad absoluta */
+}
+
+.navbar-custom .nav-item {
+  display: flex !important; /* que el li también sea flex */
+  align-items: center !important; /* vertical centrado */
+}
+.navbar-custom .nav-link {
+  display: flex !important;
+  align-items: center !important; /* vertical centrado */
+  justify-content: center;
+  padding: 0 1rem !important; /* evita padding desigual */
+  height: 100%;
+  line-height: 1.2rem; /* opcional, ajustar si hace falta */
+}
+
+/* Navbar */
+.navbar-custom {
+  background: linear-gradient(90deg, #051220, #0b3846);
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 60px;
+  z-index: 1030;
+}
+
+.navbar-custom .nav-item .nav-link {
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0 15px;
+  cursor: pointer;
+}
+
+.navbar-custom .nav-item .nav-link:hover {
+  color: #ff9800;
+}
+
+/* Sidebar base */
+.sidebar {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  bottom: 0;
+  width: 15.5%;
+  background-color: #cfcfcf;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+/* Main content */
+.main-content {
+  margin-left: 15.5%;
+  margin-right: 1%;
+  margin-top: -2%;
+}
+
+/* Contenedor central */
+.content {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px);
+  margin-left: 15.5%;
+}
+
+/* Hacer que "Volver" tenga los mismos estilos que los links del menú */
+.navbar-custom .navbar-brand {
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0 15px;
+  cursor: pointer;
+  transition: color 0.2s; /* suaviza el hover */
+}
+
+.navbar-custom .navbar-brand:hover {
+  color: #ff9800 !important;
+}
+
+body::-webkit-scrollbar {
+  width: 6px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #ffd500cc;
+  border-radius: 3px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #ffe96a;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #071a2d;
+}

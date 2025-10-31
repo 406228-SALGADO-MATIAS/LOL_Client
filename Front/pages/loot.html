@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loot</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/css/loot/sideBarLoot.css" />
+    <link rel="stylesheet" href="/css/loot/lootCards.css" />
+    <link rel="stylesheet" href="/css/loot/layoutLoot.css" />
+    <link rel="stylesheet" href="/css/loot/modal/lootHoverModal.css" />
+    <link rel="stylesheet" href="/css/loot/modal/lootClickModal.css" />
+    <link rel="stylesheet" href="/css/loot/modal/lootNewItemModal.css" />
+    <link rel="stylesheet" href="/css/loot/modal/lootClickModalEnchant.css" />
+    <link rel="stylesheet" href="/css/loot/modal/lootRollModal.css" />
+  </head>
+
+  <body>
+    <div class="page-transition"></div>
+    <!-- Main Navbar -->
+    <div id="navbar-container"></div>
+
+    <div class="container-fluid mt-5">
+      <div class="row">
+        <!-- Sidebar -->
+        <div class="col-12 col-md-4 sidebar p-3 d-flex flex-column">
+          <!-- Navbar superior dentro del sidebar -->
+          <div
+            class="sidebar-topbar d-flex justify-content-between align-items-center mb-3"
+          >
+            <!-- Buscador a la izquierda -->
+            <input
+              type="text"
+              class="form-control w-50"
+              id="searchLoot"
+              placeholder="Buscar..."
+            />
+
+            <!-- Dropdown a la derecha -->
+            <div class="sidebar-topbar">
+              <select id="filterSelect" class="form-select custom-select">
+                <option value="all">Todos</option>
+                <option value="availables">Desbloqueables</option>
+                <option value="adquired">En coleccion</option>
+                <option value="resources">Necesita recursos</option>
+                <option value="champion">Necesita campeón</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Contenido scrollable -->
+          <div class="sidebar-scroll flex-grow-1 overflow-auto">
+            <!-- Categorías -->
+            <div class="loot-category">
+              <div class="loot-category-header">
+                <h5>Materiales</h5>
+              </div>
+              <div id="materialContainer" class="row"></div>
+            </div>
+
+            <div class="loot-category">
+              <div class="loot-category-header">
+                <h5>Campeones</h5>
+                <button id="rollChampion" class="btn-roll">ROLL 3 x 1</button>
+              </div>
+              <div id="championContainer" class="row"></div>
+            </div>
+
+            <div class="loot-category">
+              <!-- Botón roll -->
+              <div class="loot-category-header">
+                <h5>Skins</h5>
+                <button id="rollSkin" class="btn-roll">ROLL 3 x 1</button>
+              </div>
+              <div id="skinContainer" class="row"></div>
+            </div>
+
+            <div class="loot-category">
+              <div class="loot-category-header">
+                <h5>Iconos</h5>
+                <!-- Botón roll -->
+                <button id="rollIcon" class="btn-roll">ROLL 3 x 1</button>
+              </div>
+              <div id="iconContainer" class="row"></div>
+            </div>
+          </div>
+
+          <!-- Barra inferior fija -->
+          <div class="sidebar-bottombar mt-3">
+            <!-- Botón Desencantar -->
+            <div class="btn-2">
+              <button id="disenchantBtn" class="btn-filter">Desencantar</button>
+            </div>
+            <div class="d-flex justify-content-center text-center">
+              <!-- Chest -->
+              <div class="mx-2">
+                <img id="chestImg" class="sidebar-icon" alt="Chest" />
+                <div id="chestCount" class="sidebar-count">0</div>
+              </div>
+              <!-- MasterChest -->
+              <div class="mx-2">
+                <img
+                  id="masterChestImg"
+                  class="sidebar-icon"
+                  alt="MasterChest"
+                />
+                <div id="masterChestCount" class="sidebar-count">0</div>
+              </div>
+              <!-- Key -->
+              <div class="mx-2">
+                <img id="keyImg" class="sidebar-icon" alt="Key" />
+                <div id="keyCount" class="sidebar-count">0</div>
+              </div>
+              <!-- Orange Essence -->
+              <div class="mx-2">
+                <img
+                  id="essenceImg"
+                  class="sidebar-icon"
+                  alt="Orange Essence"
+                />
+                <div id="essenceCount" class="sidebar-count">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-12 col-md-8 main-content p-3">
+          <div id="lootModalContainer">
+            <!-- Aquí se abrirán dinámicamente las modals -->
+          </div>
+        </div>
+        <!-- Modal Desencantar -->
+        <div
+          class="modal fade"
+          id="disenchantModal"
+          tabindex="-1"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Confirmar desencantar</h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Cerrar"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+              <div class="modal-body">
+                ¿Deseas desencantar los ítems duplicados y los que ya están en
+                tu colección?
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  id="confirmDisenchant"
+                >
+                  Sí, desencantar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Primero definiciones -->
+    <script src="/javascript/support/collectionsChampions/imageRepositionChampions.js"></script>
+    <script src="/javascript/support/collectionsSkins/imageRepositionSkins.js"></script>
+    <script src="/javascript/support/visualsDom/cardLoot.js"></script>
+    <script src="/javascript/support/loot/modalHooverLoot.js"></script>
+    <script src="/javascript/support/loot/modalClickLoot.js"></script>
+    <script src="/javascript/support/loot/modalNewItem.js"></script>
+    <script src="/javascript/support/loot/modalRoll.js"></script>
+    <script src="/javascript/support/loot/filterLoot.js"></script>
+    <script src="/javascript/support/loot/renderLoot.js"></script>
+
+    <!-- Después, el que llama a esas funciones -->
+    <script src="/javascript/core/loot.js"></script>
+
+    <script>
+      // Navbar dinámico
+      fetch("/pages/mainNavbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          const container = document.getElementById("navbar-container");
+          container.innerHTML = html;
+
+          const mainNav = container.querySelector("nav");
+          mainNav.style.position = "fixed";
+          mainNav.style.top = "0";
+          mainNav.style.left = "0";
+          mainNav.style.width = "100%";
+          mainNav.style.zIndex = "1040";
+
+          const script = document.createElement("script");
+          script.src = "/javascript/core/mainNavbar.js";
+          document.body.appendChild(script);
+        })
+        .catch((err) => console.error(err));
+    </script>
+    <script>
+      //Transicion
+      function setupPageTransitions() {
+        const transition = document.querySelector(".page-transition");
+
+        // Entrada → al cargar la página
+        window.addEventListener("load", () => {
+          setTimeout(() => transition.classList.add("hidden"), 15);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", setupPageTransitions);
+    </script>
+  </body>
+</html>

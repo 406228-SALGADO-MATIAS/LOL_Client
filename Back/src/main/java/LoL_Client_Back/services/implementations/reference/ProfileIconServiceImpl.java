@@ -48,13 +48,13 @@ public class ProfileIconServiceImpl implements ProfileIconService {
 
     @Override
     public List<ProfileIconDTO> getAll() {
-        return dtoBuilder.buildDtoList(repository.findAll(),
+        return dtoBuilder.buildIconDtoList(repository.findAll(),
                 "Did not find any profile icons");
     }
 
     @Override
     public List<ProfileIconDTO> findByName(String name) {
-        return dtoBuilder.buildDtoList(repository.findByIconIgnoreCaseContaining(name),
+        return dtoBuilder.buildIconDtoList(repository.findByIconIgnoreCaseContaining(name),
                 "Did not find any profile icons by the name "+name);
     }
 
@@ -106,15 +106,15 @@ public class ProfileIconServiceImpl implements ProfileIconService {
     public List<ProfileIconDTO> getUserIcons(Long idUser) {
         List<UserXIconEntity> ownership =
                 userXIconRepository.findByUser_Id(idUser);
+        List<ProfileIconDTO> iconsList = new ArrayList<>();
         if (!ownership.isEmpty()) {
-            List<ProfileIconDTO> iconsList = new ArrayList<>();
+
             for (UserXIconEntity u : ownership) {
                 iconsList.add(dtoBuilder.buildIconDTO
                         (u.getIcon(),Optional.empty(),""));
             }
-            return iconsList;
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"The user has not any icons in possession");
+        return iconsList;
     }
 
     @Override
@@ -130,9 +130,18 @@ public class ProfileIconServiceImpl implements ProfileIconService {
             for (UserXIconEntity u : ownershipList){
                 ownedIconsIds.add(u.getIcon().getId());
             }
-            return dtoBuilder.buildDtoList(repository.findByIdNotIn(ownedIconsIds),errorMsg);
+
+            List<ProfileIconEntity> iconsNotOwned = repository.findByIdNotIn(ownedIconsIds);
+            List<ProfileIconDTO> dtoList = new ArrayList<>();
+
+            for (ProfileIconEntity p : iconsNotOwned)
+            {
+                dtoList.add(dtoBuilder.buildIconDTO(p,null,"This icon does not exists"));
+            }
+
+            return dtoList;
         }
-        return dtoBuilder.buildDtoList(repository.findAll(),errorMsg);
+        return dtoBuilder.buildIconDtoList(repository.findAll(),errorMsg);
     }
 
     private void checkPreexistenceIconName(String name, ProfileIconEntity iconToUpdate)
