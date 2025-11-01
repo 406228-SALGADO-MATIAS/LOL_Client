@@ -66,7 +66,7 @@ async function loadTopProfile(
           imageContainer.style.backgroundImage = `url(${bgUrl})`;
           imageContainer.style.backgroundSize = "cover";
           applyChampionBackgroundPosition(imageContainer, bgUrl);
-        } 
+        }
       }
     }
   } catch (err) {
@@ -279,15 +279,17 @@ function setupRanksCarouselTitle() {
   };
 
   function changeBackground(index) {
-    // 1. oscurecer
+    // 1. oscurecer overlay
     bgOverlay.style.opacity = "1";
 
-    // 2. después de la animación, cambiar imagen y desvanecer
+    // 2. cambiar la imagen inmediatamente
+    document.body.style.backgroundImage =
+      backgroundsByIndex[index] || backgroundsByIndex[0];
+
+    // 3. revelar con delay para la animación
     setTimeout(() => {
-      document.body.style.backgroundImage =
-        backgroundsByIndex[index] || backgroundsByIndex[0];
       bgOverlay.style.opacity = "0";
-    }, 100);
+    }, 100); // solo delay para el fade-out del overlay
   }
 
   // Evento de cambio de slide
