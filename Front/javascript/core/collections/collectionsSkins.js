@@ -10,16 +10,12 @@ async function loadSkins(activeFilter = null) {
 
   try {
     const [ownedRes, notOwnedRes] = await Promise.all([
-      fetch(`http://localhost:8080/skins/getUserSkins/${userId}`),
-      fetch(`http://localhost:8080/skins/getUserSkins/NotPossess/${userId}`),
+      apiSkins.getUserSkins(userId),
+      apiSkins.getUserSkinsNotOwned(userId),
     ]);
 
-    ownedSkins = ownedRes.ok ? await ownedRes.json() : [];
-    if (!notOwnedRes.ok) {
-      collectionsContainer.innerHTML = `<p class="text-center text-danger">Error cargando skins no adquiridas</p>`;
-      return;
-    }
-    notOwnedSkins = await notOwnedRes.json();
+    ownedSkins = ownedRes.data ?? [];
+    notOwnedSkins = notOwnedRes.data ?? [];
 
     updateSkinCounters();
 
@@ -37,14 +33,8 @@ let ownedChampions = [];
 
 async function loadUserChampions() {
   try {
-    const res = await fetch(
-      `http://localhost:8080/champions/userChampions/${userId}`
-    );
-    if (res.ok) {
-      ownedChampions = await res.json();
-    } else {
-      ownedChampions = [];
-    }
+    const res = await apiChampions.getUserChampions(userId); // llama al API centralizado
+    ownedChampions = res.data ?? [];
   } catch (err) {
     console.error("Error cargando campeones del usuario:", err);
     ownedChampions = [];
@@ -64,27 +54,25 @@ function updateSkinCounters() {
 }
 
 async function handleUnlockSkin(skin) {
-  // Guardamos la posición actual
   const prevScroll = window.scrollY;
-  try {
-    const res = await fetch(
-      `http://localhost:8080/UserXSkin/unlockSkin?idUser=${userId}&idSkin=${skin.id}`,
-      { method: "POST" }
-    );
 
-    if (res.ok) {
-      await res.json();
+  try {
+    const res = await apiSkins.unlockSkin(userId, skin);
+
+    if (res.status >= 200 && res.status < 300) {
       alert(`✅ ${skin.name} desbloqueada con éxito!`);
-      await loadUserProfile(); // 👈 primero actualizamos el RP
-      await loadSkins(document.getElementById("filterSelect").value); // 👈 luego recargamos las skins
-      // asi se actualiza la categoria de skins obtenibles para la compra
+
+      // Actualizamos RP y recargamos skins
+      await loadUserProfile();
+      await loadSkins(document.getElementById("filterSelect").value);
+
       window.hideModalSkin();
 
       // Volvemos a la posición anterior
       window.scrollTo({ top: prevScroll, behavior: "auto" });
     } else {
-      const errText = await res.text();
-      alert(`❌ Error al desbloquear ${skin.name}: ${errText}`);
+      const errMsg = res.data?.message || "Error desconocido";
+      alert(`❌ Error al desbloquear ${skin.name}: ${errMsg}`);
     }
   } catch (err) {
     alert(`⚠️ Error de red: ${err.message}`);
@@ -124,58 +112,22 @@ function updateUnlockButtonSkin(skin, championName) {
   }
 }
 
-async function loadUserProfile() {
-  const userId = sessionStorage.getItem("userId");
-  if (!userId) return;
-
-  try {
-    const res = await fetch(
-      `http://localhost:8080/users/getProfileById/${userId}`
-    );
-    if (!res.ok) throw new Error("Error cargando perfil");
-
-    const data = await res.json();
-
-    const nicknameEl = document.getElementById("userNickname");
-    let serverShort = "";
-    if (data.server) {
-      const match = data.server.match(/\(([^)]+)\)/);
-      if (match) serverShort = match[1];
-    }
-
-    nicknameEl.innerHTML = `${
-      data.nickname || "Sin nick"
-    }<span style="font-weight: normal; font-size: 1.3rem">#${serverShort}</span>`;
-
-    document.getElementById("userBE").textContent = data.blueEssence ?? 0;
-    document.getElementById("userRP").textContent = data.riotPoints ?? 0;
-
-    const userIcon = document.getElementById("userIcon");
-    userIcon.src = data.iconImage || "/assets/default-icon.png";
-    userIcon.style.width = "auto";
-    userIcon.style.height = "100%";
-    userIcon.style.objectFit = "cover";
-  } catch (err) {
-    console.error(err);
-  }
-}
-
 function applyFilter(filter) {
   // Scroll arriba al aplicar filtro
   window.scrollTo({ top: 0, behavior: "smooth" });
 
   switch (filter) {
     case "ownership":
-      renderSkinsByOwnership(); 
+      renderSkinsByOwnership();
       break;
     case "tier":
-      renderSkinsByRPCost(); 
+      renderSkinsByRPCost();
       break;
     case "champion":
       renderSkinsByChampion();
       break;
     case "availableness":
-      renderSkinsByAvailableness(); 
+      renderSkinsByAvailableness();
       break;
     default:
       renderSkins();

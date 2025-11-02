@@ -64,25 +64,19 @@ async function handleLogin() {
   const payload = { server, username, password };
 
   try {
-    const response = await fetch("http://localhost:8080/users/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    // 🔹 Usamos el método específico del apiConfig
+    const { data, status } = await apiOut.login(payload);
 
-    if (!response.ok) {
-      let errorMessage = "Error desconocido";
-      try {
-        const errorData = await response.json();
-        errorMessage = errorData.message || errorMessage;
-      } catch {}
-      showLoginMessage(`Error: ${errorMessage}`, "danger");
+    // 🔹 Validamos si userId existe
+    if (!data.userId) {
+      showLoginMessage(
+        data.message || "Usuario o contraseña incorrecta",
+        "danger"
+      );
       return;
     }
 
-    const data = await response.json();
-
-    // ✅ Guardar o borrar credenciales
+    // ✅ Guardar o borrar credenciales según checkbox
     if (rememberCheck?.checked) {
       const savedData = { server, username, password };
       localStorage.setItem("savedLoginData", JSON.stringify(savedData));
@@ -90,14 +84,16 @@ async function handleLogin() {
       localStorage.removeItem("savedLoginData");
     }
 
+    // Guardamos userId en sesión
     sessionStorage.setItem("userId", data.userId);
     showLoginMessage("Login exitoso", "success");
 
     setTimeout(() => {
       window.location.href = "../menu.html";
     }, 800);
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    // 🔹 Solo entra aquí si ninguna URL respondió
+    console.error("Error en login:", err);
     showLoginMessage("Error al conectar con el servidor.", "danger");
   }
 }

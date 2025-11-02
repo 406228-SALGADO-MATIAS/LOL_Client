@@ -10,22 +10,15 @@ async function loadChampions(activeFilter = null) {
 
   try {
     const [ownedRes, notOwnedRes] = await Promise.all([
-      fetch(`http://localhost:8080/champions/userChampions/${userId}`),
-      fetch(
-        `http://localhost:8080/champions/userChampions/NotPossess/${userId}`
-      ),
+      apiChampions.getUserChampions(userId),
+      apiChampions.getUserChampionsNotOwned(userId),
     ]);
 
-    ownedData = ownedRes.ok ? await ownedRes.json() : [];
-    if (!notOwnedRes.ok) {
-      collectionsContainer.innerHTML = `<p class="text-center text-danger">Error cargando campeones no adquiridos</p>`;
-      return;
-    }
-    notOwnedData = await notOwnedRes.json();
+    ownedData = ownedRes?.data || [];
+    notOwnedData = notOwnedRes?.data || [];
 
     updateChampionCounters();
 
-    // Aplicamos filtro si se pasó, sino render normal
     if (activeFilter) {
       applyFilter(activeFilter);
     } else {
@@ -49,29 +42,20 @@ function updateChampionCounters() {
 }
 
 async function handleUnlock(champ) {
-  // Guardamos la posición actual
   const prevScroll = window.scrollY;
   try {
-    const res = await fetch(
-      `http://localhost:8080/UserXChampion/unlockChampion?idUser=${userId}&idChampion=${champ.id}`,
-      { method: "POST" }
-    );
+    const res = await apiChampions.unlockChampion(userId, champ);
 
-    if (res.ok) {
-      await res.json();
-      alert(`✅ ${champ.name} desbloqueado con éxito!`);
-      await loadChampions(document.getElementById("filterSelect").value);
-      await loadUserProfile();
-      window.hideModalChamp(); // si es modal de campeones
+    // 🔹 si todo OK, res.data contiene el json
+    alert(`✅ ${champ.name} desbloqueado con éxito!`);
 
-      // Volvemos a la posición anterior
-      window.scrollTo({ top: prevScroll, behavior: "auto" });
-    } else {
-      const errText = await res.text();
-      alert(`❌ Error al desbloquear ${champ.name}: ${errText}`);
-    }
+    await loadChampions(document.getElementById("filterSelect").value);
+    await loadUserProfile();
+    window.hideModalChamp(); // si es modal de campeones
+
+    window.scrollTo({ top: prevScroll, behavior: "auto" });
   } catch (err) {
-    alert(`⚠️ Error de red: ${err.message}`);
+    alert(`❌ Error al desbloquear ${champ.name}: ${err.message}`);
   }
 }
 

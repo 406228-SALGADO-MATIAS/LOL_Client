@@ -8,15 +8,20 @@ let currentCategoryFilter = "all";
 // ==========================
 // Cargar Items desde backend
 // ==========================
+// Cargar todos los items
 async function loadItems() {
   collectionsContainer.innerHTML = "";
-  try {
-    const res = await fetch(`http://localhost:8080/items/getAll`);
-    if (!res.ok) throw new Error("Error cargando items");
 
-    allItems = await res.json();
-    renderItems(allItems);
-    updateItemCounters();
+  try {
+    const res = await apiItems.getAllItems(); // { data, status, url }
+
+    if (res.status >= 200 && res.status < 300) {
+      allItems = res.data;
+      renderItems(allItems);
+      updateItemCounters();
+    } else {
+      throw new Error(res.data?.message || "Error cargando items");
+    }
   } catch (err) {
     collectionsContainer.innerHTML = `<p class="text-center text-danger">${err.message}</p>`;
   }
@@ -53,7 +58,6 @@ function applyItemFilter(filter) {
       break;
   }
 }
-
 
 // ==========================
 // Listeners

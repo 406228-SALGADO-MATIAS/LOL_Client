@@ -17,12 +17,8 @@ async function loadUserProfile() {
   if (!userId) return;
 
   try {
-    const res = await fetch(
-      `http://localhost:8080/users/getProfileById/${userId}`
-    );
-    if (!res.ok) throw new Error("Error cargando perfil");
-
-    const data = await res.json();
+    // 🔹 Obtenemos { data, status, url }
+    const { data } = await apiOut.getProfileDetailed(userId);
 
     // Nickname y servidor
     const nicknameEl = document.getElementById("userNickname");

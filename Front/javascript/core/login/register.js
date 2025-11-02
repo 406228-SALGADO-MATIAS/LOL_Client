@@ -27,14 +27,12 @@ function showMessage(text, type) {
  * Valida que password y confirmPassword coincidan
  * @returns {boolean}
  */
-
 async function handleSubmit(e) {
   e.preventDefault();
 
   const ok = await validate();
-  if (!ok) return; // errores críticos, no seguimos
+  if (!ok) return; // errores críticos
 
-  // Si todo bien, construimos DTO y hacemos register
   const dto = {
     username: usernameInput.value.trim(),
     password: passwordInput.value,
@@ -44,56 +42,48 @@ async function handleSubmit(e) {
   const server = serverSelect.value;
 
   try {
-    const res = await fetch(
-      `http://localhost:8080/users/createUser?serverOption=${server}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dto),
-      }
-    );
+    // 🔹 Usamos el método específico del apiConfig
+    const { data, status } = await apiOut.register(dto, server);
 
-    if (res.ok) {
-      showMessage("Registración exitosa!", "success");
+    // 🔹 Si hay mensaje de error del backend (campo repetido, etc)
+    if (data.message && !data.userId) {
+      const msg = data.message;
 
-      // 🧠 Si está tildado "remember", guardamos los datos
-      const rememberCheck = document.getElementById("remember-info");
-      if (rememberCheck.checked) {
-        const dataToSave = {
-          email: emailInput.value.trim(),
-          username: usernameInput.value.trim(),
-          password: passwordInput.value, // 🔥 incluimos password
-          nickname: nicknameInput.value.trim(),
-          server: serverSelect.value,
-        };
-        localStorage.setItem("registerData", JSON.stringify(dataToSave));
+      if (msg.includes("email")) {
+        showInputMessage("emailMsg", msg, "warning");
+      } else if (msg.includes("username")) {
+        showInputMessage("usernameMsg", msg, "warning");
+      } else if (msg.includes("nickname")) {
+        showInputMessage("nicknameMsg", msg, "warning");
       } else {
-        localStorage.removeItem("registerData");
+        showMessage(msg || "Error al registrar usuario.", "danger");
       }
-
-      // Redirección o mensaje
-      // setTimeout(() => window.location.href = "/pages/out/intro.html", 2000);
       return;
     }
 
-    // Si no fue OK, leemos la respuesta
-    const data = await res.json();
-    const msg = data.message || "";
+    // ✅ Registro exitoso
+    showMessage("Registración exitosa!", "success");
 
-    // 🔍 Detectar tipo de mensaje y mostrar en el campo correspondiente
-    if (msg.includes("email")) {
-      showInputMessage("emailMsg", msg, "warning");
-    } else if (msg.includes("username")) {
-      showInputMessage("usernameMsg", msg, "warning");
-    } else if (msg.includes("nickname")) {
-      showInputMessage("nicknameMsg", msg, "warning");
+    const rememberCheck = document.getElementById("remember-info");
+    if (rememberCheck.checked) {
+      const dataToSave = {
+        email: emailInput.value.trim(),
+        username: usernameInput.value.trim(),
+        password: passwordInput.value,
+        nickname: nicknameInput.value.trim(),
+        server: serverSelect.value,
+      };
+      localStorage.setItem("registerData", JSON.stringify(dataToSave));
     } else {
-      // Mensaje genérico si no matchea
-      showMessage(msg || "Error al registrar usuario.", "danger");
+      localStorage.removeItem("registerData");
     }
+
+    // Redirección opcional
+    // setTimeout(() => window.location.href = "/pages/out/intro.html", 2000);
   } catch (err) {
+    // 🔹 Solo entra si ninguna URL respondió correctamente
     console.error("Error en registro:", err);
-    showMessage("Error al conectar con el servidor", "danger");
+    showMessage("Error al conectar con el servidor.", "danger");
   }
 }
 

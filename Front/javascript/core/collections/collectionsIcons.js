@@ -10,12 +10,12 @@ async function loadIcons(activeFilter = null) {
   try {
     // Llamo en paralelo: todos los íconos y los que tiene el usuario
     const [allRes, ownedRes] = await Promise.all([
-      fetch(`http://localhost:8080/ProfileIcon/getAll`),
-      fetch(`http://localhost:8080/UserXIcon/findByUserId/${userId}`),
+      apiIcons.getAllIcons(), // devuelve { data, status, url }
+      apiIcons.getUserIcons(userId), // devuelve { data, status, url }
     ]);
 
-    const allIcons = allRes.ok ? await allRes.json() : [];
-    ownedIcons = ownedRes.ok ? await ownedRes.json() : [];
+    const allIcons = allRes.data ?? [];
+    ownedIcons = ownedRes.data ?? [];
 
     // Saco los no adquiridos comparando IDs
     const ownedIds = new Set(ownedIcons.map((icon) => icon.idIcon));
@@ -30,42 +30,6 @@ async function loadIcons(activeFilter = null) {
     }
   } catch (err) {
     collectionsContainer.innerHTML = `<p class="text-center text-danger">${err.message}</p>`;
-  }
-}
-
-async function loadUserProfile() {
-  const userId = sessionStorage.getItem("userId");
-  if (!userId) return;
-
-  try {
-    const res = await fetch(
-      `http://localhost:8080/users/getProfileById/${userId}`
-    );
-    if (!res.ok) throw new Error("Error cargando perfil");
-
-    const data = await res.json();
-
-    const nicknameEl = document.getElementById("userNickname");
-    let serverShort = "";
-    if (data.server) {
-      const match = data.server.match(/\(([^)]+)\)/);
-      if (match) serverShort = match[1];
-    }
-
-    nicknameEl.innerHTML = `${
-      data.nickname || "Sin nick"
-    }<span style="font-weight: normal; font-size: 1.3rem">#${serverShort}</span>`;
-
-    document.getElementById("userBE").textContent = data.blueEssence ?? 0;
-    document.getElementById("userRP").textContent = data.riotPoints ?? 0;
-
-    const userIcon = document.getElementById("userIcon");
-    userIcon.src = data.iconImage || "/assets/default-icon.png";
-    userIcon.style.width = "auto";
-    userIcon.style.height = "100%";
-    userIcon.style.objectFit = "cover";
-  } catch (err) {
-    console.error(err);
   }
 }
 
@@ -118,17 +82,15 @@ function updateUnlockButtonIcon(icon) {
   }
 }
 
-// Función temporal para desbloquear icono
+// Función para desbloquear un ícono
 async function handleUnlockIcon(icon) {
   const prevScroll = window.scrollY;
   try {
-    const res = await fetch(
-      `http://localhost:8080/UserXIcon/unlockIcon?idUser=${userId}&idIcon=${icon.id}`,
-      { method: "POST" }
-    );
+    // Llamada al endpoint vía API
+    const res = await apiIcons.unlockIcon(userId, icon); // devuelve { data, status, url }
 
-    if (res.ok) {
-      const data = await res.json(); // UserXIconDTO
+    if (res.status >= 200 && res.status < 300) {
+      const data = res.data; // UserXIconDTO
       alert(`✅ Icono "${icon.icon}" desbloqueado con éxito!`);
 
       // Actualizamos el perfil y los íconos
@@ -141,36 +103,40 @@ async function handleUnlockIcon(icon) {
       // Volvemos a la posición anterior
       window.scrollTo({ top: prevScroll, behavior: "auto" });
     } else {
-      const errText = await res.text();
-      alert(`❌ Error al desbloquear icono "${icon.name}": ${errText}`);
+      alert(
+        `❌ Error al desbloquear icono "${icon.name}": ${
+          data?.message || "Desconocido"
+        }`
+      );
     }
   } catch (err) {
     alert(`⚠️ Error de red: ${err.message}`);
   }
 }
 
-// Función temporal para usar icono
+// Función para usar un ícono
 async function handleUseIcon(userXIcon) {
   const prevScroll = window.scrollY;
 
   try {
-    const profileIconId = userXIcon.idIcon ?? userXIcon.id; // si es UserXIconDTO usa idIcon, si es ProfileIcon usa id
+    const profileIconId = userXIcon.idIcon ?? userXIcon.id; // soporta UserXIconDTO o ProfileIcon
 
-    const res = await fetch(
-      `http://localhost:8080/users/${userId}/icon/${profileIconId}`,
-      { method: "PUT" }
-    );
+    // Llamada al endpoint vía API
+    const res = await apiIcons.useIcon(userId, profileIconId); // devuelve { data, status, url }
 
-    if (res.ok) {
-      const data = await res.json(); // UserProfileDTO
+    if (res.status >= 200 && res.status < 300) {
+      const data = res.data; // UserProfileDTO
       alert(`✅ Icono "${userXIcon.icon}" aplicado con éxito!`);
 
       await loadUserProfile();
       hideModalIcon();
       window.scrollTo({ top: prevScroll, behavior: "auto" });
     } else {
-      const errText = await res.text();
-      alert(`❌ Error al aplicar icono "${userXIcon.icon}": ${errText}`);
+      alert(
+        `❌ Error al aplicar icono "${userXIcon.icon}": ${
+          res.data?.message || "Desconocido"
+        }`
+      );
     }
   } catch (err) {
     alert(`⚠️ Error de red: ${err.message}`);
