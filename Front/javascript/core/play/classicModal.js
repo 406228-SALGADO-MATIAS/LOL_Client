@@ -146,14 +146,12 @@ function goToRolesSection() {
 async function loadChampions() {
   const userId = window.originalUserId || sessionStorage.getItem("userId");
   try {
-    const res = await fetch(
-      `http://localhost:8080/champions/userChampions/${userId}`
-    );
-    const data = await res.json();
+    const { data } = await apiChampions.getUserChampions(userId);
     championsData = data;
     renderChampionGrid();
   } catch (err) {
     console.error("Error al cargar campeones:", err);
+    championsData = [];
   }
 
   animateChampionCards();
@@ -161,10 +159,8 @@ async function loadChampions() {
 
 async function loadSkins(userId) {
   try {
-    const res = await fetch(
-      `http://localhost:8080/skins/getUserSkins/${userId}`
-    );
-    skinsData = await res.json();
+    const { data } = await apiSkins.getUserSkins(userId);
+    skinsData = data;
   } catch (err) {
     console.error("Error al cargar skins:", err);
     skinsData = [];
@@ -184,21 +180,30 @@ async function finishSelection() {
   const gameMode = isRanked ? "RANKED" : "NORMAL";
 
   try {
-    const params = new URLSearchParams({
-      role: selectedRole,
-      gameMode: gameMode,
-      showChampion: true,
-      showItem: true,
-    });
+    let matchData;
+    if (selectedChampionId) {
+      // Usuario + rol + campeón
+      const { data } = await apiPlay.createMatchUserRoleAndChampion(
+        userId,
+        selectedRole,
+        gameMode,
+        selectedChampionId,
+        true,
+        true
+      );
+      matchData = data;
+    } else {
+      // Usuario + rol
+      const { data } = await apiPlay.createMatchUserAndRole(
+        userId,
+        selectedRole,
+        gameMode,
+        true,
+        true
+      );
+      matchData = data;
+    }
 
-    let url = selectedChampionId
-      ? `http://localhost:8080/matches/createMatch/userRoleAndChampion/${userId}?${params.toString()}&championId=${selectedChampionId}`
-      : `http://localhost:8080/matches/createMatch/userAndRole/${userId}?${params.toString()}`;
-
-    const res = await fetch(url, { method: "POST" });
-    if (!res.ok) throw new Error("Error al crear la partida");
-
-    const matchData = await res.json();
     closeClassicModal();
     createResultModal(matchData);
   } catch (err) {

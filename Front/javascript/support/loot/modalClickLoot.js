@@ -12,11 +12,8 @@ async function createChestClickModal(item, type) {
   // 1️⃣ Traemos los datos del usuario
   let userLootData;
   try {
-    const res = await fetch(
-      `http://localhost:8080/userLoot/${userId}?showInactives=false`
-    );
-    if (!res.ok) throw new Error("Error cargando loot del usuario");
-    userLootData = await res.json();
+    const { data } = await apiLoot.getUserLoot(userId, false);
+    userLootData = data;
   } catch (err) {
     alert("Error cargando info de cofres: " + err.message);
     return;

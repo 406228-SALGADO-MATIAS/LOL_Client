@@ -221,24 +221,17 @@ function closeAramModal() {
   }
 }
 
+// --- Adaptación de finishAramSelection ---
 async function finishAramSelection() {
-  if (!selectedChampionId) {
-    return;
-  }
+  if (!selectedChampionId) return;
 
   const userId = window.originalUserId || sessionStorage.getItem("userId");
 
   try {
-    const res = await fetch(
-      `http://localhost:8080/matches/createMatch/ARAM/userAndChampion/${userId}?championId=${selectedChampionId}`,
-      {
-        method: "POST",
-      }
+    const { data: matchData } = await apiPlay.createAramMatchWithChampion(
+      userId,
+      selectedChampionId
     );
-
-    if (!res.ok) throw new Error("Error al crear la partida ARAM");
-
-    const matchData = await res.json();
 
     closeAramModal();
     createResultModal(matchData);
@@ -246,16 +239,13 @@ async function finishAramSelection() {
     console.error("Error en finishAramSelection:", err);
   }
 }
-
 async function loadChampionsForAram() {
   const userId = window.originalUserId || sessionStorage.getItem("userId");
   try {
-    const res = await fetch(
-      `http://localhost:8080/champions/userChampions/${userId}`
-    );
-    const data = await res.json();
+    const { data } = await apiChampions.getUserChampions(userId);
     championsData = data;
   } catch (err) {
-    console.error("Error al cargar campeones:", err);
+    console.error("Error al cargar campeones para ARAM:", err);
+    championsData = [];
   }
 }

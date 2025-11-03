@@ -5,12 +5,8 @@ async function loadTopProfile(
   if (!userId) return;
 
   try {
-    const res = await fetch(
-      `http://localhost:8080/users/getProfileById/${userId}`
-    );
-    if (!res.ok) throw new Error("Error al traer perfil");
-
-    const profile = await res.json();
+    const { data: profile, status } = await apiOut.getProfileDetailed(userId);
+    if (status !== 200) throw new Error("Error al traer perfil");
 
     // === Resume ===
     if (options.resume) {
@@ -85,12 +81,9 @@ async function loadTopChampions(userId) {
   const placeholderText = "-";
 
   try {
-    const res = await fetch(
-      `http://localhost:8080/usersMatches/${userId}/stats`
-    );
-    if (!res.ok) throw new Error("Error al traer stats de usuario");
+    const { data, status } = await apiStats.getUserStats(userId);
+    if (status !== 200) throw new Error("Error al traer stats de usuario");
 
-    const data = await res.json();
     const champions = data.championsUsed || [];
 
     // Calcular total de partidas y ordenar
@@ -179,7 +172,6 @@ async function loadTopChampions(userId) {
     console.error("Error cargando Top Champions:", err);
   }
 }
-
 async function loadRanks(userId) {
   if (!userId) {
     console.warn("No se encontró userId");
@@ -189,16 +181,14 @@ async function loadRanks(userId) {
   try {
     // Traemos solo lo necesario: perfil y stats
     const [profileRes, normalStatsRes, aramStatsRes] = await Promise.all([
-      fetch(`http://localhost:8080/users/getProfileById/${userId}`),
-      fetch(
-        `http://localhost:8080/usersMatches/${userId}/stats?gameType=NORMAL`
-      ),
-      fetch(`http://localhost:8080/usersMatches/${userId}/stats?gameType=ARAM`),
+      apiOut.getProfileDetailed(userId),
+      apiStats.getUserStats(userId, "NORMAL"),
+      apiStats.getUserStats(userId, "ARAM"),
     ]);
 
-    const profile = await profileRes.json();
-    const normalStats = await normalStatsRes.json();
-    const aramStats = await aramStatsRes.json();
+    const profile = profileRes.data;
+    const normalStats = normalStatsRes.data;
+    const aramStats = aramStatsRes.data;
 
     // Slide 1 → Rank actual (perfil)
     const rankSlideSingle = document.querySelector(
@@ -289,7 +279,7 @@ function setupRanksCarouselTitle() {
     // 3. revelar con delay para la animación
     setTimeout(() => {
       bgOverlay.style.opacity = "0";
-    }, 100); // solo delay para el fade-out del overlay
+    }, 130); // solo delay para el fade-out del overlay
   }
 
   // Evento de cambio de slide

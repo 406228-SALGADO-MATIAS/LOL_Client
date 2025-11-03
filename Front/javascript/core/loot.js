@@ -15,44 +15,28 @@ async function loadOwnedCollections() {
   if (!userId) return;
 
   try {
-    // Campeones desbloqueados
-    const championsRes = await fetch(
-      `http://localhost:8080/champions/userChampions/${userId}`
-    );
-    if (championsRes.ok) {
-      ownedChampions = await championsRes.json();
-    }
+    const results = await Promise.allSettled([
+      apiChampions.getUserChampions(userId),
+      apiSkins.getUserSkins(userId),
+      apiSkins.getUserSkinsToPurchase(userId),
+      apiIcons.getUserIcons(userId),
+    ]);
 
-    // Skins desbloqueadas
-    const skinsRes = await fetch(
-      `http://localhost:8080/skins/getUserSkins/${userId}`
+    const [championsRes, skinsRes, skinsToPurchaseRes, iconsRes] = results.map(
+      (r) => (r.status === "fulfilled" ? r.value : { data: [] })
     );
-    if (skinsRes.ok) {
-      ownedSkins = await skinsRes.json();
-    }
 
-    // Skins que puede comprar (activables)
-    const skinsToPurchaseRes = await fetch(
-      `http://localhost:8080/skins/getUserSkins/toPurchase/${userId}`
-    );
-    if (skinsToPurchaseRes.ok) {
-      activableSkins = await skinsToPurchaseRes.json();
-    }
-
-    // Iconos desbloqueados
-    const iconsRes = await fetch(
-      `http://localhost:8080/ProfileIcon/getUserIcons/${userId}`
-    );
-    if (iconsRes.ok) {
-      ownedIcons = await iconsRes.json();
-    }
+    ownedChampions = championsRes.data || [];
+    ownedSkins = skinsRes.data || [];
+    activableSkins = skinsToPurchaseRes.data || [];
+    ownedIcons = iconsRes.data || [];
 
     console.log("ownedChampions", ownedChampions);
     console.log("ownedSkins", ownedSkins);
     console.log("activableSkins", activableSkins);
     console.log("ownedIcons", ownedIcons);
   } catch (err) {
-    console.error("Error cargando colecciones del usuario:", err);
+    console.error("❌ Error cargando colecciones del usuario:", err);
   }
 }
 
@@ -63,13 +47,10 @@ async function loadLootItems() {
   }
 
   try {
-    const res = await fetch(
-      `http://localhost:8080/userLoot/${userId}?showInactives=false`
-    );
+    const { data, status } = await apiLoot.getUserLoot(userId, false);
+    if (status !== 200) throw new Error("Error cargando loot del usuario");
 
-    if (!res.ok) throw new Error("Error cargando loot del usuario");
-
-    userLoot = await res.json();
+    userLoot = data || {};
     console.log("userLoot", userLoot);
 
     championsInventory = userLoot.championsInventory || [];
@@ -90,6 +71,7 @@ async function loadLootItems() {
   } catch (err) {
     alert("Error cargando loot del usuario: " + err.message);
   }
+
   applyCurrentFilter();
 }
 
@@ -99,98 +81,83 @@ async function loadUserProfile() {
   if (!userId) return;
 
   try {
-    const res = await fetch(
-      `http://localhost:8080/users/getProfileById/${userId}`
-    );
-    if (!res.ok) throw new Error("Error cargando perfil");
+    const res = await apiOut.getProfileDetailed(userId); // 👈 reemplaza el fetch
 
-    const data = await res.json();
-    console.log("res.ok", res.ok);
+    if (res.status >= 200 && res.status < 300) {
+      const data = res.data;
+      console.log("res.ok", res.status);
 
-    const nicknameEl = document.getElementById("userNickname");
-    let serverShort = "";
-    if (data.server) {
-      const match = data.server.match(/\(([^)]+)\)/);
-      if (match) serverShort = match[1];
+      const nicknameEl = document.getElementById("userNickname");
+      let serverShort = "";
+      if (data.server) {
+        const match = data.server.match(/\(([^)]+)\)/);
+        if (match) serverShort = match[1];
+      }
+
+      nicknameEl.innerHTML = `${
+        data.nickname || "Sin nick"
+      }<span style="font-weight: normal; font-size: 1.3rem">#${serverShort}</span>`;
+
+      document.getElementById("userBE").textContent = data.blueEssence ?? 0;
+      document.getElementById("userRP").textContent = data.riotPoints ?? 0;
+
+      const userIcon = document.getElementById("userIcon");
+      userIcon.src = data.iconImage || "/assets/default-icon.png";
+      userIcon.style.width = "auto";
+      userIcon.style.height = "100%";
+      userIcon.style.objectFit = "cover";
+    } else {
+      throw new Error(res.data?.message || "Error cargando perfil");
     }
-
-    nicknameEl.innerHTML = `${
-      data.nickname || "Sin nick"
-    }<span style="font-weight: normal; font-size: 1.3rem">#${serverShort}</span>`;
-
-    document.getElementById("userBE").textContent = data.blueEssence ?? 0;
-    document.getElementById("userRP").textContent = data.riotPoints ?? 0;
-
-    const userIcon = document.getElementById("userIcon");
-    userIcon.src = data.iconImage || "/assets/default-icon.png";
-    userIcon.style.width = "auto";
-    userIcon.style.height = "100%";
-    userIcon.style.objectFit = "cover";
   } catch (err) {
-    //console.error(err);
+    // console.error(err);
   }
 }
-
 async function handleOpenChest(type) {
-  const endpoint =
-    type === "chest"
-      ? `http://localhost:8080/userLoot/openChests/normal/${userId}`
-      : `http://localhost:8080/userLoot/openChests/master/${userId}`;
+  try {
+    const realType = type === "chest" ? "normal" : "master";
 
-  const res = await fetch(endpoint, { method: "PUT" });
+    const res = await apiLoot.openChest(realType, userId);
 
-  if (!res.ok) throw new Error("Error abriendo cofre");
-
-  const json = await res.json();
-  console.log(`[HANDLE OPEN CHEST] Resultado recibido:`, json);
-  return json;
+    if (res.status >= 200 && res.status < 300) {
+      console.log(`[HANDLE OPEN CHEST] Resultado recibido:`, res.data);
+      return res.data;
+    } else {
+      throw new Error(res.data?.message || "Error abriendo cofre");
+    }
+  } catch (err) {
+    console.error("Error abriendo cofre:", err);
+    throw err;
+  }
 }
 
 async function handleEnchantItem(item, type, enchant = true) {
   const userId = sessionStorage.getItem("userId");
   if (!userId) throw new Error("No se encontró el usuario");
 
-  let endpoint = "";
-  let idParam = 0;
-
-  switch (type) {
-    case "champion":
-      idParam = item.id;
-      endpoint = `http://localhost:8080/userLoot/unlockOrRefund/champion/${idParam}?enchant=${enchant}`;
-      break;
-    case "skin":
-      idParam = item.id;
-      endpoint = `http://localhost:8080/userLoot/unlockOrRefund/skin/${idParam}?enchant=${enchant}`;
-      break;
-    case "icon":
-      idParam = item.id;
-      endpoint = `http://localhost:8080/userLoot/unlockOrRefund/icon/${idParam}?enchant=${enchant}`;
-      break;
-    default:
-      throw new Error("Tipo de item desconocido: " + type);
-  }
-
   try {
-    const res = await fetch(endpoint, { method: "PUT" });
-    if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(errText || "Error desbloqueando item");
-    }
+    const res = await apiLoot.unlockOrRefundItem(type, item.id, enchant);
 
-    const data = await res.json();
+    if (res.status >= 200 && res.status < 300) {
+      const data = res.data;
 
-    // solo si estamos desbloqueando, mostramos el modal
-    if (enchant) {
-      createNewItemModal(data);
+      if (enchant) {
+        // Desbloquear -> mostrar modal
+        createNewItemModal(data);
+      } else {
+        // Desencantar -> recargar todo
+        await loadUserProfile();
+        await loadOwnedCollections();
+        await loadLootItems();
+      }
+
+      return data;
     } else {
-      // si es desencantar, recargamos todo directamente
-      await loadUserProfile();
-      await loadOwnedCollections();
-      await loadLootItems();
+      throw new Error(res.data?.message || "Error desbloqueando item");
     }
-    return data;
   } catch (err) {
-    throw new Error(err.message);
+    console.error("Error en handleEnchantItem:", err);
+    throw err;
   }
 }
 
@@ -207,30 +174,9 @@ async function handleRoll(type, selectedItems) {
 
   try {
     const ids = selectedItems.map((item) => item.id);
-    let endpoint = "";
 
-    switch (type) {
-      case "champion":
-        endpoint = `http://localhost:8080/userLoot/reRoll/champions?idLootChampion1=${ids[0]}&idLootChampion2=${ids[1]}&idLootChampion3=${ids[2]}`;
-        break;
-      case "skin":
-        endpoint = `http://localhost:8080/userLoot/reRoll/skins?idLootSkin1=${ids[0]}&idLootSkin2=${ids[1]}&idLootSkin3=${ids[2]}`;
-        break;
-      case "icon":
-        endpoint = `http://localhost:8080/userLoot/reRoll/icons?idLootIcon1=${ids[0]}&idLootIcon2=${ids[1]}&idLootIcon3=${ids[2]}`;
-        break;
-      default:
-        throw new Error("Tipo desconocido: " + type);
-    }
-
-    const res = await fetch(endpoint, { method: "PUT" });
-
-    if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(errText || "Error haciendo roll");
-    }
-
-    const data = await res.json();
+    // Llamamos a la API modularizada
+    const { data } = await apiLoot.reRollItems(type, ids);
 
     // Esperar a que se cierre el modal del roll antes de abrir el new item modal
     await new Promise((resolve) => closeLootRollModal(resolve));
@@ -359,17 +305,7 @@ confirmDisenchantBtn.addEventListener("click", async () => {
   }
 
   try {
-    const res = await fetch(
-      `http://localhost:8080/userLoot/disenchantOwnedItems?idUser=${userId}&showInactives=true`,
-      { method: "PUT" }
-    );
-
-    if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(errText || "Error desencantando ítems");
-    }
-
-    const updatedLoot = await res.json();
+    const { data: updatedLoot } = await apiLoot.disenchantOwnedItems(userId);
     console.log("Loot actualizado:", updatedLoot);
 
     // Recargar perfil, colecciones y loot

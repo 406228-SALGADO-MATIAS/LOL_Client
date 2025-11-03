@@ -81,12 +81,8 @@ async function renderSearchedUserPreview(userId, gameType = "default") {
   }
 
   try {
-    const res = await fetch(
-      `http://localhost:8080/users/getProfileById/${userId}`
-    );
-    if (!res.ok) throw new Error("Error al traer perfil de usuario");
-
-    const user = await res.json();
+    const { data: user, status } = await apiOut.getProfileDetailed(userId);
+    if (status !== 200) throw new Error("Error al traer perfil de usuario");
 
     const rankImg =
       user.rankImage ||

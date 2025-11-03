@@ -19,11 +19,9 @@ async function openMatchModal(matchId, userId, redirectMode = false) {
 // ----------- FETCH DE DATOS -----------
 async function fetchMatchData(matchId, userId) {
   try {
-    const res = await fetch(
-      `http://localhost:8080/matches/getUserMatch/${matchId}/${userId}`
-    );
-    if (!res.ok) throw new Error("Error al obtener datos de la partida");
-    return await res.json();
+    const { data, status } = await apiMatches.getUserMatch(matchId, userId);
+    if (status !== 200) throw new Error("Error al obtener datos de la partida");
+    return data;
   } catch (err) {
     console.error("Fetch error:", err);
     return null;

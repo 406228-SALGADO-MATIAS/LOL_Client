@@ -28,18 +28,18 @@ function getActiveUserId() {
 
 // ----------------- Fetch principal -----------------
 async function fetchUserMatchesHistory(userId, gameType, role, style) {
-  let url = `http://localhost:8080/matches/getUserHistory/${userId}`;
-
   const params = new URLSearchParams();
   if (gameType) params.append("gameType", gameType);
   if (role) params.append("optionalRole", role);
   if (style) params.append("optionalStyle", style);
 
-  if (params.toString()) url += "?" + params.toString();
+  const query = params.toString();
 
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Error al traer historial de partidas");
-  return await res.json();
+  const { data, status, url } = await apiMatches.getUserHistory(userId, query);
+
+  if (status !== 200) throw new Error("Error al traer historial de partidas");
+
+  return data;
 }
 
 // ----------------- Carga de datos -----------------

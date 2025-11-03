@@ -7,12 +7,10 @@ async function preloadOriginalUserMatches() {
   if (!userId) return;
 
   try {
-    const res = await fetch(
-      `http://localhost:8080/matches/getUserHistory/${userId}`
-    );
-    if (!res.ok)
+    const { data, status } = await apiMatches.getUserHistory(userId);
+    if (status !== 200)
       throw new Error("Error al cargar partidas del usuario original");
-    const data = await res.json();
+
     window.originalUserMatches = (data.matches || []).map((m) => m.idMatch);
     console.log("Partidas originales cargadas:", window.originalUserMatches);
   } catch (err) {
@@ -20,7 +18,6 @@ async function preloadOriginalUserMatches() {
     window.originalUserMatches = [];
   }
 }
-
 function highlightSharedMatches() {
   const searchedId = window.searchedUserId;
   const originalMatches = window.originalUserMatches || [];
@@ -100,7 +97,7 @@ function animateCards(cards, type = "appear", oldCards = [], newMatches = []) {
     const restCards = cards.slice(7);
     if (restCards.length > 0) {
       // Duración total aproximada de la animación de los primeros 10
-      const delay = 10 * 8
+      const delay = 10 * 8;
       setTimeout(() => {
         restCards.forEach((card) => {
           card.classList.add("appear");

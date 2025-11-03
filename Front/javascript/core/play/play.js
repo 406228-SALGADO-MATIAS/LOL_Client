@@ -3,7 +3,7 @@
 // --- IDs DE SESIÓN (definir antes de todo) ---
 window.originalUserId = sessionStorage.getItem("userId") || null;
 
-// --- CREAR PARTIDA VIA FETCH ---
+// --- CREAR PARTIDA VIA API ---
 async function createMatch() {
   const userId = window.originalUserId;
   if (!userId) {
@@ -12,7 +12,6 @@ async function createMatch() {
     return;
   }
 
-  // --- Tomamos los LI activos tal como lo hacés en getSelectedGameData() ---
   const modeLi = document.querySelector("#game-mode li.active");
   const mapLi = document.querySelector("#game-map li.active");
   const typeLi = document.querySelector("#game-type li.active");
@@ -34,11 +33,10 @@ async function createMatch() {
   if (selectedMode === "classic" && selectedSelection === "Custom") {
     const launchBtn = document.getElementById("launch-btn");
     if (launchBtn) {
-      launchBtn.disabled = true; // funcionalmente deshabilitado
-      launchBtn.classList.add("disabled"); // visualmente deshabilitado
+      launchBtn.disabled = true;
+      launchBtn.classList.add("disabled");
     }
-
-    openClassicModal(ranked); // ✅ Modal clásico (ranked o no)
+    openClassicModal(ranked);
     return;
   }
 
@@ -46,15 +44,13 @@ async function createMatch() {
   if (selectedMode === "aram" && selectedSelection === "Custom") {
     const launchBtn = document.getElementById("launch-btn");
     if (launchBtn) {
-      launchBtn.disabled = true; // funcionalmente deshabilitado
-      launchBtn.classList.add("disabled"); // visualmente deshabilitado
+      launchBtn.disabled = true;
+      launchBtn.classList.add("disabled");
     }
-
-    openAramModal(); // ✅ Modal ARAM
+    openAramModal();
     return;
   }
 
-  // --- CASO CLASSIC / ARAM → AUTOMATIC ---
   if (selectedSelection !== "Automatic") {
     alert("Solo se puede iniciar partidas automáticas desde este botón.");
     return;
@@ -64,34 +60,22 @@ async function createMatch() {
     selectedMode === "classic" ? (ranked ? "RANKED" : "NORMAL") : "NORMAL";
   const map = selectedMode === "classic" ? "SUMMONERS RIFT" : "ARAM";
 
-  const params = new URLSearchParams({
-    gameMode,
-    map,
-    showChampionImg: false,
-    showItemImg: false,
-  });
-
-  const url = `http://localhost:8080/matches/createMatch/${userId}?${params.toString()}`;
-
   try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const { data: match, status } = await apiPlay.createMatch(userId, {
+      gameMode,
+      map,
+      showChampionImg: false,
+      showItemImg: false,
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(errorText || "Error al crear la partida");
-    }
+    if (status !== 200) throw new Error("Error al crear la partida");
 
-    // --- DESHABILITAR BOTÓN ---
     const launchBtn = document.getElementById("launch-btn");
     if (launchBtn) {
-      launchBtn.disabled = true; // funcionalmente deshabilitado
-      launchBtn.classList.add("disabled"); // visualmente deshabilitado
+      launchBtn.disabled = true;
+      launchBtn.classList.add("disabled");
     }
 
-    const match = await response.json();
     console.log("✅ Partida creada con éxito:", match);
     createResultModal(match);
 

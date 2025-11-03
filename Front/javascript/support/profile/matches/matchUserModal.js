@@ -12,16 +12,12 @@ function mapServerToEnum(serverText) {
 }
 
 async function fetchUserProfileByNickname(nickname, serverOption) {
-  const url = new URL(
-    "http://localhost:8080/users/findUsers/nicknameAndserver"
-  );
-  url.searchParams.append("nickname", nickname);
-  url.searchParams.append("serverOption", serverOption);
-
   try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error("Error al buscar usuario por nickname");
-    const data = await res.json();
+    const { data, status } = await apiUsers.findByNicknameAndServer(
+      nickname,
+      serverOption
+    );
+    if (status !== 200) throw new Error("Error al buscar usuario por nickname");
     return data?.[0] || null; // tomamos el primer resultado
   } catch (err) {
     console.error("Error en fetchUserProfileByNickname:", err);

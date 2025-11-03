@@ -151,19 +151,14 @@ async function loadSelectedChampionStats(
     if (!champCard) return;
 
     const championId = champCard.dataset.championId;
-    let url;
-    if (role !== "all") {
-      url = `http://localhost:8080/usersMatches/${userId}/stats/champion/${championId}/role/${role}`;
-      if (gameType !== "all") url += `?gameType=${gameType.toUpperCase()}`;
-    } else {
-      url = `http://localhost:8080/usersMatches/${userId}/stats/champion/${championId}`;
-      if (gameType !== "all") url += `?gameType=${gameType.toUpperCase()}`;
-    }
-
-    const res = await fetch(url);
-    if (!res.ok)
+    const { data, status } = await apiStats.getChampionStats(
+      userId,
+      championId,
+      role,
+      gameType
+    );
+    if (status !== 200)
       throw new Error("Error cargando stats del campeón seleccionado");
-    const data = await res.json();
 
     const { games, wins, winrate } = getWinStats(data, gameType);
     wonCount.textContent = wins;
@@ -178,14 +173,19 @@ async function loadSelectedChampionStats(
 }
 
 // --- Fetch general ---
-async function fetchStats(userId, gameType, role) {
-  let url = `http://localhost:8080/usersMatches/${userId}/stats`;
-  if (role !== "all") url += `/role/${role}`;
-  if (gameType !== "all") url += `?gameType=${gameType.toUpperCase()}`;
-
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Error al traer stats del usuario");
-  return await res.json();
+async function fetchStats(userId, gameType = "all", role = "all") {
+  try {
+    const { data, status } = await apiStats.getUserStatsAdvanced(
+      userId,
+      gameType,
+      role
+    );
+    if (status !== 200) throw new Error("Error al traer stats del usuario");
+    return data;
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
 }
 
 // --- Funciones auxiliares ---

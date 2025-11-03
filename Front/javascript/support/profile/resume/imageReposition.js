@@ -60,13 +60,10 @@ function extractChampionNameFromUrl(url, championsList = []) {
 
   return null;
 }
-
 async function fetchChampionList() {
   try {
-    const response = await fetch("http://localhost:8080/champions/getAll");
-    if (!response.ok) throw new Error("Error obteniendo campeones");
-    const champions = await response.json();
-    return champions.map((c) => c.name); // lista simple de strings
+    const { data } = await apiChampions.getAllChampions();
+    return (data || []).map((c) => c.name);
   } catch (e) {
     console.error("No se pudieron cargar los campeones:", e);
     return [];

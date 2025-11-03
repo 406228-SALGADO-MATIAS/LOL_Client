@@ -65,9 +65,7 @@ let RANKS_TIER = [];
 
 async function fetchRankTiers() {
   try {
-    const res = await fetch("http://localhost:8080/ranks/all");
-    if (!res.ok) throw new Error("Error al traer ranks");
-    const data = await res.json();
+    const { data } = await apiRanks.getAll();
 
     // Añadimos Unranked manualmente
     RANKS_TIER = [

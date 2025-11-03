@@ -65,9 +65,9 @@ let ranksCache = [];
 // 2️⃣ Función para inicializar los ranks al cargar la página
 async function initRanks() {
   try {
-    const res = await fetch("http://localhost:8080/ranks/all");
-    if (!res.ok) throw new Error("Error al traer ranks");
-    ranksCache = await res.json();
+    const { data, status } = await apiRanks.getAll();
+    if (status !== 200) throw new Error("Error al traer ranks");
+    ranksCache = data;
   } catch (err) {
     console.error(err);
     ranksCache = [];
@@ -91,38 +91,40 @@ async function doSearch() {
     const selectedServer = serverSelect.value;
     const selectedRank = rankSelect.value;
 
-    let url = "";
+    let usuarios = [];
 
     if (selectedRank && selectedServer) {
       // Nickname + Rank + Server
-      url = `http://localhost:8080/users/findUsers/nickname/rankTierAndServer?nickname=${encodeURIComponent(
-        query
-      )}&rankTier=${encodeURIComponent(
-        selectedRank
-      )}&server=${encodeURIComponent(selectedServer)}`;
+      const { data, status } = await apiUsers.findByNicknameRankAndServer(
+        query,
+        selectedRank,
+        selectedServer
+      );
+      if (status === 200) usuarios = data;
     } else if (selectedRank) {
       // Nickname + Rank
-      url = `http://localhost:8080/users/findUsers/nickname/rankTier?nickname=${encodeURIComponent(
-        query
-      )}&rankTier=${encodeURIComponent(selectedRank)}`;
+      const { data, status } = await apiUsers.findByNicknameAndRank(
+        query,
+        selectedRank
+      );
+      if (status === 200) usuarios = data;
     } else if (selectedServer) {
       // Nickname + Server
-      url = `http://localhost:8080/users/findUsers/nicknameAndserver?nickname=${encodeURIComponent(
-        query
-      )}&serverOption=${encodeURIComponent(selectedServer)}`;
+      const { data, status } = await apiUsers.findByNicknameAndServer(
+        query,
+        selectedServer
+      );
+      if (status === 200) usuarios = data;
     } else {
       // Solo nickname
-      url = `http://localhost:8080/users/findUsers/nickname/${encodeURIComponent(
-        query
-      )}`;
+      const { data, status } = await apiUsers.findByNickname(query);
+      if (status === 200) usuarios = data;
     }
 
-    const res = await fetch(url);
-    if (!res.ok) throw new Error("Error al buscar usuarios");
-    let usuarios = await res.json();
     // Filtrar usuario original
     usuarios = usuarios.filter((u) => String(u.id) !== String(originalUserId));
     console.log("Resultados:", usuarios.length);
+
     if (usuarios.length > 0) {
       usuarios
         .slice(0, MAX_RESULTS)
@@ -181,13 +183,12 @@ if (searchedUserId) loadProfileById(searchedUserId);
 async function loadProfileById(userId) {
   sessionStorage.setItem("tempUserId", userId);
   try {
-    const res = await fetch(
-      `http://localhost:8080/users/getProfileById/${userId}`
-    );
-    if (!res.ok) throw new Error("Error al cargar perfil");
-    const profile = await res.json();
+    const { data: profile, status } = await apiOut.getProfileDetailed(userId);
+    if (status !== 200) throw new Error("Error al cargar perfil");
+    return profile;
   } catch (err) {
     console.error("Error cargando perfil:", err);
+    return null;
   }
 }
 
