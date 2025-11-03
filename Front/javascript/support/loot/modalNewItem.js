@@ -23,12 +23,26 @@ function createNewItemModal(newItem, onClose) {
   button.classList.add("newitem-btn");
   button.style.marginTop = "15px";
 
-  const closeAndReload = async () => {
-    container.innerHTML = "";
-    await loadUserProfile();
-    await loadOwnedCollections();
-    await loadLootItems();
-    if (onClose) onClose(); // reaplicar filtro o callback extra
+  const closeAndReload = async (isFinal = true) => {
+    const overlayEl = document.querySelector(".newitem-modal-overlay");
+    const modalEl = overlayEl?.querySelector(".newitem-modal");
+
+    // lanzar animación de salida (sin esperar)
+    if (modalEl) modalEl.classList.add("fade-out");
+    if (isFinal && overlayEl) overlayEl.classList.add("fade-out");
+
+    // 🔹 iniciamos reload inmediatamente, sin esperar la animación
+    const reloadPromise = Promise.all([
+      loadUserProfile(),
+      loadOwnedCollections(),
+      loadLootItems(),
+    ]);
+
+    // mientras tanto esperamos un poco antes de limpiar el DOM
+    setTimeout(() => (container.innerHTML = ""), 300);
+
+    await reloadPromise; // solo esperamos a la data antes de callback opcional
+    if (onClose) onClose();
   };
 
   button.addEventListener("click", closeAndReload);
@@ -101,9 +115,11 @@ async function showItemsSequentiallyDynamic(type, count) {
 
 // 🔹 Recarga todos los datos del usuario para el flujo dinámico
 async function reloadDynamicChestsData() {
-  await loadUserProfile();
-  await loadOwnedCollections();
-  await loadLootItems();
+  await Promise.all([
+    loadUserProfile(),
+    loadOwnedCollections(),
+    loadLootItems(),
+  ]);
 }
 
 // 🔹 Abre los cofres restantes para el flujo dinámico
@@ -143,9 +159,25 @@ function createDynamicChestModal(newItem, overlay, onAdd, onCancel) {
   button.classList.add("newitem-btn");
   button.style.marginTop = "15px";
 
-  button.addEventListener("click", onAdd);
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) onCancel();
+  // función para cerrar con animación
+  async function animateClose(isFinal) {
+    modal.classList.add("fade-out");
+    if (isFinal) overlay.classList.add("fade-out");
+    await new Promise((res) => setTimeout(res, 250));
+  }
+
+  // click en añadir → fade modal, mantener overlay (porque sigue la secuencia)
+  button.addEventListener("click", async () => {
+    animateClose(false);
+    onAdd();
+  });
+
+  // click fuera → fade modal + overlay
+  overlay.addEventListener("click", async (e) => {
+    if (e.target === overlay) {
+      animateClose(true);
+      onCancel();
+    }
   });
 
   modal.appendChild(img);

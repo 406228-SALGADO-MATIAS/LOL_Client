@@ -1,30 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bienvenido</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/main/forms.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bienvenido</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/css/main/intro.css" />
+  </head>
+  <body>
+    <video autoplay muted loop id="bg-video"></video>
+    <div id="video-overlay"></div>
+    <div class="page-transition"></div>
 
-<div class="welcome-box">
-    <h1>Bienvenido</h1>
-    <p>Selecciona una opción para continuar:</p>
-    <button class="btn btn-primary" onclick="goLogin()">Login</button>
-    <button class="btn btn-secondary" onclick="goCreate()">Create User</button>
-</div>
+    <script>
+      function goLogin() {
+        window.location.href = "login.html";
+      }
 
-<script>
-function goLogin() {
-    window.location.href = 'login.html';
-}
+      function goCreate() {
+        window.location.href = "register.html";
+      }
+    </script>
+    <!-- JS interno: transición -->
+    <script>
+      function setupPageTransitions() {
+        const transition = document.querySelector(".page-transition");
+        window.addEventListener("load", () => {
+          setTimeout(() => transition.classList.add("hidden"), 150);
+        });
+      }
 
-function goCreate() {
-    window.location.href = 'register.html';
-}
-</script>
-
-</body>
+      document.addEventListener("DOMContentLoaded", setupPageTransitions);
+    </script>
+  </body>
 </html>

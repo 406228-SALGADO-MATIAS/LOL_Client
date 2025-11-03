@@ -57,6 +57,7 @@ const roles = [
 // ⚙️ INICIALIZACIÓN DEL MODAL
 // ======================================================
 function openClassicModal(ranked = false) {
+  closeStatusModal();
   isRanked = ranked;
 
   currentChampionSkins = [];
@@ -231,6 +232,14 @@ function closeClassicModal() {
     champImg = null;
     champActionBtn = null;
     nextBtn = null;
+
     console.log("🟢 Modal classic cerrado completamente");
-  }, 250);
+
+    // 🔹 Reactivar botón Launch
+    const launchBtn = document.getElementById("launch-btn");
+    if (launchBtn) {
+      launchBtn.disabled = false;
+      launchBtn.classList.remove("disabled");
+    }
+  }, 250); // espera a que termine la animación
 }

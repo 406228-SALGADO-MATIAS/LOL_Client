@@ -303,12 +303,6 @@
   animation: fadeInUp 0.35s forwards; /* duración y dirección */
 }
 
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 /* Scrollbar del sidebar */
 .sidebar-scroll::-webkit-scrollbar {

@@ -1,4 +1,5 @@
 async function openAramModal() {
+  closeStatusModal();
   aramModal = null;
   selectedChampionId = null;
   console.log("Opening ARAM Modal");

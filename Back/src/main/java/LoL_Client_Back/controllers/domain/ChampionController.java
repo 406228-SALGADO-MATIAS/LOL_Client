@@ -27,20 +27,20 @@ public class ChampionController {
     @PostMapping("/createChampion")
     public ResponseEntity<Champion> createChampion(
             @RequestParam String name,
-            @RequestParam(required = false) Double winrate,
-            @RequestParam(required = false) String imageUrl,
+            @RequestParam(required = true) String imageUrl,
+            @RequestParam(required = true) String imgSquareUrl,
             @Parameter(
                     schema = @Schema(allowableValues = {"450", "1350", "3150", "4800", "6300", "7800"})
             )
             @RequestParam Integer price,
             @RequestParam ChampionDifficulty difficulty,
-            @RequestParam(required = false) ChampionRole role,
+            @RequestParam(required = true) ChampionRole role,
             @RequestParam(required = false) ChampionRole role2,
-            @RequestParam(required = false) ChampionStyle style,
+            @RequestParam(required = true) ChampionStyle style,
             @RequestParam(required = false) ChampionStyle style2
     ) {
         Champion champion = championService.createChampion
-                (name, winrate, imageUrl, price, difficulty, role, role2, style, style2);
+                (name, 50.0, imageUrl, imgSquareUrl ,price, difficulty, role, role2, style, style2);
         return ResponseEntity.status(HttpStatus.CREATED).body(champion);
     }
 

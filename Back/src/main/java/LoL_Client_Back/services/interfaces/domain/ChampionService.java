@@ -31,7 +31,7 @@ public interface ChampionService {
                             ChampionDifficulty difficulty, ChampionRole role, ChampionRole role2,
                             ChampionStyle style, ChampionStyle style2);
     String deleteChampion (Long id);
-    Champion createChampion(String name, Double winrate, String imageUrl, Integer price,
+    Champion createChampion(String name, Double winrate, String imageUrl, String imgSquareUrl,Integer price,
                             ChampionDifficulty difficulty, ChampionRole role, ChampionRole role2,
                             ChampionStyle style, ChampionStyle style2);
 

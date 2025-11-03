@@ -304,5 +304,29 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const launchBtn = document.getElementById("launch-btn");
-  launchBtn.addEventListener("click", createMatch);
+
+  launchBtn.addEventListener("click", (event) => {
+    // Deshabilitar el botón
+    launchBtn.disabled = true;
+    launchBtn.classList.add("disabled");
+
+    // Obtener la selección actual
+    const selectionLi = document.querySelector("#game-selection li.active");
+    if (!selectionLi) {
+      alert("Por favor selecciona un tipo de partida.");
+      launchBtn.disabled = false;
+      launchBtn.classList.remove("disabled");
+      return;
+    }
+
+    const selectedSelection = selectionLi.dataset.selection;
+
+    // Solo abrir status si es Automatic
+    if (selectedSelection === "Automatic") {
+      openStatusModal("Crear partida", "Esperando resultado");
+    }
+
+    // Ejecutar createMatch
+    createMatch();
+  });
 });

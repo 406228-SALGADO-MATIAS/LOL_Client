@@ -5,6 +5,7 @@
 
 // --- 5️⃣ Función principal: crea el modal completo
 function createResultModal(matchData) {
+  closeStatusModal();
   const userId = window.originalUserId || sessionStorage.getItem("userId");
   const player = matchData.players.find((p) => p.idUser == userId);
   if (!player) return console.error("Jugador no encontrado");
@@ -161,8 +162,14 @@ function renderButtonsSection(matchData) {
   btnRepetir.textContent = "Jugar";
   btnRepetir.classList.add("btn-replay");
   btnRepetir.addEventListener("click", () => {
+    // Cerrar modal de resultados
     closeResultModal();
-    createMatch();
+
+    // Esperar a que termine la animación (300ms) antes de abrir el status y crear la partida
+    setTimeout(() => {
+      openStatusModal("Crear partida", "Esperando resultado");
+      createMatch();
+    }, 10); // coincide con el tiempo de la transición de cierre
   });
 
   const btnStats = document.createElement("button");

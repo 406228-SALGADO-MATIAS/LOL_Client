@@ -114,3 +114,35 @@
   filter: none;
   box-shadow: none;
 }
+
+
+/* 🔹 Fade-out del overlay */
+@keyframes fadeOutNewItemOverlay {
+  from {
+    background-color: rgba(0, 0, 0, 0.421);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0);
+  }
+}
+
+/* 🔹 Scale-down + fade-out del modal */
+@keyframes scaleDownModal {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+/* 🔹 Clases que se activan dinámicamente desde JS */
+.newitem-modal.fade-out {
+  animation: scaleDownModal 0.25s ease forwards;
+}
+
+.newitem-modal-overlay.fade-out {
+  animation: fadeOutNewItemOverlay 0.3s ease forwards;
+}

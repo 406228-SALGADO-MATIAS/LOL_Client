@@ -297,7 +297,7 @@ public class ChampionServiceImpl implements ChampionService {
     }
 
     @Override
-    public Champion createChampion(String name, Double winrate, String imageUrl, Integer price,
+    public Champion createChampion(String name, Double winrate, String imageUrl, String imgSquareUrl, Integer price,
                                    ChampionDifficulty difficulty,
                                    ChampionRole role, ChampionRole role2,
                                    ChampionStyle style, ChampionStyle style2)
@@ -310,7 +310,7 @@ public class ChampionServiceImpl implements ChampionService {
             {
                 ChampionEntity c = new ChampionEntity();
                 c.setName(name);
-                c.setWinrate(winrate != null ? winrate : 0);
+                c.setWinrate(winrate != null ? winrate : 50);
                 c.setPrice(getPriceOrThrow(price));
                 c.setDifficulty(getChampionDifficulty(difficulty.name()));
                 c.setRole(role != null ? getChampionRole(role.name()) : null);
@@ -319,6 +319,7 @@ public class ChampionServiceImpl implements ChampionService {
                 c.setStyle2(style2 != null ? getChampionStyle(style2.name()) : null);
                 c.setReleaseDate(LocalDate.now());
                 c.setImage(imageUrl);
+                c.setImageSquare(imgSquareUrl);
 
                 return modelMapper.map(championRepository.save(c),Champion.class);
             }
