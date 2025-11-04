@@ -40,61 +40,62 @@
         </ul>
       </div>
     </nav>
+    <div id="vanta-bg">
+      <!-- Contenido central -->
+      <div class="container-fluid mt-5">
+        <!-- Sidebar fijo -->
+        <div class="sidebar">
+          <!-- Contador de campeones -->
+          <div class="counter-box">
+            <div id="counter-total" class="number-large">0</div>
+            <div class="label">TOTAL</div>
+            <div class="my-2"></div>
+            <div id="counter-posesion" class="number-medium">0</div>
+            <div class="label">ADQUIRIDOS</div>
+          </div>
 
-    <!-- Contenido central -->
-    <div class="container-fluid mt-5">
-      <!-- Sidebar fijo -->
-      <div class="sidebar">
-        <!-- Contador de campeones -->
-        <div class="counter-box">
-          <div id="counter-total" class="number-large">0</div>
-          <div class="label">TOTAL</div>
-          <div class="my-2"></div>
-          <div id="counter-posesion" class="number-medium">0</div>
-          <div class="label">ADQUIRIDOS</div>
+          <!-- Buscador -->
+          <input
+            type="text"
+            class="champ-search"
+            id="searchChampion"
+            placeholder="Buscar campeón..."
+          />
+
+          <!-- Checkbox -->
+          <div class="checkbox-group">
+            <input type="checkbox" id="showNotOwned" />
+            <label for="showNotOwned">No obtenidos</label>
+          </div>
+
+          <!-- Dropdown -->
+          <select id="filterSelect" class="form-select custom-select">
+            <option value="all">Todos</option>
+            <option value="ownership">Posesión</option>
+            <option value="difficulty">Dificultad</option>
+            <option value="role">Rol</option>
+            <option value="role2">Rol Secundario</option>
+            <option value="style">Estilo</option>
+            <option value="style2">Estilo secundario</option>
+            <option value="price">Precio</option>
+          </select>
         </div>
 
-        <!-- Buscador -->
-        <input
-          type="text"
-          class="champ-search"
-          id="searchChampion"
-          placeholder="Buscar campeón..."
-        />
-
-        <!-- Checkbox -->
-        <div class="checkbox-group">
-          <input type="checkbox" id="showNotOwned" />
-          <label for="showNotOwned">No obtenidos</label>
+        <!-- Contenido principal -->
+        <div class="main-content">
+          <div id="collectionsContainer">
+            <!-- Aquí se cargan dinámicamente los campeones -->
+          </div>
         </div>
-
-        <!-- Dropdown -->
-        <select id="filterSelect" class="form-select custom-select">
-          <option value="all">Todos</option>
-          <option value="ownership">Posesión</option>
-          <option value="difficulty">Dificultad</option>
-          <option value="role">Rol</option>
-          <option value="role2">Rol Secundario</option>
-          <option value="style">Estilo</option>
-          <option value="style2">Estilo secundario</option>
-          <option value="price">Precio</option>
-        </select>
       </div>
-
-      <!-- Contenido principal -->
-      <div class="main-content">
-        <div id="collectionsContainer">
-          <!-- Aquí se cargan dinámicamente los campeones -->
+      <!-- Modal para expansión de campeón -->
+      <div id="championModal" class="modal-overlay">
+        <div class="modal-content">
+          <img id="modalImage" src="" alt="Champion" />
+          <!-- Botón que muestra el precio y la acción -->
+          <button id="unlockButton">DESBLOQUEAR</button>
+          <span id="modalClose">&times;</span>
         </div>
-      </div>
-    </div>
-    <!-- Modal para expansión de campeón -->
-    <div id="championModal" class="modal-overlay">
-      <div class="modal-content">
-        <img id="modalImage" src="" alt="Champion" />
-        <!-- Botón que muestra el precio y la acción -->
-        <button id="unlockButton">DESBLOQUEAR</button>
-        <span id="modalClose">&times;</span>
       </div>
     </div>
 
@@ -139,6 +140,29 @@
       }
 
       document.addEventListener("DOMContentLoaded", setupPageTransitions);
+    </script>
+
+    <!-- Fondo animado con VANTA -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.fog.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        VANTA.FOG({
+          el: "#vanta-bg",
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.0,
+          minWidth: 200.0,
+          highlightColor: 0x31363c,
+          midtoneColor: 0x1397a0,
+          lowlightColor: 0x1f43,
+          baseColor: 0x0,
+          blurFactor: 0.4,
+          speed: 0.1,
+          zoom: 0.4,
+        });
+      });
     </script>
   </body>
 </html>

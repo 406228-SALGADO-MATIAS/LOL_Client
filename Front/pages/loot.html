@@ -18,6 +18,28 @@
     <link rel="stylesheet" href="/css/loot/modal/lootRollModal.css" />
   </head>
 
+  <!-- VANTA BACKGROUND -->
+  <div id="vanta-bg"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.topology.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      VANTA.TOPOLOGY({
+        el: "#vanta-bg",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: 0x6362,
+        backgroundColor: 0x000000,
+      });
+    });
+  </script>
+
   <body>
     <div class="page-transition"></div>
     <!-- Main Navbar -->

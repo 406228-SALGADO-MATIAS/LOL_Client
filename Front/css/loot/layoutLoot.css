@@ -1,6 +1,25 @@
 :root {
   --header-h: 60px; /* ajustá si tu navbar mide distinto */
 }
+/* Body no scrollea; reservamos espacio del header con padding-top */
+body {
+  margin: 0;
+  padding-top: var(--header-h);
+  height: 100dvh; /* usa viewport real en móviles */
+  overflow: hidden; /* elimina el scroll global */
+
+  background: linear-gradient(180deg, #06292b, #03181a);
+  user-select: none; /* No se puede seleccionar texto */
+}
+
+#vanta-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+}
 
 html,
 body {
@@ -33,17 +52,6 @@ body {
   height: var(--header-h);
   min-height: var(--header-h);
   z-index: 1040;
-}
-
-/* Body no scrollea; reservamos espacio del header con padding-top */
-body {
-  margin: 0;
-  padding-top: var(--header-h);
-  height: 100dvh; /* usa viewport real en móviles */
-  overflow: hidden; /* elimina el scroll global */
-
-  background: linear-gradient(180deg, #06292b, #03181a);
-  user-select: none; /* No se puede seleccionar texto */
 }
 
 /* Anula el empuje extra del mt-5 del container que tenés en el HTML */

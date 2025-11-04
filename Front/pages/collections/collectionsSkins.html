@@ -43,67 +43,69 @@
       </div>
     </nav>
 
-    <!-- Contenido central -->
-    <div class="container-fluid mt-5">
-      <!-- Sidebar fijo -->
-      <div class="sidebar">
-        <!-- Contador de skins -->
-        <div class="counter-box">
-          <div id="counter-total" class="number-large">0</div>
-          <div class="label">TOTAL</div>
-          <div class="my-2"></div>
-          <div id="counter-posesion" class="number-medium">0</div>
-          <div class="label">ADQUIRIDOS</div>
+    <div id="vanta-bg">
+      <!-- Contenido central -->
+      <div class="container-fluid mt-5">
+        <!-- Sidebar fijo -->
+        <div class="sidebar">
+          <!-- Contador de skins -->
+          <div class="counter-box">
+            <div id="counter-total" class="number-large">0</div>
+            <div class="label">TOTAL</div>
+            <div class="my-2"></div>
+            <div id="counter-posesion" class="number-medium">0</div>
+            <div class="label">ADQUIRIDOS</div>
+          </div>
+
+          <!-- Buscador -->
+          <label for="searchSkin" class="sidebar-label">Skin</label>
+          <input
+            type="text"
+            class="skin-search"
+            id="searchSkin"
+            placeholder="Buscar skin..."
+          />
+
+          <!-- Buscador de campeones -->
+          <label for="searchChampion" class="sidebar-label">Campeón</label>
+          <input
+            type="text"
+            class="champ-search"
+            id="searchChampion"
+            placeholder="Buscar campeón..."
+          />
+
+          <!-- Checkbox -->
+          <div class="checkbox-group">
+            <input type="checkbox" id="showNotOwned" />
+            <label for="showNotOwned">No obtenidos</label>
+          </div>
+
+          <!-- Dropdown -->
+          <select id="filterSelect" class="form-select custom-select">
+            <option value="all">Todos</option>
+            <option value="availableness">Disponibilidad</option>
+            <option value="ownership">Posesión</option>
+            <option value="tier">Precio</option>
+            <option value="champion">Campeón</option>
+          </select>
         </div>
 
-        <!-- Buscador -->
-        <label for="searchSkin" class="sidebar-label">Skin</label>
-        <input
-          type="text"
-          class="skin-search"
-          id="searchSkin"
-          placeholder="Buscar skin..."
-        />
-
-        <!-- Buscador de campeones -->
-        <label for="searchChampion" class="sidebar-label">Campeón</label>
-        <input
-          type="text"
-          class="champ-search"
-          id="searchChampion"
-          placeholder="Buscar campeón..."
-        />
-
-        <!-- Checkbox -->
-        <div class="checkbox-group">
-          <input type="checkbox" id="showNotOwned" />
-          <label for="showNotOwned">No obtenidos</label>
+        <!-- Contenido principal -->
+        <div class="main-content">
+          <div id="collectionsContainer">
+            <!-- Aquí se cargan dinámicamente los campeones -->
+          </div>
         </div>
-
-        <!-- Dropdown -->
-        <select id="filterSelect" class="form-select custom-select">
-          <option value="all">Todos</option>
-          <option value="availableness">Disponibilidad</option>
-          <option value="ownership">Posesión</option>
-          <option value="tier">Precio</option>
-          <option value="champion">Campeón</option>
-        </select>
       </div>
-
-      <!-- Contenido principal -->
-      <div class="main-content">
-        <div id="collectionsContainer">
-          <!-- Aquí se cargan dinámicamente los campeones -->
+      <!-- Modal para expansión de campeón -->
+      <div id="skinModal" class="modal-overlay">
+        <div class="modal-content">
+          <img id="modalImage" src="" alt="Champion" />
+          <!-- Botón que muestra el precio y la acción -->
+          <button id="unlockButton">DESBLOQUEAR</button>
+          <span id="modalClose">&times;</span>
         </div>
-      </div>
-    </div>
-    <!-- Modal para expansión de campeón -->
-    <div id="skinModal" class="modal-overlay">
-      <div class="modal-content">
-        <img id="modalImage" src="" alt="Champion" />
-        <!-- Botón que muestra el precio y la acción -->
-        <button id="unlockButton">DESBLOQUEAR</button>
-        <span id="modalClose">&times;</span>
       </div>
     </div>
 
@@ -148,6 +150,29 @@
       }
 
       document.addEventListener("DOMContentLoaded", setupPageTransitions);
+    </script>
+
+    <!-- Fondo animado con VANTA -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.fog.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        VANTA.FOG({
+          el: "#vanta-bg",
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.0,
+          minWidth: 200.0,
+          highlightColor: 0x31363c,
+          midtoneColor: 0x1397a0,
+          lowlightColor: 0x1f43,
+          baseColor: 0x0,
+          blurFactor: 0.4,
+          speed: 0.1,
+          zoom: 0.4,
+        });
+      });
     </script>
   </body>
 </html>

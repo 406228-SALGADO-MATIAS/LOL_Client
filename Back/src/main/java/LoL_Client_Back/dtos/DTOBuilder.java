@@ -40,6 +40,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -145,18 +146,19 @@ public class DTOBuilder
         return dto;
     }
 
-    public List<ItemDTO> buildItemDTOList (List<ItemEntity> list, String errorMsg)
-    {
-        if (!list.isEmpty())
-        {
+    public List<ItemDTO> buildItemDTOList(List<ItemEntity> list, String errorMsg) {
+        if (!list.isEmpty()) {
             List<ItemDTO> dtoList = new ArrayList<>();
             for (ItemEntity i : list) {
                 dtoList.add(buildItemDTO(i));
             }
+            dtoList.sort(Comparator.comparing(ItemDTO::getName, String.CASE_INSENSITIVE_ORDER));
+
             return dtoList;
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,errorMsg);
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, errorMsg);
     }
+
 
     public ChampionDTO buildChampionDTO(ChampionEntity c) {
         ChampionDTO dto = customMapper.map(c, ChampionDTO.class);

@@ -2,7 +2,7 @@
 
 /* Sidebar general */
 .sidebar {
-  background-color: #041d1f; /* fondo oscuro */
+  background-color: #041d1fab; /* fondo oscuro */
   height: 100%; /* ocupa toda la altura disponible del contenedor */
   overflow-y: auto;
   overflow-x: hidden; /* 👉 oculta scroll horizontal */

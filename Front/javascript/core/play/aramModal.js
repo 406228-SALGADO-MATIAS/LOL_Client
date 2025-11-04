@@ -222,24 +222,41 @@ function closeAramModal() {
   }
 }
 
-// --- Adaptación de finishAramSelection ---
 async function finishAramSelection() {
   if (!selectedChampionId) return;
 
   const userId = window.originalUserId || sessionStorage.getItem("userId");
 
   try {
-    const { data: matchData } = await apiPlay.createAramMatchWithChampion(
-      userId,
-      selectedChampionId
-    );
-
     closeAramModal();
-    createResultModal(matchData);
+
+    // 🔹 Esperar 300 ms antes de abrir el status modal
+    setTimeout(() => {
+      openStatusModal("Crear partida", "Esperando resultado...");
+    }, 100);
+
+    // 🔹 Esperar a que termine la animación del cierre
+    setTimeout(async () => {
+      try {
+        const { data: matchData } = await apiPlay.createAramMatchWithChampion(
+          userId,
+          selectedChampionId
+        );
+
+        // 🔹 Cerrar status y mostrar resultados
+        closeStatusModal();
+        createResultModal(matchData);
+      } catch (err) {
+        closeStatusModal();
+        console.error("❌ Error al crear la partida ARAM:", err);
+        alert("No se pudo crear la partida ARAM. Intenta nuevamente.");
+      }
+    }, 250);
   } catch (err) {
-    console.error("Error en finishAramSelection:", err);
+    console.error("❌ Error inesperado en finishAramSelection:", err);
   }
 }
+
 async function loadChampionsForAram() {
   const userId = window.originalUserId || sessionStorage.getItem("userId");
   try {

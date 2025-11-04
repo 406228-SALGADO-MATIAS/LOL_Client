@@ -1,12 +1,14 @@
 body {
-  height: 100vh;
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(110deg, #04020c, #110831);
-  font-family: Arial, sans-serif;
   user-select: none; /* No se puede seleccionar texto */
+  background-image: url("https://res.cloudinary.com/dzhyqelnw/image/upload/v1762237770/Screenshot_1_t1o6ok.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 #bg-video {

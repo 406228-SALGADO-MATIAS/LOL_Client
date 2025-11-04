@@ -181,6 +181,12 @@ async function finishSelection() {
   const gameMode = isRanked ? "RANKED" : "NORMAL";
 
   try {
+    // 🔹 Cerrar el modal clásico
+    closeClassicModal();
+
+    // 🔹 Mostrar el modal de estado
+    openStatusModal("Crear partida", "Esperando resultado...");
+
     let matchData;
     if (selectedChampionId) {
       // Usuario + rol + campeón
@@ -205,10 +211,12 @@ async function finishSelection() {
       matchData = data;
     }
 
-    closeClassicModal();
+    // 🔹 Cerrar el modal de estado y abrir el resultado
+    closeStatusModal();
     createResultModal(matchData);
   } catch (err) {
     console.error("❌ Error al finalizar selección:", err);
+    closeStatusModal();
     alert("No se pudo crear la partida. Intenta nuevamente.");
   }
 }

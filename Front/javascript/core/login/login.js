@@ -64,11 +64,18 @@ async function handleLogin() {
   const payload = { server, username, password };
 
   try {
+    // 🔹 Mostrar modal de estado
+    openStatusModal(
+      "Login Status",
+      "Starting authentication process. Waiting for server..."
+    );
+
     // 🔹 Usamos el método específico del apiConfig
     const { data, status } = await apiOut.login(payload);
 
     // 🔹 Validamos si userId existe
     if (!data.userId) {
+      closeStatusModal();
       showLoginMessage(
         data.message || "Usuario o contraseña incorrecta",
         "danger"
@@ -84,15 +91,20 @@ async function handleLogin() {
       localStorage.removeItem("savedLoginData");
     }
 
-    // Guardamos userId en sesión
+    // 🔹 Guardamos userId en sesión
     sessionStorage.setItem("userId", data.userId);
     showLoginMessage("Login exitoso", "success");
 
+    // 🔹 Actualizamos estado visual
+    updateStatusModal("Login Status", "Logging on...");
+
+    // 🔹 Esperar 1.5 segundos antes de redirigir
     setTimeout(() => {
+      closeStatusModal();
       window.location.href = "../menu.html";
-    }, 800);
+    }, 2000);
   } catch (err) {
-    // 🔹 Solo entra aquí si ninguna URL respondió
+    closeStatusModal();
     console.error("Error en login:", err);
     showLoginMessage("Error al conectar con el servidor.", "danger");
   }

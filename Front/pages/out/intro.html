@@ -9,23 +9,81 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
     <link rel="stylesheet" href="/css/main/intro.css" />
+    <link rel="stylesheet" href="/css/main/modalStatus.css" />
   </head>
+
   <body>
-    <video autoplay muted loop id="bg-video"></video>
+    <video autoplay muted loop id="bg-video" playsinline>
+      <source
+        src="https://res.cloudinary.com/dzhyqelnw/video/upload/v1761552543/2025-10-27_05-00-56_anydsb.mp4"
+        type="video/mp4"
+      />
+    </video>
+
     <div id="video-overlay"></div>
     <div class="page-transition"></div>
 
+    <!-- JS necesarios -->
+    <script src="/javascript/apiConfig.js"></script>
+    <script src="/javascript/support/modalStatus.js"></script>
+
     <script>
-      function goLogin() {
-        window.location.href = "login.html";
+      async function testConnection() {
+        // Mostrar el modal de conexión
+        openStatusModal(
+          "Connection Status",
+          "Trying to connect with the server..."
+        );
+
+        let connected = false;
+        let result;
+        let attempts = 0;
+        const startTime = Date.now();
+
+        while (!connected) {
+          attempts++;
+
+          try {
+            result = await apiChampions.getAllChampions();
+
+            const champions = Array.isArray(result)
+              ? result
+              : Array.isArray(result.data)
+              ? result.data
+              : null;
+
+            if (champions) {
+              connected = true;
+              break;
+            } else {
+              await new Promise((r) => setTimeout(r, 4000));
+            }
+          } catch (err) {
+            await new Promise((r) => setTimeout(r, 4000));
+          }
+
+          // Si pasó más de 20 segundos, actualizar mensaje informativo
+          if (Date.now() - startTime > 20000) {
+            updateStatusModal(
+              "Still trying to connect...",
+              "This may take up to a few minutes if Render is waking up."
+            );
+          }
+        }
+
+        // Mostrar mensaje de éxito
+        updateStatusModal(
+          "Connection Successful",
+          "Redirecting to register..."
+        );
+
+        setTimeout(() => {
+          closeStatusModal();
+          window.location.href = "/pages/out/register.html";
+        }, 1500);
       }
 
-      function goCreate() {
-        window.location.href = "register.html";
-      }
-    </script>
-    <!-- JS interno: transición -->
-    <script>
+      // Efecto de transición
       function setupPageTransitions() {
         const transition = document.querySelector(".page-transition");
         window.addEventListener("load", () => {
@@ -33,7 +91,13 @@
         });
       }
 
-      document.addEventListener("DOMContentLoaded", setupPageTransitions);
+      // Iniciar todo
+      document.addEventListener("DOMContentLoaded", () => {
+        setupPageTransitions();
+          setTimeout(() => {
+          testConnection();
+        }, 500);
+      });
     </script>
   </body>
 </html>

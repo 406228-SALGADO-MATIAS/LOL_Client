@@ -20,7 +20,7 @@
 
 /* Navbar */
 .navbar-custom {
-  background: linear-gradient(90deg, #051220, #0b3846);
+  background: linear-gradient(90deg, #051220, #000000);
   height: 45px;
   display: flex;
   align-items: center;
@@ -85,12 +85,12 @@
 }
 
 body::-webkit-scrollbar {
-  width: 6px;
+  width: 7px;
 }
 
 body::-webkit-scrollbar-thumb {
   background-color: #ffd500cc;
-  border-radius: 3px;
+  border-radius: 1px;
 }
 
 body::-webkit-scrollbar-thumb:hover {

@@ -42,77 +42,79 @@
       </div>
     </nav>
 
-    <!-- Contenido central -->
-    <div class="container-fluid mt-5">
-      <!-- Sidebar fijo -->
-      <div class="sidebar">
-        <!-- Contador de campeones -->
-        <div class="counter-box">
-          <div id="counter-total" class="number-large">0</div>
-          <div class="label">TOTAL</div>
+    <div id="vanta-bg">
+      <!-- Contenido central -->
+      <div class="container-fluid mt-5">
+        <!-- Sidebar fijo -->
+        <div class="sidebar">
+          <!-- Contador de campeones -->
+          <div class="counter-box">
+            <div id="counter-total" class="number-large">0</div>
+            <div class="label">TOTAL</div>
+          </div>
+
+          <!-- Buscador -->
+          <input
+            type="text"
+            class="champ-search"
+            id="searchItem"
+            placeholder="Buscar item..."
+          />
+          <!-- Dropdown -->
+          <select id="filterItems" class="form-select custom-select">
+            <option value="all">Todos</option>
+            <option value="style1">Tipo</option>
+            <option value="style2">Tipo 2</option>
+          </select>
+
+          <!-- Dropdown de ordenar -->
+          <label for="sortItems" class="sidebar-label">Ordenar por</label>
+          <select id="sortItems" class="form-select custom-select">
+            <option value="">Ninguno</option>
+            <option value="attackDamage">Attack Damage</option>
+            <option value="armor">Armor</option>
+            <option value="health">Health</option>
+            <option value="abilityPower">Ability Power</option>
+            <option value="magicResistance">Magic Resistance</option>
+            <option value="cost">Coste</option>
+          </select>
         </div>
 
-        <!-- Buscador -->
-        <input
-          type="text"
-          class="champ-search"
-          id="searchItem"
-          placeholder="Buscar item..."
-        />
-        <!-- Dropdown -->
-        <select id="filterItems" class="form-select custom-select">
-          <option value="all">Todos</option>
-          <option value="style1">Tipo</option>
-          <option value="style2">Tipo 2</option>
-        </select>
-
-        <!-- Dropdown de ordenar -->
-        <label for="sortItems" class="sidebar-label">Ordenar por</label>
-        <select id="sortItems" class="form-select custom-select">
-          <option value="">Ninguno</option>
-          <option value="attackDamage">Attack Damage</option>
-          <option value="armor">Armor</option>
-          <option value="health">Health</option>
-          <option value="abilityPower">Ability Power</option>
-          <option value="magicResistance">Magic Resistance</option>
-          <option value="cost">Coste</option>
-        </select>
+        <!-- Contenido principal -->
+        <div class="main-content">
+          <div id="collectionsContainer">
+            <!-- Aquí se cargan dinámicamente los campeones -->
+          </div>
+        </div>
       </div>
-
-      <!-- Contenido principal -->
-      <div class="main-content">
-        <div id="collectionsContainer">
-          <!-- Aquí se cargan dinámicamente los campeones -->
+      <!-- Modal para items -->
+      <div id="itemModal" class="modal-overlay">
+        <div class="modal-content-small">
+          <div
+            id="itemModalImageContainer"
+            style="
+              flex: 2;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <img id="itemModalImage" src="" alt="Item" />
+          </div>
+          <div
+            id="itemModalInfo"
+            style="
+              flex: 1;
+              padding-left: 1rem;
+              color: white;
+              overflow-y: auto;
+              max-height: 80vh;
+            "
+          >
+            <!-- Aquí se inyectarán stats y descripción -->
+          </div>
+          <div id="itemModalClose">&times;</div>
         </div>
-      </div>
-    </div>
-    <!-- Modal para items -->
-    <div id="itemModal" class="modal-overlay">
-      <div class="modal-content-small">
-        <div
-          id="itemModalImageContainer"
-          style="
-            flex: 2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          "
-        >
-          <img id="itemModalImage" src="" alt="Item" />
-        </div>
-        <div
-          id="itemModalInfo"
-          style="
-            flex: 1;
-            padding-left: 1rem;
-            color: white;
-            overflow-y: auto;
-            max-height: 80vh;
-          "
-        >
-          <!-- Aquí se inyectarán stats y descripción -->
-        </div>
-        <div id="itemModalClose">&times;</div>
       </div>
     </div>
 
@@ -156,6 +158,29 @@
       }
 
       document.addEventListener("DOMContentLoaded", setupPageTransitions);
+    </script>
+
+    <!-- Fondo animado con VANTA -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.fog.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        VANTA.FOG({
+          el: "#vanta-bg",
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.0,
+          minWidth: 200.0,
+          highlightColor: 0x31363c,
+          midtoneColor: 0x1397a0,
+          lowlightColor: 0x1f43,
+          baseColor: 0x0,
+          blurFactor: 0.4,
+          speed: 0.1,
+          zoom: 0.4,
+        });
+      });
     </script>
   </body>
 </html>

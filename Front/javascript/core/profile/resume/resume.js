@@ -302,16 +302,14 @@ function setupRanksCarouselTitle() {
 async function loadResume(userId, isTempUser = false) {
   if (!userId) return;
 
-  // Si es usuario temporal, actualizamos solo Resume
-  if (isTempUser) {
-    await loadTopProfile(userId, { resume: true, topSection: true });
-  } else {
-    // Usuario de sesión → actualizamos todo
-    await loadTopProfile(userId, { resume: true, topSection: true });
-  }
+  const profilePromise = loadTopProfile(userId, {
+    resume: true,
+    topSection: true,
+  });
+  const champsPromise = loadTopChampions(userId);
+  const ranksPromise = loadRanks(userId);
 
-  await loadTopChampions(userId);
-  await loadRanks(userId);
+  await Promise.all([profilePromise, champsPromise, ranksPromise]);
 }
 
 // Ejecutar al cargar la página
