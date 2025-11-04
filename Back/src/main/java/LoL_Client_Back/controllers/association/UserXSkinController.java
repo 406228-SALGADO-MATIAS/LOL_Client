@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("UserXSkin")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://lol-client-front.onrender.com"})
 public class UserXSkinController {
     @Autowired
     UserXSkinService service;

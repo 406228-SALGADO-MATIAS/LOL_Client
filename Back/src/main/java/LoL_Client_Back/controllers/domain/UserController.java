@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("users")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://lol-client-front.onrender.com"})
 public class UserController {
     @Autowired
     UserService userService;

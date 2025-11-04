@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("skins")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://lol-client-front.onrender.com"})
 public class SkinController {
     @Autowired
     SkinService skinService;

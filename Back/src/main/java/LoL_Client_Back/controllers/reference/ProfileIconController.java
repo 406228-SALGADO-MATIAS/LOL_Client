@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("ProfileIcon")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://lol-client-front.onrender.com"})
 public class ProfileIconController {
     @Autowired
     ProfileIconService profileIconService;

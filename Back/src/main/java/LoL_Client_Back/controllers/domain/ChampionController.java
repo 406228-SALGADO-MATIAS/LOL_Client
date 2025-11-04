@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("champions")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://lol-client-front.onrender.com"})
 public class ChampionController {
     @Autowired
     ChampionService championService;

@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("ranks")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://lol-client-front.onrender.com"})
 public class RankTierController {
 
     @Autowired
