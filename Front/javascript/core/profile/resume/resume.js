@@ -269,8 +269,7 @@ function setupRanksCarouselTitle() {
   };
 
   function changeBackground(index) {
-    // 1. oscurecer overlay
-    bgOverlay.style.opacity = "1";
+   
 
     // 2. cambiar la imagen inmediatamente
     document.body.style.backgroundImage =
