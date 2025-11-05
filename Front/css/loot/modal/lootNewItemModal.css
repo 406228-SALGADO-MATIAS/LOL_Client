@@ -100,6 +100,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .newitem-btn:hover {
@@ -115,6 +116,10 @@
   box-shadow: none;
 }
 
+.newitem-btn:focus,
+.newitem-btn:active {
+  outline: none;
+}
 
 /* 🔹 Fade-out del overlay */
 @keyframes fadeOutNewItemOverlay {

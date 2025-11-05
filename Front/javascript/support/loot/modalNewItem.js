@@ -176,7 +176,15 @@ function createDynamicChestModal(newItem, overlay, onAdd, onCancel) {
   overlay.addEventListener("click", async (e) => {
     if (e.target === overlay) {
       animateClose(true);
-      onCancel();
+
+      // 🔹 Mostrar modal de estado
+      openStatusModal("Cargando inventario","Procesando cofres restantes...");
+
+      // 🔹 Ejecutar el onCancel, que ya maneja los cofres restantes
+      await onCancel();
+
+      // 🔹 Cerrar el modal de estado cuando termine todo
+      closeStatusModal();
     }
   });
 

@@ -56,27 +56,54 @@ function updateSkinCounters() {
 async function handleUnlockSkin(skin) {
   const prevScroll = window.scrollY;
 
-  try {
-    const res = await apiSkins.unlockSkin(userId, skin);
+  // Abrimos el modal con mensaje inicial
+  openStatusModal("Desbloquear skin", "Procesando...");
 
-    if (res.status >= 200 && res.status < 300) {
-      alert(`✅ ${skin.name} desbloqueada con éxito!`);
+  // Esperamos 1 segundo para que se note el mensaje antes del fetch
+  setTimeout(async () => {
+    try {
+      const res = await apiSkins.unlockSkin(userId, skin);
 
-      // Actualizamos RP y recargamos skins
-      await loadUserProfile();
-      await loadSkins(document.getElementById("filterSelect").value);
+      if (res.status >= 200 && res.status < 300) {
+        // ✅ Éxito
+        updateStatusModal(
+          "Desbloquear skin",
+          `${skin.name} desbloqueada con éxito!`
+        );
 
-      window.hideModalSkin();
+        // Esperamos un momento para que se vea el mensaje
+        setTimeout(async () => {
+          await loadUserProfile();
+          await loadSkins(document.getElementById("filterSelect").value);
+          window.hideModalSkin?.();
+          closeStatusModal();
+          window.scrollTo({ top: prevScroll, behavior: "auto" });
+        }, 1000);
+      } else {
+        // ❌ Error desde el backend
+        const errMsg = res.data?.message || "Error desconocido";
+        updateStatusModal("Desbloquear skin", `Error: ${errMsg}`);
 
-      // Volvemos a la posición anterior
-      window.scrollTo({ top: prevScroll, behavior: "auto" });
-    } else {
-      const errMsg = res.data?.message || "Error desconocido";
-      alert(`❌ Error al desbloquear ${skin.name}: ${errMsg}`);
+        setTimeout(() => {
+          closeStatusModal();
+          window.scrollTo({ top: prevScroll, behavior: "auto" });
+        }, 1500);
+      }
+    } catch (err) {
+      // ⚠️ Error de red u otro
+      updateStatusModal(
+        "Desbloquear skin",
+        `Error al conectar con el servidor.`
+      );
+
+      setTimeout(() => {
+        closeStatusModal();
+        window.scrollTo({ top: prevScroll, behavior: "auto" });
+      }, 1500);
+
+      console.error(`Error al desbloquear ${skin.name}:`, err);
     }
-  } catch (err) {
-    alert(`⚠️ Error de red: ${err.message}`);
-  }
+  }, 500);
 }
 
 function updateUnlockButtonSkin(skin, championName) {

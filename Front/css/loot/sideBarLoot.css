@@ -15,10 +15,8 @@
 
 /* Buscador */
 #searchLoot {
-  width: 90%;
+  width: 100%;
   max-width: 400px;
-  padding: 0.5rem 0.8rem;
-  margin: 0 auto 1rem auto;
   border-radius: 0.25rem;
   border: 1px solid #444;
   background-color: #111;

@@ -253,7 +253,7 @@ function animateCardAppear(card) {
 const GRADIENTS = {
   aram: "linear-gradient(90deg, rgba(0, 71, 99, 0.55), rgba(0, 23, 43, 0.664))",
   default:
-    "linear-gradient(90deg, rgba(33, 54, 0, 0.82), rgba(37, 29, 0, 0.65))",
+    "linear-gradient(90deg, rgba(56, 90, 0, 0.54), rgba(37, 29, 0, 0.65))",
 };
 
 function changeBackgroundByGameType(gameType) {

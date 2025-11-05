@@ -124,28 +124,32 @@ function renderSkinsByAvailableness() {
   const userRP = parseInt(document.getElementById("userRP").textContent, 10);
   const skins = getFilteredSkins();
 
-  // Definimos las categorías con su lógica
+  // 🔹 Ícono RP igual al de renderSkinsByRPCost
+  const rpIcon =
+    '<img class="rp-icon-big" src="https://res.cloudinary.com/dzhyqelnw/image/upload/v1761340820/rp_avaiqa.png" alt="RP" title="Riot Points (RP)" style="width:22px; height:22px; vertical-align:middle; margin-left:4px;">';
+
   const categories = [
     {
-      title: "ADQUIRED",
+      title: "ADQUIRIDOS",
       filter: (skin) => skin.owned,
     },
     {
-      title: "OBTAINABLE",
+      title: "DISPONIBLES",
       filter: (skin) =>
         !skin.owned &&
         ownedChampions.some((c) => c.name === skin.championName) &&
         userRP >= skin.rpCost,
     },
     {
-      title: "NEED RP",
+      // 🔹 categoría modificada
+      title: `NECESITA ${rpIcon}`,
       filter: (skin) =>
         !skin.owned &&
         ownedChampions.some((c) => c.name === skin.championName) &&
         userRP < skin.rpCost,
     },
     {
-      title: "NEED CHAMPION",
+      title: "NECESITA EL CAMPEÓN",
       filter: (skin) =>
         !skin.owned &&
         !ownedChampions.some((c) => c.name === skin.championName),

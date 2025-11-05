@@ -269,16 +269,11 @@ function setupRanksCarouselTitle() {
   };
 
   function changeBackground(index) {
-   
-
     // 2. cambiar la imagen inmediatamente
     document.body.style.backgroundImage =
       backgroundsByIndex[index] || backgroundsByIndex[0];
 
-    // 3. revelar con delay para la animación
-    setTimeout(() => {
-      bgOverlay.style.opacity = "0";
-    }, 130); // solo delay para el fade-out del overlay
+    bgOverlay.style.opacity = "0";
   }
 
   // Evento de cambio de slide
@@ -313,16 +308,28 @@ async function loadResume(userId, isTempUser = false) {
 
 // Ejecutar al cargar la página
 document.addEventListener("DOMContentLoaded", async () => {
-  await fetchRankTiers(); // traemos todos los ranks desde el backend
+  // 🔹 Mostrar modal de carga
+  openStatusModal("Cargando perfil", "Obteniendo el resumen del usuario...");
 
-  const tempUserId = sessionStorage.getItem("tempUserId");
-  const sessionUserId = sessionStorage.getItem("userId");
+  try {
+    await fetchRankTiers(); // traemos todos los ranks desde el backend
 
-  const userId = tempUserId || sessionUserId;
-  const isTempUser = !!tempUserId;
+    const tempUserId = sessionStorage.getItem("tempUserId");
+    const sessionUserId = sessionStorage.getItem("userId");
 
-  await loadResume(userId, isTempUser);
+    const userId = tempUserId || sessionUserId;
+    const isTempUser = !!tempUserId;
 
-  setupChampionCarouselTitle();
-  setupRanksCarouselTitle();
+    await loadResume(userId, isTempUser);
+
+    setupChampionCarouselTitle();
+    setupRanksCarouselTitle();
+
+    // 🔹 Cerrar el modal al finalizar
+    closeStatusModal();
+  } catch (err) {
+    console.error("Error cargando perfil:", err);
+    updateStatusModal("Error", "No se pudo obtener el resumen del usuario.");
+    setTimeout(() => closeStatusModal(), 2000);
+  }
 });

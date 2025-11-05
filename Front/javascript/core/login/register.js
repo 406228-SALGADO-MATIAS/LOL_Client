@@ -10,7 +10,7 @@ const passwordInput = document.getElementById("password");
 const confirmPasswordInput = document.getElementById("confirmPassword");
 const emailInput = document.getElementById("email");
 const nicknameInput = document.getElementById("nickname");
-const messageEl = document.getElementById("message");
+const mainMessageEl = document.getElementById("message");
 
 /**
  * Muestra un mensaje en el div #message
@@ -18,9 +18,11 @@ const messageEl = document.getElementById("message");
  * @param {'success'|'danger'} type - Tipo de mensaje
  */
 function showMessage(text, type) {
-  messageEl.innerText = text;
-  messageEl.classList.remove("text-success", "text-danger");
-  messageEl.classList.add(type === "success" ? "text-success" : "text-danger");
+  mainMessageEl.innerText = text;
+  mainMessageEl.classList.remove("text-success", "text-danger");
+  mainMessageEl.classList.add(
+    type === "success" ? "text-success" : "text-danger"
+  );
 }
 
 /**
@@ -41,14 +43,24 @@ async function handleSubmit(e) {
   };
   const server = serverSelect.value;
 
+  const formBox = document.querySelector(".form-box");
+  // Ocultamos el formulario mientras se procesa
+  formBox.style.display = "none";
+
+  // Abrimos el modal con mensaje inicial
+  openStatusModal("Crear cuenta", "Procesando...");
+
   try {
-    // 🔹 Usamos el método específico del apiConfig
-    const { data, status } = await apiOut.register(dto, server);
+    const { data } = await apiOut.register(dto, server);
 
-    // 🔹 Si hay mensaje de error del backend (campo repetido, etc)
+    // Si hubo error desde backend
     if (data.message && !data.userId) {
-      const msg = data.message;
+      // Cerramos modal y mostramos el form de nuevo
+      closeStatusModal();
+      formBox.style.display = "block";
 
+      // Mostramos mensajes específicos en los inputs (igual que antes)
+      const msg = data.message;
       if (msg.includes("email")) {
         showInputMessage("emailMsg", msg, "warning");
       } else if (msg.includes("username")) {
@@ -61,16 +73,20 @@ async function handleSubmit(e) {
       return;
     }
 
-    // ✅ Registro exitoso
-    showMessage("Registración exitosa!", "success");
+    // Registro exitoso
+    updateStatusModal(
+      "Crear cuenta",
+      "Cuenta creada con éxito, redirigiendo a login..."
+    );
 
+    // Guardamos datos si activaste remember
     const rememberCheck = document.getElementById("remember-info");
     if (rememberCheck.checked) {
       const dataToSave = {
-        email: emailInput.value.trim(),
-        username: usernameInput.value.trim(),
-        password: passwordInput.value,
-        nickname: nicknameInput.value.trim(),
+        email: dto.email,
+        username: dto.username,
+        password: dto.password,
+        nickname: dto.nickname,
         server: serverSelect.value,
       };
       localStorage.setItem("registerData", JSON.stringify(dataToSave));
@@ -78,12 +94,20 @@ async function handleSubmit(e) {
       localStorage.removeItem("registerData");
     }
 
-    // Redirección opcional
-    // setTimeout(() => window.location.href = "/pages/out/intro.html", 2000);
+    // Redirigimos después de 2 segundos
+    setTimeout(() => {
+      closeStatusModal();
+      window.location.href = "/pages/out/login.html";
+    }, 2000);
   } catch (err) {
-    // 🔹 Solo entra si ninguna URL respondió correctamente
     console.error("Error en registro:", err);
-    showMessage("Error al conectar con el servidor.", "danger");
+
+    // Cerramos modal y mostramos el form de nuevo
+    closeStatusModal();
+    formBox.style.display = "block";
+
+    // Mostramos error en el form normal
+    showMessage("Ocurrió un error -1", "danger");
   }
 }
 

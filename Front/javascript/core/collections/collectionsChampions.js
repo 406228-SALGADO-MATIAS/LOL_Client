@@ -43,20 +43,44 @@ function updateChampionCounters() {
 
 async function handleUnlock(champ) {
   const prevScroll = window.scrollY;
-  try {
-    const res = await apiChampions.unlockChampion(userId, champ);
 
-    // 🔹 si todo OK, res.data contiene el json
-    alert(`✅ ${champ.name} desbloqueado con éxito!`);
+  // Abrimos el modal desde el inicio
+  openStatusModal("Desbloquear campeón", "Procesando...");
 
-    await loadChampions(document.getElementById("filterSelect").value);
-    await loadUserProfile();
-    window.hideModalChamp(); // si es modal de campeones
+  // Esperamos 1 segundo antes de llamar al API
+  setTimeout(async () => {
+    try {
+      const res = await apiChampions.unlockChampion(userId, champ);
 
-    window.scrollTo({ top: prevScroll, behavior: "auto" });
-  } catch (err) {
-    alert(`❌ Error al desbloquear ${champ.name}: ${err.message}`);
-  }
+      // ✅ Éxito
+      updateStatusModal(
+        "Desbloquear campeón",
+        `${champ.name} desbloqueado con éxito!`
+      );
+
+      // Esperamos un poco para mostrar el mensaje y luego cerramos
+      setTimeout(async () => {
+        await loadChampions(document.getElementById("filterSelect").value);
+        await loadUserProfile();
+        window.hideModalChamp?.(); // Cierra el modal de campeón si existe
+        closeStatusModal();
+        window.scrollTo({ top: prevScroll, behavior: "auto" });
+      }, 1000);
+    } catch (err) {
+      // ❌ Error
+      updateStatusModal(
+        "Desbloquear campeón",
+        `Error al desbloquear ${champ.name}.`
+      );
+
+      setTimeout(() => {
+        closeStatusModal();
+        window.scrollTo({ top: prevScroll, behavior: "auto" });
+      }, 1500);
+
+      console.error(`Error al desbloquear ${champ.name}:`, err);
+    }
+  }, 500);
 }
 
 function updateUnlockButton(champ) {

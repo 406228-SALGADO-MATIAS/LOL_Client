@@ -304,31 +304,39 @@ confirmDisenchantBtn.addEventListener("click", async () => {
     return;
   }
 
+  // 🔹 Mostrar modal de estado
+  openStatusModal(
+    "Desencantar","Reembolsando los ítems repetidos y en colección..."
+  );
+
   try {
     const { data: updatedLoot } = await apiLoot.disenchantOwnedItems(userId);
     console.log("Loot actualizado:", updatedLoot);
 
-    // Recargar perfil, colecciones y loot
+    // 🔹 Recargar perfil, colecciones y loot
     await loadUserProfile();
     await loadOwnedCollections();
     await loadLootItems();
 
-    // Cerrar modal
+    // 🔹 Cerrar modal de desencantar
     disenchantModal.classList.remove("show");
     disenchantModal.style.display = "none";
     disenchantModal.setAttribute("aria-hidden", "true");
     disenchantModal.removeAttribute("aria-modal");
 
-    // Quitar backdrop
+    // 🔹 Quitar backdrop si existe
     const backdrop = document.getElementById("modalBackdrop");
     if (backdrop) backdrop.remove();
   } catch (err) {
     console.error(err);
     alert("No se pudo desencantar: " + err.message);
-  }
+  } finally {
+    // 🔹 Cerrar modal de estado
+    closeStatusModal();
 
-  closeLootRollModal();
-  closeItemModal();
+    // 🔹 Cerrar modal de lootroll (por si sigue abierto)
+    closeLootRollModal();
+  }
 });
 
 document.getElementById("rollChampion").addEventListener("click", () => {

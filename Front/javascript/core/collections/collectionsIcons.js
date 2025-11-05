@@ -85,62 +85,95 @@ function updateUnlockButtonIcon(icon) {
 // Función para desbloquear un ícono
 async function handleUnlockIcon(icon) {
   const prevScroll = window.scrollY;
-  try {
-    // Llamada al endpoint vía API
-    const res = await apiIcons.unlockIcon(userId, icon); // devuelve { data, status, url }
 
-    if (res.status >= 200 && res.status < 300) {
-      const data = res.data; // UserXIconDTO
-      alert(`✅ Icono "${icon.icon}" desbloqueado con éxito!`);
+  // Abrimos el modal con mensaje inicial
+  openStatusModal("Desbloquear ícono", "Procesando...");
 
-      // Actualizamos el perfil y los íconos
-      await loadUserProfile();
-      await loadIcons(document.getElementById("filterSelect").value);
+  // Esperamos 1 segundo antes de hacer el fetch
+  setTimeout(async () => {
+    try {
+      // Llamada al endpoint vía API
+      const res = await apiIcons.unlockIcon(userId, icon); // devuelve { data, status, url }
 
-      // Cerramos el modal
-      hideModalIcon();
+      if (res.status >= 200 && res.status < 300) {
+        // ✅ Éxito
+        updateStatusModal(
+          "Desbloquear ícono",
+          `Ícono "${icon.icon}" desbloqueado con éxito!`
+        );
 
-      // Volvemos a la posición anterior
-      window.scrollTo({ top: prevScroll, behavior: "auto" });
-    } else {
-      alert(
-        `❌ Error al desbloquear icono "${icon.name}": ${
-          data?.message || "Desconocido"
-        }`
+        // Esperamos un poco para mostrar el mensaje y luego cerramos
+        setTimeout(async () => {
+          await loadUserProfile();
+          await loadIcons(document.getElementById("filterSelect").value);
+          window.hideModalIcon?.();
+          closeStatusModal();
+          window.scrollTo({ top: prevScroll, behavior: "auto" });
+        }, 1000);
+      } else {
+        // ❌ Error del backend
+        const errMsg = res.data?.message || "Error desconocido";
+        updateStatusModal(
+          "Desbloquear ícono",
+          `Error al desbloquear: ${errMsg}`
+        );
+
+        setTimeout(() => {
+          closeStatusModal();
+          window.scrollTo({ top: prevScroll, behavior: "auto" });
+        }, 1500);
+      }
+    } catch (err) {
+      // ⚠️ Error de red
+      updateStatusModal(
+        "Desbloquear ícono",
+        `Error al conectar con el servidor.`
       );
+
+      setTimeout(() => {
+        closeStatusModal();
+        window.scrollTo({ top: prevScroll, behavior: "auto" });
+      }, 1500);
+
+      console.error(`Error al desbloquear ícono "${icon.icon}":`, err);
     }
-  } catch (err) {
-    alert(`⚠️ Error de red: ${err.message}`);
-  }
+  }, 500);
 }
 
 // Función para usar un ícono
 async function handleUseIcon(userXIcon) {
   const prevScroll = window.scrollY;
 
-  try {
-    const profileIconId = userXIcon.idIcon ?? userXIcon.id; // soporta UserXIconDTO o ProfileIcon
+  // Obtenemos el ID del ícono (compatibilidad con distintas estructuras)
+  const profileIconId = userXIcon.idIcon ?? userXIcon.id;
 
-    // Llamada al endpoint vía API
-    const res = await apiIcons.useIcon(userId, profileIconId); // devuelve { data, status, url }
+  // Abrimos el modal
+  openStatusModal("Cambiar ícono", `Aplicando ícono "${userXIcon.icon}"...`);
 
-    if (res.status >= 200 && res.status < 300) {
-      const data = res.data; // UserProfileDTO
-      alert(`✅ Icono "${userXIcon.icon}" aplicado con éxito!`);
+  // Esperamos 1 segundo antes de ejecutar el fetch
+  setTimeout(async () => {
+    try {
+      // Llamada al endpoint vía API
+      const res = await apiIcons.useIcon(userId, profileIconId); // devuelve { data, status, url }
 
-      await loadUserProfile();
-      hideModalIcon();
-      window.scrollTo({ top: prevScroll, behavior: "auto" });
-    } else {
-      alert(
-        `❌ Error al aplicar icono "${userXIcon.icon}": ${
+      if (res.status >= 200 && res.status < 300) {
+        // ✅ Éxito: actualizamos el perfil
+        await loadUserProfile();
+        window.hideModalIcon?.();
+      } else {
+        console.error(
+          `Error al aplicar ícono "${userXIcon.icon}":`,
           res.data?.message || "Desconocido"
-        }`
-      );
+        );
+      }
+    } catch (err) {
+      console.error(`Error de red al aplicar ícono "${userXIcon.icon}":`, err);
+    } finally {
+      // Cerrar el modal y restaurar el scroll
+      closeStatusModal();
+      window.scrollTo({ top: prevScroll, behavior: "auto" });
     }
-  } catch (err) {
-    alert(`⚠️ Error de red: ${err.message}`);
-  }
+  }, 700);
 }
 
 // Filtros (placeholder, igual que con skins)
