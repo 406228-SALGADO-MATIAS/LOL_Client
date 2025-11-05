@@ -1,4 +1,6 @@
 function createNewItemModal(newItem, onClose) {
+  // 🔹 cerrar modal de estado una vez que todo terminó
+  closeStatusModal();
   const container = document.getElementById("lootModalContainer");
   container.innerHTML = "";
 
@@ -31,17 +33,18 @@ function createNewItemModal(newItem, onClose) {
     if (modalEl) modalEl.classList.add("fade-out");
     if (isFinal && overlayEl) overlayEl.classList.add("fade-out");
 
-    // 🔹 iniciamos reload inmediatamente, sin esperar la animación
+    // 🔹 iniciamos reload inmediatamente
     const reloadPromise = Promise.all([
       loadUserProfile(),
       loadOwnedCollections(),
       loadLootItems(),
     ]);
 
-    // mientras tanto esperamos un poco antes de limpiar el DOM
-    setTimeout(() => (container.innerHTML = ""), 300);
+    // limpiar DOM mientras tanto
+    setTimeout(() => (container.innerHTML = ""), 0);
 
-    await reloadPromise; // solo esperamos a la data antes de callback opcional
+    await reloadPromise; // esperamos los datos antes del cierre
+
     if (onClose) onClose();
   };
 
@@ -124,18 +127,23 @@ async function reloadDynamicChestsData() {
 
 // 🔹 Abre los cofres restantes para el flujo dinámico
 async function finishRemainingDynamicChests(type, totalCount, openedCount) {
-  const remaining = totalCount - openedCount;
+  let remaining = totalCount - openedCount;
+
   for (let i = 0; i < remaining; i++) {
     try {
       await handleOpenChest(type);
-    } catch (err) {
-      // solo log interno, no propagar al usuario
-      console.debug(
-        `[FINISH WARN] Error simulando cofre restante #${openedCount + i + 1}:`,
-        err.message
+
+      const newRemaining = remaining - (i + 1);
+      updateStatusModal(
+        "Cargando inventario",
+        `Terminando de abrir cofres... 
+        Restantes: ${newRemaining}`
       );
-    }
+    } catch (err) {}
   }
+
+  // 🔹 Cerrar modal al terminar
+  closeStatusModal("Todos los cofres fueron abiertos ✅");
 }
 
 // 🔹 Crea el modal visual del ítem para el flujo dinámico
@@ -178,7 +186,7 @@ function createDynamicChestModal(newItem, overlay, onAdd, onCancel) {
       animateClose(true);
 
       // 🔹 Mostrar modal de estado
-      openStatusModal("Cargando inventario","Procesando cofres restantes...");
+      openStatusModal("Cargando inventario", "Abriendo cofres restantes...");
 
       // 🔹 Ejecutar el onCancel, que ya maneja los cofres restantes
       await onCancel();

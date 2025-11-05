@@ -135,6 +135,13 @@ async function handleEnchantItem(item, type, enchant = true) {
   const userId = sessionStorage.getItem("userId");
   if (!userId) throw new Error("No se encontró el usuario");
 
+  // 🔹 Mostrar modal de estado según la acción
+  if (enchant) {
+    openStatusModal("Desbloquear ítem", "Procesando la adquisición...");
+  } else {
+    openStatusModal("Reembolsar ítem", "Procesando el reembolso...");
+  }
+
   try {
     const res = await apiLoot.unlockOrRefundItem(type, item.id, enchant);
 
@@ -145,18 +152,23 @@ async function handleEnchantItem(item, type, enchant = true) {
         // Desbloquear -> mostrar modal
         createNewItemModal(data);
       } else {
-        // Desencantar -> recargar todo
-        await loadUserProfile();
-        await loadOwnedCollections();
-        await loadLootItems();
+        // Desencantar -> recargar todo (en paralelo)
+        await Promise.all([
+          loadUserProfile(),
+          loadOwnedCollections(),
+          loadLootItems(),
+        ]);
+        closeStatusModal();
       }
 
       return data;
     } else {
-      throw new Error(res.data?.message || "Error desbloqueando item");
+      throw new Error(res.data?.message || "Error desbloqueando ítem");
     }
   } catch (err) {
     console.error("Error en handleEnchantItem:", err);
+    updateStatusModal("Error", err.message || "Fallo al procesar el ítem");
+    setTimeout(() => closeStatusModal(), 2000);
     throw err;
   }
 }
@@ -328,9 +340,11 @@ confirmDisenchantBtn.addEventListener("click", async () => {
     console.log("Loot actualizado:", updatedLoot);
 
     // 🔹 Recargar perfil, colecciones y loot
-    await loadUserProfile();
-    await loadOwnedCollections();
-    await loadLootItems();
+    await Promise.all([
+      loadUserProfile(),
+      loadOwnedCollections(),
+      loadLootItems(),
+    ]);
 
     // 🔹 Cerrar modal de desencantar
     disenchantModal.classList.remove("show");
