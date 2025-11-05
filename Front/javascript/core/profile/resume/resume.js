@@ -311,6 +311,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 🔹 Mostrar modal de carga
   openStatusModal("Cargando perfil", "Obteniendo el resumen del usuario...");
 
+  // 🔹 Forzamos fondo negro total solo en este caso
+  const overlay = document.querySelector(".status-modal-overlay");
+  if (overlay) overlay.style.backgroundColor = "rgba(0, 0, 0, 1)";
+
   try {
     await fetchRankTiers(); // traemos todos los ranks desde el backend
 
@@ -325,11 +329,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupChampionCarouselTitle();
     setupRanksCarouselTitle();
 
-    // 🔹 Cerrar el modal al finalizar
+    // 🔹 Restaurar fondo al cerrar
+    if (overlay) overlay.style.backgroundColor = "rgba(0, 0, 0, 0.308)";
     closeStatusModal();
   } catch (err) {
     console.error("Error cargando perfil:", err);
     updateStatusModal("Error", "No se pudo obtener el resumen del usuario.");
-    setTimeout(() => closeStatusModal(), 2000);
+    setTimeout(() => {
+      if (overlay) overlay.style.backgroundColor = "rgba(0, 0, 0, 0.308)";
+      closeStatusModal();
+    }, 2000);
   }
 });
