@@ -28,8 +28,14 @@ async function loadIcons(activeFilter = null) {
     } else {
       renderIcons();
     }
+
+    // 🔹 Cerrar modal al finalizar correctamente
+    closeStatusModal();
   } catch (err) {
+    console.error("Error cargando íconos:", err);
     collectionsContainer.innerHTML = `<p class="text-center text-danger">${err.message}</p>`;
+    updateStatusModal("Error", "No se pudieron obtener los íconos.");
+    setTimeout(() => closeStatusModal(), 2000);
   }
 }
 
@@ -191,8 +197,12 @@ function applyFilter(filter) {
 }
 
 // Al cargar la página
-document.addEventListener("DOMContentLoaded", () => {
-  loadIcons();
+document.addEventListener("DOMContentLoaded", async () => {
+  // 🔹 Mostrar modal de carga
+  openStatusModal("Cargando colección", "Obteniendo los íconos...");
+
+  // Llamar la carga
+  await loadIcons();
 });
 
 document.getElementById("showNotOwned").addEventListener("change", () => {

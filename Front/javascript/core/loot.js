@@ -243,24 +243,37 @@ function applyCurrentFilter() {
 // Inicialización
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await loadUserProfile();
-  await loadOwnedCollections();
-  await loadLootItems();
+  // 🔹 Mostrar modal de carga
+  openStatusModal(
+    "Cargando inventario",
+    "Obteniendo el inventario del usuario..."
+  );
 
-  // listener del select de filtros
-  const filterSelect = document.getElementById("filterSelect");
-  if (filterSelect) {
-    filterSelect.addEventListener("change", () => {
-      applyCurrentFilter();
-    });
+  try {
+    // Ejecutar todas las cargas en paralelo
+    await Promise.all([
+      loadUserProfile(),
+      loadOwnedCollections(),
+      loadLootItems(),
+    ]);
+
+    // 🔹 Cerrar modal al finalizar correctamente
+    closeStatusModal("Inventario cargado correctamente ✅");
+  } catch (err) {
+    console.error("Error cargando inventario:", err);
+    updateStatusModal("Error", "No se pudo cargar el inventario del usuario.");
+    setTimeout(() => closeStatusModal(), 2000);
   }
 
-  // listener del input de búsqueda
+  // 🎚️ Listeners de filtros y búsqueda
+  const filterSelect = document.getElementById("filterSelect");
+  if (filterSelect) {
+    filterSelect.addEventListener("change", applyCurrentFilter);
+  }
+
   const searchInput = document.getElementById("searchLoot");
   if (searchInput) {
-    searchInput.addEventListener("input", () => {
-      applyCurrentFilter();
-    });
+    searchInput.addEventListener("input", applyCurrentFilter);
   }
 });
 
@@ -306,7 +319,8 @@ confirmDisenchantBtn.addEventListener("click", async () => {
 
   // 🔹 Mostrar modal de estado
   openStatusModal(
-    "Desencantar","Reembolsando los ítems repetidos y en colección..."
+    "Desencantar",
+    "Reembolsando los ítems repetidos y en colección..."
   );
 
   try {

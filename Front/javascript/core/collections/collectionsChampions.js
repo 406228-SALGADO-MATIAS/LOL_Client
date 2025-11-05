@@ -24,8 +24,15 @@ async function loadChampions(activeFilter = null) {
     } else {
       renderChampions();
     }
+
+    // 🔹 Cerrar modal al finalizar
+    closeStatusModal();
   } catch (err) {
     collectionsContainer.innerHTML = `<p class="text-center text-danger">${err.message}</p>`;
+
+    // 🔹 Mostrar error en el modal antes de cerrarlo
+    updateStatusModal("Error", "No se pudieron obtener los campeones.");
+    setTimeout(() => closeStatusModal(), 2000);
   }
 }
 
@@ -140,7 +147,22 @@ function applyFilter(filterValue = null) {
 }
 
 // Inicialización
-document.addEventListener("DOMContentLoaded", loadChampions);
+document.addEventListener("DOMContentLoaded", async () => {
+  // 🔹 Mostrar modal de carga
+  openStatusModal("Cargando colección", "Obteniendo los campeones...");
+
+  try {
+    await loadChampions(); // Ejecuta la carga normal
+  } catch (err) {
+    console.error("Error al cargar campeones:", err);
+    updateStatusModal("Error", "No se pudieron obtener los campeones.");
+    setTimeout(() => closeStatusModal(), 2000);
+    return;
+  }
+
+  // 🔹 Cerrar el modal al finalizar correctamente
+  closeStatusModal();
+});
 
 // Checkbox para mostrar campeones no obtenidos
 document.getElementById("showNotOwned").addEventListener("change", () => {

@@ -1,36 +1,34 @@
 const collectionsContainer = document.getElementById("collectionsContainer");
 
-// Variable global para todos los items
+// Variable global para todos los ítems
 let allItems = [];
-
 let currentCategoryFilter = "all";
 
 // ==========================
 // Cargar Items desde backend
 // ==========================
-// Cargar todos los items
 async function loadItems() {
   collectionsContainer.innerHTML = "";
 
   try {
-    const res = await apiItems.getAllItems(); // { data, status, url }
+    const res = await apiItems.getAllItems();
 
     if (res.status >= 200 && res.status < 300) {
       allItems = res.data;
       renderItems(allItems);
       updateItemCounters();
+      closeStatusModal("Ítems cargados correctamente ✅");
     } else {
-      throw new Error(res.data?.message || "Error cargando items");
+      throw new Error(res.data?.message || "Error cargando ítems");
     }
   } catch (err) {
-    collectionsContainer.innerHTML = `<p class="text-center text-danger">${err.message}</p>`;
+    closeStatusModal(`❌ ${err.message}`);
   }
 }
 
 // ==========================
 // Renderizado básico
 // ==========================
-
 function updateItemCounters() {
   const total = allItems.length;
   const posesion = total; // siempre igual al total
@@ -62,8 +60,10 @@ function applyItemFilter(filter) {
 // ==========================
 // Listeners
 // ==========================
-// Cuando la página cargue
+
+// 🔹 Cuando la página cargue
 document.addEventListener("DOMContentLoaded", () => {
+  openStatusModal("Cargando colección", "Obteniendo los ítems...");
   loadItems();
 });
 

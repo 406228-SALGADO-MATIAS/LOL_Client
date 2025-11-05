@@ -24,8 +24,15 @@ async function loadSkins(activeFilter = null) {
     } else {
       renderSkins();
     }
+
+    // 🔹 Cerrar modal al finalizar
+    closeStatusModal();
   } catch (err) {
     collectionsContainer.innerHTML = `<p class="text-center text-danger">${err.message}</p>`;
+
+    // 🔹 Mostrar error en el modal antes de cerrarlo
+    updateStatusModal("Error", "No se pudieron obtener las skins.");
+    setTimeout(() => closeStatusModal(), 2000);
   }
 }
 
@@ -163,6 +170,8 @@ function applyFilter(filter) {
 
 // Inicialización al cargar la página
 document.addEventListener("DOMContentLoaded", async () => {
+  // 🔹 Mostrar modal de carga
+  openStatusModal("Cargando colección", "Obteniendo las skins...");
   await loadUserChampions(); // 👈 primero traemos campeones
   await loadSkins(); // 👈 después las skins
 });
