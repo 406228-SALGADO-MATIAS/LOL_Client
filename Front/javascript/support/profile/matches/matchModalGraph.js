@@ -83,8 +83,8 @@ function createGraphsHeader() {
       header.querySelectorAll("label").forEach((l) => {
         l.style.backgroundColor = l.querySelector("input").checked
           ? "rgba(0, 75, 124, 1)"
-          : "#222";
-        l.style.color = l.querySelector("input").checked ? "#fff" : "#ccc";
+          : "#0f0f0fff";
+        l.style.color = l.querySelector("input").checked ? "#00a4aaff" : "#ccccccff";
       });
     });
 

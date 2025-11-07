@@ -131,6 +131,10 @@
   text-align: center;
 }
 
+.rank-slide-three{
+  margin-top: -vh;
+}
+
 /* Por defecto, ocultos */
 .carousel-item.rank-slide-single,
 .carousel-item.rank-slide-three {
@@ -162,8 +166,8 @@
 }
 
 .rank-img.rank-img-big {
-  width: 380px !important;
-  height: 380px !important;
+  width: 38vw !important;
+  height: 38vh !important;
   margin-top: -65px;
   margin-bottom: -60px;
 }

@@ -43,17 +43,15 @@ function highlightMemberCard() {
     // Caso 1: hay searchedUserId
     if (window.searchedUserId) {
       if (String(uid) === String(window.searchedUserId)) {
-        card.style.border = "2px solid #ffbb00cb"; // dorado
-        card.style.boxShadow = "0 0 10px #635400ff";
+        card.style.boxShadow = "0 0 20px #ffa600ff";
       } else if (String(uid) === String(window.originalUserId)) {
         card.style.border = "2px solid white"; // blanco
-        card.style.boxShadow = "0 0 10px #808080ff";
+        card.style.boxShadow = "0 0 20px #ffffffff";
       }
     }
     // Caso 2: no hay searchedUserId → original es dorado
     else if (String(uid) === String(window.originalUserId)) {
-      card.style.border = "2px solid #ffbb009c"; // dorado
-      card.style.boxShadow = "0 0 10px #635400ff";
+      card.style.boxShadow = "0 0 20px #ffae00ff";
     }
   });
 }

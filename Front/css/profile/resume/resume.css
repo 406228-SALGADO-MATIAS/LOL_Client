@@ -12,6 +12,15 @@ body {
   color: #fff; /* color de texto por defecto */
 }
 
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* desactiva scroll completamente */
+  margin: 0;
+  padding: 0;
+}
+
 #bg-overlay {
   position: fixed;
   inset: 0;
@@ -44,21 +53,27 @@ body {
 /* 3. Layout principal (resume-container) */
 /* ============================= */
 .resume-container {
-  margin-top: 105px; /* espacio para navbars */
-  padding: 1rem 4rem; /* padding lateral y superior/inferior */
+  position: fixed;
+  top: 12vh; /* o el mismo valor de margen que usabas antes */
+  left: 0;
+  width: 100vw;
+  height: 88vh; /* resto del espacio fijo */
+  padding: 1rem 4rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  height: calc(100vh - 120px); /* ocupar altura restante */
+  overflow: hidden; /* nada se sale */
 }
 
 /* ============================= */
 /* 4. Parte superior (top-section) */
 /* ============================= */
 .top-section {
+  flex: none;
+  height: 43%; /* o píxeles exactos si querés precisión */
   display: flex;
   gap: 1rem;
-  height: 43%; /* altura relativa */
+  overflow: hidden;
 }
 
 /* ============================= */
@@ -83,22 +98,22 @@ body {
 }
 
 .user-icon {
-  width: 160px;
-  height: 160px;
+  width: 9vw;
   border-radius: 12px;
   object-fit: cover; /* mantiene proporción de la imagen */
 }
 
-.user-nickname {
-  font-size: 1.7rem;
+.sidebar .user-nickname {
+  font-size: 1.7vw; /* escala con el ancho de la ventana */
   font-weight: bold;
   color: #fff;
 }
 
-.user-server {
+.sidebar .user-server {
   font-size: 1.4rem;
   color: #ccc;
 }
+
 /* ============================= */
 /* 4b. Main top / imagen central */
 /* ============================= */
@@ -137,10 +152,14 @@ body {
 /* ============================= */
 /* 5. Parte inferior (bottom-section) */
 /* ============================= */
+
 .bottom-section {
+  flex: none;
+  height: 55%;
   display: flex;
   gap: 1rem;
-  height: 55%; /* mitad inferior */
+  overflow: hidden;
+  align-items: stretch;
 }
 
 .bottom-column {
@@ -152,6 +171,8 @@ body {
   border: 6px solid transparent;
   border-image: linear-gradient(90deg, #141414, #1d1d1d);
   border-image-slice: 1;
+  height: 47vh;
+  max-height: 47vh;
 }
 
 .section-title {
