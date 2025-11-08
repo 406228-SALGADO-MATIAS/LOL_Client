@@ -23,5 +23,6 @@ public class UserLootDTO {
     List<LootInventoryChampionDTO> championsInventory;
     List<LootInventorySkinDTO> skinsInventory;
     List<LootInventoryIconDTO> iconsInventory;
+    List<NewItemDTO> itemsEnchanted;
 
 }

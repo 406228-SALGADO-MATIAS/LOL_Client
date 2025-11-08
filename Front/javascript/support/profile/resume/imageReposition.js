@@ -38,8 +38,12 @@ function extractChampionNameFromUrl(url, championsList = []) {
     return rawName;
   }
 
-  // 2️⃣ Fallback: búsqueda en la lista de campeones
-  const lowerUrl = url.toLowerCase();
+  const normalizedUrl = url
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[´' ._-]/g, ""); // elimina guiones, underscores, etc.
+
   for (const champ of championsList) {
     const normalizedName = champ
       .toLowerCase()
@@ -47,7 +51,7 @@ function extractChampionNameFromUrl(url, championsList = []) {
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/[´' ._-]/g, "");
 
-    if (lowerUrl.includes(normalizedName)) return champ;
+    if (normalizedUrl.includes(normalizedName)) return champ;
   }
 
   // 3️⃣ Fallback manual solo para URLs conocidas que no contienen el nombre
@@ -108,6 +112,7 @@ function getChampionObjectPosition(name) {
     "fizz",
     "jarvaniv",
     "xerath",
+    "lissandra"
   ];
   const up40 = [
     "kaisa",
@@ -128,11 +133,12 @@ function getChampionObjectPosition(name) {
     "shen",
     "aatrox",
     "drmundo",
+    "",
   ];
   const up50 = ["aurelionsol"];
 
   const down5 = ["warwick"];
-  const down10 = ["khazix"];
+  const down10 = [""];
   const down15 = ["zac", ""];
   const down30 = ["skarner"];
 

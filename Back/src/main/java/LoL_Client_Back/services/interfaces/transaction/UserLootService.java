@@ -39,6 +39,8 @@ public interface UserLootService {
     UserLootDTO disenchantAll (Long idUser,String lootType, boolean showInactives);
     UserLootDTO disenchantOwnedItems (Long idUser, boolean showInactives);
 
+    UserLootDTO enchantAll(Long idUser, String lootType, boolean showInactives);
+
     void delete(Long userLootId);
 
     void deleteLootInventory (Long idLoot, String typeLoot);

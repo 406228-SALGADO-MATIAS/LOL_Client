@@ -316,6 +316,22 @@ const apiLoot = {
         headers: { "Content-Type": "application/json" },
       }
     ),
+
+  /**
+   * PUT Desbloquear todos los ítems de un tipo (campeones, skins, íconos)
+   * @param {number} userId
+   * @param {"CHAMPIONS"|"SKINS"|"ICONS"} lootType
+   * @param {boolean} [showInactives=true]
+   * @returns {Promise<{data, status, url}>}
+   */
+  enchantAll: (userId, lootType, showInactives = true) =>
+    smartFetchUniversal(
+      `/userLoot/enchantAll?idUser=${userId}&lootType=${lootType}&showInactives=${showInactives}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+      }
+    ),
 };
 
 const apiMatches = {

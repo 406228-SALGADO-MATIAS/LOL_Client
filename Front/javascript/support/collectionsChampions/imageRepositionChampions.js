@@ -43,7 +43,7 @@ function getChampionObjectPosition(name) {
     "Malphite",
     "Vladimir",
     "Trundle",
-    "Singed",
+    "Singed", 
   ];
   const veryLargeRight = [
     "Jinx",
@@ -55,6 +55,7 @@ function getChampionObjectPosition(name) {
     "Vi",
     "Jarvan IV",
     "Tryndamere",
+    "Lissandra"
   ];
   const superRight = ["Fizz", "Braum", "Draven", "Caitlyn"];
   const verySmallLeft = ["Kai'Sa", "Mordekaiser", "Ivern", "Galio"];
@@ -95,9 +96,9 @@ function getChampionZoom(name) {
     "Kai'Sa",
   ];
   //15
-  const mediumZoom = ["Jinx", "Zed", "Braum", "Kha'Zix", "Renata", "Vi"];
+  const mediumZoom = ["Jinx", "Zed", "Braum", "Kha'Zix", "Renata", "Vi","Lissandra"];
   //25
-  const largeZoom = ["Karma", "Lucian"];
+  const largeZoom = ["Karma", "Lucian",];
   //35
   const veryLargeZoom = [];
   //50

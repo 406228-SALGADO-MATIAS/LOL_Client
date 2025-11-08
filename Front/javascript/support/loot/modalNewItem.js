@@ -201,3 +201,99 @@ function createDynamicChestModal(newItem, overlay, onAdd, onCancel) {
   modal.appendChild(button);
   overlay.appendChild(modal);
 }
+
+// 🔹 Muestra en secuencia todos los ítems desbloqueados del enchantAll
+async function showItemsSequentiallyEnchantAll(itemsList) {
+  if (!itemsList || !itemsList.length) return;
+
+  const container = document.getElementById("lootModalContainer");
+  container.innerHTML = "";
+  let current = 0;
+  let stop = false;
+
+  const overlay = document.createElement("div");
+  overlay.classList.add("newitem-modal-overlay");
+  container.appendChild(overlay);
+
+  // 🔸 Cierra todo y recarga inventario
+  async function finishSequence() {
+    container.innerHTML = "";
+    openStatusModal("Actualizando inventario", "Refrescando colecciones...");
+    await Promise.all([
+      loadUserProfile(),
+      loadOwnedCollections(),
+      loadLootItems(),
+    ]);
+    closeStatusModal("Inventario actualizado ✅");
+  }
+
+  async function showNext() {
+    if (stop || current >= itemsList.length) {
+      await finishSequence();
+      return;
+    }
+
+    const item = itemsList[current];
+
+    createDynamicEnchantModal(
+      item,
+      overlay,
+      async () => {
+        current++;
+        showNext(); // mostrar siguiente
+      },
+      async () => {
+        stop = true;
+        await finishSequence(); // canceló → recarga
+      }
+    );
+  }
+
+  showNext();
+}
+
+// 🔹 Modal individual para cada ítem desbloqueado por enchantAll
+function createDynamicEnchantModal(newItem, overlay, onAdd, onCancel) {
+  overlay.innerHTML = "";
+
+  const modal = document.createElement("div");
+  modal.classList.add("newitem-modal");
+
+  const img = document.createElement("img");
+  img.src = newItem.image;
+  img.alt = newItem.name;
+
+  const nameEl = document.createElement("div");
+  nameEl.classList.add("newitem-modal-name");
+  nameEl.textContent = newItem.name.replace(/´/g, "'");
+  nameEl.style.textAlign = "center";
+
+  const button = document.createElement("button");
+  button.textContent = "Añadir";
+  button.classList.add("newitem-btn");
+  button.style.marginTop = "15px";
+
+  // animación de salida
+  async function animateClose(isFinal = false) {
+    modal.classList.add("fade-out");
+    if (isFinal) overlay.classList.add("fade-out");
+    await new Promise((res) => setTimeout(res, 250));
+  }
+
+  button.addEventListener("click", async () => {
+    await animateClose(false);
+    onAdd();
+  });
+
+  overlay.addEventListener("click", async (e) => {
+    if (e.target === overlay) {
+      await animateClose(true);
+      onCancel();
+    }
+  });
+
+  modal.appendChild(img);
+  modal.appendChild(nameEl);
+  modal.appendChild(button);
+  overlay.appendChild(modal);
+}

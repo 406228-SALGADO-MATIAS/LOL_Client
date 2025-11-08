@@ -114,10 +114,17 @@ VALUES
 (47, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888472/dr_mundo_kvsjm6.jpg', 'Dr. Mundo', DATE '2009-09-02', 49.8, 1, 1, 1, 2, 5, NULL),
 (48, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888481/trynda_y6eyl6.jpg', 'Tryndamere', DATE '2009-05-01', 48.9, 1, 2, 1, 2, 2, 1),
 (49, 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761888473/Ivern_0_mz8qyv.webp', 'Ivern', DATE '2016-10-05', 49.9, 3, 4, 2, 5, 6, 3);
+INSERT INTO champions (id, image, name, release_date, winrate, difficulty_id, price_id, role_id, role2_id, style_id, style2_id)
+VALUES
+(50, 'https://vignette.wikia.nocookie.net/leagueoflegends/images/3/31/Lissandra_OriginalSkin_HD.jpg/revision/latest/scale-to-width-down/2000?cb=20180602173607', 'Lissandra', DATE '2016-10-05', 49.9, 2, 5, 3, 1, 3, NULL);
+
 
 
 ALTER TABLE CHAMPIONS ALTER COLUMN ID RESTART WITH 50;
 
+UPDATE champions
+SET image_square = 'https://www.lolvvv.com/_next/image?url=%2Fstatic%2Fchampion%2FLissandra.png&w=640&q=75'
+WHERE name = 'Lissandra';
 
 UPDATE champions
 SET image_square = 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1761334056/AatroxSquare_wwqmkb.webp'

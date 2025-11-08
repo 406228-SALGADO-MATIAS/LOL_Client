@@ -149,6 +149,16 @@ public class UserLootController {
         return ResponseEntity.ok(result);
     }
 
+    @PutMapping("/enchantAll")
+    public ResponseEntity<UserLootDTO> enchantAll(@RequestParam Long idUser,
+                                                  @RequestParam
+                                                  @Parameter(schema = @Schema(allowableValues = {"SKINS", "CHAMPIONS", "ICONS"}))
+                                                  String lootType,
+                                                  @RequestParam(defaultValue = "true") boolean showInactives) {
+        return ResponseEntity.ok(userLootService.enchantAll(idUser, lootType, showInactives));
+    }
+
+
     @GetMapping("/getById/{id}")
     public ResponseEntity<UserLootDTO> findById (@PathVariable Long id,
                                                  @RequestParam(defaultValue = "true") boolean showInactives)

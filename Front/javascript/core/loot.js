@@ -201,55 +201,48 @@ async function handleRoll(type, selectedItems) {
   }
 }
 
-function applySearchFilter() {
-  const searchInput = document.getElementById("searchLoot");
-  const searchValue = searchInput ? searchInput.value.trim() : "";
+async function handleUnlockAll(lootType) {
+  const userId = sessionStorage.getItem("userId");
+  if (!userId) throw new Error("No se encontró el usuario");
 
-  const filteredChampions = filterItemsByName(
-    championsInventory,
-    "champion",
-    searchValue
-  );
-  const filteredSkins = filterItemsByName(skinsInventory, "skin", searchValue);
-  const filteredIcons = filterItemsByName(iconsInventory, "icon", searchValue);
+  openStatusModal("Desbloquear todos", "Procesando desbloqueo masivo...");
 
-  // Renderizar con los items filtrados
-  renderLootGrid("championContainer", filteredChampions, "champion");
-  renderLootGrid("skinContainer", filteredSkins, "skin");
-  renderLootGrid("iconContainer", filteredIcons, "icon");
+  try {
+    const res = await apiLoot.enchantAll(userId, lootType, true);
+
+    if (res.status >= 200 && res.status < 300) {
+      const itemsList = res.data?.itemsEnchanted || [];
+
+      updateStatusModal(
+        "Completado",
+        `Se desbloquearon ${itemsList.length} ítems`
+      );
+
+      // 🔹 Esperamos un poco antes de cerrar el status modal y mostrar los ítems
+      setTimeout(() => closeStatusModal(), 800);
+
+      // 🔹 Esperar lo mismo antes de mostrar los ítems (para que no se superpongan)
+      setTimeout(() => {
+        showItemsSequentiallyEnchantAll(itemsList);
+      }, 800);
+    } else {
+      throw new Error(res.data?.message || "Error desbloqueando ítems");
+    }
+  } catch (err) {
+    console.error("Error en handleUnlockAll:", err);
+    updateStatusModal(
+      "Error",
+      err.message || "Fallo al procesar el desbloqueo"
+    );
+    setTimeout(() => closeStatusModal(), 2000);
+  }
 }
 
-function applyCurrentFilter() {
-  const filterSelect = document.getElementById("filterSelect");
-  const filterValue = filterSelect ? filterSelect.value : "all";
-
-  const searchInput = document.getElementById("searchLoot");
-  const searchValue = searchInput ? searchInput.value.trim() : "";
-
-  renderMaterials(materialsInventory);
-  renderBottomBarMaterials(materialsInventory);
-
-  renderLootGrid(
-    "championContainer",
-    championsInventory,
-    "champion",
-    filterValue,
-    searchValue
-  );
-  renderLootGrid(
-    "skinContainer",
-    skinsInventory,
-    "skin",
-    filterValue,
-    searchValue
-  );
-  renderLootGrid(
-    "iconContainer",
-    iconsInventory,
-    "icon",
-    filterValue,
-    searchValue
-  );
+async function reloadLootAndCollections() {
+  // 🔹 Recalcular los botones una vez que tenemos todo
+  updateEnchantAllButtonState("champion");
+  updateEnchantAllButtonState("skin");
+  updateEnchantAllButtonState("icon");
 }
 
 // Inicialización
@@ -287,6 +280,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (searchInput) {
     searchInput.addEventListener("input", applyCurrentFilter);
   }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btnUnlockChampions = document.getElementById("unlockChampions");
+  const btnUnlockSkins = document.getElementById("unlockSkins");
+  const btnUnlockIcons = document.getElementById("unlockIcons");
+
+  if (btnUnlockChampions)
+    btnUnlockChampions.addEventListener("click", () =>
+      handleUnlockAll("CHAMPIONS")
+    );
+
+  if (btnUnlockSkins)
+    btnUnlockSkins.addEventListener("click", () => handleUnlockAll("SKINS"));
+
+  if (btnUnlockIcons)
+    btnUnlockIcons.addEventListener("click", () => handleUnlockAll("ICONS"));
 });
 
 const disenchantBtn = document.getElementById("disenchantBtn");
