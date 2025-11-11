@@ -237,6 +237,13 @@ async function handleUnlockAll(lootType) {
     }
     await updateButtons();
   } catch (err) {
+    if (
+      err.message?.includes("rollback") ||
+      err.message?.includes("Duplicate entry")
+    ) {
+      setTimeout(() => closeStatusModal(), 1500);
+      return;
+    }
     console.error("Error en handleUnlockAll:", err);
     updateStatusModal(
       "Error",
@@ -251,9 +258,9 @@ async function updateButtons() {
   updateEnchantAllButtonState("skin");
   updateEnchantAllButtonState("icon");
 
-  updateRollButtonState("champion");
-  updateRollButtonState("skin");
-  updateRollButtonState("icon");
+  update3x1ButtonState("champion");
+  update3x1ButtonState("skin");
+  update3x1ButtonState("icon");
 }
 
 // 🔹 Controla los botones "UNLOCK ALL"
@@ -309,7 +316,7 @@ function updateEnchantAllButtonState(type) {
 }
 
 // 🔹 Controla los botones "ROLL 3x1"
-function updateRollButtonState(type) {
+function update3x1ButtonState(type) {
   let inventory = [];
   let button = null;
 
@@ -476,18 +483,6 @@ confirmDisenchantBtn.addEventListener("click", async () => {
     // 🔹 Cerrar modal de lootroll (por si sigue abierto)
     closeLootRollModal();
   }
-});
-
-document.getElementById("rollChampion").addEventListener("click", () => {
-  createLootRollModal("champion");
-});
-
-document.getElementById("rollSkin").addEventListener("click", () => {
-  createLootRollModal("skin");
-});
-
-document.getElementById("rollIcon").addEventListener("click", () => {
-  createLootRollModal("icon");
 });
 
 // Listener del input de búsqueda

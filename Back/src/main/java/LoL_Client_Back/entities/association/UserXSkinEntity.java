@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "users_x_skins")
+@Table(name = "users_x_skins", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "skin_id"}))
 public class UserXSkinEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +25,16 @@ public class UserXSkinEntity {
     @ManyToOne
     @JoinColumn
     private SkinEntity skin;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserXSkinEntity that)) return false;
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 }

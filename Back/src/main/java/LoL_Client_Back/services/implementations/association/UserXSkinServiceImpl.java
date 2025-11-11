@@ -285,7 +285,7 @@ public class UserXSkinServiceImpl implements UserXSkinService {
         }
     }
 
-    private void verifyChampionBelonging(Long idUser, Long idChampion) {
+    public void verifyChampionBelonging(Long idUser, Long idChampion) {
         try {
             userXChampionService.findByUserAndChampion(idChampion, idUser);
         } catch (ResponseStatusException ex) {
@@ -296,7 +296,7 @@ public class UserXSkinServiceImpl implements UserXSkinService {
             throw ex;
         }
     }
-    private void verifyExistingRegister(UserEntity user, SkinEntity skin) {
+    public void verifyExistingRegister(UserEntity user, SkinEntity skin) {
         Optional<UserXSkinEntity> opt = userXSkinRepository.findByUserAndSkin(user, skin);
         if (opt.isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,

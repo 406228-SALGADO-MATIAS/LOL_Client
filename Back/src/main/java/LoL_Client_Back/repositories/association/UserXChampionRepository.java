@@ -12,18 +12,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserXChampionRepository extends JpaRepository<UserXChampionEntity,Long> {
+public interface UserXChampionRepository extends JpaRepository<UserXChampionEntity, Long> {
+
     List<UserXChampionEntity> findByChampion_Id(Long id);
     List<UserXChampionEntity> findByUser_Id(Long id);
     List<UserXChampionEntity> findByUser_IdNot(Long id);
     Optional<UserXChampionEntity> findByUserAndChampion(UserEntity userEntity, ChampionEntity championEntity);
+
+    boolean existsByUser_IdAndChampion_Id(Long userId, Long championId);
     @Query("SELECT DISTINCT u.user.id FROM UserXChampionEntity u")
     List<Long> findAllUserIdsWithChampions();
 
-    @Query("SELECT u FROM UserEntity u" +
-            " WHERE u.id NOT IN " +
-            "(SELECT ux.user.id FROM UserXChampionEntity ux)")
+    @Query("SELECT u FROM UserEntity u WHERE u.id NOT IN (SELECT ux.user.id FROM UserXChampionEntity ux)")
     List<UserEntity> findUsersWithoutChampions();
-
-
 }

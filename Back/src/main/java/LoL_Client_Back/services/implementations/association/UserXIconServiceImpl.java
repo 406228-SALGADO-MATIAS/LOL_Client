@@ -243,7 +243,7 @@ public class UserXIconServiceImpl implements UserXIconService {
     }
 
 
-    private void verifyExistingRegister(UserEntity user, ProfileIconEntity icon) {
+    public void verifyExistingRegister(UserEntity user, ProfileIconEntity icon) {
         Optional<UserXIconEntity> opt = userXIconRepository.findByUserAndIcon(user, icon);
         if (opt.isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,

@@ -26,10 +26,15 @@ import LoL_Client_Back.repositories.transaction.LootInventoryChampionsRepository
 import LoL_Client_Back.repositories.transaction.LootInventoryIconsRepository;
 import LoL_Client_Back.repositories.transaction.LootInventorySkinsRepository;
 import LoL_Client_Back.repositories.transaction.UserLootRepository;
+import LoL_Client_Back.services.implementations.association.UserXChampionServiceImpl;
+import LoL_Client_Back.services.implementations.association.UserXIconServiceImpl;
+import LoL_Client_Back.services.implementations.association.UserXSkinServiceImpl;
 import LoL_Client_Back.services.interfaces.transaction.UserLootService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -68,6 +73,8 @@ public class UserLootServiceImpl implements UserLootService {
     LootInventoryIconsRepository lootInventoryIconsRepository;
     @Autowired
     DTOBuilder dtoBuilder;
+
+
 
     @Override
     public UserLootDTO findById(Long id, boolean showInactives) {
@@ -894,167 +901,137 @@ public class UserLootServiceImpl implements UserLootService {
     }
 
     @Override
+    @Transactional
     public UserLootDTO enchantAll(Long idUser, String lootType, boolean showInactives) {
         List<NewItemDTO> itemsEnchanted = new ArrayList<>();
 
         UserEntity user = userRepository.findById(idUser)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Did not find user with id " + idUser));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found: " + idUser));
 
         UserLootEntity userLoot = userLootRepository.findByUser_Id(idUser)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Did not find user loot with id user " + idUser));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User loot not found: " + idUser));
 
-        switch (lootType.toUpperCase()) {
-            case "CHAMPIONS" -> {
-                List<LootInventoryChampionsEntity> lootList =
-                        lootInventoryChampionsRepository.findByLootAndIsActiveTrue(userLoot);
+        try {
+            switch (lootType.toUpperCase()) {
+                case "CHAMPIONS" -> {
+                    var lootList = lootInventoryChampionsRepository.findByLootAndIsActiveTrue(userLoot).stream()
+                            .filter(l -> l.getChampion() != null)
+                            .collect(Collectors.collectingAndThen(
+                                    Collectors.toMap(l -> l.getChampion().getId(), l -> l, (a, b) -> a, LinkedHashMap::new),
+                                    m -> new ArrayList<>(m.values())
+                            ));
 
-                if (lootList.isEmpty())
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                            "No active champion loots found for user " + idUser);
+                    lootList.sort(Comparator.comparingInt(l -> l.getChampion().getPrice().getEnchantPrice()));
+                    int essence = user.getBlueEssence();
 
+                    for (var loot : lootList) {
+                        int cost = loot.getChampion().getPrice().getEnchantPrice();
+                        if (essence < cost) break;
 
-                lootList.sort(Comparator.comparingInt(
-                        loot -> loot.getChampion().getPrice().getEnchantPrice()));
+                        if (userXChampionRepository.existsByUser_IdAndChampion_Id(idUser, loot.getChampion().getId()))
+                            continue;
 
+                        essence -= cost;
 
-                Set<String> unlockedNames = new HashSet<>();
-                List<LootInventoryChampionsEntity> toEnchant = new ArrayList<>();
+                        var uxc = new UserXChampionEntity();
+                        uxc.setUser(user);
+                        uxc.setChampion(loot.getChampion());
+                        uxc.setMasteryLevel(0);
+                        uxc.setAdquisitionDate(LocalDateTime.now());
+                        userXChampionRepository.save(uxc);
 
-                int userBlueEssence = user.getBlueEssence();
+                        loot.setIsActive(false);
+                        itemsEnchanted.add(new NewItemDTO(loot.getChampion().getImage(), loot.getChampion().getName(), false));
+                    }
 
-                for (LootInventoryChampionsEntity lootChampion : lootList) {
-                    String champName = lootChampion.getChampion().getName();
-                    int cost = lootChampion.getChampion().getPrice().getEnchantPrice();
-
-                    if (unlockedNames.contains(champName)) continue; // ya agregado
-
-                    Optional<UserXChampionEntity> alreadyOwned =
-                            userXChampionRepository.findByUserAndChampion(user, lootChampion.getChampion());
-
-                    if (alreadyOwned.isPresent()) continue; // ya lo tiene
-
-                    if (userBlueEssence >= cost) {
-                        toEnchant.add(lootChampion);
-                        userBlueEssence -= cost;
-                        unlockedNames.add(champName);
-                    } else break; // no alcanza más
+                    lootInventoryChampionsRepository.saveAll(lootList);
+                    user.setBlueEssence(essence);
+                    userRepository.save(user);
                 }
 
+                case "SKINS" -> {
+                    var lootList = lootInventorySkinsRepository.findByLootAndIsActiveTrue(userLoot).stream()
+                            .filter(l -> l.getSkin() != null)
+                            .collect(Collectors.collectingAndThen(
+                                    Collectors.toMap(l -> l.getSkin().getId(), l -> l, (a, b) -> a, LinkedHashMap::new),
+                                    m -> new ArrayList<>(m.values())
+                            ));
 
-                for (LootInventoryChampionsEntity lootChampion : toEnchant) {
-                    NewItemDTO item = new NewItemDTO();
-                    item.setName(lootChampion.getChampion().getName());
-                    item.setActive(false);
-                    item.setImage(lootChampion.getChampion().getImage());
-                    itemsEnchanted.add(item);
-                    unlockOrRefundChampionLoot(lootChampion.getId(), true);
+                    lootList.sort(Comparator.comparingInt(l -> l.getSkin().getTier().getOrangeEssenceCost()));
+                    int essence = userLoot.getOrangeEssence();
+
+                    for (var loot : lootList) {
+                        int cost = loot.getSkin().getTier().getOrangeEssenceCost();
+                        if (essence < cost) break;
+
+                        if (!userXChampionRepository.existsByUser_IdAndChampion_Id(idUser, loot.getSkin().getChampion().getId()))
+                            continue;
+                        if (userXSkinRepository.existsByUser_IdAndSkin_Id(idUser, loot.getSkin().getId()))
+                            continue;
+
+                        essence -= cost;
+
+                        var uxs = new UserXSkinEntity();
+                        uxs.setUser(user);
+                        uxs.setSkin(loot.getSkin());
+                        uxs.setAdquisitionDate(LocalDateTime.now());
+                        userXSkinRepository.save(uxs);
+
+                        loot.setIsActive(false);
+                        itemsEnchanted.add(new NewItemDTO(loot.getSkin().getImage(), loot.getSkin().getName(), false));
+                    }
+
+                    lootInventorySkinsRepository.saveAll(lootList);
+                    userLoot.setOrangeEssence(essence);
+                    userLootRepository.save(userLoot);
                 }
+
+                case "ICONS" -> {
+                    var lootList = lootInventoryIconsRepository.findByLootAndIsActiveTrue(userLoot).stream()
+                            .filter(l -> l.getIcon() != null)
+                            .collect(Collectors.collectingAndThen(
+                                    Collectors.toMap(l -> l.getIcon().getId(), l -> l, (a, b) -> a, LinkedHashMap::new),
+                                    m -> new ArrayList<>(m.values())
+                            ));
+
+                    lootList.sort(Comparator.comparingInt(l -> l.getIcon().getPrice().getEnchantPrice()));
+                    int essence = user.getBlueEssence();
+
+                    for (var loot : lootList) {
+                        int cost = loot.getIcon().getPrice().getEnchantPrice();
+                        if (essence < cost) break;
+
+                        if (userXIconRepository.existsByUser_IdAndIcon_Id(idUser, loot.getIcon().getId()))
+                            continue;
+
+                        essence -= cost;
+
+                        var uxi = new UserXIconEntity();
+                        uxi.setUser(user);
+                        uxi.setIcon(loot.getIcon());
+                        uxi.setAdquisitionDate(LocalDateTime.now());
+                        userXIconRepository.save(uxi);
+
+                        loot.setIsActive(false);
+                        itemsEnchanted.add(new NewItemDTO(loot.getIcon().getImage(), loot.getIcon().getIcon(), false));
+                    }
+
+                    lootInventoryIconsRepository.saveAll(lootList);
+                    user.setBlueEssence(essence);
+                    userRepository.save(user);
+                }
+
+                default -> throw new IllegalArgumentException("Unsupported loot type: " + lootType);
             }
-
-            case "SKINS" -> {
-                List<LootInventorySkinsEntity> lootList =
-                        lootInventorySkinsRepository.findByLootAndIsActiveTrue(userLoot);
-
-                if (lootList.isEmpty())
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                            "No active skin loots found for user " + idUser);
-
-
-                lootList.sort(Comparator.comparingInt(
-                        loot -> loot.getSkin().getTier().getOrangeEssenceCost()));
-
-                Set<String> unlockedNames = new HashSet<>();
-                List<LootInventorySkinsEntity> toEnchant = new ArrayList<>();
-
-                int userOrangeEssence = userLoot.getOrangeEssence();
-
-                for (LootInventorySkinsEntity lootSkin : lootList) {
-                    String skinName = lootSkin.getSkin().getName();
-                    int cost = lootSkin.getSkin().getTier().getOrangeEssenceCost();
-
-                    if (unlockedNames.contains(skinName)) continue;
-
-                    boolean alreadyOwned = userXSkinRepository
-                            .findByUserAndSkin(user, lootSkin.getSkin())
-                            .isPresent();
-
-                    boolean hasChampion = userXChampionRepository
-                            .findByUserAndChampion(user, lootSkin.getSkin().getChampion())
-                            .isPresent();
-
-                    if (alreadyOwned || !hasChampion) continue;
-
-                    if (userOrangeEssence >= cost) {
-                        toEnchant.add(lootSkin);
-                        userOrangeEssence -= cost;
-                        unlockedNames.add(skinName);
-                    } else break;
-                }
-
-                for (LootInventorySkinsEntity lootSkin : toEnchant) {
-                    NewItemDTO item = new NewItemDTO();
-                    item.setName(lootSkin.getSkin().getName());
-                    item.setActive(false);
-                    item.setImage(lootSkin.getSkin().getImage());
-                    itemsEnchanted.add(item);
-                    unlockOrRefundSkinLoot(lootSkin.getId(), true);
-                }
-            }
-
-            case "ICONS" -> {
-                List<LootInventoryIconsEntity> lootList =
-                        lootInventoryIconsRepository.findByLootAndIsActiveTrue(userLoot);
-
-                if (lootList.isEmpty())
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                            "No active icon loots found for user " + idUser);
-
-                lootList.sort(Comparator.comparingInt(
-                        loot -> loot.getIcon().getPrice().getEnchantPrice()));
-
-                Set<String> unlockedNames = new HashSet<>();
-                List<LootInventoryIconsEntity> toEnchant = new ArrayList<>();
-
-                int userBlueEssence = user.getBlueEssence();
-
-                for (LootInventoryIconsEntity lootIcon : lootList) {
-                    String iconName = lootIcon.getIcon().getIcon();
-                    int cost = lootIcon.getIcon().getPrice().getEnchantPrice();
-
-                    if (unlockedNames.contains(iconName)) continue;
-
-                    boolean alreadyOwned = userXIconRepository
-                            .findByUserAndIcon(user, lootIcon.getIcon())
-                            .isPresent();
-
-                    if (alreadyOwned) continue;
-
-                    if (userBlueEssence >= cost) {
-                        toEnchant.add(lootIcon);
-                        userBlueEssence -= cost;
-                        unlockedNames.add(iconName);
-                    } else break;
-                }
-
-                for (LootInventoryIconsEntity lootIcon : toEnchant) {
-                    NewItemDTO item = new NewItemDTO();
-                    item.setName(lootIcon.getIcon().getIcon());
-                    item.setActive(false);
-                    item.setImage(lootIcon.getIcon().getImage());
-                    itemsEnchanted.add(item);
-                    unlockOrRefundIconLoot(lootIcon.getId(), true);
-                }
-            }
-
-            default -> throw new IllegalArgumentException("Unsupported loot type: " + lootType);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("⚠️ Duplicate entry prevented by constraint: " + e.getMessage());
         }
 
-        UserLootDTO dto = dtoBuilder.buildUserLootDTO(userLoot, showInactives);
+        var dto = dtoBuilder.buildUserLootDTO(userLoot, showInactives);
         dto.setItemsEnchanted(itemsEnchanted);
         return dto;
     }
+
 
 
     private void disenchantDuplicateLoot(UserLootEntity userLoot) {

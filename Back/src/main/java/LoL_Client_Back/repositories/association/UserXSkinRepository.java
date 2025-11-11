@@ -11,11 +11,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserXSkinRepository extends JpaRepository<UserXSkinEntity,Long> {
+public interface UserXSkinRepository extends JpaRepository<UserXSkinEntity, Long> {
+
     List<UserXSkinEntity> findBySkin_Id(Long id);
     List<UserXSkinEntity> findByUser_Id(Long id);
     List<UserXSkinEntity> findByUser_IdNot(Long id);
     Optional<UserXSkinEntity> findByUserAndSkin(UserEntity userEntity, SkinEntity skinEntity);
+
+    boolean existsByUser_IdAndSkin_Id(Long userId, Long skinId);
     @Query("SELECT u FROM UserEntity u WHERE u.id NOT IN (SELECT us.user.id FROM UserXSkinEntity us)")
     List<UserEntity> findUsersWithoutSkins();
 }

@@ -311,7 +311,7 @@ public class UserXChampionServiceImpl implements UserXChampionService {
         return list.get(random.nextInt(list.size()));
     }
 
-    private void verifyExistingRegister(UserEntity user, ChampionEntity champion) {
+    public void verifyExistingRegister(UserEntity user, ChampionEntity champion) {
         Optional<UserXChampionEntity> opt =
                 userXChampionRepository.findByUserAndChampion(user, champion);
         if (opt.isPresent()) {

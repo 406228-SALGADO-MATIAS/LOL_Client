@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "users_x_champions")
+@Table(name = "users_x_champions", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "champion_id"}))
 public class UserXChampionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +29,16 @@ public class UserXChampionEntity {
     @ManyToOne
     @JoinColumn(nullable = false)
     private ChampionEntity champion;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserXChampionEntity that)) return false;
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 }

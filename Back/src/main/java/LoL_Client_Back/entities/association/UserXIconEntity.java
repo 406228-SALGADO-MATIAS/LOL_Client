@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "users_x_icons")
+@Table(name = "users_x_icons", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "icon_id"}))
 public class UserXIconEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +29,16 @@ public class UserXIconEntity {
     @ManyToOne
     @JoinColumn
     private ProfileIconEntity icon;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserXIconEntity that)) return false;
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 }

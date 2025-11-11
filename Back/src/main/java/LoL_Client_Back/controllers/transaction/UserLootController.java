@@ -154,7 +154,7 @@ public class UserLootController {
                                                   @RequestParam
                                                   @Parameter(schema = @Schema(allowableValues = {"SKINS", "CHAMPIONS", "ICONS"}))
                                                   String lootType,
-                                                  @RequestParam(defaultValue = "true") boolean showInactives) {
+                                                  @RequestParam(defaultValue = "false") boolean showInactives) {
         return ResponseEntity.ok(userLootService.enchantAll(idUser, lootType, showInactives));
     }
 
