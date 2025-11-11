@@ -324,7 +324,7 @@ const apiLoot = {
    * @param {boolean} [showInactives=true]
    * @returns {Promise<{data, status, url}>}
    */
-  enchantAll: (userId, lootType, showInactives = true) =>
+  enchantAll: (userId, lootType, showInactives = false) =>
     smartFetchUniversal(
       `/userLoot/enchantAll?idUser=${userId}&lootType=${lootType}&showInactives=${showInactives}`,
       {

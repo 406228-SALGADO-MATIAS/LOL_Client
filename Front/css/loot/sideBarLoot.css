@@ -286,12 +286,14 @@
   box-shadow: 0 0 8px #eed600ce;
 }
 
-/* Versión deshabilitada */
-.btn-roll:disabled {
-  opacity: 0.5;
+.btn-roll:disabled,
+.btn-roll.disabled {
+  opacity: 0.4;
   cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+  transform: none !important;
+  box-shadow: none !important;
+  filter: grayscale(60%);
+  pointer-events: none;
 }
 
 /* Animación de aparición para cada item */

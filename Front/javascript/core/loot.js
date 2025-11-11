@@ -38,6 +38,7 @@ async function loadOwnedCollections() {
   } catch (err) {
     console.error("❌ Error cargando colecciones del usuario:", err);
   }
+  await updateButtons();
 }
 
 async function loadLootItems() {
@@ -73,6 +74,7 @@ async function loadLootItems() {
   }
 
   applyCurrentFilter();
+  await updateButtons();
 }
 
 async function loadUserProfile() {
@@ -112,6 +114,7 @@ async function loadUserProfile() {
   } catch (err) {
     // console.error(err);
   }
+  await updateButtons();
 }
 async function handleOpenChest(type) {
   try {
@@ -129,6 +132,7 @@ async function handleOpenChest(type) {
     console.error("Error abriendo cofre:", err);
     throw err;
   }
+  await updateButtons();
 }
 
 async function handleEnchantItem(item, type, enchant = true) {
@@ -158,6 +162,8 @@ async function handleEnchantItem(item, type, enchant = true) {
           loadOwnedCollections(),
           loadLootItems(),
         ]);
+        await updateButtons();
+
         closeStatusModal();
       }
 
@@ -195,6 +201,7 @@ async function handleRoll(type, selectedItems) {
 
     // Ahora sí abrimos el modal del nuevo item
     createNewItemModal(data);
+    await updateButtons();
   } catch (err) {
     console.error(err);
     alert("Error haciendo roll: " + err.message);
@@ -205,10 +212,10 @@ async function handleUnlockAll(lootType) {
   const userId = sessionStorage.getItem("userId");
   if (!userId) throw new Error("No se encontró el usuario");
 
-  openStatusModal("Desbloquear todos", "Procesando desbloqueo masivo...");
+  openStatusModal("Desbloquear todos", "Procesando...");
 
   try {
-    const res = await apiLoot.enchantAll(userId, lootType, true);
+    const res = await apiLoot.enchantAll(userId, lootType, false);
 
     if (res.status >= 200 && res.status < 300) {
       const itemsList = res.data?.itemsEnchanted || [];
@@ -228,6 +235,7 @@ async function handleUnlockAll(lootType) {
     } else {
       throw new Error(res.data?.message || "Error desbloqueando ítems");
     }
+    await updateButtons();
   } catch (err) {
     console.error("Error en handleUnlockAll:", err);
     updateStatusModal(
@@ -238,11 +246,102 @@ async function handleUnlockAll(lootType) {
   }
 }
 
-async function reloadLootAndCollections() {
-  // 🔹 Recalcular los botones una vez que tenemos todo
+async function updateButtons() {
   updateEnchantAllButtonState("champion");
   updateEnchantAllButtonState("skin");
   updateEnchantAllButtonState("icon");
+
+  updateRollButtonState("champion");
+  updateRollButtonState("skin");
+  updateRollButtonState("icon");
+}
+
+// 🔹 Controla los botones "UNLOCK ALL"
+function updateEnchantAllButtonState(type) {
+  let inventory = [];
+  let button = null;
+  let essenceAvailable = 0;
+
+  switch (type) {
+    case "champion":
+      inventory = championsInventory;
+      button = document.getElementById("unlockChampions");
+      essenceAvailable = userLoot?.userBlueEssence ?? 0;
+      break;
+    case "skin":
+      inventory = skinsInventory;
+      button = document.getElementById("unlockSkins");
+      essenceAvailable = userLoot?.orangeEssence ?? 0;
+      break;
+    case "icon":
+      inventory = iconsInventory;
+      button = document.getElementById("unlockIcons");
+      essenceAvailable = userLoot?.userBlueEssence ?? 0;
+      break;
+    default:
+      return;
+  }
+
+  if (!button) return;
+
+  const hasUnlockable = inventory.some((item) => {
+    const status = getItemStatus(item, type);
+
+    if (status !== "ACTIVABLE") return false;
+
+    if (type === "champion" || type === "icon") {
+      return (item.blueEssenceCost || 0) <= essenceAvailable;
+    } else if (type === "skin") {
+      return (item.orangeEssenceCost || 0) <= essenceAvailable;
+    }
+    return false;
+  });
+
+  if (hasUnlockable) {
+    button.disabled = false;
+    button.classList.remove("disabled");
+    button.onclick = () => handleUnlockAll(type.toUpperCase() + "S");
+  } else {
+    button.disabled = true;
+    button.classList.add("disabled");
+    button.onclick = null;
+  }
+}
+
+// 🔹 Controla los botones "ROLL 3x1"
+function updateRollButtonState(type) {
+  let inventory = [];
+  let button = null;
+
+  switch (type) {
+    case "champion":
+      inventory = championsInventory;
+      button = document.getElementById("rollChampion");
+      break;
+    case "skin":
+      inventory = skinsInventory;
+      button = document.getElementById("rollSkin");
+      break;
+    case "icon":
+      inventory = iconsInventory;
+      button = document.getElementById("rollIcon");
+      break;
+    default:
+      return;
+  }
+
+  if (!button) return;
+
+  // Habilitar solo si hay 3 o más ítems en el inventario
+  if (inventory.length >= 3) {
+    button.disabled = false;
+    button.classList.remove("disabled");
+    button.onclick = () => createLootRollModal(type);
+  } else {
+    button.disabled = true;
+    button.classList.add("disabled");
+    button.onclick = null;
+  }
 }
 
 // Inicialización
@@ -261,6 +360,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       loadOwnedCollections(),
       loadLootItems(),
     ]);
+    await updateButtons();
 
     // 🔹 Cerrar modal al finalizar correctamente
     closeStatusModal("Inventario cargado correctamente ✅");
@@ -355,6 +455,7 @@ confirmDisenchantBtn.addEventListener("click", async () => {
       loadOwnedCollections(),
       loadLootItems(),
     ]);
+    await updateButtons();
 
     // 🔹 Cerrar modal de desencantar
     disenchantModal.classList.remove("show");
