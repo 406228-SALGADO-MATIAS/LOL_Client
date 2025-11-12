@@ -1342,6 +1342,34 @@ INSERT INTO skins VALUES
 
 ALTER TABLE SKINS ALTER COLUMN ID RESTART WITH 100;
 
+INSERT INTO skins (name, release_date, image, tier_id, champion_id) VALUES
+('Fiddlesticks Praetorian', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955574/Fiddlesticks_Praetorian_v3dqj6.jpg', 4, 54),
+('Fiddlesticks Surprise Party', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955551/Fiddlesticks_Surprise_Party_kuweki.jpg', 5, 54),
+('Gangplank Special Forces', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955572/Gangplank_Special_Forces_rgumw2.jpg', 2, 55),
+('Gangplank Dreadnova', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955571/Gangplank_Dreadnova_vvabg8.jpg', 4, 55),
+('Garen God King', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955569/Garen_God_King_rtdyq5.jpg', 5, 52),
+('Garen Steel Legion', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955568/Garen_Steel_Legion_tmgpam.jpg', 4, 52),
+('LeBlanc Prestigious', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955566/Prestigious_LeBlanc_rtgsyk.jpg', 3, 56),
+('Program LeBlanc', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955565/Program_LeBlanc_pvsvss.jpg', 4, 56),
+('Lee Sin God Fist', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955563/Lee_Sin_God_Fist_ere4gg.jpg', 5, 58),
+('Lee Sin Pool Party', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955562/Lee_Sin_Pool_Party_zt7gts.jpg', 4, 58),
+('Master Yi PsyOps', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955561/Master_Yi_PsyOps_zcmfke.jpg', 4, 57),
+('Master Yi Inkshadow', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762956588/Master_Yi_InkShadow_bqeiqz.jpg', 5, 57),
+('Nasus Infernal', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955559/Nasus_Infernal_kzxie0.jpg', 5, 59),
+('Nasus Lunar Guardian', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955558/Nasus_Lunar_Guardian_c9vkxy.jpg', 4, 59),
+('Poppy Lollipop', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955556/Poppy_Lollipoppy_krnpor.jpg', 2, 60),
+('Poppy Noxus', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955556/Poppy_Noxus_nla0a0.jpg', 1, 60),
+('Elise Victorious', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955552/Elise_Victorious_ws9zf0.jpg', 4, 53),
+('Elise Black Rose', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762956723/Elise_Black_Rose_m2ogw5.jpg', 4, 53),
+('Shaco Masked', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955552/Shaco_Masked_nap2bx.jpg', 3, 62),
+('Shaco Crime City', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762955551/Shaco_Crime_City_zhpq1q.jpg', 4, 62),
+('Lissandra Aquelarre', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762950567/lissandraAquelarre_p6nykg.jpg', 4, 50),
+('Lissandra Queen of Blades', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762950561/lissandraQueenOfBlades_jhc3ip.jpg', 4, 50),
+('Leona Debonair', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762950566/leonaDebonair_pdpmfp.webp', 4, 61),
+('Leona Pool Party', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762950561/leonaPoolParty_kyufc8.jpg', 4, 61),
+('Goth Annie', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762950560/gothAnnie_x2auku.jpg', 1, 51),
+('Annie Coffee Cuties', '2025-05-15', 'https://res.cloudinary.com/dzhyqelnw/image/upload/v1762950560/annieCoffeCuties_hjg5ci.webp', 4, 51);
+
 INSERT INTO user_loots VALUES
 (1, 2, 4, 2, 1500, 1),
 (2, 2, 4, 2, 1500, 2),

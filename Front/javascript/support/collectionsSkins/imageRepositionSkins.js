@@ -55,6 +55,20 @@ function getSkinZoom(name) {
     "Sugar Rush Zilean",
     "The Magnificent Twisted Fate",
     "Arcana Xerath",
+    "Annie Coffee Cuties",
+    "Elise Black Rose",
+    "Elise Victorious",
+    "Gangplank Dreadnova",
+    "Gangplank Special Forces",
+    "Garen Steel Legion",
+    "Garen God King",
+    "Program LeBlanc",
+    "Lee Sin God Fist",
+    "Lissandra Aquelarre",
+    "Lissandra Queen of Blades",
+    "Master Yi Inkshadow",
+    "Nasus Infernal",
+    "Nasus Lunar Guardian",
   ];
 
   // +15%
@@ -81,10 +95,13 @@ function getSkinZoom(name) {
     "Kitty Cat Katarina",
     "PROJECT Lucian",
     "Commando Galio",
+    "Leona Debonair",
+    "LeBlanc Prestigious",
+    "Poppy Noxus",
   ];
 
   // +25%
-  const largeZoom = ["Time Machine Zilean", "Surfer Singed"];
+  const largeZoom = ["Time Machine Zilean", "Surfer Singed", "Shaco Masked"];
 
   // +35%
   const veryLargeZoom = [
@@ -130,6 +147,8 @@ function getSkinObjectPosition(name) {
     "Tundra Hunter Warwick",
     "Arcana Xerath",
     "Astronaut Ivern",
+    "Goth Annie",
+    "Master Yi Inkshadow",
   ];
 
   // +15%
@@ -137,6 +156,11 @@ function getSkinObjectPosition(name) {
     "Arcade Kai'Sa",
     "Giant Enemy Crabgot",
     "Sugar Rush Zilean",
+    "Program LeBlanc",
+    "Lee Sin God Fist",
+    "Leona Debonair",
+    "Lissandra Aquelarre",
+    "Nasus Lunar Guardian",
   ];
 
   // +22%
@@ -159,10 +183,19 @@ function getSkinObjectPosition(name) {
     "Special Weapon Zac",
     "Arcade Hecarim",
     "Commando Galio",
+    "Fiddlesticks Praetorian",
   ];
 
   // +30
-  const midlargeRight = ["Night Hunter Rengar",];
+  const midlargeRight = [
+    "Night Hunter Rengar",
+    "Gangplank Dreadnova",
+    "Garen Steel Legion",
+    "LeBlanc Prestigious",
+    "Lee Sin Pool Party",
+    "Nasus Infernal",
+    "Shaco Masked",
+  ];
 
   // +35%
   const largeRight = [
@@ -179,6 +212,10 @@ function getSkinObjectPosition(name) {
     "Shockblade Zed",
     "Santa Braum",
     "Time Machine Zilean",
+    "Leona Pool Party",
+    "Lissandra Queen of Blades",
+    "Master Yi PsyOps",
+    "Poppy Lollipop",
   ];
 
   // +42%
@@ -196,8 +233,10 @@ function getSkinObjectPosition(name) {
     "Warring Kingdoms Tryndamere",
     "Scorched Earth Xerath",
     "Pool Party Renekton",
-    
+    "Elise Victorious",
     "Pool Party Graves",
+    "Gangplank Special Forces",
+    "Poppy Noxus",
   ];
 
   // +50%
@@ -230,11 +269,17 @@ function getSkinObjectPosition(name) {
     "Prestige True Damage Senna",
     "Empyrean Zed",
     "PROJECT: Vi",
+    "Elise Black Rose",
   ];
   ("Hecarim");
 
   //-17%
-  const smallLeft = ["Moo Cow Alistar", "Dragonslayer Twitch"];
+  const smallLeft = [
+    "Moo Cow Alistar",
+    "Dragonslayer Twitch",
+    "Annie Coffee Cuties",
+    "Garen God King",
+  ];
 
   if (verySmallRight.includes(name)) position += 7;
   else if (smallRight.includes(name)) position += 15;
@@ -248,4 +293,3 @@ function getSkinObjectPosition(name) {
 
   return `${position}% center`;
 }
-
