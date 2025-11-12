@@ -3,7 +3,8 @@
 // --- BACKGROUNDS DEFINIDOS ---
 const backgrounds = {
   // MODO
-  classic: "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761882144/JEdnVm_o9wsiv.jpg",
+  classic:
+    "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761882144/JEdnVm_o9wsiv.jpg",
   aram: "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761881919/runeterra-freljord-01_r7ox9p.jpg",
 
   // MAPAS
@@ -13,7 +14,8 @@ const backgrounds = {
     "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761881917/c-o-runeterra-freljord-05_cys8pu.jpg",
 
   // TIPOS
-  Ranked: "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761881962/499385_vjtpcg.jpg",
+  Ranked:
+    "https://res.cloudinary.com/dzhyqelnw/image/upload/v1761881962/499385_vjtpcg.jpg",
 };
 
 // --- FADE HELPERS ---
@@ -74,7 +76,14 @@ function createBackgroundOverlay(parent) {
   return bgOverlay;
 }
 
+// 🟩 Precargar todas las imágenes
+Object.values(backgrounds).forEach((src) => {
+  const img = new Image();
+  img.src = src;
+});
+
 // ACTUALIZACIÓN DE BACKGROUND
+
 function updateBackground({
   selectedMode,
   selectedMap,

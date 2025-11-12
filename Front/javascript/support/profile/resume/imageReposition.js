@@ -92,7 +92,7 @@ function getChampionObjectPosition(name) {
   const up10 = ["alistar"];
   const up15 = ["reksai", "twitch", "katarina"];
   const up20 = ["chogath", "draven", "vi"];
-  const up25 = ["rengar"];
+  const up25 = ["rengar", "annie", "garen"];
   const up30 = [
     "karma",
     "senna",
@@ -101,6 +101,8 @@ function getChampionObjectPosition(name) {
     "bard",
     "trundle",
     "jinx",
+    "elise",
+    ,
   ];
   const up35 = [
     "zed",
@@ -112,7 +114,11 @@ function getChampionObjectPosition(name) {
     "fizz",
     "jarvaniv",
     "xerath",
-    "lissandra"
+    "lissandra",
+    "gangplank",
+    "nasus",
+    "masteryi",
+    "leesin",
   ];
   const up40 = [
     "kaisa",
@@ -122,6 +128,8 @@ function getChampionObjectPosition(name) {
     "caitlyn",
     "singed",
     "renekton",
+    "shaco",
+    "leblanc",
   ];
   const up45 = [
     "akali",
@@ -133,7 +141,8 @@ function getChampionObjectPosition(name) {
     "shen",
     "aatrox",
     "drmundo",
-    "",
+    "poppy",
+    "leona",
   ];
   const up50 = ["aurelionsol"];
 

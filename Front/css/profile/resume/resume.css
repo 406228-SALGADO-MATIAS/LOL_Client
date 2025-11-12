@@ -10,6 +10,8 @@ body {
   background-attachment: fixed; /* opcional: efecto fijo al scrollear */
   font-family: Arial, sans-serif;
   color: #fff; /* color de texto por defecto */
+  position: relative; /* importante para el stacking */
+  z-index: 0;
 }
 
 html,
@@ -21,16 +23,24 @@ body {
   padding: 0;
 }
 
-#bg-overlay {
+/* Contenedor del fondo */
+#bg-container {
   position: fixed;
+  inset: 0;
+  z-index: -1; /* queda detrás de todo el contenido */
+}
+
+/* Capa negra que oscurece solo el fondo */
+#bg-overlay {
+  position: absolute;
   inset: 0;
   background: black;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.8s ease;
-  z-index: 9999; /* por debajo del page-transition si la usás */
 }
 
+/* Transición de página (sigue igual) */
 .page-transition {
   position: fixed;
   top: 0;

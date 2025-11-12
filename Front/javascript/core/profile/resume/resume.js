@@ -268,12 +268,35 @@ function setupRanksCarouselTitle() {
     2: 'url("https://res.cloudinary.com/dzhyqelnw/image/upload/v1761881922/c-o-runeterra-freljord-04_exbcqo.jpg")',
   };
 
-  function changeBackground(index) {
-    // 2. cambiar la imagen inmediatamente
-    document.body.style.backgroundImage =
-      backgroundsByIndex[index] || backgroundsByIndex[0];
+  // 🟩 Precargar las imágenes
+  Object.values(backgroundsByIndex).forEach((bg) => {
+    const img = new Image();
+    img.src = bg.replace(/^url\(["']?|["']?\)$/g, ""); // limpia el url()
+  });
 
-    bgOverlay.style.opacity = "0";
+  function changeBackground(index) {
+    const newBg = backgroundsByIndex[index] || backgroundsByIndex[0];
+    const currentBg = document.body.dataset.currentBg;
+    const overlay = document.getElementById("bg-overlay");
+
+    // Evita cambiar si ya es el mismo fondo
+    if (currentBg === newBg) return;
+
+    // Transición inicial: oscurecer suavemente
+    overlay.style.transition = "opacity 0.35s ease";
+    overlay.style.opacity = "0.45";
+
+    // Espera a que el overlay esté cubriendo antes de cambiar
+    setTimeout(() => {
+      // Cambiar fondo ya con la imagen precargada (sin flash)
+      document.body.style.backgroundImage = newBg;
+      document.body.dataset.currentBg = newBg;
+
+      // Revelar suavemente
+      setTimeout(() => {
+        overlay.style.opacity = "0";
+      }, 10);
+    }, 100);
   }
 
   // Evento de cambio de slide
@@ -290,6 +313,7 @@ function setupRanksCarouselTitle() {
     backgroundsByIndex[initialIndex] || backgroundsByIndex[0];
   document.body.style.backgroundSize = "cover";
   document.body.style.backgroundPosition = "center";
+  document.body.dataset.currentBg = backgroundsByIndex[initialIndex];
 }
 
 // Función principal de carga de la página

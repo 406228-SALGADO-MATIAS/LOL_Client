@@ -87,7 +87,8 @@ function createChampionCard(champ) {
   img.style.objectFit = "cover";
   img.style.objectPosition = getChampionObjectPosition(champ.name);
   img.style.transform = `scale(${getChampionZoom(champ.name)})`;
-
+  img.style.position = "relative";
+  img.style.top = `${getChampionVerticalOffset(champ.name)}px`;
   if (!champ.owned) {
     img.style.filter = "grayscale(95%)";
     img.style.opacity = "0.70";
