@@ -7,23 +7,22 @@
 ## 📑 Índice
 
 1. [🚀 Demo](#-demo)
-2. [🚀 Tecnologías utilizadas](#-tecnologías-utilizadas)
 
-3. [🎮 Simulación de partidas](#-simulación-de-partidas)
+2. [🎮 Simulación de partidas](#-simulación-de-partidas)
    - [⚙️ Emparejamiento](#️-emparejamiento)
    - [🎯 Modos de juego](#-modos-de-juego)
    - [🎲 Generación automática](#-generación-automática)
    - [🧠 Itemización y estilos](#-itemización-y-estilos)
    - [📊 Distribución de estadísticas](#-distribución-de-estadísticas)
 
-4. [👤 Gestión de usuarios](#-gestión-de-usuarios)
+3. [👤 Gestión de usuarios](#-gestión-de-usuarios)
 
-5. [💰 Sistema de progresión y recompensas](#-sistema-de-progresión-y-recompensas)
+4. [💰 Sistema de progresión y recompensas](#-sistema-de-progresión-y-recompensas)
    - [🏆 Progresión competitiva](#-progresión-competitiva)
    - [🎁 Recompensas post-partida](#-recompensas-post-partida)
    - [💎 Economía e inventario](#-economía-e-inventario)
 
-6. [🖼️ Arquitectura y modelo de datos](#️-arquitectura-y-modelo-de-datos)
+5. [🖼️ Arquitectura y modelo de datos](#️-arquitectura-y-modelo-de-datos)
    - [🌍 Servidores](#-servidores)
    - [👤 Usuarios](#-usuarios)
    - [🛡️ Campeones](#️-campeones)
@@ -32,6 +31,8 @@
    - [🎒 Objetos de la partida](#-objetos-de-la-partida)
    - [🔁 Relaciones de usuario con recursos](#-relaciones-de-usuario-con-recursos)
    - [🏆 Sistema de partidas](#-sistema-de-partidas)
+
+6. [🚀 Tecnologías utilizadas](#-tecnologías-utilizadas)
 
 7. [🗂️ Estructura del proyecto](#️-estructura-del-proyecto)
 
@@ -50,24 +51,6 @@ Además, cuenta con una aplicación frontend que integra y expone toda esta lóg
 ### 🌐 [LOL Client Frontend](https://lol-client-front.onrender.com/)
 
 ### ⚙️[LOL Client Backend](https://lol-client-back.onrender.com/) (Endpoints)
-
----
-
-## 🚀 Tecnologías utilizadas
-
-- Java 17
-- Spring Boot
-- Maven
-- JPA / Hibernate
-- Lombok
-- MapStruct
-- Swagger / OpenAPI
-- Docker
-- JavaScript
-- HTML5
-- CSS3
-- Base de datos en memoria (H2)
-- IntelliJ IDEA (estructura `.idea`)
 
 ---
 
@@ -299,9 +282,27 @@ La generación de partidas se encuentra segmentada por modos (Ranked, Normal y A
 
 Toda esta lógica se integra directamente con los sistemas de usuarios, inventario, progresión y recompensas del proyecto.
 
+Con esta arquitectura, el sistema emula con precisión cómo el cliente de LoL organiza y presenta la información para cada jugador en su región, facilitando filtrados complejos y administración de contenido digital asociado (skins, campeones, íconos).
+
 ---
 
-Con esta arquitectura, el sistema emula con precisión cómo el cliente de LoL organiza y presenta la información para cada jugador en su región, facilitando filtrados complejos y administración de contenido digital asociado (skins, campeones, íconos).
+## 🚀 Tecnologías utilizadas
+
+- Java 17
+- Spring Boot
+- Maven
+- JPA / Hibernate
+- Lombok
+- MapStruct
+- Swagger / OpenAPI
+- Docker
+- JavaScript
+- HTML
+- CSS3
+- Base de datos en memoria (H2)
+- IntelliJ IDEA (estructura `.idea`)
+
+---
 
 ## 🗂️ Estructura del proyecto
 
@@ -324,3 +325,4 @@ LOL_Client/
 ├── README.md                     # Documentación principal
 ├── README.en.md                  # English version
 └── .idea/                        # Configuración de IntelliJ IDEA
+```

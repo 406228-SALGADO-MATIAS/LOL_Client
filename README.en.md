@@ -7,23 +7,22 @@
 ## 📑 Index
 
 1. [🚀 Demo](#-demo)
-2. [🚀 Technologies Used](#-technologies-used)
 
-3. [🎮 Match Simulation](#-match-simulation)
+2. [🎮 Match Simulation](#-match-simulation)
    - [⚙️ Matchmaking](#️-matchmaking)
    - [🎯 Game Modes](#-game-modes)
    - [🎲 Automatic Generation](#-automatic-generation)
    - [🧠 Itemization and Playstyles](#-itemization-and-playstyles)
    - [📊 Statistics Distribution](#-statistics-distribution)
 
-4. [👤 User Management](#-user-management)
+3. [👤 User Management](#-user-management)
 
-5. [💰 Progression and Reward System](#-progression-and-reward-system)
+4. [💰 Progression and Reward System](#-progression-and-reward-system)
    - [🏆 Competitive Progression](#-competitive-progression)
    - [🎁 Post-Match Rewards](#-post-match-rewards)
    - [💎 Economy and Inventory](#-economy-and-inventory)
 
-6. [🖼️ Architecture and Data Model](#️-architecture-and-data-model)
+5. [🖼️ Architecture and Data Model](#️-architecture-and-data-model)
    - [🌍 Servers](#-servers)
    - [👤 Users](#-users)
    - [🛡️ Champions](#️-champions)
@@ -32,6 +31,8 @@
    - [🎒 Match Items](#-match-items)
    - [🔁 User Resource Relationships](#-user-resource-relationships)
    - [🏆 Match System](#-match-system)
+
+6. [🚀 Technologies Used](#-technologies-used)
 
 7. [🗂️ Project Structure](#️-project-structure)
 
@@ -50,24 +51,6 @@ In addition, it includes a frontend application that integrates and exposes all 
 ### 🌐 [LOL Client Frontend](https://lol-client-front.onrender.com/)
 
 ### ⚙️ [LOL Client Backend](https://lol-client-back.onrender.com/) (Endpoints)
-
----
-
-## 🚀 Technologies Used
-
-- Java 17
-- Spring Boot
-- Maven
-- JPA / Hibernate
-- Lombok
-- MapStruct
-- Swagger / OpenAPI
-- Docker
-- JavaScript
-- HTML5
-- CSS3
-- H2 In-Memory Database
-- IntelliJ IDEA (`.idea` structure)
 
 ---
 
@@ -299,9 +282,27 @@ Match generation is segmented into different game modes (Ranked, Normal, and ARA
 
 All this logic is directly integrated with the user, inventory, progression, and reward systems of the project.
 
+With this architecture, the system accurately emulates how the League of Legends client organizes and presents information for each player within their region, facilitating complex filtering and digital content management (skins, champions, profile icons).
+
 ---
 
-With this architecture, the system accurately emulates how the League of Legends client organizes and presents information for each player within their region, facilitating complex filtering and digital content management (skins, champions, profile icons).
+## 🚀 Technologies Used
+
+- Java 17
+- Spring Boot
+- Maven
+- JPA / Hibernate
+- Lombok
+- MapStruct
+- Swagger / OpenAPI
+- Docker
+- JavaScript
+- HTML
+- CSS3
+- H2 In-Memory Database
+- IntelliJ IDEA (`.idea` structure)
+
+---
 
 ## 🗂️ Project Structure
 
@@ -324,3 +325,4 @@ LOL_Client/
 ├── README.md                     # Main documentation
 ├── README.en.md                  # English version
 └── .idea/                        # IntelliJ IDEA configuration
+```
